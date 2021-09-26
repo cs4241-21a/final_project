@@ -16,7 +16,11 @@ Some simple photo manipulation features we'd like to include (given the deadline
 If more time allows, we can add more features to make the website more robust.
 
 ## Libraries we can use to accomplish this:
-- (insert something...)
+- Pica
+- Lena.js
+- Jimp
+- Grade.js
+- Compressor.js
 
 ## General Logic Flow for App
 
