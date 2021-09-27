@@ -1,0 +1,21 @@
+{
+  "name": "a4-final-project",
+  "version": "1.0.0",
+  "description": "Submission for Group 21",
+  "author": "God",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": "https://github.com/Matthew7758-a3-persistence",
+  "dependencies": {
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "express-validator": "^6.12.1",
+    "morgan": "^1.10.0",
+    "cors": "^2.8.5"
+  },
+  "engines": {
+    "node": "14.x"
+  }
+}
