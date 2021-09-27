@@ -1,6 +1,6 @@
 # Proposal: ARAM Match Generator 
 
-Team Members
+Group 3 Team Members
 - Felix Chen
 - Jason Odell
 - Timothy Goon
