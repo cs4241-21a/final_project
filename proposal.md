@@ -6,13 +6,14 @@
 - Ivan Martinovic
 
 ### Outline
-We want to create a workout tracking tool. Some of the main features include: creating custom workout routines, a form that takes any data from a particular workout (including target muscle group), graph display of progress with the ability to filter on certain criteria. Users will be able to create their own account. If time allows, we think it would be a cool idea to implement a leaderboard. 
+We want to create a workout tracking tool. Some of the main features include: creating custom workout routines and adding it to table that can be modified and filtered specific attributes such as muscle group amongst other things.Aa form that takes any data from a particular workout (including target muscle group), graph display of progress with the ability to filter on certain criteria. Users will be able to create their own account. If time allows, we think it would be a cool idea to implement a leaderboard. 
 
 
 #### Key Technologies
 - Express Server
 - MongoDB
 - D3
+- Svelte/React
 
 Provide an outline of your project direction and the names of associated team members. 
 The outline should have enough detail so that staff can determine if it meets the minimum expectations, or if it goes too far to be reasonable by the deadline. 
