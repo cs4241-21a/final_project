@@ -1,7 +1,7 @@
 # Improving WPI's really bad no good laundry status pages
-WPI has a serious problem. Say you want to check the status of a laundry room and see how busy it is. More specifically - on your phone. Wait, what's that? Do I hear the sounds of 2000s web design?
+WPI has a serious problem. Say you want to check the status of a laundry room and see how busy it is (https://laundryconnect.net/wpifounders.aspx for instance). More specifically - on your phone. Wait, what's that? Do I hear the sounds of 2000s web design?
 
-Here comes us making the laundry status page much, much better.
+Here comes us making the laundry status page much, much better, with such buzzwords as Material Design, React, Node.JS, Blockchain, ML, and AI.
 
 # What the project consists of
 * A web scraper in Node.JS to get data from LaundryConnect. This sits on a server and runs every 5 minutes. One of our group members wrote a prototype web scraper in Python, so there's some familiarity of the system.
