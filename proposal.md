@@ -12,7 +12,7 @@ We want to create a workout tracking tool. Some of the main features include: cr
 #### Key Technologies
 - Express Server
 - MongoDB
-- 
+- D3
 
 Provide an outline of your project direction and the names of associated team members. 
 The outline should have enough detail so that staff can determine if it meets the minimum expectations, or if it goes too far to be reasonable by the deadline. 
