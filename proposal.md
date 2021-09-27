@@ -1,27 +1,36 @@
-# Improving WPI's really bad no good laundry status pages
+Group 9 - Owen, Steven, Duncan, Michael, Andrew
+
+We have two proposals as we figure out which one is better.
+
+# Proposal 1 - Dinder
+Ever been with your friends trying to find somewhere to eat and you just can't find anything?
+
+Here comes us making a Tinder-like app to swipe on nearby restauraunts with all your friends, then seeing how you all voted at the end.
+
+## How this would work
+One friend would launch the web app, enter the location of where you're trying to eat, filter by rating, price, etc, then create a new session. You'd share a session link to your friends, thaen you'd all swipe on restauraunts before seeing which restauraunts were swiped on most.
+
+## Technologies we'd use
+* Google Maps API to get restauraunt details, then to be fed into the Web UI
+* Web UI written in React
+* MongoDB to store swiping sessions and match results
+* WebSockets to communicate between clients about the swipe sessions
+* Express would host the server.
+
+# Proposal 2 - Laundry Connect 2: Electric Boogaloo
 WPI has a serious problem. Say you want to check the status of a laundry room and see how busy it is (https://laundryconnect.net/wpifounders.aspx for instance). More specifically - on your phone. Wait, what's that? Do I hear the sounds of 2000s web design?
 
 Here comes us making the laundry status page much, much better, with such buzzwords as Material Design, React, Node.JS, Blockchain, ML, and AI.
 
-# What the project consists of
-* A web scraper in Node.JS to get data from LaundryConnect. This sits on a server and runs every 5 minutes. One of our group members wrote a prototype web scraper in Python, so there's some familiarity of the system.
-* A Web UI written in React to show the data. This Web UI will show general availability of laundry rooms (% of dryers/washers available), with the option to drill down into individual laundry rooms.
-* The Web UI will also have the ability to sign up/log in so users can favorite certain laundry rooms to see on the Web UI.
-* A server written in Node.JS
+## How this would work
+You'd launch the Laundry Connect 2 website to get an overview of laundry room availability (% dryers/washers available). Then, you could go into a laundry room to see specific machines available.
 
-# Technologies we'll use
+You could also make an account to make specific laundry rooms favorited.
 
-## MongoDB
-MongoDB will be used to store the laundry data & user login data, plus Mongoose for accessing/writing data.
-
-## Express
-Express will host the server.
-
-## React
-React will be used for the main Web UI.
-
-## Other technologies
-* node-web-scraper to do the web scraping
-* We'll think of other technologies that we'll use along the way.
+## Technologies we'd use
+* Web scraper in Node.JS to get the data from Laundry Connect.
+* Web UI written in React
+* MongoDB to store laundry room availability, user logins,
+* Express would host the server.
 
 
