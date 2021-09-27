@@ -6,21 +6,22 @@ Group Members: Aditya Kumar, Matthew Malone, William White
 
 ## Project Idea
 
-We want to create a website that will host a simple photo manipulation / editor tool. While there are websites and software that manipulate photos, we find majority of them to be too intricate or pricey to use. We believe that we can deliver a photo manipulation website that is accessible and simple to use.
+We want to create a website that will host a simple photo manipulation / editor tool. While there are websites and software that manipulate photos, we find a majority of them to be too intricate or pricey to use. We believe that we can deliver a photo manipulation website that is accessible and simple to use.
+We will use primarily Javascript for this project.
 
 Some simple photo manipulation features we'd like to include (given the deadline):
 - Apply Filters 
 - Add Text
-- Crop / Morph 
+- Crop / Morph
 
 If more time allows, we can add more features to make the website more robust.
 
 ## Libraries we can use to accomplish this:
-- Pica
-- Lena.js
-- Jimp
-- Grade.js
-- Compressor.js
+- Pica --Resize images
+- Lena.js --Image processing
+- Jimp  --Another image processing library written entirely in JS
+- Grade.js --Make gradient from supplied image.
+- Compressor.js --Javascript image compressor
 
 ## General Logic Flow for App
 
