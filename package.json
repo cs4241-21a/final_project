@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node server.js"
   },
-  "repository": "https://github.com/Matthew7758-a3-persistence",
+  "repository": "https://github.com/hellofellowkids/final_project",
   "dependencies": {
     "express": "^4.17.1",
     "helmet": "^4.6.0",
