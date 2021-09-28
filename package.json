@@ -1,5 +1,5 @@
 {
-  "name": "webware-final-project",
+  "name": "final_project",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -16,20 +16,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-server": "node server.js",
-    "build-client": "cd client && npm run build",
+    "build-client": "cd client && npm install && npm run build",
     "start-client": "cd client && npm run start",
     "start": "run-s build-client start-server",
     "dev": "run-p start-client start-server"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/IamParadoxdotexe/webware-final-project.git"
-  },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/IamParadoxdotexe/webware-final-project/issues"
-  },
-  "homepage": "https://github.com/IamParadoxdotexe/webware-final-project#readme"
+  "license": "ISC"
 }
