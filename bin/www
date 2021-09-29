@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 
+console.log("Starting things")
 var app = require('../app');
 var debug = require('debug')('final-template:server');
 var http = require('http');
@@ -19,6 +20,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 
+console.log("Starting HTTP server on port: ", port)
 var server = http.createServer(app);
 
 /**
