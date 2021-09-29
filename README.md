@@ -1,3 +1,5 @@
+# Note: Run the project by running bin/www in node, not app.js
+
 # Final Project
 *Due before the start of class, October 11th (final day of the term)*
 
