@@ -1,15 +1,16 @@
 
 //bool to keep track if the user is currently drawing 
 let isDrawing = false
-
-//keeps track of current drawing color 
 let color = 'black'
+lineWidth = 3 
+let eraseMode = false
 
 //Saves the mouse position 
-//TODO fix offset, this does not work when the screen is scrolled down 
 const getPos = function( event ) {
-    cursorPosX = event.clientX - canvas.offsetLeft
-    cursorPosY = event.clientY - canvas.offsetTop
+    const canvas = document.querySelector('#canvas');
+    const rect = canvas.getBoundingClientRect()
+    cursorPosX = event.clientX - rect.left 
+    cursorPosY = event.clientY - rect.top 
 }
 
 //Signals to start drawing 
@@ -30,16 +31,29 @@ const draw = function(event){
     }
     else {
     ctx.strokeStyle = color //'black';
+
+    const checkErase = document.querySelector('input[name="action"]:checked').value
+    if(checkErase === "Erase"){  
+        ctx.strokeStyle = 'white'
+    }
+
+    console.log(lineWidth)
+    ctx.lineWidth = lineWidth
     ctx.beginPath()
-    ctx.moveTo(cursorPosX, cursorPosY)
+    ctx.moveTo(cursorPosX, cursorPosY) 
     getPos(event)
-    ctx.lineTo(cursorPosX,cursorPosY)
+    ctx.lineTo(cursorPosX,cursorPosY) // Possibly use a different shape like a circle or a square 
     ctx.stroke()
     }
 }
 
 const colorSelected = function(event){
     color = document.querySelector( '#colorSelector').value
+}
+
+const changeWidth = function(event){
+    console.log(lineWidth)
+    lineWidth = document.querySelector( '#lineWidth').value
 }
 
 const clear = function(event){
@@ -57,8 +71,10 @@ window.onload = function() {
 
     const clearBtn = document.querySelector( '#clearBtn')
     clearBtn.onclick = clear
-}
 
+    const lineWidth = document.querySelector('#lineWidth')
+    lineWidth.onclick = changeWidth
+}
 
 const canvas = document.querySelector('#canvas');
 const ctx = canvas.getContext('2d');
