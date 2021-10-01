@@ -1,5 +1,7 @@
 # Gompei Clicker #
 
+Nicholas Markou, Kiara Munz, Benjamin Gelinas, Liam Rathke, Adam Grabowski
+
 General Description: 
 
 We will be creating a clicker game with a WPI theme! Interface will include references to WPI facilities, clubs, and events in the form of upgrades. Players will be able to earn goatbucks by upgrading their goatbucks per click and automatic goatbucks per second. The application will feature five levels for each type of upgrade, as well as a leaderboard to see who has the most goatbucks that updates every minute.
