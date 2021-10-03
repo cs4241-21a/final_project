@@ -1,6 +1,7 @@
 const express = require("express"),
   mongodb = require("mongodb"),
   bodyParser = require("body-parser"),
+  ws = require('ws'),
   app = express(),
   port = 3001;
 
@@ -64,4 +65,17 @@ app.get("/views/login.html", (request, response) => {
   response.sendFile(__dirname + "/views/login.html");
 });
 
-app.listen(process.env.PORT || port);
+const server = app.listen(process.env.PORT || port);
+
+const wss = new ws.Server({ noServer: true });
+wss.on('connection', socket => {
+    socket.on('message', message => {
+        console.log("[WSS] " + message);
+        socket.send("I got: " + message);
+    });
+});
+server.on('upgrade', (req, socket, head) => {
+    wss.handleUpgrade(req, socket, head, socket => {
+        wss.emit('connection', socket, req);
+    });
+});
