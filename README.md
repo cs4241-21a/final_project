@@ -1,4 +1,4 @@
-# Final Project Proposal - Meeting Scheduler
+# Final Project - Meeting Scheduler
 
 ## Group 7 Team Members
 
