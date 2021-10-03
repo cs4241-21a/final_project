@@ -22,7 +22,7 @@ const login = function(e) {
       if (user.length == 0) {
         alert("Username or password is incorrect");
       } else {
-        window.location.href = "game.html";
+        window.location.href = "views/game.html";
       }
     });
   return false;
