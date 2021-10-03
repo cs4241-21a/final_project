@@ -52,4 +52,8 @@ app.get("/", (request, response) => {
   response.sendFile(__dirname + "/views/login.html");
 });
 
+app.get("/views/game.html", (request, response) => {
+  response.sendFile(__dirname + "/views/game.html");
+});
+
 app.listen(process.env.PORT || port);
