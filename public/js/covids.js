@@ -1,13 +1,17 @@
 let viruses = []
 let canvasSize = (400, 400)
+let DETECTION_RADIUS = 10
 
 function Entity(x, y) {
   this.x = x
   this.y = y
+  this.radius = DETECTION_RADIUS
 }
 
 function MovableEntity(x, y) {
   Entity.call()
+  this.dx = 0
+  this.dy = 0
 }
 
 function CollectableEntity(x, y) {
@@ -40,8 +44,13 @@ Object.setPrototypeOf(Mask.prototype, CollectableEntity.prototype)
 Object.setPrototypeOf(Ship.prototype, MovableEntity.prototype)
 Object.setPrototypeOf(Virus.prototype, MovableEntity.prototype)
 
-MovableEntity.prototype.Move = function(dx,dy) {
+Entity.prototype.Contacted = function(targets) {
   
+}
+
+MovableEntity.prototype.Move = function(dx,dy) {
+  this.dx += dx
+  this.dy += dy
 }
 
 function setup() {
