@@ -22,7 +22,7 @@ const login = function(e) {
       if (user.length == 0) {
         alert("Username or password is incorrect");
       } else {
-        window.location.href = "views/game.html";
+        window.location.href = "views/snake.html";
       }
     });
   return false;
@@ -47,7 +47,7 @@ const register = function(e) {
     body: body,
     headers: { "Content-Type": "application/json" }
   }).then(response => response.json());
-  window.location.href = "game.html";
+  window.location.href = "snake.html";
 };
 
 window.onload = function() {
