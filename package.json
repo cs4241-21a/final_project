@@ -1,0 +1,23 @@
+{
+  "name": "laundry-connect-2",
+  "version": "1.0.0",
+  "description": "Laundry Connect 2 (CS4243 Final Project)",
+  "main": "server.js",
+  "scripts": {
+    "scrape": "scraper.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/o355/final_project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/o355/final_project/issues"
+  },
+  "homepage": "https://github.com/o355/final_project#readme",
+  "dependencies": {
+    "jssoup": "0.0.14",
+    "mongoose": "^6.0.8"
+  }
+}
