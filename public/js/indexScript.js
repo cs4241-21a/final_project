@@ -12,8 +12,9 @@ const changeWidth = function(event){
     lineWidth = document.querySelector( '#lineWidth').value
 }
 
+
 function setup() {
-    createCanvas(1000, 500);
+    let myCanvas = createCanvas(1000, 500);
 
     const colorSelector = document.querySelector( '#colorSelector')
     colorSelector.addEventListener('change', changeColor);
@@ -46,4 +47,8 @@ function setup() {
       clear()
   }
 
+
+  function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+  }
 
