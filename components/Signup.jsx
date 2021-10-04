@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 const Signup = (props) => {
 
-  const [state, setState] = setState({errorMsg: ""})
+  const [state, setState] = useState({errorMsg: ""})//setState({errorMsg: ""})
 
 
   const signup = ( e ) => {
