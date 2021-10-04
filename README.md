@@ -1,10 +1,30 @@
-# Final Project - Meeting Scheduler
+# webware-final-project
 
-## Group 7 Team Members
+Empty project.
 
-- Aidan Pecorale
-- Ben Staw
-- Josh McKeen
-- Matthew Spofford
+## How to run on localhost
 
-## Report
+First install dependencies:
+
+```sh
+npm install
+```
+
+To run in dev mode mode:
+
+```sh
+npm start
+```
+
+Then go to http://localhost:8080
+
+To create a production build:
+
+```sh
+npm run build
+```
+
+## Credits
+
+Made with [createapp.dev](https://createapp.dev/)
+

@@ -18,9 +18,6 @@ const uri = 'mongodb+srv://'+process.env.USERNAME+':'+process.env.PASS+'@'+proce
 
 //const uri =`mongodb+srv://${USER}:${PASS}@${HOST}/myFirstDatabase?retryWrites=true&w=majority`;
 
-
-console.log(process.env.USERNAME)
-
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(result => app.listen(process.env.PORT || port))
     .catch(err => console.log(err));
