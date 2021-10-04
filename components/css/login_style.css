@@ -1,0 +1,22 @@
+.loginForm {
+    display: grid;
+    
+    background-position-x: -100px;
+    background-repeat: no-repeat;
+
+    grid-template-columns: [col0] 150px [col1] 300px [col2] 500px [col3] 300px [col4] auto [col5];
+    grid-template-rows: [row0] 100px [row1] 0px [row1] 300px [row2] 200px [row3] 200px [row4];
+
+
+    grid-template-areas:  
+        "headerArea headerArea headerArea headerArea headerArea"
+        ". logoArea . . ."
+        ". logoArea . formArea . "
+        ". . . formArea ."
+        ". . . . ."
+        ". . . . ." 
+}
+
+.buttonHolder {
+    text-align: center;
+}
