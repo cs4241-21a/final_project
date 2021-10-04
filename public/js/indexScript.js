@@ -29,14 +29,14 @@ function setup() {
     if (mouseIsPressed) {
         //Check if in erase mode 
         const checkErase = document.querySelector('input[name="action"]:checked').value
-        if(checkErase === "Erase"){   //Todo change cursor to change area 
+        if(checkErase === "Erase"){   //Todo change cursor to show erasing area?
             erase()
-            ellipse(mouseX, mouseY, lineWidth, lineWidth);
+            strokeWeight(lineWidth)
+            line(mouseX, mouseY, pmouseX, pmouseY);
        }
         else{
-            stroke(color)
-            fill(color)
-            ellipse(mouseX, mouseY, lineWidth, lineWidth);
+            strokeWeight(lineWidth)
+            line(mouseX, mouseY, pmouseX, pmouseY);
        }
     } 
     noErase()
