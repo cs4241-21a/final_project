@@ -3,25 +3,23 @@
 <head>
   <title>Express</title>
   
-
   <link rel="stylesheet" href="/stylesheets/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js"></script>
+
+  <script src = "/js/indexScript.js"></script>
 </head>
 
 <body>
   <h1>Welcome!</h1>
-  <input type="color" id="colorSelector"  value="#000000">
+  <input type="color" id="colorSelector" value="#000000">
   <button id = "clearBtn">Clear</button>
   <label for = "lineWidth">Line Width:</label> 
-  <input type="number" id="lineWidth"  min="1" max="50" value = "3">
+  <input type="number" id="lineWidth"  min="1" max="100" value = "50">
 
   <label for = "actionDraw">Draw</label>
   <input type = "radio" id = "actionDraw" name = "action" value = "Draw" checked = true>  
   <label for = "actionErase">Erase</label>
-  <input type = "radio" id = "actionErase" name = "action" value = "Erase">    
-
-  <canvas id="canvas" width = "1000" height = "500" style="border:1px solid #000000"></canvas>
-
-  <script src = "/js/indexScript.js"></script>
+  <input type = "radio" id = "actionErase" name = "action" value = "Erase"> 
 </body>
 
 
