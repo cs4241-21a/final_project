@@ -35,7 +35,7 @@ router.post('/login', async (req, res, next) => {
   }
 
   // login success
-  res.cookie(loginCookieName, { userId: user._id }, { maxAge: 21600000 });
+  res.cookie(loginCookieName, { userId: existingUser._id }, { maxAge: 21600000 });
   res.json({ loggedIn: true });
   // res.redirect(`/user/${user._id}`);
 
@@ -52,7 +52,12 @@ router.post('/register', async (req, res, next) => {
 
   const existingUser = await User.findOne({ username });
   if (existingUser) {
-    res.json({ error: 'Username always exists.' });
+    res.json({ error: {username: 'Username already exists.'} });
+    return;
+  }
+
+  if(password !== confirmPassword) {
+    res.json({ error: {password: 'Passwords do not match.'} });
     return;
   }
 
