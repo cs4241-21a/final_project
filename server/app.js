@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
-var env = process.env.NODE_ENV || 'development'
+var env = process.env.NODE_ENV || 'development';
 
 var app = express();
 
@@ -17,6 +17,9 @@ if (env === 'development') {
   }));
   console.log('cors enabled');
 }
+
+// Mongodb connection string
+const MONGODB = process.env.MONGODB;
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -45,5 +48,14 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// Connect to mongodb
+mongoose.connect(MONGODB, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log('MongoDB Connected');
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
 module.exports = app;
