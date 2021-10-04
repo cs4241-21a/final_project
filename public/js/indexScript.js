@@ -3,9 +3,8 @@ let color = 'black'
 let lineWidth = 50
 let eraseMode = false
 
-const colorSelected = function(event){
+const changeColor = function(event){
     color = document.querySelector( '#colorSelector').value
-    console.log(color)
 }
 
 const changeWidth = function(event){
@@ -17,7 +16,7 @@ function setup() {
     createCanvas(1000, 500);
 
     const colorSelector = document.querySelector( '#colorSelector')
-    colorSelector.addEventListener('change', colorSelected);
+    colorSelector.addEventListener('change', changeColor);
 
     const clearBtn = document.querySelector( '#clearBtn')
     clearBtn.onclick = clearCanvas
@@ -28,7 +27,7 @@ function setup() {
   
   function draw() {
     if (mouseIsPressed) {
-        //Check is in erase mode 
+        //Check if in erase mode 
         const checkErase = document.querySelector('input[name="action"]:checked').value
         if(checkErase === "Erase"){   //Todo change cursor to change area 
             erase()
