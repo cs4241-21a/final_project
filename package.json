@@ -13,7 +13,8 @@
     "helmet": "^4.6.0",
     "express-validator": "^6.12.1",
     "morgan": "^1.10.0",
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "browserify": "^17.0.0"
   },
   "engines": {
     "node": "14.x"
