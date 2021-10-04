@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/o355/final_project#readme",
   "dependencies": {
-    "jssoup": "0.0.14",
+    "node-html-parser": "^4.1.5",
+    "node-fetch": "^3.0.0",
     "mongoose": "^6.0.8"
   }
 }
