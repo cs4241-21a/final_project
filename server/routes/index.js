@@ -12,7 +12,7 @@ router.get('/', function (req, res, next) {
 });
 
 // Post request to login
-router.post('/login', (req, res, next) => {
+router.post('/login', async (req, res, next) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
