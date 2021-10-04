@@ -3,11 +3,12 @@ import { Switch, Route } from "react-router-dom";
 
 import Home from "./Home";
 import Login from "./Login";
+import NavigationBar from "./NavigationBar";
 
 const App = (props) => {
   return (
     <div>
-      <header>Navigation Bar</header>
+        <NavigationBar></NavigationBar>
 
       <Switch>
         <Route exact path="/" component={Home}></Route>
