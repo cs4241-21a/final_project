@@ -1,8 +1,54 @@
 let imgBtn = document.getElementById('imageInput')
 const download = document.getElementById('download')
 const canvas = document.getElementById('imgCanvas')
+const topTextBtn = document.getElementById('topTextBtn')
+const bottomTextBtn = document.getElementById('bottomTextBtn')
 let imgData
 let context
+
+topTextBtn.addEventListener('click', function(event) {
+    context.font = "40pt Impact";
+    context.fillStyle = "white"
+    context.strokeStyle = "black"
+    context.textAlign = "center"
+    const text = document.getElementById('topText').value
+    //context.fillText(text,canvas.width/2,canvas.height/8);
+    //context.strokeText(text,canvas.width/2,canvas.height/8);
+    wrapText(text,canvas.width/2,canvas.height/8,canvas.width,50)
+})
+
+bottomTextBtn.addEventListener('click', function(event) {
+    context.font = "40pt Impact";
+    context.fillStyle = "white"
+    context.strokeStyle = "black"
+    context.textAlign = "center"
+    const text = document.getElementById('bottomText').value
+    //context.fillText(text,canvas.width/2,canvas.height-(canvas.height/12));
+    //context.strokeText(text,canvas.width/2,canvas.height-(canvas.height/12));
+    wrapText(text,canvas.width/2,canvas.height-(canvas.height/12),canvas.width,50)
+})
+
+function wrapText(text, x, y, maxWidth, lineHeight) {
+    const words = text.split(' ');
+    let line = '';
+
+    for(let n = 0; n < words.length; n++) {
+        const testLine = line + words[n] + ' '
+        const metrics = context.measureText(testLine)
+        const testWidth = metrics.width;
+        if (testWidth > maxWidth && n > 0) {
+            context.fillText(line, x, y)
+            context.strokeText(line, x, y)
+            line = words[n] + ' '
+            y += lineHeight
+        }
+        else {
+            line = testLine
+        }
+    }
+    context.fillText(line, x, y)
+    context.strokeText(line,x,y)
+}
 
 download.addEventListener('click', function(e) {
     const link = document.createElement('a')
@@ -24,13 +70,7 @@ imgBtn.addEventListener('change', function(event) {
                 canvas.width = userImage.width
                 canvas.height = userImage.height
                 context.drawImage(userImage,0,0)
-                context.font = "40pt Impact";
-                context.fillStyle = "white"
-                context.strokeStyle = "black"
-                context.textAlign = "center"
 
-                context.fillText("twitch.tv/plainttv",userImage.width/2,userImage.height/8);
-                context.strokeText("twitch.tv/plainttv",userImage.width/2,userImage.height/8);
                 imgData = canvas.toDataURL("image/png",0.75)
             }
         }
