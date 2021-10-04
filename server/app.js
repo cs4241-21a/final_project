@@ -11,10 +11,12 @@ var app = express();
 if (env === 'development') {
   var cors = require('cors');
   require('dotenv').config();
-  app.use(cors());
+  app.use(cors({
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true, // allow session cookie from browser to pass through
+  }));
   console.log('cors enabled');
 }
-
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
