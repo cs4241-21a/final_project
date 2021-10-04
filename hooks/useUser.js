@@ -16,7 +16,7 @@ const ExampleComponent = () => {
 const useUser = () => {
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
+  useEffect(async() => {
     const res = await fetch("/me");
     setUser(res.status === 401 ? null : await res.json());
   });
