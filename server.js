@@ -15,6 +15,10 @@ require('dotenv').config();
 //register view engine
 app.set('view engine','ejs');
 
+// helpful boi
+app.use(morgan('dev'));
+
+
 ///////// Define MongoDB database information //////////
 
 const uri = 'mongodb+srv://'+process.env.USER+':'+process.env.PASS+'@'+process.env.HOST
@@ -52,8 +56,20 @@ app.use(bodyparser.json())
 app.use(express.static(staticDir))
 
 // Setup handling of GET requests for homepage route
-app.get('/', (request,  response) => {
-  response.render('index')
+app.get('/', (req,  res) => {
+  res.redirect('/index');
+})
+
+app.get('/index', (req, res) =>{
+  res.render('index');
+})
+
+app.get('/events', (req,  res) => {
+  res.render('events');
+})
+
+app.get('/login', (req, res) => {
+  res.render('login');
 })
 
 const listener = app.listen( process.env.PORT || port, () => {
