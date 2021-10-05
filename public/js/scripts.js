@@ -104,9 +104,9 @@ function addItem() {
 		'          class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">\n' +
 		'      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">\n' +
 		"        <div>\n" +
-		'          <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-myGreen-100 sm:mx-0 sm:h-10 sm:w-10">\n' +
+		'          <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-theme-100 sm:mx-0 sm:h-10 sm:w-10">\n' +
 		"            <!-- Heroicon name: outline/plus-circle -->\n" +
-		'            <svg class="h-6 w-6 text-myGreen-600" xmlns="http://www.w3.org/2000/svg" fill="none"\n' +
+		'            <svg class="h-6 w-6 text-theme-600" xmlns="http://www.w3.org/2000/svg" fill="none"\n' +
 		'                 viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">\n' +
 		'              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"\n' +
 		'                    d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>\n' +
@@ -124,11 +124,11 @@ function addItem() {
 		'                    <span class="text-gray-500 sm:text-sm"> $ </span></div>\n' +
 		'                  <input type="number" id="amount" name="amount" min="0.01" step="0.01"\n' +
 		'                         placeholder="0.00" required\n' +
-		'                         class="focus:ring-myGreen-500 focus:border-myGreen-500 block w-full pl-7 pr-12 text-gray-500 sm:text-sm border-gray-300 rounded-md">\n' +
+		'                         class="focus:ring-theme-500 focus:border-theme-500 block w-full pl-7 pr-12 text-gray-500 sm:text-sm border-gray-300 rounded-md">\n' +
 		'                  <div class="absolute inset-y-0 right-0 flex items-center">\n' +
 		'                    <label for="type" class="sr-only">Type</label>\n' +
 		'                    <select id="type" name="type"\n' +
-		'                            class="focus:ring-myGreen-500 focus:border-myGreen-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md">\n' +
+		'                            class="focus:ring-theme-500 focus:border-theme-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md">\n' +
 		'                      <option value="expense" selected>Expense</option>\n' +
 		'                      <option value="income">Income</option>\n' +
 		"                    </select>\n" +
@@ -143,7 +143,7 @@ function addItem() {
 		'                  <input type="date" id="date" name="date" value=\'' +
 		new Date().toLocaleDateString("en-CA") +
 		"' required\n" +
-		'                         class="focus:ring-myGreen-500 focus:border-myGreen-500 block w-full text-gray-500 sm:text-sm border-gray-300 rounded-md">\n' +
+		'                         class="focus:ring-theme-500 focus:border-theme-500 block w-full text-gray-500 sm:text-sm border-gray-300 rounded-md">\n' +
 		"                </div>\n" +
 		"              </div>\n" +
 		"              <br>\n" +
@@ -152,7 +152,7 @@ function addItem() {
 		'                <label for="note" class="block text-sm font-medium text-gray-700">Note</label>\n' +
 		'                <div class="mt-1 relative rounded-md shadow-sm">\n' +
 		'                  <input type="text" id="note" name="note" placeholder="optional"\n' +
-		'                            class="focus:ring-myGreen-500 focus:border-myGreen-500 block w-full text-gray-500\n' +
+		'                            class="focus:ring-theme-500 focus:border-theme-500 block w-full text-gray-500\n' +
 		'                  sm:text-sm border-gray-300 rounded-md">\n' +
 		"                </div>\n" +
 		"              </div>\n" +
@@ -162,11 +162,11 @@ function addItem() {
 		"      </div>\n" +
 		'      <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">\n' +
 		'        <button type="submit"\n' +
-		'                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-myGreen-600 text-base font-medium text-white hover:bg-myGreen-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-myGreen-500 sm:ml-3 sm:w-auto sm:text-sm">\n' +
+		'                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-theme-600 text-base font-medium text-white hover:bg-theme-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-theme-500 sm:ml-3 sm:w-auto sm:text-sm">\n' +
 		"          Add Item\n" +
 		"        </button>\n" +
 		'        <button type="button" onclick="document.body.removeChild(document.getElementById(\'overlayAdd\'))"\n' +
-		'                class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-myGreen-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">\n' +
+		'                class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-theme-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">\n' +
 		"          Cancel\n" +
 		"        </button>\n" +
 		"      </div>\n" +
@@ -311,13 +311,13 @@ function createCard(json) {
 		list +=
 			" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6'> <dt class='text-base font-medium ";
 		// Change color for type
-		if (transaction.isIn) list += "text-myGreen-500'> ";
+		if (transaction.isIn) list += "text-theme-500'> ";
 		else list += "text-yellow-500'> ";
 		list +=
 			"<div class='w-0 flex-1 flex items-center'> " +
 			"<svg class='flex-shrink-0 h-4 w-4 ";
 		// Change color for type
-		if (transaction.isIn) list += "text-myGreen-500' ";
+		if (transaction.isIn) list += "text-theme-500' ";
 		else list += "text-yellow-500' ";
 		list +=
 			"xmlns='http://www.w3.org/2000/svg' fill='currentColor' " +
@@ -345,7 +345,7 @@ function createCard(json) {
 			" </div> </div> </dt> " +
 			"<dd class='mt-1 text-sm ";
 		// Change color for type
-		if (transaction.isIn) list += "text-myGreen-600";
+		if (transaction.isIn) list += "text-theme-600";
 		else list += "text-yellow-500";
 		list +=
 			" sm:mt-0 sm:col-span-2'> " +
@@ -359,7 +359,7 @@ function createCard(json) {
 		list += `</span> </div> <div class='ml-4 flex-shrink-0'>
 			<button class='font-medium `;
 		// Change color for type
-		if (transaction.isIn) list += `text-myGreen-600 hover:text-myGreen-700' `;
+		if (transaction.isIn) list += `text-theme-600 hover:text-theme-700' `;
 		else list += `text-yellow-500 hover:text-yellow-600' `;
 		list += `onclick="editItem('${transaction.id}', '${transaction.date}', '${transaction.isIn}', '${transaction.amount}', '${transaction.note}')"> Edit </button> </div> </div> </dd> </div>`;
 	});

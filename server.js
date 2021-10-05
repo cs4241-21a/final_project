@@ -7,7 +7,7 @@ const express = require("express"),
 	app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}));
 app.use(bodyparser.json());
 app.use(favicon(path.join(__dirname, "public/assets/G3P-logo.png")));
 
@@ -50,22 +50,30 @@ app.use(
 // ------ Serve Non-Secret Files ------
 
 // login
-app.get("/login", function(req, res) {
+app.get("/login", function (req, res) {
 	res.sendFile(__dirname + "/public/login.html");
 });
 
 // join
-app.get("/join", function(req, res) {
+app.get("/join", function (req, res) {
 	res.sendFile(__dirname + "/public/join.html");
 });
 
 // css
-app.get("/styles.css", function(req, res) {
-	res.sendFile(__dirname + "/public/css/styles.css");
+app.get("/styles.css", function (req, res) {
+	switch (req.session.theme) {
+		case "pink":
+			res.sendFile(__dirname + "/public/css/stylesPink.css");
+			break;
+		default:
+			// Defaults and backup to the default style so nothing breaks
+			res.sendFile(__dirname + "/public/css/styles.css");
+			break;
+	}
 });
 
 // icon
-app.get("/G3P-logo.png", function(req, res) {
+app.get("/G3P-logo.png", function (req, res) {
 	res.sendFile(__dirname + "/public/assets/G3P-logo.png");
 });
 
@@ -77,7 +85,7 @@ app.post("/login", (req, res) => {
 	console.log(req.body);
 
 	collection
-		.find({ email: req.body.email, password: req.body.password })
+		.find({email: req.body.email, password: req.body.password})
 		.toArray()
 		.then(result => {
 			if (result === "" || result === "[]" || result[0] === undefined) {
@@ -98,7 +106,7 @@ app.post("/login", (req, res) => {
 });
 
 // User logout
-app.get("/logout", function(req, res) {
+app.get("/logout", function (req, res) {
 	req.session = null;
 	// TODO: Inform user "Successfully logged out"
 	res.redirect("/login");
@@ -115,7 +123,7 @@ app.post("/join", (req, res) => {
 	}
 
 	collection
-		.find({ email: req.body.email })
+		.find({email: req.body.email})
 		.toArray()
 		.then(result => {
 			if (result[0] !== undefined) {
@@ -136,7 +144,7 @@ app.post("/join", (req, res) => {
 });
 
 // Block all unauthenticated access
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
 	if (req.session.login === true) next();
 	else res.redirect("/login");
 });
@@ -146,10 +154,10 @@ app.use(function(req, res, next) {
 // ------ Logged in only ------
 
 // Serve static files with automatic extension fallbacks so things can look much nicer
-app.use(express.static("public", { extensions: ["html", "js", "css"] }));
+app.use(express.static("public", {extensions: ["html", "js", "css"]}));
 
 // Serve index.html
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
 	res.sendFile(__dirname + "/public/index.html");
 });
 
@@ -170,11 +178,11 @@ app.post("/create", (req, res) => {
 
 	collection
 		.updateOne(
-			{ _id: new mongodb.ObjectId(req.session.id) },
-			{ $push: { list: transaction } }
+			{_id: new mongodb.ObjectId(req.session.id)},
+			{$push: {list: transaction}}
 		)
 		.then(result => {
-			const { matchedCount, modifiedCount } = result;
+			const {matchedCount, modifiedCount} = result;
 			if (matchedCount && modifiedCount) {
 				console.log("Successfully added a new transaction:");
 				console.log(transaction);
@@ -188,7 +196,7 @@ app.post("/create", (req, res) => {
 // Route to read transaction
 app.get("/read", (req, res) => {
 	collection
-		.findOne({ _id: new mongodb.ObjectId(req.session.id) })
+		.findOne({_id: new mongodb.ObjectId(req.session.id)})
 		.then(result => res.json(result.list));
 });
 
@@ -207,11 +215,11 @@ app.post("/update", (req, res) => {
 
 	collection
 		.updateOne(
-			{ "list._id": new mongodb.ObjectId(req.body.id) },
-			{ $set: { "list.$": transaction } }
+			{"list._id": new mongodb.ObjectId(req.body.id)},
+			{$set: {"list.$": transaction}}
 		)
 		.then(result => {
-			const { matchedCount, modifiedCount } = result;
+			const {matchedCount, modifiedCount} = result;
 			if (matchedCount && modifiedCount) {
 				console.log("Successfully updated a transaction:");
 				console.log(transaction);
@@ -229,11 +237,11 @@ app.post("/delete", (req, res) => {
 
 	collection
 		.updateOne(
-			{ _id: new mongodb.ObjectId(req.session.id) },
-			{ $pull: { list: { _id: new mongodb.ObjectId(req.body.id) } } }
+			{_id: new mongodb.ObjectId(req.session.id)},
+			{$pull: {list: {_id: new mongodb.ObjectId(req.body.id)}}}
 		)
 		.then(result => {
-			const { matchedCount, modifiedCount } = result;
+			const {matchedCount, modifiedCount} = result;
 			if (matchedCount && modifiedCount) {
 				console.log("Successfully deleted a transaction: " + req.body.id);
 			}
@@ -242,5 +250,16 @@ app.post("/delete", (req, res) => {
 
 	res.redirect("/");
 });
+
+// ------ Other Server Operations ------
+
+// Update theme selection
+// basically change client's cookie's theme field
+app.post("/theme", (req, res) => {
+	console.log("/theme");
+	console.log(req.body);
+	req.session.theme = req.body.theme
+	res.redirect('/')
+})
 
 app.listen(3000);

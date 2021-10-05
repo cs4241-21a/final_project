@@ -1117,12 +1117,12 @@ select {
   border-color: rgba(234, 179, 8, var(--tw-border-opacity));
 }
 
-.focus\:border-myGreen-400:focus {
+.focus\:border-theme-400:focus {
   --tw-border-opacity: 1;
   border-color: rgba(99, 211, 151, var(--tw-border-opacity));
 }
 
-.focus\:border-myGreen-500:focus {
+.focus\:border-theme-500:focus {
   --tw-border-opacity: 1;
   border-color: rgba(81, 188, 131, var(--tw-border-opacity));
 }
@@ -1156,12 +1156,12 @@ select {
   background-color: rgba(202, 138, 4, var(--tw-bg-opacity));
 }
 
-.bg-myGreen-100 {
+.bg-theme-100 {
   --tw-bg-opacity: 1;
   background-color: rgba(210, 255, 230, var(--tw-bg-opacity));
 }
 
-.bg-myGreen-600 {
+.bg-theme-600 {
   --tw-bg-opacity: 1;
   background-color: rgba(62, 181, 117, var(--tw-bg-opacity));
 }
@@ -1181,7 +1181,7 @@ select {
   background-color: rgba(161, 98, 7, var(--tw-bg-opacity));
 }
 
-.hover\:bg-myGreen-700:hover {
+.hover\:bg-theme-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgba(53, 154, 99, var(--tw-bg-opacity));
 }
@@ -1359,22 +1359,22 @@ select {
   color: rgba(202, 138, 4, var(--tw-text-opacity));
 }
 
-.text-myGreen-400 {
+.text-theme-400 {
   --tw-text-opacity: 1;
   color: rgba(99, 211, 151, var(--tw-text-opacity));
 }
 
-.text-myGreen-500 {
+.text-theme-500 {
   --tw-text-opacity: 1;
   color: rgba(81, 188, 131, var(--tw-text-opacity));
 }
 
-.text-myGreen-600 {
+.text-theme-600 {
   --tw-text-opacity: 1;
   color: rgba(62, 181, 117, var(--tw-text-opacity));
 }
 
-.group:hover .group-hover\:text-myGreen-500 {
+.group:hover .group-hover\:text-theme-500 {
   --tw-text-opacity: 1;
   color: rgba(81, 188, 131, var(--tw-text-opacity));
 }
@@ -1389,12 +1389,12 @@ select {
   color: rgba(202, 138, 4, var(--tw-text-opacity));
 }
 
-.hover\:text-myGreen-400:hover {
+.hover\:text-theme-400:hover {
   --tw-text-opacity: 1;
   color: rgba(99, 211, 151, var(--tw-text-opacity));
 }
 
-.hover\:text-myGreen-700:hover {
+.hover\:text-theme-700:hover {
   --tw-text-opacity: 1;
   color: rgba(53, 154, 99, var(--tw-text-opacity));
 }
@@ -1463,12 +1463,12 @@ select {
   --tw-ring-color: rgba(234, 179, 8, var(--tw-ring-opacity));
 }
 
-.focus\:ring-myGreen-400:focus {
+.focus\:ring-theme-400:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgba(99, 211, 151, var(--tw-ring-opacity));
 }
 
-.focus\:ring-myGreen-500:focus {
+.focus\:ring-theme-500:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgba(81, 188, 131, var(--tw-ring-opacity));
 }
