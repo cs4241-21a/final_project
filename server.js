@@ -4,16 +4,20 @@ const express = require("express");
 const mongodb = require("mongodb");
 const cookie = require("cookie-session");
 const helmet = require("helmet");
-const favicon = require("serve-favicon");
 const serveStatic = require("serve-static");
 const path = require("path");
-const app = express();
+const dontenv = require("dotenv");
 
+const app = express();
+const port = 3000;
+
+console.log(dontenv.config());
 const clientID = "66f056183e981d1a11b2";
 
 app.use(helmet());
-
-app.use(serveStatic("build", { index: ["index.html"] }));
+app.use(serveStatic(path.join(__dirname, "static")));
+app.use(express.static("build"));
+app.use(express.json());
 
 app.use(
   cookie({
@@ -21,8 +25,6 @@ app.use(
     keys: [process.env.COOKIE_KEY1, process.env.COOKIE_KEY2],
   })
 );
-
-app.use(favicon(path.join(__dirname, "build", "favicon.ico")));
 
 passport.serializeUser(function (user, done) {
   done(null, user);
@@ -58,7 +60,6 @@ app.get(
   }
 );
 
-//we might be able to skip redirecting, i think i was just playing around during a3
 app.get("/res", (req, res) => {
   req.session.id = req.query.id;
   res.redirect("/");
@@ -74,15 +75,12 @@ app.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-app.use(express.static("build"));
-app.use(express.json());
-
 const uri =
   "mongodb+srv://" +
   process.env.DB_USERNAME +
   ":" +
   process.env.DB_PASSWORD +
-  "@cluster0.yb8hn.mongodb.net/";
+  "@group8data.ehg8z.mongodb.net/";
 
 const client = new mongodb.MongoClient(uri, {
   useNewUrlParser: true,
@@ -102,6 +100,10 @@ client
     // blank query returns all documents
     return collection.find({}).toArray();
   });
+
+app.get("/", (request, response) => {
+  response.sendFile(__dirname + "/views/index.html");
+});
 
 app.get("/favorites", (req, res) => {
   if (collection !== null) {
@@ -131,8 +133,6 @@ app.post("/submit", (req, res) => {
         collection
           .replaceOne(
             {
-              name: dataJSON.name,
-              team: dataJSON.team,
               userID: dataJSON.userID,
             },
             dataJSON
@@ -147,4 +147,6 @@ app.post("/remove", (req, res) => {
   collection.deleteOne(req.body).then((result) => res.json(result));
 });
 
-app.listen(8080);
+const listener = app.listen(process.env.PORT || port, () => {
+  console.log("Your app is listening on port " + listener.address().port);
+});
