@@ -54,7 +54,7 @@ app.post("/login", async (req, res) => {
   console.log(`Session is now logged in as ${userLookup.username}`);
   req.session.username = userLookup.username;
   console.log(req.session);
-  res.sendStatus(200);
+  res.json(userLookup);
 });
 
 /*
@@ -86,7 +86,7 @@ app.post("/signup", async (req, res) => {
   console.log("Logging in by setting session username");
   req.session.username = userInfo.username;
   console.log(req.session);
-  res.status(200).end();
+  res.json(userInfo);
 });
 
 /*
@@ -95,7 +95,9 @@ If not logged in, respond with a 401
 */
 app.get("/me", async (req, res) => {
   if (!req.session.username) {
-    res.sendStatus(401);
+    console.log("Non-logged person tried /me");
+    res.status(401).end();
+    return;
   }
   const userRes = await mongoClient
     .db("final")
@@ -104,9 +106,10 @@ app.get("/me", async (req, res) => {
 
   if (!userRes) {
     console.log("Session has an invalid username (THIS SHOULD NEVER HAPPEN)");
-    res.sendStatus(401);
+    res.status(401).end();
+    return;
   }
-
+  console.log("Reminding user that they are logged in");
   res.json(userRes);
 });
 
