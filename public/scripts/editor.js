@@ -11,6 +11,9 @@ let context
 let userImage
 let cropper
 startCropBtn.addEventListener('click', function() {
+    startCropBtn.disabled = true
+    cropBtn.disabled = false
+    restoreCropBtn.disabled = false
     cropper = new Cropper(canvas,{crop(event) {
             console.log(event.detail.x);
             console.log(event.detail.y);
@@ -33,7 +36,9 @@ cropBtn.addEventListener('click', function() {
     canvas.height = image.height
     canvas.width = image.width
     context.drawImage(image,0,0)
-
+    startCropBtn.disabled = false
+    cropBtn.disabled = true
+    restoreCropBtn.disabled = true
 })
 restoreCropBtn.addEventListener('click', function() {
     cropper.destroy()
@@ -43,6 +48,9 @@ restoreCropBtn.addEventListener('click', function() {
     context.drawImage(userImage,0,0)
 
     imgData = canvas.toDataURL("image/png",1.0)
+    startCropBtn.disabled = false
+    cropBtn.disabled = true
+    restoreCropBtn.disabled = true
 })
 
 topTextBtn.addEventListener('click', function() {
@@ -106,7 +114,7 @@ imgBtn.addEventListener('change', function(event) {
                 canvas.width = userImage.width
                 canvas.height = userImage.height
                 context.drawImage(userImage,0,0)
-
+                startCropBtn.disabled = false
                 imgData = canvas.toDataURL("image/png",1.0)
             }
         }
