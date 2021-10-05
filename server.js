@@ -13,29 +13,17 @@ app.use(favicon(path.join(__dirname, "public/assets/G3P-logo.png")));
 
 // Database Connection
 const uri = 'mongodb+srv://myApp:qyTOpIT3cup5lTe9@cluster0.9gtis.mongodb.net/'
-const client = new mongodb.MongoClient(uri, {
-	useNewUrlParser: true,
-	useUnifiedTopology: true
-});
-let collection = null;
+const client = new mongodb.MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
+client.connect().catch(console.dir)
+const db = client.db("G3PExpenseTracker")
+const users = db.collection("users")
+if (users !== null) console.log("MongoDB connection established");
+else console.log("MongoDB connection failed")
 
-client
-	.connect()
-	.then(() => {
-		return client.db("ExpenseTracker").collection("final_project");
-	})
-	.then(__collection => {
-		collection = __collection;
-		if (collection !== null) console.log("mongoDB connection established");
-	});
-
-// Checks DB connection
+// Checks DB connection for each request
 app.use((req, res, next) => {
-	if (collection !== null) {
-		next();
-	} else {
-		res.status(503).send();
-	}
+	if (users !== null) next();
+	else res.status(503).send();
 });
 
 // Cookie
@@ -84,23 +72,23 @@ app.post("/login", (req, res) => {
 	console.log("/login");
 	console.log(req.body);
 
-	collection
-		.find({email: req.body.email, password: req.body.password})
-		.toArray()
+	users
+		.countDocuments({email: req.body.email, password: req.body.password})
 		.then(result => {
-			if (result === "" || result === "[]" || result[0] === undefined) {
-				// TODO: Inform user "Email or Password Incorrect"
-				res.redirect("/login");
-			} else {
+			if (result === 1) {
 				console.log("Successfully logged user in");
 				req.session.login = true;
-				console.log("user id: " + result[0]._id.toString());
-				req.session.id = result[0]._id.toString();
+				console.log("user id: " + req.body.email);
+				req.session.email = req.body.email;
 				// TODO: This is a temporary implementation of the "Remember me" feature
 				if (req.body.remember !== "on") {
 					req.sessionOptions.maxAge = 5 * 60 * 1000; // 5 Minutes
 				}
 				res.redirect("/");
+			} else {
+				console.log("No such combination found");
+				// TODO: Inform user "Email or Password Incorrect"
+				res.redirect("/login");
 			}
 		});
 });
@@ -108,6 +96,7 @@ app.post("/login", (req, res) => {
 // User logout
 app.get("/logout", function (req, res) {
 	req.session = null;
+	console.log("Successfully logged out")
 	// TODO: Inform user "Successfully logged out"
 	res.redirect("/login");
 });
@@ -118,27 +107,30 @@ app.post("/join", (req, res) => {
 	console.log(req.body);
 
 	if (req.body.password !== req.body.passwordC) {
+		console.log("Passwords don't match")
 		// TODO: Inform user "Passwords don't match"
 		res.redirect("/join");
 	}
 
-	collection
-		.find({email: req.body.email})
-		.toArray()
+	users
+		.countDocuments({email: req.body.email})
 		.then(result => {
-			if (result[0] !== undefined) {
-				// TODO: Inform user "Email already used"
-				res.redirect("/join");
-			} else {
+			if (result === 0) {
 				let newUser = {
 					email: req.body.email,
-					password: req.body.password,
-					list: []
+					password: req.body.password
 				};
-				collection.insertOne(newUser).then(() => {
+				db.createCollection(req.body.email).catch(console.dir);
+				console.log("User collection created");
+				users.insertOne(newUser).then(() => {
 					console.log("Successfully created account");
 					res.redirect("/login");
 				});
+			} else {
+				console.log("Email already in use");
+				// TODO: Inform user "Email already in use"
+				// res.body.notify = "Email already in use"?
+				res.redirect("/join");
 			}
 		});
 });
@@ -167,44 +159,28 @@ app.get("/", function (req, res) {
 app.post("/create", (req, res) => {
 	console.log("/create");
 	console.log(req.body);
-
 	let transaction = {
-		_id: new mongodb.ObjectId(),
 		date: req.body.date,
 		isIn: req.body.type === "income",
 		amount: req.body.amount * 100,
 		note: req.body.note
 	};
-
-	collection
-		.updateOne(
-			{_id: new mongodb.ObjectId(req.session.id)},
-			{$push: {list: transaction}}
-		)
-		.then(result => {
-			const {matchedCount, modifiedCount} = result;
-			if (matchedCount && modifiedCount) {
-				console.log("Successfully added a new transaction:");
-				console.log(transaction);
-			}
-		})
-		.catch(err => console.error(`Failed to add transaction: ${err}`));
-
+	db.collection(req.session.email).insertOne(transaction)
 	res.redirect("/");
 });
 
 // Route to read transaction
 app.get("/read", (req, res) => {
-	collection
-		.findOne({_id: new mongodb.ObjectId(req.session.id)})
-		.then(result => res.json(result.list));
+	db.collection(req.session.email)
+		.find()
+		.toArray()
+		.then(result => res.json(result));
 });
 
 // Route to update transaction
 app.post("/update", (req, res) => {
 	console.log("/update");
 	console.log(req.body);
-
 	let transaction = {
 		_id: new mongodb.ObjectId(req.body.id),
 		date: req.body.date,
@@ -212,21 +188,7 @@ app.post("/update", (req, res) => {
 		amount: req.body.amount * 100,
 		note: req.body.note
 	};
-
-	collection
-		.updateOne(
-			{"list._id": new mongodb.ObjectId(req.body.id)},
-			{$set: {"list.$": transaction}}
-		)
-		.then(result => {
-			const {matchedCount, modifiedCount} = result;
-			if (matchedCount && modifiedCount) {
-				console.log("Successfully updated a transaction:");
-				console.log(transaction);
-			}
-		})
-		.catch(err => console.error(`Failed to update transaction: ${err}`));
-
+	db.collection(req.session.email).replaceOne({_id: new mongodb.ObjectId(req.body.id)}, transaction)
 	res.redirect("/");
 });
 
@@ -234,20 +196,7 @@ app.post("/update", (req, res) => {
 app.post("/delete", (req, res) => {
 	console.log("/delete");
 	console.log(req.body);
-
-	collection
-		.updateOne(
-			{_id: new mongodb.ObjectId(req.session.id)},
-			{$pull: {list: {_id: new mongodb.ObjectId(req.body.id)}}}
-		)
-		.then(result => {
-			const {matchedCount, modifiedCount} = result;
-			if (matchedCount && modifiedCount) {
-				console.log("Successfully deleted a transaction: " + req.body.id);
-			}
-		})
-		.catch(err => console.error(`Failed to delete transaction: ${err}`));
-
+	db.collection(req.session.email).deleteOne({_id: new mongodb.ObjectId(req.body.id)})
 	res.redirect("/");
 });
 
