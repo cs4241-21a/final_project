@@ -19,8 +19,13 @@
         <button id="bottomTextBtn">Add Text</button>
     </label>
     <br/>
-    <canvas id="imgCanvas" width="1000" height="800"></canvas>
+    <input id="startCropBtn" type="button" onclick="cropper.startCropping()" value="Start Cropping" />
+    <input id="cropBtn" type="button" onclick="cropper.getCroppedImageSrc()" value="Crop" />
+    <input id="restoreCropBtn" type="button" onclick="cropper.restore()" value="Restore" />
+    <br/>
+    <canvas id="imgCanvas" width="1000" height="800">Your browser does not support canvas.</canvas>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/cropperjs"></script>
 <script src="./scripts/editor.js"></script>
 </body>
 </html>

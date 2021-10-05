@@ -1,17 +1,20 @@
 const express = require('express')
-const helmet = require("helmet");
 const morgan = require('morgan')
 const cors = require('cors')
-
-
+const csp = require('helmet-csp')
 const app = express();
-app.use(helmet());
 app.use(express.static('public'))
 app.use(express.static(__dirname));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan('tiny'))
 app.use(cors())
+app.use(csp({
+    directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-eval'", "'unsafe-inline'", 'https://cdn.jsdelivr.net/npm/cropperjs']
+    }
+}))
 
 
 app.use( function( req, res, next ) {

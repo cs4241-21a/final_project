@@ -1,11 +1,15 @@
-const cropper = require("cropper")
 let imgBtn = document.getElementById('imageInput')
 const download = document.getElementById('download')
 const canvas = document.getElementById('imgCanvas')
 const topTextBtn = document.getElementById('topTextBtn')
 const bottomTextBtn = document.getElementById('bottomTextBtn')
+const startCropBtn = document.getElementById('startCropBtn')
+const cropBtn = document.getElementById('cropBtn')
+const restoreCropBtn = document.getElementById('restoreCropBtn')
 let imgData
 let context
+let cropper
+
 
 topTextBtn.addEventListener('click', function() {
     context.font = "36pt Impact";
@@ -70,6 +74,8 @@ imgBtn.addEventListener('change', function(event) {
                 context.drawImage(userImage,0,0)
 
                 imgData = canvas.toDataURL("image/png",0.75)
+                cropper = new Cropper(canvas)
+                cropper.start
             }
         }
     }
