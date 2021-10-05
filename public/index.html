@@ -4,25 +4,26 @@
     <link rel=icon href='./img/favicon.ico' type="image/ico">
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link href="style.css" rel="stylesheet">
     <title>Meme Machine</title>
 </head>
 <body>
 <div class="editor">
     <input type="file" id="imageInput" accept="image/*"/>
-    <button id="download">Download</button>
+    <button class="btn btn-primary" id="download">Download</button>
     <br/>
     <label for="topText">
-        <input type="text" id="topText" placeholder="TOP TEXT">
-        <button id="topTextBtn">Add Text</button>
+        <input type="text" class="form-control" id="topText" placeholder="TOP TEXT">
+        <button class="btn btn-primary" id="topTextBtn">Add Text</button>
     </label>
     <label for="bottomText">
-        <input type="text" id="bottomText" placeholder="BOTTOM TEXT">
-        <button id="bottomTextBtn">Add Text</button>
+        <input type="text" class="form-control" id="bottomText" placeholder="BOTTOM TEXT">
+        <button class="btn btn-primary" id="bottomTextBtn">Add Text</button>
     </label>
     <br/>
-    <input id="startCropBtn" type="button" onclick="cropper.startCropping()" value="Start Cropping" />
-    <input id="cropBtn" type="button" onclick="cropper.getCroppedImageSrc()" value="Crop" />
-    <input id="restoreCropBtn" type="button" onclick="cropper.restore()" value="Restore" />
+    <input id="startCropBtn" type="button" class="btn btn-secondary" onclick="cropper.startCropping()" value="Start Cropping" />
+    <input id="cropBtn" type="button" class="btn btn-secondary" onclick="cropper.getCroppedImageSrc()" value="Crop" />
+    <input id="restoreCropBtn" type="button" class="btn btn-secondary" onclick="cropper.restore()" value="Restore" />
     <br/>
     <canvas id="imgCanvas" width="1000" height="800">Your browser does not support canvas.</canvas>
 </div>

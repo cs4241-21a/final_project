@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  margin: 2em 1em;
+}
+
+h1 {
+  line-height: 1.1;
+}
+
+input {
+  border: 1px solid silver;
+  font-size: 16px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding: 5px;
+}
+
+input[type="button"], input[type="submit"] { 
+  border:1px solid; 
+}
+
+footer {
+  margin-top: 3em;
+  padding-top: 1.5em;
+  border-top: 1px solid lightgrey;
+}
+
+div[class="editor"] {
+  margin-bottom: 5px;
+  margin-left: 15px;
+}
