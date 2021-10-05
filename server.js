@@ -1,9 +1,14 @@
-const express = require('express')
+const express = require('express'),
+    expressLayouts = require('express-ejs-layouts')
 const app = express()
 const port = 3000
 
+//ejs
+app.use(expressLayouts);
+app.set('view engine', 'ejs');
+
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.render('welcome')
 })
 
 app.listen(port, () => {
