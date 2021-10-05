@@ -66,10 +66,15 @@ body {
     justify-self: center;
     background-color: #42B72A;
     color: black;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #secondaryButton {
     grid-area: secondaryButtonArea;
     justify-self: center; 
     background-color: white;
+    text-align: center;
 }
