@@ -7,24 +7,20 @@ let imgData
 let context
 
 topTextBtn.addEventListener('click', function(event) {
-    context.font = "40pt Impact";
+    context.font = "36pt Impact";
     context.fillStyle = "white"
     context.strokeStyle = "black"
     context.textAlign = "center"
     const text = document.getElementById('topText').value
-    //context.fillText(text,canvas.width/2,canvas.height/8);
-    //context.strokeText(text,canvas.width/2,canvas.height/8);
     wrapText(text,canvas.width/2,canvas.height/8,canvas.width,50)
 })
 
 bottomTextBtn.addEventListener('click', function(event) {
-    context.font = "40pt Impact";
+    context.font = "36pt Impact";
     context.fillStyle = "white"
     context.strokeStyle = "black"
     context.textAlign = "center"
     const text = document.getElementById('bottomText').value
-    //context.fillText(text,canvas.width/2,canvas.height-(canvas.height/12));
-    //context.strokeText(text,canvas.width/2,canvas.height-(canvas.height/12));
     wrapText(text,canvas.width/2,canvas.height-(canvas.height/12),canvas.width,50)
 })
 
