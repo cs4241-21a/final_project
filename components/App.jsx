@@ -7,14 +7,19 @@ import Login from "./Login";
 const App = (props) => {
   return (
     <div id='appDiv'>
-      <header>Navigation Bar</header>
+      <div id='headerDiv'>
+        <header>Navigation Bar</header>
+      </div>
+      
 
       <Switch>
         <Route exact path="/" component={Home}></Route>
         <Route exact path="/login" component={Login}></Route>
       </Switch>
 
-      <footer>Fortnite balls</footer>
+      <div id='footerDiv'>
+        <footer>Fortnite balls</footer>
+      </div>
     </div>
   );
 };

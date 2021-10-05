@@ -12,7 +12,7 @@ body {
     display: grid;
     
     grid-template-columns: [col0] auto;
-    grid-template-rows: [row0] 100px [row1] 50px [row1] 600px [row2] 50px [row3] 100px;
+    grid-template-rows: [row0] 10% [row1] 5% [row1] 70% [row2] 5% [row3] 10%;
 
 
     grid-template-areas:  
@@ -22,9 +22,10 @@ body {
         "."
         "footerArea";
     
+    height: 70vw;
 }
 
-header, footer {   
+#headerDiv, #footerDiv {   
     background-image: url('../resources/header-background.jpg');
     background-repeat: repeat-x;
     background-color: black;
@@ -34,29 +35,37 @@ header, footer {
     text-align: center;
 }
 
-header {
+#headerDiv {
     grid-area: headerArea;
 }
 
-footer {
+#footerDiv {
     grid-area: footerArea;
 }
 
+#logoDiv {
+    grid-area: logoArea;
+    background: transparent;
+}
 
 #logo {
     width: 300px;
     height: 300px;
-    grid-area: logoArea;
     place-self: center;
+    background: transparent;
 }
 
+.staticButtons {
+    width: 80%;
+    border: 2px solid black;
+    border-radius: 10px;
+}
 
 #primaryButton {
     grid-area: primaryButtonArea;
     justify-self: center;
     background-color: #42B72A;
     color: black;
-    border-color: #42B72A;    
 }
 
 #secondaryButton {

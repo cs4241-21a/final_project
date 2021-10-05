@@ -5,6 +5,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.static("build"));
+app.use(express.urlencoded({extended: true}));
 
 /*
 ===================================================
@@ -20,7 +21,7 @@ Try to log the user in
 Give them a cookie to keep track of them
 If invalid login info, respond with 400
 */
-app.post("/login", (req, res) => {});
+app.post("/login", (req, res) => {console.log(req.body)});
 
 /*
 Attempt to create a new user with the specified username/password
@@ -41,5 +42,7 @@ app.get("/me", (req, res) => {
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/build/index.html"));
 });
+
+app.get("/login", (req, res) => {console.log(req.body)});
 
 app.listen(3000);
