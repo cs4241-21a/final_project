@@ -1,7 +1,9 @@
 {
   "name": "final_project",
   "version": "1.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "semantic": "0.0.1"
+  },
   "devDependencies": {
     "express": "^4.17.1"
   }
