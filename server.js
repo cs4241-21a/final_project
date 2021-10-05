@@ -133,8 +133,6 @@ app.post("/submit", (req, res) => {
         collection
           .replaceOne(
             {
-              name: dataJSON.name,
-              team: dataJSON.team,
               userID: dataJSON.userID,
             },
             dataJSON
