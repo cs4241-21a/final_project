@@ -22,6 +22,7 @@ app.use(
 );
 app.use(express.json());
 app.use(express.static("build"));
+app.use(express.urlencoded({ extended: true }));
 
 /*
 ===================================================
@@ -37,6 +38,7 @@ Try to log the user in
 Give them a cookie to keep track of them
 If invalid login info, respond with 400
 */
+
 app.post("/login", async (req, res) => {
   const userInfo = req.body;
   const userLookup = await mongoClient
@@ -117,6 +119,10 @@ app.get("/me", async (req, res) => {
 // Define all GET routes before this so that we don't accidentaly send index.html when we want something else
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/build/index.html"));
+});
+
+app.get("/login", (req, res) => {
+  console.log(req.body);
 });
 
 app.listen(3000);

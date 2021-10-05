@@ -7,8 +7,11 @@ import Signup from "./Signup";
 
 const App = (props) => {
   return (
-    <div>
-      <header>Navigation Bar</header>
+    <div id='appDiv'>
+      <div id='headerDiv'>
+        <header>Navigation Bar</header>
+      </div>
+      
 
       <Switch>
         <Route exact path="/" component={Home}></Route>
@@ -16,7 +19,9 @@ const App = (props) => {
         <Route exact path="/signup" component={Signup}></Route>
       </Switch>
 
-      <footer>Fortnite balls</footer>
+      <div id='footerDiv'>
+        <footer>Fortnite balls</footer>
+      </div>
     </div>
   );
 };
