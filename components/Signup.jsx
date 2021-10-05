@@ -31,7 +31,7 @@ const Signup = (props) => {
       password: passwordIn.value
     }
 
-        body = JSON.stringify(json)
+        let body = JSON.stringify(json)
         
       fetch( '/signup', {
       method:'POST',
@@ -41,7 +41,7 @@ const Signup = (props) => {
       
     }).then(res => {
       
-      if(res.status === 201){//return if all good redirect to login?
+      if(res.status === 201){// if all good redirect to login?
         
       }
       else if(res.status === 202){//err is user exists
