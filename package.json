@@ -1,0 +1,43 @@
+{
+  "name": "hello-express",
+  "version": "0.0.1",
+  "description": "A simple Node app built on Express, instantly up and running.",
+  "main": "server.js",
+  "scripts": {
+    "clean": "rm dist/bundle.js",
+    "start-dev": "snowpack dev",
+    "build": "snowpack build",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.10.2",
+    "@types/react": "^17.0.27",
+    "@types/react-dom": "^17.0.9",
+    "cookie-session": "^1.4.0",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "mongodb": "^4.1.2",
+    "passport": "^0.5.0",
+    "passport-github2": "^0.1.12",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "serve-static": "^1.14.1",
+    "typescript": "^4.4.3"
+  },
+  "engines": {
+    "node": "12.x"
+  },
+  "repository": {
+    "url": "https://glitch.com/edit/#!/hello-express"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "glitch",
+    "express"
+  ],
+  "devDependencies": {
+    "snowpack": "^3.8.8"
+  }
+}
