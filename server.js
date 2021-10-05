@@ -6,7 +6,7 @@ const express = require("express"),
   MongoClient = mongodb.MongoClient,
   // Will need to create .env file with variables for DB_USER, DB_PASS, and DB_HOST
   // uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/HotelReviews?retryWrites=true&w=majority`,
-  uri = `mongodb+srv://test_user:tester_user_pw@cluster0.dpk53.mongodb.net/`,
+  uri = `mongodb+srv://test_user:tester_user_pw@cluster0.exade.mongodb.net/`,
   client = new MongoClient(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
