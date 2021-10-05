@@ -110,9 +110,21 @@ const express = require("express"),
     passport.authenticate("github", { failureRedirect: "/" }),
     function (req, res) {
       // Successful authentication, redirect home.
+     
       res.redirect('/dashboard.html');  // TODO need to redirect based on profile
+    
+
+      // find id then redirect
+     // collection_profile.insertOne {
+        // insert profile id
+
+
+    //  };
+    
     }
   );
+
+  // in profile server add function, use global variable profile Id to find
 
   passport.use(
     new GoogleStrategy(
