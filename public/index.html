@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <link rel=icon href='./img/favicon.ico' type="image/ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.css" integrity="sha512-+VDbDxc9zesADd49pfvz7CgsOl2xREI/7gnzcdyA9XjuTxLXrdpuz21VVIqc5HPfZji2CypSbxx1lgD7BgBK5g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <meta charset="UTF-8">
     <title>Meme Machine</title>
 </head>
@@ -19,9 +20,9 @@
         <button id="bottomTextBtn">Add Text</button>
     </label>
     <br/>
-    <input id="startCropBtn" type="button" onclick="cropper.startCropping()" value="Start Cropping" />
-    <input id="cropBtn" type="button" onclick="cropper.getCroppedImageSrc()" value="Crop" />
-    <input id="restoreCropBtn" type="button" onclick="cropper.restore()" value="Restore" />
+    <input id="startCropBtn" type="button" value="Start Cropping" />
+    <input id="cropBtn" type="button" value="Crop" />
+    <input id="restoreCropBtn" type="button" value="Restore" />
     <br/>
     <canvas id="imgCanvas" width="1000" height="800">Your browser does not support canvas.</canvas>
 </div>
