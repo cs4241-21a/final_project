@@ -8,6 +8,13 @@ body {
            
 }
 
+form {
+    background-color: #E7E9EB;
+    color: black;
+    place-self: center;
+    grid-area: formArea;
+}
+
 #appDiv {
     display: grid;
     
@@ -64,7 +71,6 @@ body {
 #primaryButton {
     grid-area: primaryButtonArea;
     justify-self: center;
-    background-color: #42B72A;
     color: black;
     height: 40px;
     display: flex;

@@ -1,0 +1,13 @@
+#signupPage {
+    grid-area: mainDivArea;
+    display: grid;
+    
+    grid-template-columns: [col0] 8% [col1] 300px [col2] 40% [col3] 20% [col4] auto;
+    grid-template-rows: [row0] 55% [row1] 300px;
+
+
+    grid-template-areas:  
+        ". . . formArea ."
+        ". logoArea . formArea .";
+}
+

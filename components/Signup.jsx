@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import useUser from "../hooks/useUser";
 
+import "./css/signup_style.css";
+
+
 const Signup = (props) => {
   const [user, setUser] = useUser();
   const [state, setState] = useState({ errorMsg: "" }); //setState({errorMsg: ""})
@@ -56,10 +59,20 @@ const Signup = (props) => {
   if (user === "loading") return <div>Loading</div>;
   if (!user) {
     return (
-      <div>
-        <h1>SignUp</h1>
-        <div>
+      <div id = 'signupPage'>
+        <div id="logoDiv">
+          <img
+            id="logo"
+            src="./components/resources/logo.jpg"
+            alt="App Logo"
+            width="300px"
+            height="300px"
+            title="App Logo"
+          />
+        </div>
+
           <form onsubmit="return false">
+            <h1>Sign Up</h1>
             <p id="Error message">{state.errorMsg}</p>
             <input type="text" id="user" placeholder="username" />
             <input type="password" id="passwordone" placeholder="password" />
@@ -68,11 +81,13 @@ const Signup = (props) => {
               id="passwordtwo"
               placeholder="repeat password"
             />
-            <button id="signup" onClick={signup}>
-              Sign Up
-            </button>
+            <div class = 'buttonHolder'>
+              <button class="staticButtons" id="signup" onClick={signup}>
+                Sign Up
+              </button>
+            </div>
+            
           </form>
-        </div>
       </div>
     );
   } else return <Redirect to="/" />;

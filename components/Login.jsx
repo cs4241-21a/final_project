@@ -47,24 +47,21 @@ const Login = (props) => {
         </div>
 
         <form id="form" onsubmit="return false">
-          <label for="username"> Username: </label>
-          <br />
           <input
             type="text"
             id="username"
             name="username"
             required="required"
             pattern="[A-Za-z0-9]{1,20}"
+            placeholder="username"
           />{" "}
-          <br />
-          <label for="password">Password:</label>
-          <br />
           <input
             type="password"
             id="password"
             name="password"
             required="required"
             pattern="[A-Za-z0-9]{1,20}"
+            placeholder="password"
           />
           <br />
           <div class="buttonHolder">
