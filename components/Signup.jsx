@@ -27,7 +27,7 @@ const Signup = (props) => {
     }
 
     let json = {
-      user: userIn.value, 
+      username: userIn.value, 
       password: passwordIn.value
     }
 
