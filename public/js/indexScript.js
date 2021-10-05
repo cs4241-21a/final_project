@@ -36,6 +36,7 @@ function setup() {
             line(mouseX, mouseY, pmouseX, pmouseY);
        }
         else{
+            stroke(color)
             strokeWeight(lineWidth)
             line(mouseX, mouseY, pmouseX, pmouseY);
        }
