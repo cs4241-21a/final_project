@@ -4,7 +4,7 @@ import "./css/login_style.css"
 
 const Login = (props) => {
   return ( 
-    <div className = 'loginPage'>
+    <div id = 'loginPage'>
     <img id = 'logo' src = 'resources/logo.webp' alt = 'App Logo' width="300px" height="300px" title="App Logo"/>
 
     <form id = 'form' action='/login' method='POST'>

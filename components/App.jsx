@@ -6,7 +6,7 @@ import Login from "./Login";
 
 const App = (props) => {
   return (
-    <div>
+    <div id='appDiv'>
       <header>Navigation Bar</header>
 
       <Switch>

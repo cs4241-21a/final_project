@@ -1,22 +1,26 @@
-.loginForm {
+#loginPage {
+    grid-area: mainDivArea;
     display: grid;
     
-    background-position-x: -100px;
-    background-repeat: no-repeat;
-
-    grid-template-columns: [col0] 150px [col1] 300px [col2] 500px [col3] 300px [col4] auto [col5];
-    grid-template-rows: [row0] 100px [row1] 0px [row1] 300px [row2] 200px [row3] 200px [row4];
+    grid-template-columns: [col0] 8% [col1] 300px [col2] 40% [col3] 20% [col4] auto;
+    grid-template-rows: [row0] 55% [row1] 300px;
 
 
     grid-template-areas:  
-        "headerArea headerArea headerArea headerArea headerArea"
-        ". logoArea . . ."
-        ". logoArea . formArea . "
         ". . . formArea ."
-        ". . . . ."
-        ". . . . ." 
+        ". logoArea . formArea .";
 }
+
 
 .buttonHolder {
     text-align: center;
 }
+
+form {
+    background-color: #E7E9EB;
+    color: black;
+    place-self: center;
+    grid-area: formArea;
+}
+
+

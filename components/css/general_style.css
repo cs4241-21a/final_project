@@ -1,16 +1,45 @@
 @import url('https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@300&family=Roboto+Mono:wght@200&display=swap');
 
-#root { 
-    background-color: black;
+body { 
+    background-color: gray;
     background-image: url('../resources/arnold-background.jpeg');
-    background-size: 700px 500px;
+    background-size: cover;
+    background-repeat: no-repeat;
+           
 }
 
-form {
-    background-color: #E7E9EB;
-    color: black;
-    place-self: center;
-    grid-area: formArea;
+#appDiv {
+    display: grid;
+    
+    grid-template-columns: [col0] auto;
+    grid-template-rows: [row0] 100px [row1] 50px [row1] 600px [row2] 50px [row3] 100px;
+
+
+    grid-template-areas:  
+        "headerArea"
+        "."
+        "mainDivArea"
+        "."
+        "footerArea";
+    
+}
+
+header, footer {   
+    background-image: url('../resources/header-background.jpg');
+    background-repeat: repeat-x;
+    background-color: black;
+    color: white;
+    
+    width: 100vw;    
+    text-align: center;
+}
+
+header {
+    grid-area: headerArea;
+}
+
+footer {
+    grid-area: footerArea;
 }
 
 
