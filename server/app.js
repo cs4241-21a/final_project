@@ -12,6 +12,7 @@ if (env === 'development') {
   var cors = require('cors');
   require('dotenv').config();
   app.use(cors({
+    origin: "http://localhost:3000",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true, // allow session cookie from browser to pass through
   }));
