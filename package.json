@@ -12,6 +12,16 @@
     "build": "snowpack build"
   },
   "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "install": "^0.13.0",
+    "mongodb": "^4.1.2",
+    "passport": "^0.5.0",
+    "passport-discord": "^0.1.4",
+    "passport-github": "^1.1.0",
+    "passport-google-oauth2": "^0.2.0",
+    "passport-outlook": "^3.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },

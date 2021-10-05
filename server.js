@@ -2,11 +2,184 @@
 require("dotenv").config();
 const express = require("express"),
   app = express(),
-  mongodb = require("mongodb"),
-  MongoClient = mongodb.MongoClient,
+  mongodb = require("mongodb");
+  MongoClient = mongodb.MongoClient;
+
+  // OAuth Code 
+  const passport = require('passport');
+  const session = require('express-session');
+  const OutlookStrategy = require('passport-outlook').Strategy;
+  const GitHubStrategy = require("passport-github").Strategy;
+  const GoogleStrategy = require("passport-google-oauth2").Strategy;
+  const DiscordStrategy = require("passport-discord").Strategy;
+  scopes = ['identify'];
+
+  const isAuth = (req,res, next) => {
+    if(req.user) {
+      next();
+    } else {
+      // check if they have an account 
+      res.redirect('/dashboard.html');
+    }
+  }
+    
+  app.get("/login", (request, response) => {
+    if(request.user) {
+      return response.redirect('/'); // redirect according to profile
+    }
+    response.sendFile(__dirname + '/build/login.html');
+  });
+
+  // simple testing to route to login initially
+  app.get("/", (request, response) => response.sendFile(__dirname + "/build/login.html"))
+
+  app.get("/logout", (request, response) => {
+    request.logOut();
+    response.redirect('/login');
+  });
+
+  app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { 
+      httpOnly: true,
+      secure: false,
+      maxAge: 24 * 60 * 60 * 1000,
+    },
+  }))
+  
+  app.use(passport.initialize())
+  app.use(passport.session());
+  
+  let profileID; 
+
+  passport.serializeUser(function(user,cb) {
+    cb(null, user.id);
+  });
+  
+  passport.deserializeUser(function(id,cb) {
+    cb(null, id);
+  });
+  
+  passport.use(new OutlookStrategy({
+    clientID: process.env.OUTLOOK_CLIENT_ID,
+    clientSecret: process.env.OUTLOOK_CLIENT_SECRET
+  },
+  function(accessToken, refreshToken, profile, done) {
+    profileID = profile.id;
+    cb(null,profile)
+  }
+  ));
+
+  app.get('/auth/outlook', passport.authenticate('windowslive', {
+    scope: [
+      'openid',
+      'profile',
+      'offline_access'
+    ]
+  }));
+  
+  app.get(
+    '/auth/outlook/callback',
+    passport.authenticate('windowslive', {failureRedirect: '/login'}),
+    function (req, res) {
+      // Successful authentication, redirect home.  TODO need to redirect based on profile
+      res.redirect('/dashboard.html');
+    }
+  );
+  
+  passport.use(
+    new GitHubStrategy(
+      {
+        clientID: process.env.GIT_CLIENT_ID,
+        clientSecret: process.env.GIT_CLIENT_SECRET,
+        callbackURL: process.env.GIT_CALLBACK_URL,
+      },
+      function (accessToken, refreshToken, profile, cb) {
+        profileID = profile.id;
+        cb(null, profile);
+      }
+    )
+  );
+
+  app.get("/auth/github", passport.authenticate("github"));
+
+  app.get(
+    "/auth/github/callback",
+    passport.authenticate("github", { failureRedirect: "/" }),
+    function (req, res) {
+      // Successful authentication, redirect home.
+      res.redirect('/dashboard.html');  // TODO need to redirect based on profile
+    }
+  );
+
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: process.env.GOOGLE_CALLBACK_URL,
+        passReqToCallback: true,
+      },
+      function (request, accessToken, refreshToken, profile, done) {
+        profileID = profile.id;
+        return done(null, profile);
+      }
+    )
+  );
+
+  app.get(
+    "/auth/google",
+    passport.authenticate("google", { scope: ["email", "profile"] })
+  );
+
+  app.get(
+    "/auth/google/callback",
+    passport.authenticate("google", {
+      // successRedirect: "/auth/google/success",
+      failureRedirect: "/auth/google/failure",
+    }),
+    function (req, res) {
+      // Successful authentication, redirect home.
+      res.redirect('/dashboard.html'); // TODO need to redirect based on profile
+    }
+  );
+
+  passport.use(
+    new DiscordStrategy(
+      {
+        clientID: process.env.DISCORD_CLIENT_ID,
+        clientSecret: process.env.DISCORD_CLIENT_SECRET,
+        callbackURL: process.env.DISCORD_CALLBACK_URL,
+        scope: scopes
+      },
+      function (accessToken, refreshToken, profile, cb) {
+        profileID = profile.id;
+        return cb(null, profile);
+      }
+    )
+  );
+
+  app.get("/auth/discord", passport.authenticate("discord"));
+
+  app.get(
+    "/auth/discord/callback",
+    passport.authenticate("discord", {
+      failureRedirect: "/",
+    }),
+    function (req, res) {
+      // Successful authentication, redirect home.
+      res.redirect('/dashboard.html'); // TODO need to redirect based on profile
+    }
+  );
+
+
+
+
   // Will need to create .env file with variables for DB_USER, DB_PASS, and DB_HOST
   // uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/HotelReviews?retryWrites=true&w=majority`,
-  uri = `mongodb+srv://test_user:tester_user_pw@cluster0.dpk53.mongodb.net/`,
+  uri = `mongodb+srv://test_user:tester_user_pw@cluster0.exade.mongodb.net/`,
   client = new MongoClient(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -38,14 +211,6 @@ client.once("open", () => {
 
 });
 
-// Middleware to check connection to database
-app.use((req, res, next) => {
-  if (collection !== null) {
-    next();
-  } else {
-    res.status(503).send();
-  }
-});
 
 app.use(express.static("build"));
 
