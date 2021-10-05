@@ -1,3 +1,4 @@
+const cropper = require("cropper")
 let imgBtn = document.getElementById('imageInput')
 const download = document.getElementById('download')
 const canvas = document.getElementById('imgCanvas')
@@ -6,7 +7,7 @@ const bottomTextBtn = document.getElementById('bottomTextBtn')
 let imgData
 let context
 
-topTextBtn.addEventListener('click', function(event) {
+topTextBtn.addEventListener('click', function() {
     context.font = "36pt Impact";
     context.fillStyle = "white"
     context.strokeStyle = "black"
@@ -15,7 +16,7 @@ topTextBtn.addEventListener('click', function(event) {
     wrapText(text,canvas.width/2,canvas.height/8,canvas.width,50)
 })
 
-bottomTextBtn.addEventListener('click', function(event) {
+bottomTextBtn.addEventListener('click', function() {
     context.font = "36pt Impact";
     context.fillStyle = "white"
     context.strokeStyle = "black"
@@ -46,7 +47,7 @@ function wrapText(text, x, y, maxWidth, lineHeight) {
     context.strokeText(line,x,y)
 }
 
-download.addEventListener('click', function(e) {
+download.addEventListener('click', function() {
     const link = document.createElement('a')
     link.download = 'download.png'
     link.href = canvas.toDataURL()
@@ -60,8 +61,9 @@ imgBtn.addEventListener('change', function(event) {
         reader.readAsDataURL(imageFile)
         reader.onloadend = function(event) {
             const userImage = new Image()
+            // noinspection JSValidateTypes
             userImage.src = event.target.result
-            userImage.onload = function (event) {
+            userImage.onload = function () {
                 context = canvas.getContext('2d')
                 canvas.width = userImage.width
                 canvas.height = userImage.height
