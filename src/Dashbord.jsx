@@ -18,8 +18,16 @@ class Dashboard extends React.Component{
             })
     }
     render() {
-        <div>{this.state.songsJson}</div>
+        const {songsJson} = this.state
+        const trackList = songsJson.tracks
+        return(
+            <div>
+                {trackList.map(track => {
+                    <p>track.title</p>
+                })}
+            </div>
+        )
     }
 }
 
-export default Dashboard
+export default Dashboard;

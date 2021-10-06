@@ -8,10 +8,10 @@ class App extends React.Component {
     this.state = {
       musicJson: {}
     }
-    this.load()
+    // this.load('Kiss the rain')
   }
-  load() {
-    fetch(`/getMusicData`, {method:'get', 'no-cors':true})
+  load(songName) {
+    fetch(`/getSongByName?term=${songName}`, {method:'get', 'no-cors':true})
       .then(res => res.json())
       .then(json => {
         this.setState({
