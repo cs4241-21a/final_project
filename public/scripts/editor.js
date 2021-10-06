@@ -14,6 +14,10 @@ const flipYBtn = document.getElementById('flipY')
 const compressBtn = document.getElementById('compressBtn')
 const greyscaleBtn = document.getElementById('greyscaleBtn')
 const resetBtn = document.getElementById('resetButton')
+const embossBtn = document.getElementById('embossBtn')
+const herMajestyBtn = document.getElementById('herMajestyBtn')
+const orangePeelBtn = document.getElementById('orangePeelBtn')
+const sinCityBtn = document.getElementById('sinCityBtn')
 
 // additional variables
 let imgData
@@ -26,13 +30,53 @@ resetBtn.addEventListener('click', function() {
     location.reload(true)
 })
 
+// Sin City button
+sinCityBtn.addEventListener('click', function(){
+    sinCityBtn.innerText = "Rendering..."
+    Caman(canvas, function () {
+        this.sinCity().render()
+        sinCityBtn.innerText = "Sin City"
+    })
+
+})
+
+// Orange Peel button
+orangePeelBtn.addEventListener('click', function(){
+    orangePeelBtn.innerText = "Rendering..."
+    Caman(canvas, function () {
+        this.orangePeel().render()
+        orangePeelBtn.innerText = "Orange Peel"
+    })
+})
+
+// Her Majesty button
+herMajestyBtn.addEventListener('click', function(){
+    herMajestyBtn.innerText = "Rendering..."
+    Caman(canvas, function () {
+        this.herMajesty().render()
+        herMajestyBtn.innerText = "Her Majesty"
+    })
+
+})
+
+// Emboss button
+embossBtn.addEventListener('click', function(){
+    embossBtn.innerText = "Rendering..."
+    Caman(canvas, function () {
+        this.emboss().render()
+        embossBtn.innerText = "Emboss"
+    })
+
+})
+
 // Greyscale button
 greyscaleBtn.addEventListener('click', function(){
     greyscaleBtn.innerText = "Rendering..."
     Caman(canvas, function () {
         this.greyscale().render()
+        greyscaleBtn.innerText = "Greyscale"
     })
-    greyscaleBtn.innerText = "Greyscale"
+
 })
 
 
