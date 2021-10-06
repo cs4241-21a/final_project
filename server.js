@@ -24,6 +24,14 @@ app.get("/addItem", (request, response) => {
   response.sendFile(__dirname + "/views/addItem.html");
 });
 
+app.get("/home", (request, response) => {
+  response.sendFile(__dirname + "/views/home.html");
+});
+
+app.get("/listView", (request, response) => {
+  response.sendFile(__dirname + "/views/listView.html");
+});
+
 // listen for requests :)
 const listener = app.listen(process.env.PORT || port, () => {
   console.log("Your app is listening on port " + listener.address().port);
