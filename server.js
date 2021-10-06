@@ -14,10 +14,9 @@ require('dotenv').config();
 
 const {response, request} = require("express");
 
-const uri = 'mongodb+srv://'+process.env.USERNAME+':'+process.env.PASS+'@'+process.env.HOST
+const uri = 'mongodb+srv://'+process.env.ACCOUNT+':'+process.env.PASS+'@'+process.env.HOST
 
 //const uri =`mongodb+srv://${USER}:${PASS}@${HOST}/myFirstDatabase?retryWrites=true&w=majority`;
-
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(result => app.listen(process.env.PORT || port))
     .catch(err => console.log(err));
