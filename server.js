@@ -88,6 +88,26 @@ app.post('/login', async (req, res) => {
     res.render('login');
   }
 })
+/*
+app.post('/createEvent', async (req, res) => {
+
+  collection.insertOne(req.body)
+  .then(dbresponse => {
+    return collection.find({'_id':dbresponse.insertedId}).toArray()
+  })
+  .then(dbresponse =>{
+    res.json(dbresponse)
+  })
+    .then(dbresponse =>{
+      collection.updateOne({'_id':mongodb.ObjectId(req.body._id)},
+      {$set:{ user:req.session.user} })
+        .then( dbresponse=>{
+          res.json(dbresponse)
+         // console.log(dbresponse)
+        })
+  })
+})
+*/
 
 async function checkUsernamePassword(user, pass){
   let array = [];

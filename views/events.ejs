@@ -4,6 +4,31 @@
 <body>
 <%- include("./partials/nav.ejs")%>
 <p>events page</p>
+
+<form method="post">
+    <label for="title">Event Title:</label>
+    <input id="title" name="title"></textarea>
+    <br><br>
+
+    <label for="startHour">Start Time:</label>
+    <input type="text" id="startHour" name="startHour">
+    <input type="text" id="startMinute" name="startMinute">
+    <br><br>
+
+    <label for="endHour">End Time:</label>
+    <input type="text" id="endHour" name="endHour">
+    <input type="text" id="endMinute" name="endMinute">
+    <br><br>
+
+    <label for="date">Event Date:</label>
+    <input type="date" id="date" name="date">
+    <br><br>
+
+
+    <button type="button" id="submitButton">Submit</button>
+
+</form>
+
 <%- include("./partials/footer.ejs")%>
 </body>
 </html>
