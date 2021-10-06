@@ -107,7 +107,7 @@ app.get('/getSongs', (req, res) => {
 
     request(options, function (error, response, body) {
         if (error) throw new Error(error);
-        console.log(body);
+        //console.log(body);
         res.send(body)
         res.end()
     });
@@ -128,7 +128,7 @@ app.get('/getSongByName', (req, res) => {
     request(options, function (error, response, body) {
         if (error) throw new Error(error);
 
-        console.log(body)
+        //console.log(body)
         res.send(body)
         res.end()
     });
