@@ -23,6 +23,7 @@ function pageLoad() {
 			// Sort data
 			res.sort((a, b) => b.date.localeCompare(a.date));
 
+			// Group data into days
 			let jsons = [];
 
 			// Process first transaction

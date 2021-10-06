@@ -29,6 +29,6 @@ This is an interactive expense tracker application. A user can log in to record 
 ## Technologies
 
 - Node.js with express as server
-- MongoDB as database
+- mongoDB as database
 - TailwindCSS as CSS framework
 - This is a functionality oriented project. Technologies will be added according to the needs of functionalities.

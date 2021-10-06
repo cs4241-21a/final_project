@@ -17,8 +17,8 @@ const client = new mongodb.MongoClient(uri, {useNewUrlParser: true, useUnifiedTo
 client.connect().catch(console.dir)
 const db = client.db("G3PExpenseTracker")
 const users = db.collection("users")
-if (users !== null) console.log("MongoDB connection established");
-else console.log("MongoDB connection failed")
+if (users !== null) console.log("mongoDB connection established");
+else console.log("mongoDB connection failed")
 
 // Checks DB connection for each request
 app.use((req, res, next) => {
