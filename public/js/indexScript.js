@@ -2,19 +2,24 @@
 let color = 'black'
 let lineWidth = 50
 let eraseMode = false
+let undoList = []
+let redoList = []
 
 const changeColor = function(event){
     color = document.querySelector( '#colorSelector').value
 }
 
 const changeWidth = function(event){
-    console.log(lineWidth)
-    lineWidth = document.querySelector( '#lineWidth').value
+   lineWidth = document.querySelector( '#lineWidth').value
 }
 
-
 function setup() {
-    let myCanvas = createCanvas(1000, 500);
+    //let myCanvas = createCanvas(windowWidth, windowHeight)
+    let myCanvas = createCanvas(1000, 500)
+
+    myCanvas.style('border', '1px solid #000')
+
+    myCanvas.mousePressed(saveForUndo)
 
     const colorSelector = document.querySelector( '#colorSelector')
     colorSelector.addEventListener('change', changeColor);
@@ -24,32 +29,61 @@ function setup() {
 
     const lineWidth = document.querySelector('#lineWidth')
     lineWidth.onclick = changeWidth
+
+    const undoBtn = document.querySelector('#undoBtn')
+    undoBtn.onclick = undo
+    const redoBtn = document.querySelector('#redoBtn')
+    redoBtn.onclick = redo
   }
   
-  function draw() {
+function draw() {
     if (mouseIsPressed) {
         //Check if in erase mode 
         const checkErase = document.querySelector('input[name="action"]:checked').value
-        if(checkErase === "Erase"){   //Todo change cursor to show erasing area?
+        if(checkErase === "Erase"){
+            cursor('https://icons.iconarchive.com/icons/pixture/stationary/32/Eraser-2-icon.png', 16, 16)
             erase()
             strokeWeight(lineWidth)
-            line(mouseX, mouseY, pmouseX, pmouseY);
-       }
+            line(mouseX, mouseY, pmouseX, pmouseY)
+        }
         else{
-            strokeWeight(lineWidth)
+            cursor('https://icons.iconarchive.com/icons/custom-icon-design/flatastic-6/32/Brush-tool-icon.png', 16, 16)
             stroke(color)
-            line(mouseX, mouseY, pmouseX, pmouseY);
-       }
+            strokeWeight(lineWidth)
+            line(mouseX, mouseY, pmouseX, pmouseY)
+        }
     } 
     noErase()
-  }
+}
 
-  function clearCanvas(){
-      clear()
-  }
+function clearCanvas(){
+    clear()
+}
 
-
-  function windowResized() {
+function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
-  }
+}
 
+function saveForUndo(){
+    undoList.push(get())
+}
+
+const redo = function(event){
+    if (redoList.length == 0) {
+        return
+    }
+    undoList.push(get())
+    //Reset background and redraw the previous image
+    background(255)
+    image(redoList.pop(), 0, 0);
+ }
+
+const undo = function (event) {
+    if (undoList.length == 0) {
+        return
+    }
+    redoList.push(get())
+    //Reset background and redraw the previous image
+    background(255)
+    image(undoList.pop(), 0, 0)
+}
