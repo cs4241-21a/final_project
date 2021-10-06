@@ -1,11 +1,4 @@
-// fun background
-var can = document.getElementById('canvas1');
-var ctx = can.getContext('2d');
-can.width = 600;
-can.height = 600;
-var img = new Image();
-img.src = "coviBackgound.png";
-   
+
 
 //login functions
 const login = function(e) {
@@ -60,10 +53,38 @@ const register = function(e) {
   window.location.href = "snake.html";
 };
 
+// fun background
+var can = document.getElementById('canvas1');
+var ctx = can.getContext('2d');
+can.width = 600;
+can.height = 600;
+var img = new Image();
+img.src = "coviBackgound.png";
+   
+
 window.onload = function() {
+  // login
   const loginBtn = document.getElementById("loginButton");
   loginBtn.onclick = login;
 
   const signUpBtn = document.getElementById("registerButton");
   signUpBtn.onclick = register;
+  
+   // background
+   var imgHeight = 0;
+   var speed = 10;
+  
+  function loop()
+  {
+    ctx.drawImage(img, 0, imgHeight);
+    ctx.drawImage(img, 0, imgHeight - can.height);
+  
+    imgHeight += speed;
+                
+    if(imgHeight == can.height)
+      imgHeight = 0;
+      window.requestAnimationFrame(loop);
+      
+   }
+  loop();
 };
