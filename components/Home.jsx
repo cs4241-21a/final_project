@@ -8,6 +8,7 @@ const Home = () => {
 
   if (user === "loading") return <div>Loading</div>;
   if (!user) return <Redirect to="/login" />;
+
   // const user = useUser();
   let json = {
     exercise_name: "Squat",
