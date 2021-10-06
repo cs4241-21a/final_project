@@ -28,21 +28,9 @@ resetBtn.addEventListener('click', function() {
 
 // Greyscale button
 greyscaleBtn.addEventListener('click', function(){
-    
-    let context = canvas.getContext("2d");
-    let imgData = context.getImageData(0, 0, canvas.width, canvas.height);
-    let pixels = imgData.data;
-
-    for (var i = 0; i < pixels.length; i += 4) {
-		let lightness = parseInt((pixels[i] + pixels[i + 1] + pixels[i + 2])/3);
-		pixels[i] = lightness; 
-		pixels[i + 1] = lightness; 
-		pixels[i + 2] = lightness; 
-	}
-
-    context.putImageData(imgData, 0, 0);
-
-    
+    Caman(canvas, function () {
+        this.greyscale().render()
+    })
 })
 
 
