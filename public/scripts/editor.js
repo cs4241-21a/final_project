@@ -15,10 +15,16 @@ let context
 let userImage
 let cropper
 flipXBtn.addEventListener('click',function() {
-    cropper.scaleX(-1)
+    if(cropper.getData().scaleX === 1)
+        cropper.scaleX(-1)
+    else
+        cropper.scaleX(1)
 })
 flipYBtn.addEventListener('click',function() {
-    cropper.scaleY(-1)
+    if(cropper.getData().scaleY === 1)
+        cropper.scaleY(-1)
+    else
+        cropper.scaleY(1)
 })
 rotateRightBtn.addEventListener('click', function() {
     cropper.rotate(45)
