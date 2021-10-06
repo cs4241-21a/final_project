@@ -1,16 +1,24 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import useUser from "../hooks/useUser";
 import "./css/navigation_style.css";
-
-
-const user = useUser();
+//import "./css/general_style.css";
 
 const NavigationBar = (props) => {
-    return <div class = "topNav">
-        <Link to="/">Home</Link>
-        if(user) return <Link to ="/me" >Logged in as {user.username}</Link>       
-        return <Link to = "/login">Login</Link>
-        </div>
+  const [user, setUser] = useUser();
+  return (
+    <div class="topNav" id="headerDiv">
+      <Link to="/">Home</Link>
+
+      {user === null ? (
+        <Link to="/login">Login</Link>
+      ) : user === "loading" ? (
+        <div>Loading</div>
+      ) : (
+        <button>Log Out</button>
+      )}
+    </div>
+  );
 };
 
 export default NavigationBar;

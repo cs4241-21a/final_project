@@ -8,17 +8,15 @@ import Signup from "./Signup";
 
 const App = (props) => {
   return (
-    <div id='appDiv'>
-      <div id='headerDiv'>
-        <header>Navigation Bar</header>
-      </div>
+    <div id="appDiv">
+      <NavigationBar />
       <Switch>
         <Route exact path="/" component={Home}></Route>
         <Route exact path="/login" component={Login}></Route>
         <Route exact path="/signup" component={Signup}></Route>
       </Switch>
 
-      <div id='footerDiv'>
+      <div id="footerDiv">
         <footer>Fortnite balls</footer>
       </div>
     </div>
