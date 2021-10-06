@@ -6,14 +6,34 @@ const bottomTextBtn = document.getElementById('bottomTextBtn')
 const startCropBtn = document.getElementById('startCropBtn')
 const cropBtn = document.getElementById('cropBtn')
 const restoreCropBtn = document.getElementById('restoreCropBtn')
+const rotateLeftBtn = document.getElementById('rotateLeft')
+const rotateRightBtn = document.getElementById('rotateRight')
+const flipXBtn = document.getElementById('flipX')
+const flipYBtn = document.getElementById('flipY')
 let imgData
 let context
 let userImage
 let cropper
+flipXBtn.addEventListener('click',function() {
+    cropper.scaleX(-1)
+})
+flipYBtn.addEventListener('click',function() {
+    cropper.scaleY(-1)
+})
+rotateRightBtn.addEventListener('click', function() {
+    cropper.rotate(45)
+})
+rotateLeftBtn.addEventListener('click', function() {
+    cropper.rotate(-45)
+})
 startCropBtn.addEventListener('click', function() {
     startCropBtn.disabled = true
     cropBtn.disabled = false
     restoreCropBtn.disabled = false
+    rotateLeftBtn.disabled = false
+    rotateRightBtn.disabled = false
+    flipXBtn.disabled = false
+    flipYBtn.disabled = false
     cropper = new Cropper(canvas,{crop(event) {
             console.log(event.detail.x);
             console.log(event.detail.y);
@@ -22,7 +42,7 @@ startCropBtn.addEventListener('click', function() {
             console.log(event.detail.rotate);
             console.log(event.detail.scaleX);
             console.log(event.detail.scaleY);
-        },viewMode: 3, dragMode: 'crop',})
+        },viewMode: 2, dragMode: 'crop',})
 })
 cropBtn.addEventListener('click', function() {
     const image = cropper.getCroppedCanvas()
@@ -39,6 +59,10 @@ cropBtn.addEventListener('click', function() {
     startCropBtn.disabled = false
     cropBtn.disabled = true
     restoreCropBtn.disabled = true
+    rotateLeftBtn.disabled = true
+    rotateRightBtn.disabled = true
+    flipXBtn.disabled = true
+    flipYBtn.disabled = true
 })
 restoreCropBtn.addEventListener('click', function() {
     cropper.destroy()
@@ -51,6 +75,10 @@ restoreCropBtn.addEventListener('click', function() {
     startCropBtn.disabled = false
     cropBtn.disabled = true
     restoreCropBtn.disabled = true
+    rotateLeftBtn.disabled = true
+    rotateRightBtn.disabled = true
+    flipXBtn.disabled = true
+    flipYBtn.disabled = true
 })
 
 topTextBtn.addEventListener('click', function() {
