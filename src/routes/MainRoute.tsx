@@ -32,6 +32,42 @@ const MainRoute = () : JSX.Element => {
   const [artifactPrefs, setArtifactPrefs] = React.useState<EnablablePrefProps[]>([]);
 
   // !!! TODO (Andrew): Write fetch requests to DB to initialize preferences
+  /**
+   * initPrefs() fetches the user preferences from the database
+   */
+  function initPrefs() {
+    fetch("/prefs",{
+      method: "GET"
+    }).then(function(res) {
+      return res.json();
+    }).then(function (data) {
+      if(data.length > 0) {
+        setCharPrefs(data[0].characters);
+        setWeaponsPrefs(data[0].weapons);
+        setArtifactPrefs(data[0].artifacts);
+      }
+    })
+  }
+
+  /**
+   * updatePrefs() updates the user preferences to the database
+   */
+  function updatePrefs() {
+    const json = {
+      characters: charPrefs,
+      weapons: weaponPrefs,
+      artifacts: artifactPrefs
+    }
+    const body = JSON.stringify(json);
+
+    fetch("/submit", {
+      method: "POST",
+      body,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+  }
 
 
     // This calculates the farmable items to be displayed and their related locations

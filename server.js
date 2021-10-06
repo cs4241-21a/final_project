@@ -6,7 +6,9 @@ const cookie = require("cookie-session");
 const helmet = require("helmet");
 const serveStatic = require("serve-static");
 const path = require("path");
-const dontenv = require("dotenv");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const app = express();
 const port = 3000;
@@ -104,10 +106,11 @@ app.get("/", (request, response) => {
   response.sendFile(__dirname + "/views/index.html");
 });
 
-app.get("/favorites", (req, res) => {
+app.get("/prefs", (req, res) => {
   if (collection !== null) {
     collection
-      .find({ userID: req.session.id })
+      // .find({ userID: req.session.id })
+      .find({ userID: "1" })
       .toArray()
       .then((result) => res.json(result));
   }
@@ -115,11 +118,11 @@ app.get("/favorites", (req, res) => {
 
 app.post("/submit", (req, res) => {
   // assumes only one object to insert
-  const dataJSON = req.body;
-  dataJSON.userID = req.session.id;
+  const dataJSON = JSON.parse(req.body);
+  // dataJSON.userID = req.session.id;
+  dataJSON.userID = "1";
   collection
     .findOne({
-      // data to check if favorite already exists we can figure this out later
       userID: dataJSON.userID,
     })
     .then(function (result) {
