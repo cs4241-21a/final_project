@@ -7,11 +7,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@500&display=swap" rel="stylesheet">   
   </head>
   <body>
-    <canvas style="background-image=coviBackground.png;" id="canvas1" style="border: 1px solid black;"></canvas>
+    <div class="wrapper">
+    <canvas class= "canvas" style="background-image=coviBackground.png;" id="canvas1" style="border: 1px solid black;"></canvas>
+    </div>
     <script src="js/loginscript.js"></script>
     <h1>LOGIN</h1>
     <div class="login-page">
-      <div class="form">
+      <div class="form" id="form">
         <div class = "container1">
         <input type="text" id="uname" placeholder="username" />
         <input type="password" id="pword" placeholder="password" /> <br>
@@ -29,6 +31,17 @@
   
     
   <style>
+    
+  .wrapper{
+    position: relative;
+    }
+    
+  #form {
+  position: absolute;
+  top: 0;
+  right: 0;
+  }
+ 
   body { 
     text-align: center;
     font-family: 'Libre Franklin', sans-serif;
@@ -54,15 +67,7 @@
   display: inline-block;
   }
     
-  #canvas1,
-  #form {
-  position: absolute;
-  top: 0;
-  left: 0;
-  }
-  #form {
-    z-index: 10;
-  }
+
     
 
   </style>
