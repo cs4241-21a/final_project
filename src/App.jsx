@@ -1,5 +1,6 @@
 
 import React from "react";
+import Dashboard from "./Dashbord";
 
 class App extends React.Component {
   constructor( props ) {
@@ -23,9 +24,7 @@ class App extends React.Component {
     const { musicJson } = this.state;
     return (
       <>
-        <h1>
-          Hello {musicJson}
-        </h1>
+        <Dashboard />
       </>
     );
   }

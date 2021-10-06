@@ -91,7 +91,7 @@ app.get('/profile',
   })
 });
 
-app.get('/', (req, res) =>{
+app.get('/getSongs', (req, res) =>{
     const request = require('request');
 
     const options = {
