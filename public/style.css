@@ -1,0 +1,82 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  margin: 2em 1em;
+  background-color: rgb(237, 250, 252);
+}
+
+h1 {
+  line-height: 1.1;
+}
+
+input {
+  border: 1px solid silver;
+  font-size: 16px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding: 5px;
+}
+
+div[class="editor"] {
+  margin-bottom: 5px;
+  margin-left: 15px;
+}
+
+div[class="controlHolder"] {
+  border: 3px solid rgb(238, 238, 238);
+  border-radius: 25px;
+  background-color: rgb(248, 248, 248);
+  width: 500px;
+  flex-shrink: 0;
+  padding: 10px;
+}
+
+div[class="textInputs"] {
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+input [type="text"], [class="pull-left"]{
+  display: inline-block;
+  text-align: center;
+  display: inline-block;
+  width: 70%;
+}
+
+label[class="topInputs"] {
+  padding: 10px;
+  display: inline-block;
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+}
+
+label[class="bottomInputs"] {
+  padding: 10px;
+  display: inline-block;
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+}
+
+div[class="cropControls"] {
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+div[class="rotators"] {
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+div[class="flippers"] {
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+}
