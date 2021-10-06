@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Add an Item" content="Add an item to your list">
+    <title>Add a List</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/script.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Wish List</h1>
+    </header>
+
+    <main>
+      <h2>Add an Item:</h2>
+
+      <form class="newItemForm" action='/new-item' method='POST'>
+        <label for="fname">Name:</label>
+        <input type='text' id='fname' maxlength="50">
+        </br>
+        <label for="fstore">Store:</label>
+        <input type='text' id='fstore'>
+        </br>
+        <label for="flink">Link:</label>
+        <input type='url' id='flink'>
+        </br>
+        <label for="fprice">Price:</label>
+        <input type='number' id='fprice'>
+        </br>
+        <label for="fpicture">Picture:</label>
+        <input type='file' id='fpicture'>
+        </br>
+        <button type="submit" id="create-list">Create a New List</button>
+      </form>
+
+    </main>
+  </body>
+</html>
