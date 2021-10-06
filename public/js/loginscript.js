@@ -61,16 +61,7 @@ can.height = 2700;
 var img = new Image();
 img.src = "https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2FcoviBackground.png?v=1633552358358";
    
-
-window.onload = function() {
-  // login
-  const loginBtn = document.getElementById("loginButton");
-  loginBtn.onclick = login;
-
-  const signUpBtn = document.getElementById("registerButton");
-  signUpBtn.onclick = register;
-  
-   // background
+// background
    var imgHeight = 0;
    var speed = 2;
   
@@ -87,4 +78,14 @@ window.onload = function() {
       
    }
   loop();
+
+window.onload = function() {
+  // login
+  const loginBtn = document.getElementById("loginButton");
+  loginBtn.onclick = login;
+
+  const signUpBtn = document.getElementById("registerButton");
+  signUpBtn.onclick = register;
+  
+   
 };

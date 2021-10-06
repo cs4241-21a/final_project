@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@500&display=swap" rel="stylesheet">   
   </head>
   <body>
-    <canvas sid="canvas1" style="border: 1px solid black;"></canvas>
+    <canvas style="background-image=coviBackground.png;" id="canvas1" style="border: 1px solid black;"></canvas>
     <script src="js/loginscript.js"></script>
     <h1>LOGIN</h1>
     <div class="login-page">
@@ -35,23 +35,35 @@
     background-color: black; 
     text-shadow: 4px 4px 4px #aaa;
     }
-    
-  .container1 {
+  
+  #container1 {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
   }
     
-  .container2{
+  #container2{
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
   }
     
-    #highScorePage{
-    display: inline-block;
-    }
+  #highScorePage{
+  display: inline-block;
+  }
+    
+  #canvas1,
+  #form {
+  position: absolute;
+  top: 0;
+  left: 0;
+  }
+  #form {
+    z-index: 10;
+  }
+    
+
   </style>
 </html>
