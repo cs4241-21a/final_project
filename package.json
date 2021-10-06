@@ -7,11 +7,11 @@
     "semantic": "0.0.1"
   },
   "devDependencies": {
-    "ejs-layouts": "0.0.1",
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.1"
   },
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   }
 }
