@@ -118,7 +118,7 @@ app.get("/prefs", (req, res) => {
 
 app.post("/submit", (req, res) => {
   // assumes only one object to insert
-  const dataJSON = req.body;
+  const dataJSON = JSON.parse(req.body);
   // dataJSON.userID = req.session.id;
   dataJSON.userID = "1";
   collection
