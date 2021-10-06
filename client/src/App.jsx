@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 
-import PTag from './components/PTag';
 
 function App() {
 
@@ -34,7 +33,6 @@ function App() {
           <p>{state.hello}</p>
         }
 
-        <PTag foo={'bar'} />
 
       </header>
     </div>
