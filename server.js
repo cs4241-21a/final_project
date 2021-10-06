@@ -83,8 +83,6 @@ const uri =
   process.env.DB_PASSWORD +
   "@group8data.ehg8z.mongodb.net/";
 
-console.log(uri);
-
 const client = new mongodb.MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
