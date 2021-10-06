@@ -12,7 +12,7 @@ app.use(cors())
 app.use(csp({
     directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-eval'", "'unsafe-inline'", 'https://cdn.jsdelivr.net/npm/cropperjs']
+        scriptSrc: ["'self'", "'unsafe-eval'", "'unsafe-inline'", 'https://cdn.jsdelivr.net/npm/cropperjs', 'https://cdn.jsdelivr.net/npm/caman']
     }
 }))
 
