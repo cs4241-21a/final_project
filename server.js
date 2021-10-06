@@ -6,7 +6,7 @@ const passport = require("passport");
 const Strategy = require('passport-local').Strategy;
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/build');
 app.set('view engine', 'ejs');
 
 app.use(require('morgan')('combined'));
@@ -91,11 +91,28 @@ app.get('/profile',
   })
 });
 
+app.get('/', (req, res) =>{
+    const request = require('request');
 
+    const options = {
+        method: 'GET',
+        url: 'https://shazam.p.rapidapi.com/songs/list-recommendations',
+        qs: { key: '484129036', locale: 'en-US' },
+        headers: {
+            'x-rapidapi-host': 'shazam.p.rapidapi.com',
+            'x-rapidapi-key': 'd78b659621msh22ffdaa369a9cd9p123b29jsn8434a2c82d11',
+            useQueryString: true
+        }
+    };
 
+    request(options, function (error, response, body) {
+        if (error) throw new Error(error);
 
+        console.log(body);
+    });
+})
 
-app.get('/getMusicData', (req, res) => {
+app.get('/getSongByName', (req, res) => {
     const options = {
         method: 'GET',
         url: 'https://shazam.p.rapidapi.com/search',
