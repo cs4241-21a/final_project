@@ -1,3 +1,13 @@
+// fun background
+var can = document.getElementById('canvas1');
+var ctx = can.getContext('2d');
+can.width = 600;
+can.height = 600;
+var img = new Image();
+img.src = "coviBackgound.png";
+   
+
+//login functions
 const login = function(e) {
   e.preventDefault();
 
