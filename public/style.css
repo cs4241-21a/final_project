@@ -78,3 +78,19 @@ div[class="flippers"] {
   text-align: center;
   width: 100%;
 }
+
+div[class="filtersHolder"] {
+  border: 3px solid rgb(180, 187, 189);
+  border-radius: 5px;
+  background-color: rgb(192, 209, 212);
+  width: 100%;
+  flex-shrink: 0;
+  padding: 10px;
+  text-align: center;
+}
+
+div[class="filterSubgroup"] {
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+}

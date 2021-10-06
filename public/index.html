@@ -37,29 +37,35 @@
             <input type="number" id="bottomTextSize" class="form-control" placeholder="Text Size">
             <button class="btn btn-primary" id="bottomTextBtn">Add Text</button>
         </label>
-        <button id="compressBtn" class="btn btn-secondary" value="Compress">Compress</button>
-        <button id="greyscaleBtn" class="btn btn-secondary" value="Greyscale">Greyscale</button>
-        <button id="embossBtn" class="btn btn-secondary" value="Emboss">Emboss</button>
-        <button id="herMajestyBtn" class="btn btn-secondary" value="Her Majesty">Her Majesty</button>
-        <button id="orangePeelBtn" class="btn btn-secondary" value="Orange Peel">Orange Peel</button>
-        <button id="sinCityBtn" class="btn btn-secondary" value="Sin City">Sin City</button>
+        
 
     </div>
     <div class="cropControls">
         <button disabled class="btn btn-secondary" id="startCropBtn" value="Start Cropping">Start Cropping</button>
         <button disabled class="btn btn-secondary" id="cropBtn" type="button" value="Crop">Crop Image</button>
-        <button disabled class="btn btn-secondary" id="restoreCropBtn" type="button" value="Restore">Reset
-            Image
-        </button>
+        <button disabled class="btn btn-secondary" id="restoreCropBtn" type="button" value="Restore">Reset Image</button>
     </div>
     <div class="rotators">
         <button disabled class="btn btn-secondary" id="rotateLeft" type="button" value="Rotate Left">RotateLeft</button>
-        <button disabled class="btn btn-secondary" id="rotateRight" type="button" value="Rotate Right">RotateRight
-        </button>
+        <button disabled class="btn btn-secondary" id="rotateRight" type="button" value="Rotate Right">RotateRight</button>
     </div>
     <div class="flippers">
         <button disabled class="btn btn-secondary" id="flipX" type="button" value="Flip X">Flip X</button>
         <button disabled class="btn btn-secondary" id="flipY" type="button" value="Flip Y">Flip Y</button>
+    </div>
+    <div class="filtersHolder">
+        <div class="filterSubgroup">
+            <button id="compressBtn" class="btn btn-success" value="Compress">Compress</button>
+            <button id="greyscaleBtn" class="btn btn-success" value="Greyscale">Greyscale</button>
+        </div>
+        <div class="filterSubgroup">
+            <button id="embossBtn" class="btn btn-success" value="Emboss">Emboss</button>
+        </div>
+        <div class="filterSubgroup">
+            <button id="herMajestyBtn" class="btn btn-success" value="Her Majesty">Her Majesty</button>
+            <button id="orangePeelBtn" class="btn btn-success" value="Orange Peel">Orange Peel</button>
+            <button id="sinCityBtn" class="btn btn-success" value="Sin City">Sin City</button>
+        </div>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/caman"></script>
