@@ -11,7 +11,6 @@ const dontenv = require("dotenv");
 const app = express();
 const port = 3000;
 
-console.log(dontenv.config());
 const clientID = "66f056183e981d1a11b2";
 
 app.use(helmet());
