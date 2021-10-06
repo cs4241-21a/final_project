@@ -9,7 +9,7 @@ const NavigationBar = (props) => {
     return <div class = "topNav">
         <Link to="/">Home</Link>
         if(user) return <Link to ="/me" >Logged in as {user.username}</Link>       
-        return <Link to = "/Login">Not logged in</Link>
+        return <Link to = "/login">Login</Link>
         </div>
 };
 
