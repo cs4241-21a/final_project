@@ -18,8 +18,7 @@ const express = require("express"),
     if(req.user) {
       next();
     } else {
-      // check if they have an account 
-      res.redirect('/dashboard.html');
+      res.redirect("/build/login.html");
     }
   }
     
@@ -27,11 +26,13 @@ const express = require("express"),
     if(request.user) {
       return response.redirect('/'); // redirect according to profile
     }
-    response.sendFile(__dirname + '/build/login.html');
+    response.sendFile(__dirname + "/build/login.html");
   });
 
-  // simple testing to route to login initially
+  // simple testing to route to login initially -> change for final version
   app.get("/", (request, response) => response.sendFile(__dirname + "/build/login.html"))
+  app.get("/build/dashboard.html", (request, response) => response.sendFile(__dirname + "/build/dashboard.html"))
+  app.get("/build/profile.html", (request, response) => response.sendFile(__dirname + "/build/profile.html"))
 
   app.get("/logout", (request, response) => {
     request.logOut();
@@ -68,6 +69,11 @@ const express = require("express"),
   },
   function(accessToken, refreshToken, profile, done) {
     profileID = profile.id;
+
+    collection_profile.insertOne( 
+      { 
+        profileID: profile.id,
+      })
     cb(null,profile)
   }
   ));
@@ -83,9 +89,25 @@ const express = require("express"),
   app.get(
     '/auth/outlook/callback',
     passport.authenticate('windowslive', {failureRedirect: '/login'}),
-    function (req, res) {
-      // Successful authentication, redirect home.  TODO need to redirect based on profile
-      res.redirect('/dashboard.html');
+    async function (req, res) {
+      // Successful authentication    
+      // check if they have an account, redirect accordingly
+
+      let user = null;
+      let dbPromise_user = collection_profile
+        .findOne({ profileID: profileID })
+        .then((read_data) => (user = read_data));
+    
+      await dbPromise_user;
+
+      if (user) 
+      {
+        res.redirect('/build/dashboard.html')
+      }
+      else
+      {
+        res.redirect('/build/profile.html')
+      }
     }
   );
   
@@ -98,6 +120,12 @@ const express = require("express"),
       },
       function (accessToken, refreshToken, profile, cb) {
         profileID = profile.id;
+
+        collection_profile.insertOne( 
+          { 
+            profileID: profile.id,
+          })
+
         cb(null, profile);
       }
     )
@@ -108,19 +136,25 @@ const express = require("express"),
   app.get(
     "/auth/github/callback",
     passport.authenticate("github", { failureRedirect: "/" }),
-    function (req, res) {
-      // Successful authentication, redirect home.
-     
-      res.redirect('/dashboard.html');  // TODO need to redirect based on profile
+    async function (req, res) {
+      // Successful authentication    
+      // check if they have an account, redirect accordingly
+
+      let user = null;
+      let dbPromise_user = collection_profile
+        .findOne({ profileID: profileID })
+        .then((read_data) => (user = read_data));
     
+      await dbPromise_user;
 
-      // find id then redirect
-     // collection_profile.insertOne {
-        // insert profile id
-
-
-    //  };
-    
+      if (user) 
+      {
+        res.redirect('/build/dashboard.html')
+      }
+      else
+      {
+        res.redirect('/build/profile.html')
+      }
     }
   );
 
@@ -136,6 +170,12 @@ const express = require("express"),
       },
       function (request, accessToken, refreshToken, profile, done) {
         profileID = profile.id;
+
+        collection_profile.insertOne( 
+          { 
+            profileID: profile.id,
+          })
+
         return done(null, profile);
       }
     )
@@ -152,9 +192,26 @@ const express = require("express"),
       // successRedirect: "/auth/google/success",
       failureRedirect: "/auth/google/failure",
     }),
-    function (req, res) {
-      // Successful authentication, redirect home.
-      res.redirect('/dashboard.html'); // TODO need to redirect based on profile
+  
+    async function (req, res) {
+      // Successful authentication    
+      // check if they have an account, redirect accordingly
+
+      let user = null;
+      let dbPromise_user = collection_profile
+        .findOne({ profileID: profileID })
+        .then((read_data) => (user = read_data));
+    
+      await dbPromise_user;
+
+      if (user) 
+      {
+        res.redirect('/build/dashboard.html')
+      }
+      else
+      {
+        res.redirect('/build/profile.html')
+      }
     }
   );
 
@@ -168,6 +225,12 @@ const express = require("express"),
       },
       function (accessToken, refreshToken, profile, cb) {
         profileID = profile.id;
+
+        collection_profile.insertOne( 
+          { 
+            profileID: profile.id,
+          })
+
         return cb(null, profile);
       }
     )
@@ -180,14 +243,27 @@ const express = require("express"),
     passport.authenticate("discord", {
       failureRedirect: "/",
     }),
-    function (req, res) {
-      // Successful authentication, redirect home.
-      res.redirect('/dashboard.html'); // TODO need to redirect based on profile
+    async function (req, res) {
+      // Successful authentication    
+      // check if they have an account, redirect accordingly
+
+      let user = null;
+      let dbPromise_user = collection_profile
+        .findOne({ profileID: profileID })
+        .then((read_data) => (user = read_data));
+    
+      await dbPromise_user;
+
+      if (user) 
+      {
+        res.redirect('/build/dashboard.html')
+      }
+      else
+      {
+        res.redirect('/build/profile.html')
+      }
     }
   );
-
-
-
 
   // Will need to create .env file with variables for DB_USER, DB_PASS, and DB_HOST
   // uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/HotelReviews?retryWrites=true&w=majority`,
@@ -220,9 +296,7 @@ client.once("open", () => {
   collection_studentSkillRelation = client.db("WebwareGroupProject").collection("StudentSkillRelation");
   collection_studentClassRelation = client.db("WebwareGroupProject").collection("StudentClassRelation");
   collection_postSkillRelation = client.db("WebwareGroupProject").collection("PostSkillRelation");
-
 });
-
 
 app.use(express.static("build"));
 
