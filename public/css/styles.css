@@ -986,10 +986,6 @@ select {
           appearance: none;
 }
 
-.items-end {
-  align-items: flex-end;
-}
-
 .items-center {
   align-items: center;
 }
@@ -1506,14 +1502,25 @@ select {
   transition-duration: 150ms;
 }
 
+/* Remove spinners on number input field */
+
+/* Chrome, Safari, Edge, Opera */
+
+input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 @media (min-width: 640px) {
   .sm\:col-span-2 {
     grid-column: span 2 / span 2;
-  }
-
-  .sm\:mx-0 {
-    margin-left: 0px;
-    margin-right: 0px;
   }
 
   .sm\:my-8 {
@@ -1525,12 +1532,16 @@ select {
     margin-top: 0px;
   }
 
-  .sm\:ml-3 {
-    margin-left: 0.75rem;
+  .sm\:mt-5 {
+    margin-top: 1.25rem;
   }
 
-  .sm\:ml-4 {
-    margin-left: 1rem;
+  .sm\:mr-auto {
+    margin-right: auto;
+  }
+
+  .sm\:ml-3 {
+    margin-left: 0.75rem;
   }
 
   .sm\:block {
@@ -1555,10 +1566,6 @@ select {
 
   .sm\:h-screen {
     height: 100vh;
-  }
-
-  .sm\:w-10 {
-    width: 2.5rem;
   }
 
   .sm\:w-auto {

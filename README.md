@@ -30,3 +30,14 @@ Update: I finished refactoring the server code from one collection for all users
 
 Update: Feels like this change is well worth it, just like some other decisions previously. It has already made it much easier to do things (and more secure since some data isn't passed around), not to say it will sort and filter the data for me in the future.
 
+#### UI/UX Stuff
+
+I noticed a set of arrows on the number input field that overlaid with my nice looking inline expense/income selector. Realized they are spinners and finally eliminated them by changing the pre-compile tailwind CSS file. I also restructured the add/edit popup, so they look more natural and balanced. I also looked up how to get the delete button to be on the left instead of right with cancel/edit, and it turns out nice. I also fixed an issue where the popup is positioned near the end of the screen on mobile devices.
+
+Before:
+![before](readme/UIUX1.png)
+![before.png](readme/Mobile1.png)
+
+After:
+![after](readme/UIUX2.png)
+![after.png](readme/Mobile2.png)
