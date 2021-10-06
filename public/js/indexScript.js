@@ -2,7 +2,8 @@
 let color = 'black'
 let lineWidth = 50
 let eraseMode = false
-let history = []
+let undoList = []
+let redoList = []
 
 const changeColor = function(event){
     color = document.querySelector( '#colorSelector').value
@@ -15,6 +16,8 @@ const changeWidth = function(event){
 function setup() {
     let myCanvas = createCanvas(1000, 500);
     myCanvas.style('border', '1px solid #000')
+
+    myCanvas.mousePressed(saveForUndo)
    
     const colorSelector = document.querySelector( '#colorSelector')
     colorSelector.addEventListener('change', changeColor);
@@ -24,6 +27,11 @@ function setup() {
 
     const lineWidth = document.querySelector('#lineWidth')
     lineWidth.onclick = changeWidth
+
+    const undoBtn = document.querySelector('#undoBtn')
+    undoBtn.onclick = undo
+    const redoBtn = document.querySelector('#redoBtn')
+    redoBtn.onclick = redo
   }
   
 function draw() {
@@ -34,13 +42,13 @@ function draw() {
             cursor(CROSS)
             erase()
             strokeWeight(lineWidth)
-            line(mouseX, mouseY, pmouseX, pmouseY);
+            line(mouseX, mouseY, pmouseX, pmouseY)
         }
         else{
             cursor(ARROW)
             stroke(color)
             strokeWeight(lineWidth)
-            line(mouseX, mouseY, pmouseX, pmouseY);
+            line(mouseX, mouseY, pmouseX, pmouseY)
         }
     } 
     noErase()
@@ -50,23 +58,26 @@ function clearCanvas(){
     clear()
 }
 
-function mousePressed() {
-    //TODO fix to doesn't include mouse actions that aren't drawing such as to change the color
-    history.push(get())
+function saveForUndo(){
+    undoList.push(get())
 }
 
-function keyPressed(e) {
-    //check if 'z' and ctrl/cmd clicked 
-    if (e.keyCode == 90 && (e.ctrlKey || e.metaKey)) {
-        undo();
-    }
-}
-  
-function undo() {
-    if (history.length == 0) {
+const redo = function(event){
+    if (redoList.length == 0) {
         return;
     }
+    undoList.push(get())
+    //Reset background and redraw the previous image 
+    background(255);   
+    image(redoList.pop(), 0, 0);
+ }
+
+const undo = function (event) {
+    if (undoList.length == 0) {
+        return;
+    }
+    redoList.push(get())
     //Reset background and redraw the previous image 
     background(255);
-    image(history.pop(), 0, 0);
+    image(undoList.pop(), 0, 0);
 }
