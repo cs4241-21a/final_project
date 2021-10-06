@@ -13,12 +13,18 @@ const flipXBtn = document.getElementById('flipX')
 const flipYBtn = document.getElementById('flipY')
 const compressBtn = document.getElementById('compressBtn')
 const greyscaleBtn = document.getElementById('greyscaleBtn')
+const resetBtn = document.getElementById('resetButton')
 
 // additional variables
 let imgData
 let context
 let userImage
 let cropper
+
+// Reset button
+resetBtn.addEventListener('click', function() {
+    location.reload(true)
+})
 
 // Greyscale button
 greyscaleBtn.addEventListener('click', function(){
