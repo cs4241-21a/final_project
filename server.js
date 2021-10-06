@@ -121,12 +121,7 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/build/index.html"));
 });
 
-<<<<<<< HEAD
-app.listen(3001);
-=======
+
 app.get("/login", (req, res) => {
   console.log(req.body);
 });
-
-app.listen(3000);
->>>>>>> origin/user-backend-jack

@@ -1,12 +1,15 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import "./css/navigation_style.css";
+
+
+const user = useUser();
 
 const NavigationBar = (props) => {
-    return <div>
-
+    return <div class = "topNav">
         <Link to="/">Home</Link>
-        <Link to="/">Workouts</Link>
-        <Link to="/login">Login</Link>
+        if(user) return <Link to ="/me" >Logged in as {user.username}</Link>       
+        return <Link to = "/Login">Not logged in</Link>
         </div>
 };
 
