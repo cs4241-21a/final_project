@@ -129,7 +129,10 @@ restoreCropBtn.addEventListener('click', function() {
 
 // Add top-text button
 topTextBtn.addEventListener('click', function() {
-    context.font = "36pt Impact";
+    if(document.getElementById('topTextSize').value !== "" || document.getElementById('topTextSize') !== null)
+        context.font = `${document.getElementById('topTextSize').value}pt Impact`
+    else
+        context.font = "36pt Impact";
     context.fillStyle = "white"
     context.strokeStyle = "black"
     context.textAlign = "center"
@@ -139,7 +142,10 @@ topTextBtn.addEventListener('click', function() {
 
 // Add bottom-text button
 bottomTextBtn.addEventListener('click', function() {
-    context.font = "36pt Impact";
+    if(document.getElementById('bottomTextSize').value !== "" || document.getElementById('bottomTextSize') !== null)
+        context.font = `${document.getElementById('bottomTextSize').value}pt Impact`
+    else
+        context.font = "36pt Impact";
     context.fillStyle = "white"
     context.strokeStyle = "black"
     context.textAlign = "center"
