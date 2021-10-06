@@ -56,7 +56,7 @@ const register = function(e) {
 // fun background
 var can = document.getElementById('canvas1');
 var ctx = can.getContext('2d');
-can.width = 1800;
+can.width = 2700;
 can.height = 2700;
 var img = new Image();
 img.src = "https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2FcoviBackground.png?v=1633552358358";
