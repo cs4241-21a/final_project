@@ -17,25 +17,30 @@ const clients = []
 var data = "Real-Time Update 1";
 var number = 1;
 
+var canvas
+
 wss.on('connection', client => {
+
+    client.send(canvas)
 
     client.on('message', message => {
         console.log(`Received message => ${message}`)
         clients.forEach( c => {
             if( c !== client ){
-                c.send( msg )
+                c.send( message )
+                canvas = message
             }
         } )
     })
 
     clients.push( client )
 
-    var interval = setInterval(function(){
-        data = "Real-Time Update "+number;
-        console.log("SENT: "+data);
-        clients.forEach( c => c.send( data ) )
-        number++;
-    }, randomInteger(2,9)*100);
+    // var interval = setInterval(function(){
+    //     data = "Real-Time Update "+number;
+    //     console.log("SENT: "+data);
+    //     clients.forEach( c => c.send( data ) )
+    //     number++;
+    // }, randomInteger(2,9)*100);
 
     client.on('close', function close() {
         clearInterval(interval);

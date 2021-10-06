@@ -4,6 +4,8 @@ let lineWidth = 50
 let eraseMode = false
 let undoList = []
 let redoList = []
+let undoCounter = 0
+let connection
 
 const changeColor = function(event){
     color = document.querySelector( '#colorSelector').value
@@ -14,6 +16,7 @@ const changeWidth = function(event){
 }
 
 function setup() {
+
     //let myCanvas = createCanvas(windowWidth, windowHeight)
     let myCanvas = createCanvas(1000, 500)
 
@@ -34,6 +37,12 @@ function setup() {
     undoBtn.onclick = undo
     const redoBtn = document.querySelector('#redoBtn')
     redoBtn.onclick = redo
+
+    connection = new WebSocket('ws://localhost:3323')
+
+    connection.onmessage = e => {
+        image(e.data, 0, 0)
+    }
   }
   
 function draw() {
@@ -46,12 +55,13 @@ function draw() {
             strokeWeight(lineWidth)
             line(mouseX, mouseY, pmouseX, pmouseY)
         }
-        else{
+        else {
             cursor('https://icons.iconarchive.com/icons/custom-icon-design/flatastic-6/32/Brush-tool-icon.png', 16, 16)
             stroke(color)
             strokeWeight(lineWidth)
             line(mouseX, mouseY, pmouseX, pmouseY)
         }
+
     } 
     noErase()
 }
@@ -66,6 +76,7 @@ function windowResized() {
 
 function saveForUndo(){
     undoList.push(get())
+    connection.send(get())
 }
 
 const redo = function(event){
@@ -82,6 +93,7 @@ const undo = function (event) {
     if (undoList.length == 0) {
         return
     }
+    undoCounter ++
     redoList.push(get())
     //Reset background and redraw the previous image
     background(255)

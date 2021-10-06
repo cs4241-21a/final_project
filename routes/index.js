@@ -8,9 +8,9 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/rtc', function(req, res, next) {
-  res.render('rtc', { title: 'Express' });
-  // res.sendFile(path.join(__dirname, '../public/rtc.html'))
-})
+// router.get('/rtc', function(req, res, next) {
+//   res.render('rtc', { title: 'Express' });
+//   // res.sendFile(path.join(__dirname, '../public/rtc.html'))
+// })
 
 module.exports = router;
