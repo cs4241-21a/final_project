@@ -28,9 +28,11 @@ resetBtn.addEventListener('click', function() {
 
 // Greyscale button
 greyscaleBtn.addEventListener('click', function(){
+    greyscaleBtn.innerText = "Rendering..."
     Caman(canvas, function () {
         this.greyscale().render()
     })
+    greyscaleBtn.innerText = "Greyscale"
 })
 
 
