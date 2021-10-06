@@ -1,8 +1,13 @@
-// Using JSSoup as it's similar to BeautifulSoup, which is what the original
-// scraper was coded in.
-const htmlparser = require('node-html-parser')
+const htmlparser = require('node-html-parser'),
+      parse = htmlparser.parse,
+      mongoose = require('mongoose'),
+      laundryRoom = require('./models/LaundryRoom.js'),
+      timestamp = require('./models/Timestamp.js')
+
+require('dotenv').config()
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
-const parse = htmlparser.parse
+const { Schema } = mongoose;
+mongoose.connect(process.env.DB_URL)
 
 const AVAILABLE_MODES = ["MachineReadyMode", "MachineDoorOpenReadyMode"]
 const READY_MODES = ["MachineStartMode", "MachinePartialVendMode", "MachineDoorOpenStartMode", "MachineDoorOpenPartialVendMode"]
@@ -16,7 +21,7 @@ const OFFLINE_MODES = ["MachineDropOffMode", "MachineLockoutMode", "MachineDoorO
 const FREE_MODES = [AVAILABLE_MODES]
 const BUSY_MODES = [READY_MODES, IN_USE_MODES, ALMOST_DONE_MODES, END_OF_CYCLE_MODES, OFFLINE_MODES]
 
-const VALID_MODES = [FREE_MODES, BUSY_MODES]
+const VALID_MODES = [FREE_MODES, BUSY_MODES, OFFLINE_MODES]
 
 const rooms = {
     "daniels": {
@@ -67,33 +72,113 @@ async function fetchRooms() {
         const response = await fetch(rooms[key]['url'])
         const data = await response.text()
         console.log("In " + key)
-        const dbdata = await parseData(data)
+        const dbdata = await parseData(key, rooms[key]['name'], data)
+
+        // Upload to the goose (mongoose)
+        const filter = {name: key}
+        let laundry = await laundryRoom.model.findOneAndUpdate(filter, dbdata, {
+            new: true,
+            upsert: true
+        })
+
+        console.log("yeehaw")
+
     }
+
+    var ts = Math.floor(Date.now() / 1000)
+    const ts_filter = {name: "timestamp"}
+    const ts_data = {"timestamp": ts}
+    let ts_push = await timestamp.model.findOneAndUpdate(ts_filter, ts_data, {
+        new: true,
+        upsert: true
+    })
+
+    mongoose.connection.close()
+    return
 }
 
-async function parseData(sitedata) {
+async function parseData(name, humanname, sitedata) {
     const root = parse(sitedata)
     const trs = root.querySelectorAll("tr")
+
+    let data = {
+        "humanname": humanname,
+        "washermachines": 0,
+        "dryermachines": 0,
+        "washeravailable": 0,
+        "dryeravailable": 0,
+        "washeravailable_percent": 0,
+        "dryeravailable_percent": 0,
+        "washers": [],
+        "dryers": []
+    }
+
     for (tr in trs) {
-        //console.log(trs[tr].getAttribute("class"))
         if (JSON.stringify(VALID_MODES).includes(trs[tr].getAttribute("class"))) {
-            //console.log("Found a valid machine!")
-            //console.log(trs[tr].querySelector(".name"))
-            //console.log(trs[tr].querySelector(".type"))
-            //console.log(trs[tr].querySelector(".status"))
-            var machinenum = trs[tr].querySelector(".name").childNodes[1]
-            var machinetime = trs[tr].querySelector(".time").childNodes[1]
-            var machinetype = trs[tr].querySelector(".type").childNodes[0]._rawText
-            //console.log(trs[tr].querySelector(".type"))
-            if (machinetime != undefined) {
-                console.log("Machine number " + machinenum + ", which is a " + machinetype + ", has " + trs[tr].querySelector(".time").childNodes[1] + " minutes to go.")
-            } else {
-                console.log("Machine number " + machinenum + ", which is a " + machinetype + ", has no laundry load.")
+            let machineclass = trs[tr].getAttribute("class")
+            let machinenum = trs[tr].querySelector(".name").childNodes[1]._rawText
+            let machinetime = undefined;
+            if (trs[tr].querySelector(".time").childNodes[1] != undefined) {
+                machinetime = trs[tr].querySelector(".time").childNodes[1]._rawText
             }
-            //console.log(trs[tr].querySelector(".time"))
+            let machinetype = trs[tr].querySelector(".type").childNodes[0]._rawText
+            let machinerawstatus = trs[tr].querySelector(".status").childNodes[0]._rawText
+
+            // Add to total machines
+            if (machinetype == "Washer") {
+                data["washermachines"]++
+            } else if (machinetype == "Dryer") {
+                data["dryermachines"]++
+            }
+
+            // Add to total free machines
+            if (JSON.stringify(FREE_MODES).includes(trs[tr].getAttribute("class"))) {
+                if (machinetype == "Washer") {
+                    data["washeravailable"]++
+                } else if (machinetype == "Dryer") {
+                    data["dryeravailable"]++
+                }
+            }
+
+            let machinedata = {}
+            machinedata['machinenumber'] = machinenum
+            machinedata['rawstatus'] = machinerawstatus
+            
+            // Enum the statuses
+            if (AVAILABLE_MODES.includes(machineclass)) {
+                machinedata['status'] = 'AVAILABLE'
+            } else if (READY_MODES.includes(machineclass)) {
+                machinedata['status'] = 'READY TO START'
+            } else if (IN_USE_MODES.includes(machineclass)) {
+                machinedata['status'] = 'IN USE'
+            } else if (ALMOST_DONE_MODES.includes(machineclass)) {
+                machinedata['status'] = 'ALMOST DONE'
+            } else if (END_OF_CYCLE_MODES.includes(machineclass)) {
+                machinedata['status'] = 'END OF CYCLE'
+            } else if (OFFLINE_MODES.includes(machineclass)) {
+                machinedata['status'] = 'OFFLINE'
+            } else {
+                machinedata['status'] = 'AVAILABLE'
+            }
+
+            if (machinetime != undefined) {
+                machinedata['minutes_left'] = parseInt(machinetime.split(" ")[0])
+            } else {
+                machinedata['minutes_left'] = null
+            }
+
+            if (machinetype == "Washer") {
+                data["washers"].push(machinedata)
+            } else if (machinetype == "Dryer") {
+                data["dryers"].push(machinedata)
+            }
         }
     }
-    return "poo"
+    data["washeravailable_percent"] = parseFloat(((data["washeravailable"] / data["washermachines"]) * 100).toFixed(2))
+    data["dryeravailable_percent"] = parseFloat(((data["dryeravailable"] / data["dryermachines"]) * 100).toFixed(2))
+
+    //console.log(data)
+    return data
 }
 
 fetchRooms()

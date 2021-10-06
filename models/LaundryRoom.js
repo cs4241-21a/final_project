@@ -8,6 +8,8 @@ const LaundryRoom = new Schema({
     dryermachines: Number,
     washeravailable: Number,
     dryeravailable: Number,
+    washeravailable_percent: Number,
+    dryeravailable_percent: Number,
     washers: {
         type: [{
             machinenumber: Number,
@@ -16,6 +18,7 @@ const LaundryRoom = new Schema({
                 enum: ['AVAILABLE', 'READY TO START', 'IN USE', 'ALMOST DONE', 'END OF CYCLE', 'OFFLINE'],
                 default: 'AVAILABLE'
             },
+            rawstatus: String,
             minutes_left: Number
         }]
     },
@@ -27,6 +30,7 @@ const LaundryRoom = new Schema({
                 enum: ['AVAILABLE', 'IN USE', 'ALMOST DONE', 'END OF CYCLE', 'OFFLINE'],
                 default: 'AVAILABLE'
             },
+            rawstatus: String,
             minutes_left: Number
         }]
     }
