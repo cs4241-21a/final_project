@@ -14,7 +14,9 @@ const changeWidth = function(event){
 }
 
 function setup() {
-    let myCanvas = createCanvas(1000, 500);
+    //let myCanvas = createCanvas(windowWidth, windowHeight)
+    let myCanvas = createCanvas(1000, 500)
+
     myCanvas.style('border', '1px solid #000')
 
     myCanvas.mousePressed(saveForUndo)
@@ -39,13 +41,13 @@ function draw() {
         //Check if in erase mode 
         const checkErase = document.querySelector('input[name="action"]:checked').value
         if(checkErase === "Erase"){   
-            cursor(CROSS)
+            cursor('https://icons.iconarchive.com/icons/pixture/stationary/32/Eraser-2-icon.png', 16, 16)
             erase()
             strokeWeight(lineWidth)
             line(mouseX, mouseY, pmouseX, pmouseY)
         }
         else{
-            cursor(ARROW)
+            cursor('https://icons.iconarchive.com/icons/custom-icon-design/flatastic-6/32/Brush-tool-icon.png', 16, 16)
             stroke(color)
             strokeWeight(lineWidth)
             line(mouseX, mouseY, pmouseX, pmouseY)
@@ -58,26 +60,30 @@ function clearCanvas(){
     clear()
 }
 
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+}
+
 function saveForUndo(){
     undoList.push(get())
 }
 
 const redo = function(event){
     if (redoList.length == 0) {
-        return;
+        return
     }
     undoList.push(get())
     //Reset background and redraw the previous image 
-    background(255);   
+    background(255) 
     image(redoList.pop(), 0, 0);
  }
 
 const undo = function (event) {
     if (undoList.length == 0) {
-        return;
+        return
     }
     redoList.push(get())
     //Reset background and redraw the previous image 
-    background(255);
-    image(undoList.pop(), 0, 0);
+    background(255)
+    image(undoList.pop(), 0, 0)
 }
