@@ -6,7 +6,7 @@ import * as React from "react";
 function Layout(props) {
   return (
     <div>
-      <div className="App">
+      <div>
         <NavBar
           handleRegister={props.handleRegister}
           handleLogin={props.handleLogin}

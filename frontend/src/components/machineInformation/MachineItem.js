@@ -13,14 +13,33 @@ import {
   ToggleButtonGroup,
 } from "@mui/material";
 import CircleIcon from "@mui/icons-material/Circle";
+import LocalLaundryServiceIcon from "@mui/icons-material/LocalLaundryService";
+import DryCleaningTwoToneIcon from "@mui/icons-material/DryCleaningTwoTone";
 
 function MachineItem(props) {
   return (
     <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <CardContent sx={{ flexGrow: 1 }}>
-        <Typography gutterBottom variant="h6">
-          Washer #1
-        </Typography>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+          }}
+        >
+          <Typography gutterBottom variant="h6">
+            Washer #1
+          </Typography>
+          <LocalLaundryServiceIcon
+            style={{ minWidth: "120px" }}
+            paddingfontSize="large"
+          />
+          {/* <DryCleaningTwoToneIcon
+            style={{ minWidth: "40px" }}
+            paddingfontSize="large"
+          /> */}
+        </div>
+
         <div
           style={{
             display: "flex",
@@ -35,10 +54,10 @@ function MachineItem(props) {
           />
         </div>
       </CardContent>
-      <CardActions>
+      {/* <CardActions>
         <Button size="small">View</Button>
         <Button size="small">Edit</Button>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 }

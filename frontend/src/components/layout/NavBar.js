@@ -44,38 +44,52 @@ function NavBar(props) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Laundry Connect 2.0
           </Typography>
-          {auth && (
-            <div>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleLogin}>Sign In</MenuItem>
-                <MenuItem onClick={handleRegister}>Register</MenuItem>
-              </Menu>
-            </div>
-          )}
+
+          <div>
+            <span style={{ cursor: "pointer" }} onClick={handleMenu}>
+              {" "}
+              Account Details{" "}
+            </span>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              {auth && (
+                <div>
+                  <MenuItem onClick={handleLogin}>Sign In</MenuItem>
+                  <MenuItem onClick={handleRegister}>Register</MenuItem>
+                </div>
+              )}
+
+              {!auth && (
+                <div>
+                  <MenuItem onClick={handleLogin}>Sign</MenuItem>
+                  <MenuItem onClick={handleRegister}>Reger</MenuItem>
+                </div>
+              )}
+            </Menu>
+          </div>
         </Toolbar>
       </AppBar>
     </Box>

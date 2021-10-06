@@ -1,25 +1,12 @@
 import MachineItem from "./MachineItem";
-import {
-  Typography,
-  Box,
-  Container,
-  Grid,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  Button,
-  ButtonGroup,
-  ToggleButton,
-  ToggleButtonGroup,
-} from "@mui/material";
+import { Container, Grid } from "@mui/material";
 
 function MachineList(props) {
   return (
-    <Container sx={{ py: 3 }} fullwidth maxWidth="md">
-      <Grid container spacing={1}>
+    <Container sx={{ py: 4 }} fullwidth maxWidth="lg">
+      <Grid container spacing={3}>
         {props.machineInfo.map((item, index) => (
-          <Grid item key={props.item}>
+          <Grid item key={props.item} md={3}>
             <MachineItem
               show={props.show}
               hide={props.onHide}

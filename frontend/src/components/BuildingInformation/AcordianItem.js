@@ -17,7 +17,10 @@ import { styled } from "@mui/material/styles";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MachineList from "../machineInformation/MachineList";
 
-const list = [32, 2, 2, 2, 1, 2, 1, 1, 1];
+const list = [
+  32, 2, 2, 2, 1, 2, 1, 1, 1, 32, 2, 2, 2, 1, 2, 1, 1, 1, 32, 2, 2, 2, 1, 2, 1,
+  1, 1, 32, 2, 2, 2, 1, 2, 1, 1, 1, 32, 2, 2, 2, 1, 2,
+];
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
