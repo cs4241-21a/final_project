@@ -15,8 +15,6 @@ h1 {
 input {
   border: 1px solid silver;
   font-size: 16px;
-  margin-bottom: 5px;
-  margin-top: 5px;
   padding: 5px;
 }
 
@@ -26,9 +24,9 @@ div[class="editor"] {
 }
 
 div[class="controlHolder"] {
-  border: 3px solid rgb(226, 230, 231);
+  border: 3px solid rgb(180, 187, 189);
   border-radius: 25px;
-  background-color: rgb(226, 236, 238);
+  background-color: rgb(192, 209, 212);
   width: 500px;
   flex-shrink: 0;
   padding: 10px;
@@ -44,7 +42,7 @@ input [type="text"], [class="pull-left"]{
   display: inline-block;
   text-align: center;
   display: inline-block;
-  width: 70%;
+  width: 100%;
 }
 
 label[class="topInputs"] {
