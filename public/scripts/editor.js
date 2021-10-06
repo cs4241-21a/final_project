@@ -1,3 +1,4 @@
+// Retrieve documents elements
 let imgBtn = document.getElementById('imageInput')
 const download = document.getElementById('download')
 let canvas = document.getElementById('imgCanvas')
@@ -10,10 +11,45 @@ const rotateLeftBtn = document.getElementById('rotateLeft')
 const rotateRightBtn = document.getElementById('rotateRight')
 const flipXBtn = document.getElementById('flipX')
 const flipYBtn = document.getElementById('flipY')
+const compressBtn = document.getElementById('compressBtn')
+const greyscaleBtn = document.getElementById('greyscaleBtn')
+
+// additional variables
 let imgData
 let context
 let userImage
 let cropper
+
+// Greyscale button
+greyscaleBtn.addEventListener('click', function(){
+    
+    let context = canvas.getContext("2d");
+    let imgData = context.getImageData(0, 0, canvas.width, canvas.height);
+    let pixels = imgData.data;
+
+    for (var i = 0; i < pixels.length; i += 4) {
+		let lightness = parseInt((pixels[i] + pixels[i + 1] + pixels[i + 2])/3);
+		pixels[i] = lightness; 
+		pixels[i + 1] = lightness; 
+		pixels[i + 2] = lightness; 
+	}
+
+    context.putImageData(imgData, 0, 0);
+
+    
+})
+
+
+// Compress button
+compressBtn.addEventListener('click', function(){
+    for(let i = 0; i < 20; i++) {
+        let tempImage = new Image()
+        tempImage.src = canvas.toDataURL("image/jpeg", 0.05)
+        context.drawImage(tempImage, 0, 0)
+    }
+})
+
+// Flip buttons
 flipXBtn.addEventListener('click',function() {
     if(cropper.getData().scaleX === 1)
         cropper.scaleX(-1)
@@ -26,12 +62,16 @@ flipYBtn.addEventListener('click',function() {
     else
         cropper.scaleY(1)
 })
+
+// Rotation buttons
 rotateRightBtn.addEventListener('click', function() {
     cropper.rotate(45)
 })
 rotateLeftBtn.addEventListener('click', function() {
     cropper.rotate(-45)
 })
+
+// Related to cropped
 startCropBtn.addEventListener('click', function() {
     startCropBtn.disabled = true
     cropBtn.disabled = false
@@ -87,6 +127,7 @@ restoreCropBtn.addEventListener('click', function() {
     flipYBtn.disabled = true
 })
 
+// Add top-text button
 topTextBtn.addEventListener('click', function() {
     context.font = "36pt Impact";
     context.fillStyle = "white"
@@ -96,6 +137,7 @@ topTextBtn.addEventListener('click', function() {
     wrapText(text,canvas.width/2,canvas.height/8,canvas.width,50)
 })
 
+// Add bottom-text button
 bottomTextBtn.addEventListener('click', function() {
     context.font = "36pt Impact";
     context.fillStyle = "white"
@@ -105,6 +147,7 @@ bottomTextBtn.addEventListener('click', function() {
     wrapText(text,canvas.width/2,canvas.height-(canvas.height/12),canvas.width,50)
 })
 
+// Wrap function
 function wrapText(text, x, y, maxWidth, lineHeight) {
     const words = text.split(' ');
     let line = '';
@@ -127,6 +170,7 @@ function wrapText(text, x, y, maxWidth, lineHeight) {
     context.strokeText(line,x,y)
 }
 
+// Download button
 download.addEventListener('click', function() {
     const link = document.createElement('a')
     link.download = 'download.png'
@@ -134,6 +178,8 @@ download.addEventListener('click', function() {
     link.click()
     link.delete()
 });
+
+// image button
 imgBtn.addEventListener('change', function(event) {
     if(event.target.files) {//If files
         let imageFile = event.target.files[0]
