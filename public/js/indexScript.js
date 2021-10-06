@@ -37,6 +37,7 @@ function setup() {
        }
         else{
             strokeWeight(lineWidth)
+            stroke(color)
             line(mouseX, mouseY, pmouseX, pmouseY);
        }
     } 
