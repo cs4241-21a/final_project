@@ -1,10 +1,40 @@
-// server.js
-// where your node app starts
+const mysql = require('mysql');
+
+const connection = mysql.createConnection({
+  host: 'mysql.wpi.edu',
+  user: 'lauren',
+  password: 'n8njyP',
+  database: 'wishlist'
+});
+
+connection.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+  var sqlUserTable = "CREATE OR REPLACE TABLE Users (username VARCHAR2(20) PRIMARY KEY, password VARCHAR2(30));";
+  var sqlListsTable = "CREATE TABLE Lists (listName VARCHAR2(30) PRIMARY KEY, description VARCHAR2(100), username VARCHAR2(20) REFERENCES Users (username));";
+  var sqlItemsTable = "CREATE TABLE Items (itemName VARCHAR2(50) PRIMARY KEY, link VARCHAR2(300) PRIMARY KEY, price NUMBER(6,2), store VARCHAR2(30), picture VARCHAR2(100), listName VARCHAR2(30) REFERENCES Lists (listName));";
+
+  connection.query(sqlUserTable, function (err, result) {
+    if (err) throw err;
+    console.log("User Table created");
+  });
+
+  connection.query(sqlListsTable, function (err, result) {
+    if (err) throw err;
+    console.log("Lists Table created");
+  });
+
+  connection.query(sqlItemsTable, function (err, result) {
+    if (err) throw err;
+    console.log("Items Table created");
+  });
+});
 
 // we've started you off with Express (https://expressjs.com/)
 // but feel free to use whatever libraries or frameworks you'd like through `package.json`.
 const express = require("express"),
   app = express(),
+  bodyparser = require( 'body-parser' ),
   port = 3000;
 
 // make all the files in 'public' available
@@ -31,6 +61,38 @@ app.get("/home", (request, response) => {
 app.get("/listView", (request, response) => {
   response.sendFile(__dirname + "/views/listView.html");
 });
+
+app.post( '/create-list', bodyparser.json(), function( request, response ) {
+  console.log(`create-list post request: ${request}`);
+  let dataString = ''
+  let selectResult = ''
+
+  request.on( 'data', function( data ) {
+      dataString += data 
+  })
+
+  request.on( 'end', function() {
+    const json = JSON.parse( dataString )
+    
+    connection.connect(function(err) {
+      if (err) throw err;
+      console.log("Connected!");
+      var sql = `INSERT INTO Lists (listName, description, username) VALUES ('${json.name}', '${json.description}', '${json.username}');`;
+      connection.query(sql, function (err, result) {
+        if (err) throw err;
+        console.log("1 record inserted");
+      });
+      connection.query("SELECT * FROM Lists;", function (err, result, fields) {
+        if (err) throw err;
+        console.log(result);
+        selectResult = result;
+      });
+    });
+
+    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+    response.end(JSON.stringify(selectResult))
+  })
+})
 
 // listen for requests :)
 const listener = app.listen(process.env.PORT || port, () => {

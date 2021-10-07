@@ -12,12 +12,14 @@
   <body>
     <header>
       <h1>Wish List</h1>
+      <p>Welcome</p>
+      <p id=usernameInList>lauren</p>
     </header>
 
     <main>
       <h2>Add a List:</h2>
 
-      <form class="newListForm" action='/new-list' method='POST'>
+      <form id="newListForm" action='/create-list' method='POST'>
         <label for="fname">Name:</label>
         <input type='text' id='fname' maxlength="30">
         </br>
