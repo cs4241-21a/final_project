@@ -1,20 +1,46 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <title>Wish List Home Page</title>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+      .grid-container {
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        background-color: #D1CDCF;
+        padding: 10px;
+      }
+      .grid-item {
+        background-color: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(0, 0, 0, 0.8);
+        padding: 20px;
+        font-size: 20px;
+        text-align: center;
+      }
       body {
         background-color: #ffffff;
-        font-family: 'PT Sans', sans-serif;
       }
-      
     </style>
   </head>
   <body>
-    <h1 style="color:#8182DB"> <center> Welcome, User! </center> </h1>
-    <h2 style="left:80px; right:400px; color:#5E5CSD"> Example List </h2>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Sunflower_clip_art.svg/2048px-Sunflower_clip_art.svg.png" alt="Example List Clip Art" width="150" height="150">
+    <h1 style="color:#8182DB"><center>Welcome, User!</center></h1>
+    <div class="grid-container">
+      <div class="grid-item">
+        <h2 style="left:80px; right:400px; color:#5E5CSD">Example List</h2>
+        <img src= "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Sunflower_clip_art.svg/2048px-Sunflower_clip_art.svg.png" alt="Example List Clip Art" width="150" height="150" align="center">
+      </div>
+      <div class="grid-item">
+        <h2 style="left:80px; right:400px; color:#5E5CSD">Example List</h2>
+        <img src= "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Sunflower_clip_art.svg/2048px-Sunflower_clip_art.svg.png" alt="Example List Clip Art" width="150" height="150" align="center">
+      </div>
+      <div class="grid-item">
+        <h2 style="left:80px; right:400px; color:#5E5CSD">Example List</h2>
+        <img src= "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Sunflower_clip_art.svg/2048px-Sunflower_clip_art.svg.png" alt="Example List Clip Art" width="150" height="150" align="center">  
+      </div>
+      <div class="grid-item">
+        <h2 style="left:80px; right:400px; color:#5E5CSD">Example List</h2>
+        <img src= "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Sunflower_clip_art.svg/2048px-Sunflower_clip_art.svg.png" alt="Example List Clip Art" width="150" height="150" align="center">    
+      </div>
+    </div>
   </body>
 </html>
