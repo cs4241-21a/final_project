@@ -90,6 +90,15 @@ app.post('/login', async (req, res) => {
   }
 })
 
+app.post('/loadEvents', async (req, res) =>{
+    EventEntry.find({attendees: req.session.username})
+    .then(dbresponse =>{
+      console.log("aaaa",dbresponse)
+      res.json(dbresponse)
+    })
+})
+
+
 Date.prototype.addDays = function(days) {
   let date = new Date(this.valueOf());
   date.setDate(date.getDate() + days);
