@@ -18,12 +18,37 @@ const embossBtn = document.getElementById('embossBtn')
 const herMajestyBtn = document.getElementById('herMajestyBtn')
 const orangePeelBtn = document.getElementById('orangePeelBtn')
 const sinCityBtn = document.getElementById('sinCityBtn')
+const brightnessSlider = document.getElementById('brightnessSlider')
+const contrastSlider = document.getElementById('contrastSlider')
+const saturationSlider = document.getElementById('saturationSlider')
 
 // additional variables
 let imgData
 let context
 let userImage
 let cropper
+
+// Sliders
+brightnessSlider.addEventListener('change', function(){
+    let value = brightnessSlider.value
+    Caman(canvas, function () {
+        this.brightness(value).render();
+    })
+})
+
+saturationSlider.addEventListener('change', function(){
+    let value = saturationSlider.value
+    Caman(canvas, function () {
+        this.saturation(value).render();
+    })
+})
+
+contrastSlider.addEventListener('change', function(){
+    let value = contrastSlider.value
+    Caman(canvas, function () {
+        this.contrast(value).render();
+    })
+})
 
 // Reset button
 resetBtn.addEventListener('click', function() {
