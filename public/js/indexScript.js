@@ -20,6 +20,8 @@ function setup() {
     myCanvas.style('border', '1px solid #000')
 
     myCanvas.mousePressed(drawShapes)
+
+    myCanvas.parent('canvas-container')
    
     const colorSelector = document.querySelector( '#colorSelector')
     colorSelector.addEventListener('change', changeColor);

@@ -1,0 +1,29 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+div {
+  display: flex;
+}
+
+#content-container{
+  flex-direction: row;
+}
+
+#control-container{
+  flex-direction: column;
+  margin-right:10px;
+}
+
+.rangeContainer{
+  width: 50%;
+}
+
+#myRange{
+  width: 100%;
+}
