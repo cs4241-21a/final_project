@@ -106,10 +106,12 @@ function getDates(startDate, stopDate) {
   return dateArray;
 }
 
-app.post('/createEvent', async (req,res) => {
+app.post('/createEvent', bodyparser.json(), async (req,res) => {
+  console.log(req.body);
+  console.log(req.body.title);
+
   let startDate = new Date(req.body.startDate);
   let endDate = new Date(req.body.endDate);
-  console.log(getDates(startDate,endDate));
 
 
   const entry = new EventEntry({
@@ -133,26 +135,7 @@ app.post('/createEvent', async (req,res) => {
       })
   res.render('events');
 })
-/*
-app.post('/createEvent', async (req, res) => {
 
-  collection.insertOne(req.body)
-  .then(dbresponse => {
-    return collection.find({'_id':dbresponse.insertedId}).toArray()
-  })
-  .then(dbresponse =>{
-    res.json(dbresponse)
-  })
-    .then(dbresponse =>{
-      collection.updateOne({'_id':mongodb.ObjectId(req.body._id)},
-      {$set:{ user:req.session.user} })
-        .then( dbresponse=>{
-          res.json(dbresponse)
-         // console.log(dbresponse)
-        })
-  })
-})
-*/
 
 async function checkUsernamePassword(user, pass){
   let array = [];

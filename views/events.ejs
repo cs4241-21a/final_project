@@ -2,11 +2,11 @@
 <html lang="en">
 <%- include("./partials/header.ejs")%>
 <body>
-<script src="./js/events.js" defer></script>
+<script src="./js/eventsJS.js" defer></script>
 <%- include("./partials/nav.ejs")%>
 <p>events page</p>
 <div>
-    <form action='/createEvent' method='POST'>
+    <form id="createEventForm">
         <label for="title">Event Title:</label>
         <input id="title" name="title"></textarea>
         <br><br>
@@ -31,15 +31,15 @@
         <br><br>
 
         <label for="description">Event Description:</label>
-        <input type="text" id="description" name="description">
-        <!--<textarea></textarea>-->
-        <br><br>
+        <!--<input type="text" id="description" name="description">-->
+        <textarea id="description" form="createEventForm" name="description"></textarea>
+        <br>
 
         <label for="location">Event Location:</label>
         <input type="text" id="location" name="location">
         <br><br>
 
-        <button type="submit" id="submitButton">Submit</button>
+        <button onclick="submitHandler()" id="submitButton">Submit</button>
 
     </form>
 </div>
