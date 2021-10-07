@@ -19,7 +19,7 @@ function setup() {
 
     myCanvas.style('border', '1px solid #000')
 
-    myCanvas.mousePressed(saveForUndo)
+    myCanvas.mousePressed(drawShapes)
    
     const colorSelector = document.querySelector( '#colorSelector')
     colorSelector.addEventListener('change', changeColor);
@@ -35,22 +35,71 @@ function setup() {
     const redoBtn = document.querySelector('#redoBtn')
     redoBtn.onclick = redo
   }
-  
+
+//Function for drawing and erasing so the lines are continuous
 function draw() {
     if (mouseIsPressed) {
-        //Check if in erase mode 
-        const checkErase = document.querySelector('input[name="action"]:checked').value
-        if(checkErase === "Erase"){   
+        //Check which drawing mode it is in -> show up when draw or erase are checked 
+        const checkDrawType = document.querySelector('input[name="action"]:checked').value
+        if(checkDrawType === "Erase"){   
             cursor('https://icons.iconarchive.com/icons/pixture/stationary/32/Eraser-2-icon.png', 16, 16)
             erase()
             strokeWeight(lineWidth)
             line(mouseX, mouseY, pmouseX, pmouseY)
-        }
-        else{
+        } else if (checkDrawType === "Draw") {
             cursor('https://icons.iconarchive.com/icons/custom-icon-design/flatastic-6/32/Brush-tool-icon.png', 16, 16)
             stroke(color)
             strokeWeight(lineWidth)
             line(mouseX, mouseY, pmouseX, pmouseY)
+        }
+    } 
+    noErase()
+}
+
+//Function for drawing shapes so it stamps only once
+function drawShapes() {
+    //keep track of undo
+    undoList.push(get())
+    
+    //drawing shapes
+    if (mouseIsPressed) {
+        //Check which drawing mode it is in -> shapes get stamped 
+        const checkDrawType = document.querySelector('input[name="action"]:checked').value
+        const checkFillShape = document.getElementById("fillShape").checked
+        const shapeSize = document.getElementById("myRange").value
+        if (checkDrawType === "Circle") {
+            cursor('grab')
+            if(checkFillShape === true) {
+                fill(color)
+                strokeWeight(0)
+            } else {
+                fill("white")
+                stroke(color)
+                strokeWeight(5)
+            }
+            circle(mouseX, mouseY, shapeSize)
+        } else if (checkDrawType === "Square") {
+            cursor('grab')
+            if(checkFillShape === true) {
+                fill(color)
+                strokeWeight(0)
+            } else {
+                fill("white")
+                stroke(color)
+                strokeWeight(5)
+            }
+            square(mouseX - (shapeSize/2), mouseY - (shapeSize/2), shapeSize)
+        } else if (checkDrawType === "Triangle") {
+            cursor('grab')
+            if(checkFillShape === true) {
+                fill(color)
+                strokeWeight(0)
+            } else {
+                fill("white")
+                stroke(color)
+                strokeWeight(5)
+            }
+            triangle(mouseX, mouseY+(1*(shapeSize/2)), mouseX-(1*(shapeSize/2)), mouseY-(1*(shapeSize/2)), mouseX+(1*(shapeSize/2)), mouseY-(1*(shapeSize/2)))
         }
     } 
     noErase()
@@ -62,10 +111,6 @@ function clearCanvas(){
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
-}
-
-function saveForUndo(){
-    undoList.push(get())
 }
 
 const redo = function(event){

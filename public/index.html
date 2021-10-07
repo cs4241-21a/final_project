@@ -2,9 +2,10 @@
 
 <head>
   <title>Express</title>
-  <link rel="stylesheet" href="https://unpkg.com/98.css"> 
+  <!--link rel="stylesheet" href="https://unpkg.com/98.css"--> 
   <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js"></script>
   <script src = "/js/indexScript.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
@@ -16,6 +17,27 @@
   <div class = "field-row">
   <input type = "radio" id = "actionDraw" name = "action" value = "Draw" checked = true>  
   <label for = "actionDraw">Draw</label>
+  </div>
+
+  <div class = "field-row">
+    <input type="radio" id = "actionCircle" name="action" value="Circle">
+    <label for="actionCircle">Circle</label>
+
+    <input type="radio" id = "actionSquare" name="action" value="Square">
+    <label for="actionSquare">Square</label>
+
+    <input type="radio" id = "actionTriangle" name="action" value="Triangle">
+    <label for="actionTriangle">Triangle</label>
+  </div>
+
+  <div class = "rangeContainer">
+    <input type="checkbox" id = "fillShape" name="fillShape" value="FillShape">
+    <label for="fillShape">Fill Shape</label>
+  </div>
+
+  <div class = "rangeContainer">
+    <label for="myRange">Size of Shape</label>
+    <input type="range" min="50" max="500" step="50" value="250" id="myRange" name="slider">
   </div>
 
   <div class = "field-row">
