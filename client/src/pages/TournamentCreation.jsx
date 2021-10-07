@@ -1,15 +1,16 @@
 import React from "react";
-import Team from "./Team";
+import Team from "../components/Team";
 
-class TournamentCreation extends React.Component {
+class TournamentCreationPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { teams: [] };
   }
 
   load() {
-    fetch("/loadTeams", {
+    fetch("http://localhost:3001/loadTeams", {
       method: "GET",
+      credentials: 'include'
     }).then(async (response) => {
       const json = await response.json();
       console.log(json);
@@ -30,10 +31,11 @@ class TournamentCreation extends React.Component {
       },
       body = JSON.stringify(json);
 
-    fetch("/insertTeam", {
+    fetch("http://localhost:3001/insertTeam", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body,
+      credentials: 'include'
     }).then(async (response) => {
       const json = await response.json();
       this.setState({ teams: json });
@@ -52,28 +54,30 @@ class TournamentCreation extends React.Component {
         summoners: [sum1.value, sum2.value, sum3.value, sum4.value, sum5.value],
       },
       body = JSON.stringify(json);
-    fetch("/updateTeam", {
+    fetch("http://localhost:3001/updateTeam", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body,
+      credentials: 'include'
     }).then(async (response) => {
       const json = await response.json();
       this.setState({ teams: json });
     });
   }
 
-  delete = (e,id) => {
+  delete = (e, id) => {
     const json = { _id: id },
-            body = JSON.stringify(json);
+      body = JSON.stringify(json);
 
-    fetch("/deleteTeam", {
+    fetch("http://localhost:3001/deleteTeam", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body,
+      credentials: 'include'
     }).then(async (response) => {
       const data = await response.json();
       this.setState({ locations: data });
-      window.location.reload();
+      // window.location.reload();
 
 
     });
@@ -146,6 +150,7 @@ class TournamentCreation extends React.Component {
             <tbody>
               {this.state.teams.map((team, i) => (
                 <Team
+                  key={team._id}
                   i={i}
                   _id={team._id}
                   teamName={team.teamName}
@@ -163,4 +168,4 @@ class TournamentCreation extends React.Component {
   }
 }
 
-export default TournamentCreation;
+export default TournamentCreationPage;

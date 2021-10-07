@@ -36,7 +36,7 @@ router.post('/login', async (req, res, next) => {
 
   // login success
   res.cookie(loginCookieName, { userId: existingUser._id }, { maxAge: 21600000 });
-  res.json({ loggedIn: true });
+  res.json({ loggedIn: true, id: existingUser._id });
   // res.redirect(`/user/${user._id}`);
 
 });
@@ -71,7 +71,7 @@ router.post('/register', async (req, res, next) => {
   newUser = await newUser.save();
 
   res.cookie(loginCookieName, { userId: newUser._id }, { maxAge: 21600000 });
-  res.json({ loggedIn: true });
+  res.json({ loggedIn: true, id: newUser._id });
   // res.redirect(`/user/${newUser._id}`);
 });
 

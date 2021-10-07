@@ -54,7 +54,7 @@ const RegisterPage = () => {
 
                 if (data.loggedIn) {
                     console.log('Registered');
-                    // history.push(`/user/${data.userId}`);
+                    history.push(`/tournament-create/${data.id}`);
                 }
 
                 if (data.error) {

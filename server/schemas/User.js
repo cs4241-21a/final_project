@@ -13,4 +13,10 @@ const UserSchema = new Schema(
     }
 );
 
+// for referencing other docs
+// owner: {
+//     type: Schema.Types.ObjectId,
+//     ref: 'users'
+// }
+
 module.exports = model('users', UserSchema);
