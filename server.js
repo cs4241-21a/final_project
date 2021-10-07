@@ -38,7 +38,7 @@ passport.use(
     {
       clientID: clientID,
       clientSecret: process.env.GITHUB_SECRET,
-      callbackURL: "http://localhost:3000/github/callback",
+      callbackURL: "/github/callback",
     },
     function (accessToken, refreshToken, profile, done) {
       return done(null, profile);
@@ -71,7 +71,7 @@ app.get("/id", (req, res) => {
 app.get("/logout", (req, res) => {
   req.session.id = "";
   req.logout();
-  res.redirect("http://localhost:3000")
+  res.redirect("/")
 });
 
 const uri =
