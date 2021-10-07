@@ -24,5 +24,12 @@
 
   .home-page__subtitle {
     @include mix-text-subtitle;
+    margin-bottom: $gap-xl;
+  }
+
+  .home-page__genres {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $gap-md;
   }
 }

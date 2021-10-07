@@ -1,0 +1,24 @@
+.genre-card {
+  @include mix-shadow-down;
+  width: 240px;
+  height: 320px;
+  background: $background-primary;
+  border-radius: $border-radius;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform $transition-duration $transition-timing-function;
+
+  &:hover {
+    transform: translateY(-$gap-sm);
+  }
+
+  span {
+    text-align: center;
+    font-family: $font-family-secondary;
+    font-size: 48px;
+    line-height: 125%;
+    padding: $gap-md;
+  }
+}
