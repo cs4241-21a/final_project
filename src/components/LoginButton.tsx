@@ -35,7 +35,7 @@ const LoginButton = (): JSX.Element => {
   };
 
   const logout = () => {
-    fetch("http://localhost:3000/logout", {
+    fetch("/logout", {
       method: "GET",
     }).then(() => {
         setLoggedIn(false);
