@@ -37,20 +37,6 @@
             <input type="number" id="bottomTextSize" class="form-control" placeholder="Text Size">
             <button class="btn btn-primary" id="bottomTextBtn">Add Text</button>
         </label>
-        <label> Brightness: <input id="brightnessSlider" type="range" min="-100" max="100" value="0"> </label>
-        <label> Contrast: <input id="contrastSlider" type="range" min="-100" max="100" value="0"> </label>
-        <label> Saturation: <input id="saturationSlider" type="range" min="-100" max="100" value="0"> </label>
-        <label> Vibrance: <input id="vibranceSlider" type="range" min="-100" max="100" value="0"> </label>
-        <label> Exposure: <input id="exposureSlider" type="range" min="-100" max="100" value="0"> </label>
-        <label> Hue: <input id="hueSlider" type="range" min="0" max="100" value="0"> </label>
-        <label> Sepia: <input id="sepiaSlider" type="range" min="0" max="100" value="0"> </label>
-        <label> Gamma: <input id="gammaSlider" type="range" min="0" max="10" value="0"> </label>
-        <label> Noise: <input id="noiseSlider" type="range" min="0" max="100" value="0"> </label>
-        <label> Clip: <input id="clipSlider" type="range" min="0" max="100" value="0"> </label>
-        <label> Sharpen: <input id="sharpenSlider" type="range" min="0" max="100" value="0"> </label>
-        <label> Stack Blur: <input id="stackBlurSlider" type="range" min="0" max="20" value="0"> </label>
-        
-
     </div>
     <div class="cropControls">
         <button disabled class="btn btn-secondary" id="startCropBtn" value="Start Cropping">Start Cropping</button>
@@ -64,6 +50,24 @@
     <div class="flippers">
         <button disabled class="btn btn-secondary" id="flipX" type="button" value="Flip X">Flip X</button>
         <button disabled class="btn btn-secondary" id="flipY" type="button" value="Flip Y">Flip Y</button>
+    </div>
+    <div class="sliderGroup">
+        <div class="sliderGroupLeft">
+            <label class="sliderLabel"> Brightness: <input id="brightnessSlider" type="range" class="range-field" min="-100" max="100" value="0"> </label>
+            <label class="sliderLabel"> Contrast: <input id="contrastSlider" type="range" class="range-field" min="-100" max="100" value="0"> </label>
+            <label class="sliderLabel"> Saturation: <input id="saturationSlider" type="range" class="range-field" min="-100" max="100" value="0"> </label>
+            <label class="sliderLabel"> Vibrance: <input id="vibranceSlider" type="range" class="range-field" min="-100" max="100" value="0"> </label>
+            <label class="sliderLabel"> Exposure: <input id="exposureSlider" type="range" class="range-field" min="-100" max="100" value="0"> </label>
+            <label class="sliderLabel"> Hue: <input id="hueSlider" type="range" class="range-field" min="0" max="100" value="0"> </label>
+        </div>
+        <div class="sliderGroupRight">
+            <label class="sliderLabel"> Sepia: <input id="sepiaSlider" type="range" class="range-field" min="0" max="100" value="0"> </label>
+            <label class="sliderLabel"> Gamma: <input id="gammaSlider" type="range" class="range-field" min="0" max="10" value="0"> </label>
+            <label class="sliderLabel"> Noise: <input id="noiseSlider" type="range" class="range-field" min="0" max="100" value="0"> </label>
+            <label class="sliderLabel"> Clip: <input id="clipSlider" type="range" class="range-field" min="0" max="100" value="0"> </label>
+            <label class="sliderLabel"> Sharpen: <input id="sharpenSlider" type="range" class="range-field" min="0" max="100" value="0"> </label>
+            <label class="sliderLabel"> Stack Blur: <input id="stackBlurSlider" type="range" class="range-field" min="0" max="20" value="0"> </label>
+        </div>
     </div>
     <div class="filtersHolder">
         <div class="filterSubgroup">
