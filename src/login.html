@@ -1,29 +1,76 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Login Page</title>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="css/style.css" />
-        <link href="https://unpkg.com/sanitize.css" rel="stylesheet" />
-        <link
-          href="https://unpkg.com/sanitize.css/typography.css"
-          rel="stylesheet"
-        />
-        <link href="https://unpkg.com/sanitize.css/forms.css" rel="stylesheet" />
-    </head>
-    <body>
-        <!-- <div id="app"></div>
+  <head>
+    <title>Login Page</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="./css/style.css" type="text/css" />
+    <link href="https://unpkg.com/sanitize.css" rel="stylesheet" />
+    <link
+      href="https://unpkg.com/sanitize.css/typography.css"
+      rel="stylesheet"
+    />
+    <link href="https://unpkg.com/sanitize.css/forms.css" rel="stylesheet" />
+
+    <!-- Font Information -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&family=Source+Sans+Pro&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- <div id="app"></div>
         <script type="module" src="index.js"></script> -->
+    <div class="login_grid_layout">
+      <div class="header_bar_area">
+        <h1 class="app_title"><b>Super Cool App Title</b></h1>
+      </div>
 
-        <p class="welcome_area">
-            <b>
-              Welcome! Please sign in using your Outlook/Google/Github/Discord account with the link below to
-              access your data.</b>
+      <div class="welcome_area">
+        <h2 class="welcome_title">Welcome!</h2>
+        <p class="welcome_text">
+          <b>
+            Welcome to Super Cool App Title, the app designed to help you find
+            group members for classes or interests at WPI! Please sign in using
+            your Outlook, Google, Github, or Discord account with the link below
+            to access your data.</b
+          >
         </p>
+      </div>
 
-        <a href="/auth/outlook"><img src="https://www.warrentonfire.org/wp-content/uploads/2020/12/office-outlook-logo.png" alt="Outlook login" style="width:42px;height:42px;"></a>
-        <a href="/auth/google"><img src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-webinar-optimizing-for-success-google-business-webinar-13.png" alt="Google login" style="width:42px;height:42px;"></a>
-        <a href="/auth/github"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/2048px-Octicons-mark-github.svg.png" alt="GitHub login" style="width:42px;height:42px;"></a>
-        <a href="/auth/discord"><img src="https://www.nicepng.com/png/detail/17-175360_discord-logo-png-transparent-discord-icon.png" alt="Discord login" style="width:42px;height:42px;"></a>
-    </body>
+      <div class="oauth_buttons_area">
+        <div>
+          <div>
+            <a href="/auth/outlook"
+              ><img
+                src="https://www.warrentonfire.org/wp-content/uploads/2020/12/office-outlook-logo.png"
+                alt="Outlook login"
+                class="oauth_button"
+            /></a>
+            <a href="/auth/google"
+              ><img
+                src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-webinar-optimizing-for-success-google-business-webinar-13.png"
+                alt="Google login"
+                class="oauth_button"
+            /></a>
+          </div>
+          <div>
+            <a href="/auth/github"
+              ><img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/2048px-Octicons-mark-github.svg.png"
+                alt="GitHub login"
+                class="oauth_button"
+            /></a>
+            <a href="/auth/discord"
+              ><img
+                src="https://www.nicepng.com/png/detail/17-175360_discord-logo-png-transparent-discord-icon.png"
+                alt="Discord login"
+                class="oauth_button"
+            /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
