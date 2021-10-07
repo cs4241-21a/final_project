@@ -2,25 +2,33 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const eventSchema = new Schema({
+    owner:{
+        type:String,
+        required: true
+    },
     eventName: {
         type: String,
         required: true
     },
-    eventDate: {
+    chosenEventDate: {
         type: Date,
+        required: false
+    },
+    availableDates:{
+        type: [],
         required: true
     },
     availableTimes:{
         type: [],
         required: true
     },
-    startTime: {
+    chosenStartTime: {
         type: Date,
-        required: true
+        required: false
     },
-    endTime: {
+    chosenEndTime: {
         type: Date,
-        required: true
+        required: false
     },
     location:{
         type: String,

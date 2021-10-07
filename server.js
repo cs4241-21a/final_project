@@ -89,6 +89,29 @@ app.post('/login', async (req, res) => {
     res.render('login');
   }
 })
+
+app.post('/createEvent', async (req,res) => {
+  const entry = new EventEntry({
+    owner: req.session.username,
+    eventName: req.body.title,
+    //availableDates: req.body.availDates,
+    //availableTimes: req.body.availTimes,
+    //attendees: req.body.attendees,
+    availableDates: [],
+    availableTimes: [],
+    attendees: [],
+    description: req.body.description,
+    location: req.body.location
+  })
+  await entry.save()
+      .then(async result => {
+        //res.send(result);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  res.render('events');
+})
 /*
 app.post('/createEvent', async (req, res) => {
 

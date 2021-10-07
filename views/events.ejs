@@ -2,33 +2,42 @@
 <html lang="en">
 <%- include("./partials/header.ejs")%>
 <body>
+<script src="./js/events.js" defer></script>
 <%- include("./partials/nav.ejs")%>
 <p>events page</p>
+<div>
+    <form action='/createEvent' method='POST'>
+        <label for="title">Event Title:</label>
+        <input id="title" name="title"></textarea>
+        <br><br>
 
-<form method="post">
-    <label for="title">Event Title:</label>
-    <input id="title" name="title"></textarea>
-    <br><br>
+        <!--
+        <label for="startHour">Start Time:</label>
+        <input type="text" id="startHour" name="startHour">
+        <input type="text" id="startMinute" name="startMinute">
+        <br><br>
 
-    <label for="startHour">Start Time:</label>
-    <input type="text" id="startHour" name="startHour">
-    <input type="text" id="startMinute" name="startMinute">
-    <br><br>
+        <label for="endHour">End Time:</label>
+        <input type="text" id="endHour" name="endHour">
+        <input type="text" id="endMinute" name="endMinute">
+        <br><br>
 
-    <label for="endHour">End Time:</label>
-    <input type="text" id="endHour" name="endHour">
-    <input type="text" id="endMinute" name="endMinute">
-    <br><br>
+        <label for="date">Event Date:</label>
+        <input type="date" id="date" name="date">
+        <br><br>-->
+        <label for="description">Event Description:</label>
+        <input type="text" id="description" name="description">
+        <!--<textarea></textarea>-->
+        <br><br>
 
-    <label for="date">Event Date:</label>
-    <input type="date" id="date" name="date">
-    <br><br>
+        <label for="location">Event Location:</label>
+        <input type="text" id="location" name="location">
+        <br><br>
 
+        <button type="submit" id="submitButton">Submit</button>
 
-    <button type="button" id="submitButton">Submit</button>
-
-</form>
-
+    </form>
+</div>
 <%- include("./partials/footer.ejs")%>
 </body>
 </html>
