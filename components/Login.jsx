@@ -1,11 +1,12 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import useUser from "../hooks/useUser";
+import useSWR from "swr";
 
 import "./css/login_style.css";
 
 const Login = (props) => {
-  const [user, setUser] = useUser();
+  const { user, mutate, loading, loggedOut } = useUser();
 
   const submitLogin = async (e) => {
     console.log("Submitting login");
@@ -28,11 +29,11 @@ const Login = (props) => {
     }
 
     const userInfo = await res.json();
-    setUser(userInfo);
+    mutate("/me", userInfo, false);
   };
 
-  if (user === "loading") return <div>Loading</div>;
-  if (!user) {
+  if (loading) return <div>Loading</div>;
+  if (loggedOut) {
     return (
       <div id="loginPage">
         <div id="logoDiv">

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
+import { useSWRConfig } from "swr";
 import useUser from "../hooks/useUser";
 
 import "./css/signup_style.css";
 
-
 const Signup = (props) => {
-  const [user, setUser] = useUser();
+  const { user, mutate, loggedOut, loading } = useUser();
+
   const [state, setState] = useState({ errorMsg: "" }); //setState({errorMsg: ""})
 
   const signup = async (e) => {
@@ -53,13 +54,13 @@ const Signup = (props) => {
 
     const userInfo = await res.json();
     console.log(userInfo);
-    setUser(userInfo);
+    mutate("/me", userInfo, false);
   };
 
-  if (user === "loading") return <div>Loading</div>;
-  if (!user) {
+  if (loading) return <div>Loading</div>;
+  if (loggedOut) {
     return (
-      <div id = 'signupPage'>
+      <div id="signupPage">
         <div id="logoDiv">
           <img
             id="logo"
@@ -71,23 +72,22 @@ const Signup = (props) => {
           />
         </div>
 
-          <form onsubmit="return false">
-            <h1>Sign Up</h1>
-            <p id="Error message">{state.errorMsg}</p>
-            <input type="text" id="user" placeholder="username" />
-            <input type="password" id="passwordone" placeholder="password" />
-            <input
-              type="password"
-              id="passwordtwo"
-              placeholder="repeat password"
-            />
-            <div class = 'buttonHolder'>
-              <button class="staticButtons" id="signup" onClick={signup}>
-                Sign Up
-              </button>
-            </div>
-            
-          </form>
+        <form onsubmit="return false">
+          <h1>Sign Up</h1>
+          <p id="Error message">{state.errorMsg}</p>
+          <input type="text" id="user" placeholder="username" />
+          <input type="password" id="passwordone" placeholder="password" />
+          <input
+            type="password"
+            id="passwordtwo"
+            placeholder="repeat password"
+          />
+          <div class="buttonHolder">
+            <button class="staticButtons" id="signup" onClick={signup}>
+              Sign Up
+            </button>
+          </div>
+        </form>
       </div>
     );
   } else return <Redirect to="/" />;

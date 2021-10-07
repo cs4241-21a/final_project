@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const session = require("express-session");
 
 const mongoUri =
@@ -81,7 +81,10 @@ app.post("/signup", async (req, res) => {
   const insertRes = await mongoClient
     .db("final")
     .collection("users")
-    .insertOne(userInfo);
+    .insertOne({
+      ...userInfo,
+      workouts: [],
+    });
 
   console.log(`Added new user with username ${userInfo.username}`);
 
@@ -111,8 +114,35 @@ app.get("/me", async (req, res) => {
     res.status(401).end();
     return;
   }
-  console.log("Reminding user that they are logged in");
+  console.log(`Reminding user ${req.session.username} of all their data`);
+  //console.log(userRes);
   res.json(userRes);
+});
+
+// WORKOUT MODIFICATIONS
+
+app.post("/workout", async (req, res) => {
+  if (!req.session.username) {
+    console.log("Not even logged in wtf");
+    res.status(401).end();
+  }
+  console.log(`Adding new workout for user ${req.session.username}`);
+  const updateRes = await mongoClient
+    .db("final")
+    .collection("users")
+    .updateOne(
+      { username: req.session.username },
+      {
+        $push: {
+          workouts: {
+            _id: new ObjectId().toHexString(),
+            name: `New workout ${new Date().toTimeString()}`,
+            movements: [],
+          },
+        },
+      }
+    );
+  res.status(200).end();
 });
 
 // Although we want express.static, we are using react-router for routing so we only need index.html

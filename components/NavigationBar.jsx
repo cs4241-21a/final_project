@@ -5,14 +5,14 @@ import "./css/navigation_style.css";
 //import "./css/general_style.css";
 
 const NavigationBar = (props) => {
-  const [user, setUser] = useUser();
+  const { user, loggedOut, mutate, loading } = useUser();
   return (
     <div class="topNav" id="headerDiv">
       <Link to="/">Home</Link>
 
-      {user === null ? (
+      {loggedOut ? (
         <Link to="/login">Login</Link>
-      ) : user === "loading" ? (
+      ) : loading ? (
         <div>Loading</div>
       ) : (
         <button>Log Out</button>
