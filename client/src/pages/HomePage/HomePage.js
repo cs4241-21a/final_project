@@ -5,7 +5,8 @@ export default function HomePage() {
     return (
         <div className="home-page">
             <PartySilhouetteIcon />
-            <div>Hello world!</div>
+            <div className="home-page__title">Create your next party playlist!</div>
+            <div className="home-page__subtitle">Choose a genre</div>
         </div>
     );
 }

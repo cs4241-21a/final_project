@@ -18,3 +18,15 @@
   padding-left: $framework-padding;
   padding-right: $framework-padding;
 }
+
+// texts
+@mixin mix-text-title {
+  font-family: $font-family-secondary;
+  font-size: $font-size-xl;
+  margin-bottom: $gap-sm;
+}
+
+@mixin mix-text-subtitle {
+  font-size: $font-size-md;
+  color: $color-secondary;
+}
