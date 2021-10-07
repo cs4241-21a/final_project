@@ -237,11 +237,20 @@ imgBtn.addEventListener('change', function(event) {
             userImage.src = event.target.result
             userImage.onload = function () {
                 context = canvas.getContext('2d')
-                canvas.width = userImage.width
-                canvas.height = userImage.height
-                context.drawImage(userImage,0,0)
-                startCropBtn.disabled = false
-                imgData = canvas.toDataURL("image/png",1.0)
+                const MAX_WIDTH = 1152
+                const MAX_HEIGHT = 1000
+                if(userImage.width > MAX_WIDTH || userImage.height > MAX_HEIGHT){
+                    alert("The uploaded image is too large to handle. " 
+                    + `Please upload an image that will fit in ${MAX_WIDTH} x ${MAX_HEIGHT}. \n \n`
+                    + `For reference, your image was ${userImage.width} x ${userImage.height}`)
+                }
+                else {
+                    canvas.width = userImage.width
+                    canvas.height = userImage.height
+                    context.drawImage(userImage,0,0)
+                    startCropBtn.disabled = false
+                    imgData = canvas.toDataURL("image/png",1.0)
+                }
             }
         }
     }
