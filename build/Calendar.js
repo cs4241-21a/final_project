@@ -1,4 +1,6 @@
-import React from "./_snowpack/pkg/react.js";
+import React, {Component} from "./_snowpack/pkg/react.js";
+import Popup from "./_snowpack/pkg/reactjs-popup.js";
+import "./_snowpack/pkg/reactjs-popup/dist/index.css.proxy.js";
 const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const daysInWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const daysMap = {
@@ -145,7 +147,7 @@ function EventDialogue() {
   }, (close) => /* @__PURE__ */ React.createElement("div", {
     classname: "eventSubmit"
   }, /* @__PURE__ */ React.createElement("form", {
-    action: "/createEvent",
+    action: "/addEvent",
     classname: "eventForm",
     method: "POST"
   }, /* @__PURE__ */ React.createElement("label", null, "Create your event here!"), /* @__PURE__ */ React.createElement("label", null, "Event Name"), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("input", {
@@ -165,7 +167,7 @@ function EventDialogue() {
   })), /* @__PURE__ */ React.createElement("div", {
     class: "eventButton"
   }, /* @__PURE__ */ React.createElement("button", {
-    id: "event-create"
-  }, "Create Event")))));
+    id: "add-create"
+  }, "Add Event")))));
 }
 export default Calendar;

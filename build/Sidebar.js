@@ -12,32 +12,22 @@ class Sidebar extends Component {
     }, /* @__PURE__ */ React.createElement("div", {
       className: "sidebar-calendars"
     }, /* @__PURE__ */ React.createElement("p", null, "Calendars"), /* @__PURE__ */ React.createElement(Popup, {
-      trigger: /* @__PURE__ */ React.createElement("button", null, "Add Event")
+      trigger: /* @__PURE__ */ React.createElement("button", null, "Add Calendar")
     }, (close) => /* @__PURE__ */ React.createElement("div", {
-      classname: "eventSubmit"
+      classname: "calendarSubmit"
     }, /* @__PURE__ */ React.createElement("form", {
-      action: "/createEvent",
-      classname: "eventForm",
+      action: "/addCalendar",
+      classname: "calendarForm",
       method: "POST"
-    }, /* @__PURE__ */ React.createElement("label", null, "Create your event here!"), /* @__PURE__ */ React.createElement("label", null, "Event Name"), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("input", {
+    }, /* @__PURE__ */ React.createElement("label", null, "Create your calendar here!"), /* @__PURE__ */ React.createElement("label", null, "Calendar Name"), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("input", {
       type: "text",
-      name: "event-name",
-      placeholder: "Event Name"
-    })), /* @__PURE__ */ React.createElement("label", null, "Event Date"), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("input", {
-      type: "date",
-      name: "event-date",
-      placeholder: "Event Date"
-    })), /* @__PURE__ */ React.createElement("label", null, "Start Time"), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("input", {
-      type: "time",
-      name: "event-start-time"
-    })), /* @__PURE__ */ React.createElement("label", null, "End Time"), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("input", {
-      type: "time",
-      name: "event-end-time"
+      name: "calendar-name",
+      placeholder: "Calendar Name"
     })), /* @__PURE__ */ React.createElement("div", {
-      class: "eventButton"
+      class: "calendarButton"
     }, /* @__PURE__ */ React.createElement("button", {
-      id: "event-create"
-    }, "Create Event")))))));
+      id: "calendar-create"
+    }, "Create Calendar")))))));
   }
 }
 export default Sidebar;
