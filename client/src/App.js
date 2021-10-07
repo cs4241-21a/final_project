@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.scss';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
 import Header from "./components/Header/Header";
@@ -34,11 +33,13 @@ class App extends Component {
     return (
         <Router>
             <Header />
-            <Switch>
-                <Route path="/">
-                    <HomePage />
-                </Route>
-            </Switch>
+            <div className="page">
+                <Switch>
+                    <Route path="/">
+                        <HomePage />
+                    </Route>
+                </Switch>
+            </div>
             <Footer />
         </Router>
     );
