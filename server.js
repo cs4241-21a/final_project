@@ -121,4 +121,26 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/build/index.html"));
 });
 
+/*
+Attempt to create a new user with the specified username/password
+If duplicate username, respond with 400
+*/
+app.delete("/delWorkout", async (req, res) => {
+  //{workoutid:}
+  const userInfo = req.body;
+  const existingUser = await mongoClient
+    .db("final")
+    .collection("users")
+    .findOne({ username: req.session.username });
+
+  if(!existingUser){
+    res.json(userInfo);
+  }
+  
+  await collection.updateOne({user: req.session.username}, {$pull:{workouts: {_id:req.body.id}}})  
+ 
+  
+  
+});
+
 app.listen(3000);
