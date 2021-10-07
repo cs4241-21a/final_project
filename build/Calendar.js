@@ -130,11 +130,42 @@ function CalendarWeek(props) {
 function CalendarDay(props) {
   return /* @__PURE__ */ React.createElement("div", {
     className: "calendar-days-day"
-  }, /* @__PURE__ */ React.createElement("p", null, props.day));
+  }, /* @__PURE__ */ React.createElement("p", null, props.day), /* @__PURE__ */ React.createElement("div", {
+    className: "event-dialogue"
+  }, /* @__PURE__ */ React.createElement(EventDialogue, null)));
 }
 function DayName(props) {
   return /* @__PURE__ */ React.createElement("div", {
     className: "calendar-day-name"
   }, /* @__PURE__ */ React.createElement("p", null, props.dayName));
+}
+function EventDialogue() {
+  return /* @__PURE__ */ React.createElement(Popup, {
+    trigger: /* @__PURE__ */ React.createElement("button", null, "Add Event")
+  }, (close) => /* @__PURE__ */ React.createElement("div", {
+    classname: "eventSubmit"
+  }, /* @__PURE__ */ React.createElement("form", {
+    action: "/createEvent",
+    classname: "eventForm",
+    method: "POST"
+  }, /* @__PURE__ */ React.createElement("label", null, "Create your event here!"), /* @__PURE__ */ React.createElement("label", null, "Event Name"), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("input", {
+    type: "text",
+    name: "event-name",
+    placeholder: "Event Name"
+  })), /* @__PURE__ */ React.createElement("label", null, "Event Date"), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("input", {
+    type: "date",
+    name: "event-date",
+    placeholder: "Event Date"
+  })), /* @__PURE__ */ React.createElement("label", null, "Start Time"), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("input", {
+    type: "time",
+    name: "event-start-time"
+  })), /* @__PURE__ */ React.createElement("label", null, "End Time"), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("input", {
+    type: "time",
+    name: "event-end-time"
+  })), /* @__PURE__ */ React.createElement("div", {
+    class: "eventButton"
+  }, /* @__PURE__ */ React.createElement("button", {
+    id: "event-create"
+  }, "Create Event")))));
 }
 export default Calendar;
