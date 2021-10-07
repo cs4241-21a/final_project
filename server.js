@@ -90,14 +90,35 @@ app.post('/login', async (req, res) => {
   }
 })
 
+Date.prototype.addDays = function(days) {
+  let date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+}
+
+function getDates(startDate, stopDate) {
+  let dateArray = new Array();
+  let currentDate = startDate;
+  while (currentDate <= stopDate) {
+    dateArray.push(new Date (currentDate));
+    currentDate = currentDate.addDays(1);
+  }
+  return dateArray;
+}
+
 app.post('/createEvent', async (req,res) => {
+  let startDate = new Date(req.body.startDate);
+  let endDate = new Date(req.body.endDate);
+  console.log(getDates(startDate,endDate));
+
+
   const entry = new EventEntry({
     owner: req.session.username,
     eventName: req.body.title,
-    //availableDates: req.body.availDates,
+    availableDates: getDates(startDate,endDate),
     //availableTimes: req.body.availTimes,
     //attendees: req.body.attendees,
-    availableDates: [],
+    //availableDates: [],
     availableTimes: [],
     attendees: [],
     description: req.body.description,
