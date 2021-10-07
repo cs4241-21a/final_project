@@ -27,7 +27,7 @@ loginForm.addEventListener('submit', event => {
           window.alert("Incorrect username or password");
           loginForm.reset();
         } else {
-          window.location.href = "index.html";
+          window.location.href = "./index.html";
         }
       });
   })
@@ -54,7 +54,7 @@ signform.addEventListener('submit', event => {
 
         else{
           response.json() 
-          window.location.href("/index.html")
+          window.location.href = "./index.html"
         }
 
       })

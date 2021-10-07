@@ -55,9 +55,10 @@ router.post("/login", bodyParser.json(), function(req, res) {
 router.post("/create", bodyParser.json(), function(req, res) {
     user = req.body.username;
     loginCollection.insertOne( req.body )
-    .then( insertResponse => collection.findOne(insertResponse.insertedId) )
+    .then( insertResponse => loginCollection.findOne(insertResponse.insertedId) )
     .then( findResponse => res.json( findResponse))
     .catch(err => {
+      console.log(err)
       res.status(500).json()
     }) 
     
@@ -65,6 +66,7 @@ router.post("/create", bodyParser.json(), function(req, res) {
 
 router.post("/logout", bodyParser.json(), function(req, res) {
     user = null;
+    req.session.login = false;
 });
 
 module.exports = router;
