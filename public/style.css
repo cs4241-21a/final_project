@@ -97,11 +97,12 @@ div[class="sliderGroup"] {
 }
 
 div[class="sliderGroupLeft"] {
-  text-align: right;
+  text-align: left;
+  margin-left: 15px;
 }
 
 div[class="sliderGroupRight"] {
-  text-align: right;
+  text-align: left;
 }
 
 label[class="sliderLabel"] {
@@ -110,8 +111,24 @@ label[class="sliderLabel"] {
 
 input[type='range'],
 br {
+  -webkit-appearance: none;
+  background-color: #ecf0f1;
+  border: 1px solid #bdc3c7;
+  width: 200px;
+  height: 10px;
+  border-radius: 10px;
   vertical-align: middle;
   line-height: 1.6
+}
+
+input[type=range]::-webkit-slider-thumb {
+  border: 1px solid #363636;
+  height: 20px;
+  width: 15px;
+  border-radius: 5px;
+  background: #535252;
+  cursor: pointer;
+  -webkit-appearance: none;
 }
 
 div[class="filtersHolder"] {
