@@ -10,9 +10,13 @@ const connection = mysql.createConnection({
 connection.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
-  var sqlUserTable = "CREATE OR REPLACE TABLE Users (username VARCHAR2(20) PRIMARY KEY, password VARCHAR2(30));";
-  var sqlListsTable = "CREATE TABLE Lists (listName VARCHAR2(30) PRIMARY KEY, description VARCHAR2(100), username VARCHAR2(20) REFERENCES Users (username));";
-  var sqlItemsTable = "CREATE TABLE Items (itemName VARCHAR2(50) PRIMARY KEY, link VARCHAR2(300) PRIMARY KEY, price NUMBER(6,2), store VARCHAR2(30), picture VARCHAR2(100), listName VARCHAR2(30) REFERENCES Lists (listName));";
+  connection.query("SELECT VERSION()", function (err, result) {
+    if (err) throw err;
+    console.log(result);
+  });
+  var sqlUserTable = "CREATE OR REPLACE TABLE wishlist.users (username VARCHAR(20) PRIMARY KEY, password VARCHAR(30)) ENGINE=InnoDB;";
+  var sqlListsTable = "CREATE OR REPLACE TABLE lists (listName VARCHAR2(30) PRIMARY KEY, description VARCHAR2(100), username VARCHAR2(20), CONSTRAINT `fk_username` FOREIGN KEY (username) REFERENCES users (username) ON DELETE CASCADE);";
+  var sqlItemsTable = "CREATE OR REPLACE TABLE items (itemName VARCHAR2(50) PRIMARY KEY, link VARCHAR2(300) PRIMARY KEY, price NUMBER(6,2), store VARCHAR2(30), picture VARCHAR2(100), listName VARCHAR2(30), CONSTRAINT `fk_listName` FOREIGN KEY (listName) REFERENCES lists (listName) ON DELETE CASCADE);";
 
   connection.query(sqlUserTable, function (err, result) {
     if (err) throw err;
