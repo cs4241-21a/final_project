@@ -38,10 +38,14 @@ passport.serializeUser(function (user, cb) {
 });
 
 passport.deserializeUser(function (username, cb) {
-    db.getUser(username).then((user, error) => {
-        if (error) return cb(error);
-        cb(null, user);
-    });
+    db.getUser(username)
+        .then((user, error) => {
+            if (error) return cb(error);
+            cb(null, user);
+        })
+        .catch(error => {
+            return cb(error)
+        });
 });
 
 // app.get('/',
@@ -86,14 +90,16 @@ app.get('/logout',
 app.get('/profile',
     ensureLoggedIn(),
     function (req, res) {
-        db.getContentForUser(req.user).then(content => {
-            res.render('profile', { user: req.user, content: content, readonly: false })
-        })
+        db.getContentForUser(req.user)
+            .then(content => {
+                res.render('profile', { user: req.user, content: content, readonly: false })
+            })
+            .catch(error => {
+                return cb(error)
+            });
     });
 
 app.get('/getSongs', (req, res) => {
-    const request = require('request');
-
     const options = {
         method: 'GET',
         url: 'https://shazam.p.rapidapi.com/songs/list-recommendations',
@@ -107,10 +113,10 @@ app.get('/getSongs', (req, res) => {
 
     request(options, function (error, response, body) {
         if (error) throw new Error(error);
-        //console.log(body);
-        res.send(body)
+        res.json(body)
         res.end()
     });
+
 })
 
 app.get('/getSongByName', (req, res) => {
@@ -129,7 +135,7 @@ app.get('/getSongByName', (req, res) => {
         if (error) throw new Error(error);
 
         //console.log(body)
-        res.send(body)
+        res.json(body)
         res.end()
     });
 
