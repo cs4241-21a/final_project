@@ -115,21 +115,21 @@ function getDates(startDate, stopDate) {
   return dateArray;
 }
 
-app.post('/createEvent', async (req,res) => {
+app.post('/createEvent', bodyparser.json(), async (req,res) => {
+  console.log(req.body);
+
   let startDate = new Date(req.body.startDate);
   let endDate = new Date(req.body.endDate);
-  console.log(getDates(startDate,endDate));
 
 
   const entry = new EventEntry({
     owner: req.session.username,
     eventName: req.body.title,
     availableDates: getDates(startDate,endDate),
-    //availableTimes: req.body.availTimes,
-    //attendees: req.body.attendees,
-    //availableDates: [],
-    availableTimes: [],
-    attendees: [],
+    availableTimes: req.body.timeRange,
+    //availableTimes: [],
+    attendees: req.body.attendees,
+    meetingDuration: req.body.duration,
     description: req.body.description,
     location: req.body.location
   })
@@ -142,26 +142,7 @@ app.post('/createEvent', async (req,res) => {
       })
   res.render('events');
 })
-/*
-app.post('/createEvent', async (req, res) => {
 
-  collection.insertOne(req.body)
-  .then(dbresponse => {
-    return collection.find({'_id':dbresponse.insertedId}).toArray()
-  })
-  .then(dbresponse =>{
-    res.json(dbresponse)
-  })
-    .then(dbresponse =>{
-      collection.updateOne({'_id':mongodb.ObjectId(req.body._id)},
-      {$set:{ user:req.session.user} })
-        .then( dbresponse=>{
-          res.json(dbresponse)
-         // console.log(dbresponse)
-        })
-  })
-})
-*/
 
 async function checkUsernamePassword(user, pass){
   let array = [];

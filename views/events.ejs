@@ -2,11 +2,11 @@
 <html lang="en">
 <%- include("./partials/header.ejs")%>
 <body>
-<script src="./js/events.js" defer></script>
+<script src="./js/eventsJS.js" defer></script>
 <%- include("./partials/nav.ejs")%>
 <p>events page</p>
 <div>
-    <form action='/createEvent' method='POST'>
+    <form id="createEventForm">
         <label for="title">Event Title:</label>
         <input id="title" name="title"></textarea>
         <br><br>
@@ -22,6 +22,10 @@
         <input type="text" id="endMinute" name="endMinute">
         <br><br>-->
 
+        <label for="attendees">Attendees:</label>
+        <textarea id="attendees" form="createEventForm" name="attendees" placeholder="List all attendees username seperated by a comma"></textarea>
+        <br>
+
         <label for="startDate">Date Range Start:</label>
         <input type="date" id="startDate" name="startDate" value="2021-10-10">
         <br><br>
@@ -30,16 +34,75 @@
         <input type="date" id="endDate" name="endDate" value="2021-10-15">
         <br><br>
 
-        <label for="description">Event Description:</label>
-        <input type="text" id="description" name="description">
-        <!--<textarea></textarea>-->
+        <label for="timeStart">Available Time Start:</label>
+        <select id="timeStart" name="timeStart">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+        </select>
+        <select id="timeStartMin" name="timeStartMin">
+            <option value="0">:00</option>
+            <!--<option value="15">:15</option>-->
+            <option value="30">:30</option>
+            <!--<option value="45">:45</option>-->
+        </select>
+        <select id="amPM1" name="amPM1">
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+        </select>
         <br><br>
+
+        <label for="timeEnd">Available Time End:</label>
+        <select id="timeEnd" name="timeEnd">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+        </select>
+        <select id="timeEndMin" name="timeEndMin">
+            <option value="0">:00</option>
+            <!--<option value="15">:15</option>-->
+            <option value="30">:30</option>
+            <!--<option value="45">:45</option>-->
+        </select>
+        <select id="amPM2" name="amPM2">
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+        </select>
+        <br><br>
+
+        <select id="duration" name="duration">
+            <option value="1">1hr</option>
+            <option value=".5">30mins</option>
+        </select>
+        <br><br>
+
+        <label for="description">Event Description:</label>
+        <textarea id="description" form="createEventForm" name="description"></textarea>
+        <br>
 
         <label for="location">Event Location:</label>
         <input type="text" id="location" name="location">
         <br><br>
 
-        <button type="submit" id="submitButton">Submit</button>
+        <button onclick="submitHandler()" id="submitButton">Submit</button>
 
     </form>
 </div>
