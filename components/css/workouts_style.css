@@ -1,0 +1,5 @@
+#loginPage {
+    grid-area: mainDivArea;
+    display: flexbox;
+    flex-direction: column;
+}
