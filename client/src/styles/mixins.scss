@@ -1,0 +1,19 @@
+// shadows
+@mixin mix-shadow-down() {
+  box-shadow: 0 $shadow-offset $shadow-blur rgba(0, 0, 0, $shadow-intensity);
+}
+
+// frameworks
+@mixin mix-framework {
+  @include mix-framework-dynamic($framework-width);
+}
+
+@mixin mix-framework-extended {
+  @include mix-framework-dynamic($framework-width-extended);
+}
+
+@mixin mix-framework-dynamic($width) {
+  box-sizing: content-box;
+  width: $width;
+  padding: 0 $framework-padding;
+}

@@ -1,6 +1,14 @@
+@import './styles/themes';
+@import './styles/variables';
+@import './styles/mixins';
+@import './styles/fonts';
+@import './styles/global';
+
+@import './components/Header/Header';
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: -apple-system, BlinkMacSystemFont, $font-family-primary, 'Segoe UI', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
