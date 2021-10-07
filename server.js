@@ -130,7 +130,7 @@ app.post("/submit", (req, res) => {
     })
     .then(function (data) {
       if (data === null) {
-        collection.insertOne(dataJSON).then((result) => res.json(result));
+        collection.insertOne(dataJSON).then((result) => res.status(200).json(result));
       } else {
         collection
           .replaceOne(

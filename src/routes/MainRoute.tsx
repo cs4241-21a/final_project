@@ -67,6 +67,12 @@ const MainRoute = () : JSX.Element => {
       headers: {
         "Content-Type": "application/json",
       },
+    }).then(function(res) {
+      if(res.status === 500) {
+        // handle notifying users that they need to be logged in to save
+      } else if(res.status === 200) {
+        // valid response, the id of object and if succeeded will be retured as json
+      }
     })
   }
 
