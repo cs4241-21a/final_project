@@ -13,6 +13,7 @@ import CharacterSelect from "../components/CharacterSelect";
 import WeaponSelect from "../components/WeaponSelect";
 import ArtifactSelect from "../components/ArtifactSelect";
 import FarmingDisplay from "../components/FarmingDisplay";
+import LoginButton from '../components/LoginButton';
 
 
 const MainRoute = () : JSX.Element => { 
@@ -83,6 +84,7 @@ const MainRoute = () : JSX.Element => {
   return (
     <>
     {/* !!! TODO (UI): Organize these components for displaying the page */}
+      <LoginButton />
       <CharacterSelect 
         characters={characters} 
         preferences={charPrefs} 
