@@ -108,7 +108,6 @@ function getDates(startDate, stopDate) {
 
 app.post('/createEvent', bodyparser.json(), async (req,res) => {
   console.log(req.body);
-  console.log(req.body.title);
 
   let startDate = new Date(req.body.startDate);
   let endDate = new Date(req.body.endDate);
@@ -118,11 +117,10 @@ app.post('/createEvent', bodyparser.json(), async (req,res) => {
     owner: req.session.username,
     eventName: req.body.title,
     availableDates: getDates(startDate,endDate),
-    //availableTimes: req.body.availTimes,
-    //attendees: req.body.attendees,
-    //availableDates: [],
-    availableTimes: [],
-    attendees: [],
+    availableTimes: req.body.timeRange,
+    //availableTimes: [],
+    attendees: req.body.attendees,
+    meetingDuration: req.body.duration,
     description: req.body.description,
     location: req.body.location
   })
