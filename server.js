@@ -155,22 +155,32 @@ app.get("*", (req, res) => {
 Attempt to create a new user with the specified username/password
 If duplicate username, respond with 400
 */
-app.delete("/delWorkout", async (req, res) => {
+app.delete("/workout", async (req, res) => {
   //{workoutid:}
-  const userInfo = req.body;
+  //const userInfo = req.body;
+
+  /*
   const existingUser = await mongoClient
     .db("final")
     .collection("users")
     .findOne({ username: req.session.username });
 
-  if(!existingUser){
+  if (!existingUser) {
     res.json(userInfo);
   }
-  
-  await collection.updateOne({user: req.session.username}, {$pull:{workouts: {_id:req.body.id}}})  
- 
-  
-  
+  */
+
+  console.log("Deleting workout " + req.query._id);
+
+  await mongoClient
+    .db("final")
+    .collection("users")
+    .updateOne(
+      { username: req.session.username },
+      { $pull: { workouts: { _id: req.query._id } } }
+    );
+
+  res.status(200).end();
 });
 
 app.listen(3000);

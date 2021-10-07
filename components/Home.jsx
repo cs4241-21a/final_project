@@ -37,7 +37,16 @@ const Home = () => {
         {user.workouts.map((workout) => (
           <div>
             <Link to={`/workout?_id=${workout._id}`}>{workout.name}</Link>
-            <button>Delete</button>
+            <button
+              onClick={async () => {
+                await fetch(`/workout?_id=${workout._id}`, {
+                  method: "DELETE",
+                });
+                mutate();
+              }}
+            >
+              Delete
+            </button>
           </div>
         ))}
       </div>
