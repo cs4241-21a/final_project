@@ -1,6 +1,5 @@
 .home-page {
   position: relative;
-  margin-top: $page-padding;
   overflow-x: visible;
   overflow-y: clip;
   display: flex;
@@ -10,8 +9,8 @@
 
   > svg {
     position: absolute;
-    top: 0;
-    width: 125%;
+    top: $gap-md;
+    width: 150%;
     fill: $background-tertiary;
     opacity: 0.3;
     filter: drop-shadow($gap-lg $gap-lg $gap-sm rgba(0, 0, 0, 0.15));
