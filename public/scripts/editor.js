@@ -21,7 +21,6 @@ const sinCityBtn = document.getElementById('sinCityBtn')
 
 // slider elements
 const brightnessSlider = document.getElementById('brightnessSlider')
-const contrastSlider = document.getElementById('contrastSlider')
 const saturationSlider = document.getElementById('saturationSlider')
 const vibranceSlider = document.getElementById('vibranceSlider')
 const exposureSlider = document.getElementById('exposureSlider')
@@ -31,33 +30,68 @@ const gammaSlider = document.getElementById('gammaSlider')
 const noiseSlider = document.getElementById('noiseSlider')
 const clipSlider = document.getElementById('clipSlider')
 const sharpenSlider = document.getElementById('sharpenSlider')
-const stackBlurSlider = document.getElementById('stackBlurSlider')
 
 // additional variables
 let imgData
 let context
 let userImage
 let cropper
+document.querySelectorAll('.range-field').forEach(slider => {
+    slider.addEventListener('change', function() {
+        let brightnessValue = brightnessSlider.value
+        let saturationValue = saturationSlider.value
+        let vibranceValue = vibranceSlider.value
+        let exposureValue = exposureSlider.value
+        let hueValue = hueSlider.value
+        let sepiaValue = sepiaSlider.value
+        let gammaValue = gammaSlider.value
+        let noiseValue = noiseSlider.value
+        let clipValue = clipSlider.value
+        let sharpenValue = sharpenSlider.value
+        Caman(canvas, function () {
+            this.revert(false)
+            this.brightness(brightnessValue)
+            this.saturation(saturationValue)
+            this.vibrance(vibranceValue)
+            this.exposure(exposureValue)
+            this.hue(hueValue)
+            this.sepia(sepiaValue)
+            this.gamma(gammaValue)
+            this.noise(noiseValue)
+            this.clip(clipValue)
+            this.sharpen(sharpenValue)
+            this.render()
+        })
+    })
+})
 
 // Sliders
-brightnessSlider.addEventListener('change', function(){
-    let value = brightnessSlider.value
+/*brightnessSlider.addEventListener('change', function(){
+    let brightnessValue = brightnessSlider.value
+    let saturationValue = saturationSlider.value
+    let vibranceValue = vibranceSlider.value
+    let exposureValue = exposureSlider.value
+    let hueValue = hueSlider.value
+    let sepiaValue = sepiaSlider.value
+    let gammaValue = gammaSlider.value
+    let noiseValue = noiseSlider.value
+    let clipValue = clipSlider.value
+    let sharpenValue = sharpenSlider.value
+    let stackBlurValue = stackBlurSlider.value
     Caman(canvas, function () {
-        this.brightness(value).render();
+        this.revert(false)
+        this.brightness(brightnessValue)
+        this.saturation(saturationValue)
+        this.vibrance(vibranceValue)
+        this.render()
     })
 })
 
 saturationSlider.addEventListener('change', function(){
     let value = saturationSlider.value
     Caman(canvas, function () {
+        this.revert(false)
         this.saturation(value).render();
-    })
-})
-
-contrastSlider.addEventListener('change', function(){
-    let value = contrastSlider.value
-    Caman(canvas, function () {
-        this.contrast(value).render();
     })
 })
 
@@ -114,7 +148,7 @@ clipSlider.addEventListener('change', function(){
 sharpenSlider.addEventListener('change', function(){
     let value = sharpenSlider.value
     Caman(canvas, function () {
-        this.sharpenSlider(value).render();
+        this.sharpen(value).render();
     })
 })
 
@@ -123,7 +157,7 @@ stackBlurSlider.addEventListener('change', function(){
     Caman(canvas, function () {
         this.stackBlur(value).render();
     })
-})
+})*/
 
 // Reset button
 resetBtn.addEventListener('click', function() {
