@@ -11,6 +11,8 @@ import WelcomeMessage from "./components/WelcomeMessage";
 import LoginPage from "./modals/LoginPage";
 import RegisterPage from "./modals/RegisterPage";
 
+import useToken from "./store/loginStore";
+
 const list = [1, 2, 3, 4];
 const list2 = [3, 4];
 
@@ -23,6 +25,8 @@ const theme = createTheme({
 });
 
 function App() {
+  const { token, setToken } = useToken();
+
   const [openLogin, setOpenLogin] = React.useState(false);
   const [openRegister, setOpenRegister] = React.useState(false);
 
@@ -46,7 +50,11 @@ function App() {
         handleLogin={handleClickOpenLogin}
       >
         {openLogin && (
-          <LoginPage loginOpen={openLogin} handleClose={handleClose} />
+          <LoginPage
+            loginOpen={openLogin}
+            setToken={setToken}
+            handleClose={handleClose}
+          />
         )}
         {openRegister && (
           <RegisterPage registerOpen={openRegister} handleClose={handleClose} />

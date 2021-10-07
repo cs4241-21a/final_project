@@ -1,17 +1,4 @@
-import {
-  Typography,
-  Box,
-  Container,
-  Grid,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  Button,
-  ButtonGroup,
-  ToggleButton,
-  ToggleButtonGroup,
-} from "@mui/material";
+import { Typography, Card, CardContent } from "@mui/material";
 import CircleIcon from "@mui/icons-material/Circle";
 import LocalLaundryServiceIcon from "@mui/icons-material/LocalLaundryService";
 import DryCleaningTwoToneIcon from "@mui/icons-material/DryCleaningTwoTone";
@@ -32,11 +19,11 @@ function MachineItem(props) {
           </Typography>
           <LocalLaundryServiceIcon
             style={{ minWidth: "120px" }}
-            paddingfontSize="large"
+            paddingfontsize="large"
           />
           {/* <DryCleaningTwoToneIcon
             style={{ minWidth: "40px" }}
-            paddingfontSize="large"
+            paddingfontsize="large"
           /> */}
         </div>
 
@@ -49,7 +36,7 @@ function MachineItem(props) {
         >
           <span>Empty</span>
           <CircleIcon
-            paddingfontSize="small"
+            paddingfontsize="small"
             style={{ minWidth: "40px", color: "#90ee90" }}
           />
         </div>

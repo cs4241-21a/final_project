@@ -6,7 +6,6 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import { Link } from "react-router-dom";
 
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
@@ -77,15 +76,15 @@ function NavBar(props) {
             >
               {auth && (
                 <div>
-                  <MenuItem onClick={handleLogin}>Sign In</MenuItem>
                   <MenuItem onClick={handleRegister}>Register</MenuItem>
+                  <MenuItem onClick={handleLogin}>Sign In</MenuItem>
                 </div>
               )}
 
               {!auth && (
                 <div>
-                  <MenuItem onClick={handleLogin}>Sign</MenuItem>
-                  <MenuItem onClick={handleRegister}>Reger</MenuItem>
+                  <MenuItem onClick={handleRegister}>My Account</MenuItem>
+                  <MenuItem onClick={handleLogin}>Sign Out</MenuItem>
                 </div>
               )}
             </Menu>

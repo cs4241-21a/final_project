@@ -1,7 +1,6 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
-import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -48,8 +47,41 @@ const RedTypography = withStyles({
   },
 })(Typography);
 
+async function loginUser(credentials) {
+  return fetch("/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  }).then((data) => data.json());
+}
+
 function LoginPage(props) {
   const [inputError, setError] = React.useState(false);
+  const usernameRef = React.useRef();
+  const passwordRef = React.useRef();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const username = usernameRef.current.value;
+    const password = passwordRef.current.value;
+
+    const registerData = {
+      username,
+      password,
+    };
+
+    const token = await loginUser(registerData);
+    console.log(token.failed);
+    if (token.failed === "false") {
+      props.setToken(token);
+      setError(false);
+    } else {
+      setError(true);
+    }
+  };
 
   return (
     <Box>
@@ -69,6 +101,7 @@ function LoginPage(props) {
 
           <TextField
             autoFocus
+            inputRef={usernameRef}
             margin="dense"
             id="username"
             label="Username"
@@ -79,6 +112,7 @@ function LoginPage(props) {
 
           <TextField
             autoFocus
+            inputRef={passwordRef}
             margin="dense"
             id="password"
             label="Password"
@@ -93,7 +127,7 @@ function LoginPage(props) {
           )}
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={props.handleLogin}>
+          <Button autoFocus onClick={handleSubmit}>
             Sign In
           </Button>
         </DialogActions>
