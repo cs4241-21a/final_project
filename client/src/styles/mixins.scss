@@ -17,3 +17,9 @@
   width: $width;
   padding: 0 $framework-padding;
 }
+
+// pages
+@mixin mix-page {
+  @include mix-framework;
+  min-height: calc(100vh - 128px);
+}

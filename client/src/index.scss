@@ -4,7 +4,10 @@
 @import './styles/fonts';
 @import './styles/global';
 
+@import './pages/HomePage/HomePage';
+
 @import './components/Header/Header';
+@import './components/Footer/Footer';
 
 body {
   margin: 0;
