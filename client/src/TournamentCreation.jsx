@@ -1,5 +1,5 @@
 import React from "react";
-import Team  from "./Team";
+import Team from "./Team";
 
 class TournamentCreation extends React.Component {
   constructor(props) {
@@ -12,32 +12,78 @@ class TournamentCreation extends React.Component {
       method: "GET",
     }).then(async (response) => {
       const json = await response.json();
-      console.log(json)
+      console.log(json);
       // this.setState({ teams: json });
     });
   }
 
   submit(e) {
-      const teamName = document.querySelector("#teamName"),
-            sum1 = document.querySelector("#summoner1"),
-            sum2 = document.querySelector("#summoner2"),
-            sum3 = document.querySelector("#summoner3"),
-            sum4 = document.querySelector("#summoner4"),
-            sum5 = document.querySelector("#summoner5"),
-            json = {
-              teamName:teamName.value,
-              summoners:[sum1.value,sum2.value,sum3.value,sum4.value,sum5.value]
-            },
-            body = JSON.stringify(json)
+    const teamName = document.querySelector("#teamName"),
+      sum1 = document.querySelector("#summoner1"),
+      sum2 = document.querySelector("#summoner2"),
+      sum3 = document.querySelector("#summoner3"),
+      sum4 = document.querySelector("#summoner4"),
+      sum5 = document.querySelector("#summoner5"),
+      json = {
+        teamName: teamName.value,
+        summoners: [sum1.value, sum2.value, sum3.value, sum4.value, sum5.value],
+      },
+      body = JSON.stringify(json);
 
-      fetch("/tournament/InsertTeam",{
-        method: "POST",
+    fetch("/insertTeam", {
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       body,
-      }).then(async (response) => {
-        const json = await response.json()
-        this.setState({teams:json})
-      })
+    }).then(async (response) => {
+      const json = await response.json();
+      this.setState({ teams: json });
+    });
+  }
+
+  update(e, i, id) {
+    const teamName = document.querySelector("#teamName" + i),
+      sum1 = document.querySelector("#sum1" + i),
+      sum2 = document.querySelector("#sum2" + i),
+      sum3 = document.querySelector("#sum3" + i),
+      sum4 = document.querySelector("#sum4" + i),
+      sum5 = document.querySelector("#sum5" + i),
+      json = {
+        teamName: teamName.value,
+        summoners: [sum1.value, sum2.value, sum3.value, sum4.value, sum5.value],
+      },
+      body = JSON.stringify(json);
+    fetch("/updateTeam", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body,
+    }).then(async (response) => {
+      const json = await response.json();
+      this.setState({ teams: json });
+    });
+  }
+
+  delete = (e,id) => {
+    const json = { _id: id },
+            body = JSON.stringify(json);
+
+    fetch("/deleteTeam", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body,
+    }).then(async (response) => {
+      const data = await response.json();
+      this.setState({ locations: data });
+      window.location.reload();
+
+
+    });
+  }
+
+  generateTournament(e) {
+    fetch("/generateTournament", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" }
+    })
   }
   render() {
     return (
@@ -97,18 +143,21 @@ class TournamentCreation extends React.Component {
                 <th scope="col" />
               </tr>
             </thead>
-            <tbody >
+            <tbody>
               {this.state.teams.map((team, i) => (
                 <Team
                   i={i}
                   _id={team._id}
                   teamName={team.teamName}
                   summoners={team.summoners}
+                  update={this.update}
+                  delete={this.delete}
                 />
               ))}
             </tbody>
           </table>
         </div>
+        <button onClick={(e) => this.generateTournament(e)}>Generate Tournament</button>
       </>
     );
   }
