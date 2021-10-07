@@ -177,4 +177,36 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/build/index.html"));
 });
 
+/*
+Attempt to create a new user with the specified username/password
+If duplicate username, respond with 400
+*/
+app.delete("/workout", async (req, res) => {
+  //{workoutid:}
+  //const userInfo = req.body;
+
+  /*
+  const existingUser = await mongoClient
+    .db("final")
+    .collection("users")
+    .findOne({ username: req.session.username });
+
+  if (!existingUser) {
+    res.json(userInfo);
+  }
+  */
+
+  console.log("Deleting workout " + req.query._id);
+
+  await mongoClient
+    .db("final")
+    .collection("users")
+    .updateOne(
+      { username: req.session.username },
+      { $pull: { workouts: { _id: req.query._id } } }
+    );
+
+  res.status(200).end();
+});
+
 app.listen(3000);
