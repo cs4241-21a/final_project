@@ -71,7 +71,7 @@ app.get("/id", (req, res) => {
 app.get("/logout", (req, res) => {
   req.session.id = "";
   req.logout();
-  res.redirect("/")
+  res.status(200).send("Logout Successful");
 });
 
 const uri =
