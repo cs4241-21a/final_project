@@ -30,6 +30,8 @@ div[class="controlHolder"] {
   width: 500px;
   flex-shrink: 0;
   padding: 10px;
+  position: relative;
+
 }
 
 div[class="textInputs"] {
