@@ -4,7 +4,8 @@ $color-secondary: darken($color-primary, 25%);
 $color-tertiary: darken($color-primary, 50%);
 
 $background-primary: #191414;
-$background-secondary: #292424;
+$background-secondary: lighten($background-primary, 6.5%);
+$background-tertiary: lighten($background-primary, 13%);
 
 $accent-primary: #C82929;
 

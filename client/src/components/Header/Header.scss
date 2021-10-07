@@ -1,8 +1,10 @@
 .header {
   @include mix-shadow-down;
+  position: relative;
+  background: $background-primary;
   display: flex;
   justify-content: center;
-  background: $background-primary;
+  z-index: 100;
 
   .header__framework {
     @include mix-framework-extended;

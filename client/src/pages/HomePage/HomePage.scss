@@ -1,0 +1,16 @@
+.home-page {
+  position: relative;
+  overflow-x: visible;
+  overflow-y: clip;
+  display: flex;
+  justify-content: center;
+
+  > svg {
+    position: absolute;
+    top: $gap-xl;
+    width: 125%;
+    fill: $background-tertiary;
+    opacity: 0.3;
+    filter: drop-shadow($gap-lg $gap-lg $gap-sm rgba(0, 0, 0, 0.15));
+  }
+}
