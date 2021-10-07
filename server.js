@@ -146,6 +146,7 @@ app.post("/workout", async (req, res) => {
 });
 
 app.post("/movement", async (req, res) => {
+  console.log("Received POST to /movement");
   if (!req.session.username) {
     console.log("Not even logged in wtf");
     res.status(401).end();
@@ -157,19 +158,15 @@ app.post("/movement", async (req, res) => {
     .db("final")
     .collection("users")
     .updateOne(
-      { 
-          username: req.session.username,
-          "workouts._id": req.query.workout_id
+      {
+        username: req.session.username,
+        "workouts._id": req.query.workout_id,
       },
 
-      { $push: 
-      {"workouts.$.movements": 
-              req.body
-      }
-  });
+      { $push: { "workouts.$.movements": req.body } }
+    );
   res.status(200).end();
 });
-
 
 // Although we want express.static, we are using react-router for routing so we only need index.html
 // Define all GET routes before this so that we don't accidentaly send index.html when we want something else
