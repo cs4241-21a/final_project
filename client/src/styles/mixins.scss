@@ -15,5 +15,6 @@
 @mixin mix-framework-dynamic($width) {
   box-sizing: content-box;
   width: $width;
-  padding: 0 $framework-padding;
+  padding-left: $framework-padding;
+  padding-right: $framework-padding;
 }
