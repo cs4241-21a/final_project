@@ -23,7 +23,7 @@
 
   .home-page__subtitle {
     @include mix-text-subtitle;
-    margin-bottom: $gap-xl;
+    margin-bottom: $gap-lg * 2;
   }
 
   .home-page__genres {

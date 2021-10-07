@@ -1,5 +1,3 @@
-import classNames from "classnames";
-
 export default function GenreCard(props) {
     return (
         <div className="genre-card">
