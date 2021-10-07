@@ -145,6 +145,32 @@ app.post("/workout", async (req, res) => {
   res.status(200).end();
 });
 
+app.post("/movement", async (req, res) => {
+  if (!req.session.username) {
+    console.log("Not even logged in wtf");
+    res.status(401).end();
+  }
+  console.log(`Adding new movement for user ${req.session.username}`);
+  console.log(`Adding new movement for workout ${req.query.workout_id}`);
+
+  const updateRes = await mongoClient
+    .db("final")
+    .collection("users")
+    .updateOne(
+      { 
+          username: req.session.username,
+          "workouts._id": req.query.workout_id
+      },
+
+      { $push: 
+      {"workouts.$.movements": 
+              req.body
+      }
+  });
+  res.status(200).end();
+});
+
+
 // Although we want express.static, we are using react-router for routing so we only need index.html
 // Define all GET routes before this so that we don't accidentaly send index.html when we want something else
 app.get("*", (req, res) => {
