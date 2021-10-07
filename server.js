@@ -16,59 +16,6 @@ const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const DiscordStrategy = require("passport-discord").Strategy;
 scopes = ["identify"];
 
-const isAuth = (req, res, next) => {
-  if (req.user) {
-    next();
-  } else {
-    res.redirect("/build/login.html");
-  }
-};
-
-app.get("/login", (request, response) => {
-  if (request.user) {
-    return response.redirect("/"); // redirect according to profile
-  }
-  // response.sendFile("");
-  sendFile(response, __dirname + "/build/login.html");
-});
-
-// simple testing to route to login initially -> change for final version
-app.get("/", (request, response) =>
-  // response.sendFile(__dirname + "/build/login.html")
-  sendFile(response, __dirname + "/build/login.html")
-);
-app.get("/build/dashboard.html", (request, response) =>
-  // response.sendFile(__dirname + "/build/dashboard.html")
-  sendFile(response, __dirname + "/build/dashboard.html")
-);
-app.get("/build/profile.html", (request, response) =>
-  // response.sendFile(__dirname + "/build/profile.html")
-  sendFile(response, __dirname + "/build/profile.html")
-);
-
-// Handles sending a file over to the front end
-const sendFile = function (response, filename) {
-  const type = mime.getType(filename);
-
-  fs.readFile(filename, function (err, content) {
-    // if the error = null, then we've loaded the file successfully
-    if (err === null) {
-      // status code: https://httpstatuses.com
-      response.writeHeader(200, { "Content-Type": type });
-      response.end(content);
-    } else {
-      // file not found, error code 404
-      response.writeHeader(404);
-      response.end("404 Error: File Not Found");
-    }
-  });
-};
-
-app.get("/logout", (request, response) => {
-  request.logOut();
-  response.redirect("/login");
-});
-
 app.use(
   session({
     secret: "keyboard cat",
@@ -93,6 +40,55 @@ passport.serializeUser(function (user, cb) {
 
 passport.deserializeUser(function (id, cb) {
   cb(null, id);
+});
+
+const isAuth = (req, res, next) => {
+  if (req.user) {
+    next();
+  } else {
+    res.redirect("/build/login.html");
+  }
+};
+
+app.get("/login", (request, response) => {
+  if (request.user) {
+    return response.redirect("/"); // redirect according to profile
+  }
+  sendFile(response, __dirname + "/build/login.html");
+});
+
+// simple testing to route to login initially -> change for final version
+app.get("/", (request, response) =>
+  sendFile(response, __dirname + "/build/login.html")
+);
+app.get("/build/dashboard.html", (request, response) =>
+  sendFile(response, __dirname + "/build/dashboard.html")
+);
+app.get("/build/profile.html", (request, response) =>
+  sendFile(response, __dirname + "/build/profile.html")
+);
+
+// Handles sending a file over to the front end
+const sendFile = function (response, filename) {
+  const type = mime.getType(filename);
+
+  fs.readFile(filename, function (err, content) {
+    // if the error = null, then we've loaded the file successfully
+    if (err === null) {
+      // status code: https://httpstatuses.com
+      response.writeHeader(200, { "Content-Type": type });
+      response.end(content);
+    } else {
+      // file not found, error code 404
+      response.writeHeader(404);
+      response.end("404 Error: File Not Found");
+    }
+  });
+};
+
+app.get("/logout", (request, response) => {
+  request.logOut();
+  response.redirect("/login");
 });
 
 passport.use(
@@ -134,9 +130,9 @@ app.get(
     await dbPromise_user;
 
     if (user) {
-      res.redirect("/build/dashboard.html");
+      res.redirect("/dashboard.html");
     } else {
-      res.redirect("/build/profile.html");
+      res.redirect("/profile.html");
     }
   }
 );
@@ -176,11 +172,11 @@ app.get(
 
     await dbPromise_user;
 
-    if (user) {
-      res.redirect("/build/dashboard.html");
-    } else {
-      res.redirect("/build/profile.html");
-    }
+    // if (user) {
+    res.redirect("/dashboard.html");
+    // } else {
+    // res.redirect("/profile.html");
+    // }
   }
 );
 
@@ -230,9 +226,9 @@ app.get(
     await dbPromise_user;
 
     if (user) {
-      res.redirect("/build/dashboard.html");
+      res.redirect("/dashboard.html");
     } else {
-      res.redirect("/build/profile.html");
+      res.redirect("/profile.html");
     }
   }
 );
@@ -276,21 +272,20 @@ app.get(
     await dbPromise_user;
 
     if (user) {
-      res.redirect("/build/dashboard.html");
+      res.redirect("/dashboard.html");
     } else {
-      res.redirect("/build/profile.html");
+      res.redirect("/profile.html");
     }
   }
 );
 
 // Will need to create .env file with variables for DB_USER, DB_PASS, and DB_HOST
-// uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/HotelReviews?retryWrites=true&w=majority`,
-(uri = `mongodb+srv://test_user:tester_user_pw@cluster0.exade.mongodb.net/`),
+(uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@${process.env.MONGO_HOST}/HotelReviews?retryWrites=true&w=majority`),
+  // (uri = `mongodb+srv://test_user:tester_user_pw@cluster0.exade.mongodb.net/`),
   (client = new MongoClient(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }));
-
 
 let collection_profile = null;
 let collection_admin = null;
@@ -368,10 +363,11 @@ const getAllPosts = async function () {
     .then((read_data) => (skill_data = read_data));
 
   let json = post_data;
-  for (let i = 0; i < json.length; i++) { //loop through all the posts 
-    let skills = []; //will hold the programming skills attached to this post 
-    let languages = []; //will hold the programming languages attached to this post 
-    for (let n = 0; n < post_skill_data.length; n++) { 
+  for (let i = 0; i < json.length; i++) {
+    //loop through all the posts
+    let skills = []; //will hold the programming skills attached to this post
+    let languages = []; //will hold the programming languages attached to this post
+    for (let n = 0; n < post_skill_data.length; n++) {
       if (post_skill_data[n].postID.equals(json[i]._id)) {
         //found post skill relation that goes with the post
         for (let t = 0; t < skill_data.length; t++) {
@@ -430,7 +426,7 @@ app.post("/submit", async (request, response) => {
       bodyContent: request.body.description,
       header: request.body.title,
       date: request.body.date,
-      postedByProfile: id,
+      postedByProfile: profileID,
       forClassNumber: courseNum,
       forClassDepartment: courseDep,
     })
