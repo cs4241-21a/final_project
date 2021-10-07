@@ -15,23 +15,23 @@ const duration = document.getElementById('duration');
 
 function getTimeRange(){
     let timeRange = [];
-    let startTime = parseInt(startTimeHr.value);
-    let endTime = parseInt(endTimeHr.value);
-    let meetingDur = parseInt(duration.value);
+    let startTime = parseFloat(startTimeHr.value);
+    let endTime = parseFloat(endTimeHr.value);
+    let meetingDur = parseFloat(duration.value);
     if(amPM1.value === "PM"){
-        startTime *= 2;
+        startTime += 12;
     }
     if(parseInt(startTimeMin.value) === 30){
         startTime += .5;
     }
     if(amPM2.value === "PM"){
-        endTime *= 2;
+        endTime += 12;
     }
     if(parseInt(endTimeMin.value) === 30){
         endTime += .5;
     }
 
-    if (startTime >= endTime){
+    if ((startTime + meetingDur) >= endTime){
         return undefined;
     }
 
