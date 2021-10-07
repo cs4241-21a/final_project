@@ -1,0 +1,15 @@
+Vuetify官网：（查询api或者ui component）
+https://vuetifyjs.com/zh-Hans/components/buttons/#section-4f7f7528
+
+Vue官网：（查询某些api的使用）
+https://cn.vuejs.org/v2/guide/events.html?#%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95
+
+mdi 图标选择：
+https://www.codesocang.com/demo/468/icons-mdi.html?
+
+发送http请求：
+https://blog.csdn.net/wulex/article/details/85040919
+
+Mounted和Created的区别：
+https://blog.csdn.net/xdnloveme/article/details/78035065
+
