@@ -18,9 +18,20 @@ const embossBtn = document.getElementById('embossBtn')
 const herMajestyBtn = document.getElementById('herMajestyBtn')
 const orangePeelBtn = document.getElementById('orangePeelBtn')
 const sinCityBtn = document.getElementById('sinCityBtn')
+
+// slider elements
 const brightnessSlider = document.getElementById('brightnessSlider')
 const contrastSlider = document.getElementById('contrastSlider')
 const saturationSlider = document.getElementById('saturationSlider')
+const vibranceSlider = document.getElementById('vibranceSlider')
+const exposureSlider = document.getElementById('exposureSlider')
+const hueSlider = document.getElementById('hueSlider')
+const sepiaSlider = document.getElementById('sepiaSlider')
+const gammaSlider = document.getElementById('gammaSlider')
+const noiseSlider = document.getElementById('noiseSlider')
+const clipSlider = document.getElementById('clipSlider')
+const sharpenSlider = document.getElementById('sharpenSlider')
+const stackBlurSlider = document.getElementById('stackBlurSlider')
 
 // additional variables
 let imgData
@@ -47,6 +58,70 @@ contrastSlider.addEventListener('change', function(){
     let value = contrastSlider.value
     Caman(canvas, function () {
         this.contrast(value).render();
+    })
+})
+
+vibranceSlider.addEventListener('change', function(){
+    let value = vibranceSlider.value
+    Caman(canvas, function () {
+        this.vibrance(value).render();
+    })
+})
+
+exposureSlider.addEventListener('change', function(){
+    let value = exposureSlider.value
+    Caman(canvas, function () {
+        this.exposure(value).render();
+    })
+})
+
+hueSlider.addEventListener('change', function(){
+    let value = hueSlider.value
+    Caman(canvas, function () {
+        this.hue(value).render();
+    })
+})
+
+sepiaSlider.addEventListener('change', function(){
+    let value = sepiaSlider.value
+    Caman(canvas, function () {
+        this.sepia(value).render();
+    })
+})
+
+gammaSlider.addEventListener('change', function(){
+    let value = gammaSlider.value
+    Caman(canvas, function () {
+        this.gamma(value).render();
+    })
+})
+
+
+noiseSlider.addEventListener('change', function(){
+    let value = noiseSlider.value
+    Caman(canvas, function () {
+        this.noise(value).render();
+    })
+})
+
+clipSlider.addEventListener('change', function(){
+    let value = clipSlider.value
+    Caman(canvas, function () {
+        this.clip(value).render();
+    })
+})
+
+sharpenSlider.addEventListener('change', function(){
+    let value = sharpenSlider.value
+    Caman(canvas, function () {
+        this.sharpenSlider(value).render();
+    })
+})
+
+stackBlurSlider.addEventListener('change', function(){
+    let value = stackBlurSlider.value
+    Caman(canvas, function () {
+        this.stackBlur(value).render();
     })
 })
 
