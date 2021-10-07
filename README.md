@@ -2,7 +2,7 @@
 
 Group #: 21
 Group Members: Aditya Kumar, Matthew Malone, William White
-1. This project is a simple photo editor using Javascript. The user can upload an image, and then manipulate it. The website can be found hosted on glitch at [Meme Machine](https://group21-meme-machine.glitch.me).
+1. This project is a simple photo editor using Javascript. The user can upload an image, and then manipulate it. The user can crop, rotate, and transform the image. Various filter and color manipulation options are also offered. We created a custom function that allows a user to "Jpegify" an image and introduce artifacts in order to distort it. The website can be found hosted on glitch at [Meme Machine](https://group21-meme-machine.glitch.me).
 2. Simply click the upload button and upload an image of reasonable size. The program will inform you if your image is too large. Note that because this uses the processing power of the client's computer, depending on the specs large images may cause lag or crashes, hence the automatic limiting of image sizes.
 3. We used three different libraries to do the bulk of the work in the project. We also used a CSS library to do the styling.
    1. Canvas: We used canvas to display the image and make real time edits to it. This was difficult to implement as we had to make it dynamically update with any changes made to the photo, and keep it working with all the libraries.
