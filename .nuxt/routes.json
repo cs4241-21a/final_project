@@ -1,0 +1,23 @@
+[
+  {
+    "name": "AboutUs",
+    "path": "/AboutUs",
+    "component": "/Users/mac/Desktop/CS 4241 Webware/final_project/pages/AboutUs.vue",
+    "chunkName": "pages/AboutUs",
+    "_name": "_31d85eda"
+  },
+  {
+    "name": "inspire",
+    "path": "/inspire",
+    "component": "/Users/mac/Desktop/CS 4241 Webware/final_project/pages/inspire.vue",
+    "chunkName": "pages/inspire",
+    "_name": "_5a80c5fc"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/Users/mac/Desktop/CS 4241 Webware/final_project/pages/index.vue",
+    "chunkName": "pages/index",
+    "_name": "_6b730a0c"
+  }
+]
