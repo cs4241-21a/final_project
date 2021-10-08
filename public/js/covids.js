@@ -1,16 +1,13 @@
 let stars = []	//create empty list of stars
-let numOfStars = 100
-
-let width = 750
-let height = 750
-
-let min_speed = 
-
-let small = 22
-let medium = 37
-let large = 55
-
-let gompei_size = 50
+const numOfStars = 100,
+      width = 750,
+      height = 750,
+      min_speed = .5,
+      max_speed = 2,
+      small = 22,
+      medium = 37,
+      large = 55,
+      gompei_size = 50
 
 let virus_img
 let sanitizer_img
@@ -26,30 +23,38 @@ function randomChoice(arr) {
 function generateStar(){
   let star = {} //Define star locally
   const quad = randomChoice([0, 1, 2, 3])
-  let x, y
+  let x, y, dx, dy
   if (quad === 0) { //x greater
     x = random(width, width+(large*2))
     y = random(1, 500)
+    dx = -random(min_speed,max_speed)
+    dy = random(min_speed,max_speed)*randomChoice([-1, 1])
   } else if (quad === 1) { //y greater
     x = random(1, 500)
     y = random(height, height+(large*2))
+    dx = random(min_speed,max_speed)*randomChoice([-1, 1])
+    dy = -random(min_speed,max_speed)
   } else if (quad === 2) { //x less
     x = random(-1*(large*2), -1)
     y = random(1, 500)
+    dx = random(min_speed,max_speed)
+    dy = random(min_speed,max_speed)*randomChoice([-1, 1])
   } else if (quad === 3) {//y less
     x = random(1, 500)
     y = random(-1*(large*2), -1)
+    dx = random(min_speed,max_speed)*randomChoice([-1, 1])
+    dy = random(min_speed,max_speed)
   }
 
   star.x = x
   star.y = y
+  star.dx = dx
+  star.dy = dy
 
   star.init_x = x
   star.init_y = y
 
   star.inPlay = false
-  star.dx = -random(.5,3)*Math.sign(x)
-  star.dy = -random(.5,3)*Math.sign(y)
 
   const set = randomChoice([{life:1, size:small}, {life:2, size:medium}, {life:3, size:large}])
   star.diam = set.size
@@ -66,8 +71,10 @@ function generateStars(){
 
 function drawStars(){
   for (let i = 0; i < numOfStars; i++) {
-    stars[i].x += randomChoice([stars[i].dx, random(.5,3), -random(.5,3)])
-    stars[i].y += randomChoice([stars[i].dy, random(.5,3), -random(.5,3)])
+    let rando_speedx = random(min_speed,max_speed)
+    let rando_speedy = random(min_speed,max_speed)
+    stars[i].x += randomChoice([stars[i].dx, rando_speedx, -rando_speedx])
+    stars[i].y += randomChoice([stars[i].dy, rando_speedy, -rando_speedy])
     if ((stars[i].x <= width) && (stars[i].y <= height) && (stars[i].x >= 0) && (stars[i].y >= 0)) {
       stars[i].inPlay = true
     }
