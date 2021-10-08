@@ -10,41 +10,34 @@ import { mutate } from "swr";
 class AddNewSetComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.props.obj.pointer = this; //change the this pointer to point to addnewsetcomponent
     this.onSetsChange = this.onSetsChange.bind(this);
   }
-
-  state = {
-    oldNumSets: 0,
-    newNumSets: 0,
-  };
-
 
   onSetsChange = function (e) {
     console.log("Performing Number Of Sets Have Changed");
     console.log(
-      `Old value of sets=${this.state.oldNumSets}, new value=${this.state.newNumSets}`
+      `Old value of sets=${this.props.parent.state.oldNumSets}, new value=${this.props.parent.state.newNumSets}`
     );
 
-    this.state.oldNumSets = this.state.newNumSets;
-    this.state.newNumSets = e.target.value;
-    if (this.state.newNumSets < 0) {
-      this.state.newNumSets = 0;
-      e.target.value = 0;
+    this.props.parent.state.oldNumSets = this.props.parent.state.newNumSets;
+    this.props.parent.state.newNumSets = e.target.value;
+    if (this.props.parent.state.newNumSets < 1) {
+      this.props.parent.state.newNumSets = 1;
+      e.target.value = 1;
     }
 
     let children = [];
 
-    if (this.state.oldNumSets < this.state.newNumSets) {
-      for (let i = this.state.oldNumSets; i < this.state.newNumSets; ++i) {
+    if (this.props.parent.state.oldNumSets < this.props.parent.state.newNumSets) {
+      for (let i = this.props.parent.state.oldNumSets; i < this.props.parent.state.newNumSets; ++i) {
         children.push(<Set setNumber={i} ></Set>);
       }
     } else {
-      for (let i = this.state.newNumSets; i < this.state.oldNumSets; ++i) {
+      for (let i = this.props.parent.state.newNumSets; i < this.props.parent.state.oldNumSets; ++i) {
         children.pop();
       }
     }
-    this.setState({ newNumSets: e.target.value });
+    this.props.parent.setState({ newNumSets: e.target.value });
   };
 
   addModifyButtonAction = async () => {
@@ -53,7 +46,7 @@ class AddNewSetComponent extends React.Component {
     //const formElement = document.getElementById("addNewMovementForm");
 
     const movementName = document.getElementById("movementName").value;
-    let numSets = this.state.newNumSets;
+    let numSets = this.props.parent.state.newNumSets;
     const sets = [];
     for (let i = 0; i < numSets; i++) {
       const set = {
@@ -85,10 +78,10 @@ class AddNewSetComponent extends React.Component {
   render() {
     const children = [];
     console.log(
-      `Performing render where newNumSets = ${this.state.newNumSets}`
+      `Performing render where newNumSets = ${this.props.parent.state.newNumSets}`
     );
 
-    for (var i = 0; i < this.state.newNumSets; i += 1) {
+    for (var i = 0; i < this.props.parent.state.newNumSets; i += 1) {
       children.push(<Set setNumber={i} />);
     }
 
@@ -118,43 +111,60 @@ const Set = (props) => (
   </div>
 );
 
-const Workout = (props) => {
-  const { user, loading, loggedOut } = useUser();
-  const parsed = queryString.parse(props.location.search);
-
-  //console.log(parsed);
-
-  if (loading || !user.username) return <div>Loading</div>;
-  if (loggedOut) return <Redirect to="/login" />;
-  if (!parsed._id) return <Redirect to="/" />;
-
-  const workoutRes = user.workouts.find(
-    (workout) => workout._id === parsed._id
-  );
-
-  if (!workoutRes) {
-    console.log("All workouts: ");
-    console.log(user.workouts.map((workout) => workout._id));
-    console.log("Couldn't find this workout, redirecting to /");
-    return <Redirect to="/" />;
-  } else {
-    let obj = {pointer: this}
-    let addModifyForm = <AddNewSetComponent workout_id={parsed._id} obj={obj}/>
-    return (
-      <div id="workoutPage">
-
-        <h1>{workoutRes.name}</h1>
-        {addModifyForm}
-        {workoutRes.movements.length === 0 ? (
-          <div>You have no movements yet :(</div>
-        ) : (
-          workoutRes.movements.map((movement) => (
-            <Movement_Card_View movement={movement} form={obj.pointer} />
-          ))
-        )}
-      </div>
-    );
+class WrapperClass extends React.Component {
+  constructor(props) {
+    super(props);
+    this.user = props.user;
+    this.parsed= props.parsed;
   }
+
+  state = {
+    oldNumSets: 0,
+    newNumSets: 0,
+  };
+
+  render() {
+    
+    const workoutRes = this.user.workouts.find(
+      (workout) => workout._id === this.parsed._id
+    );
+
+    if (!workoutRes) {
+      console.log("All workouts: ");
+      console.log(this.user.workouts.map((workout) => workout._id));
+      console.log("Couldn't find this workout, redirecting to /");
+      return <Redirect to="/" />;
+    } else {
+
+      return (      
+      <div id="workoutPage">
+          <h1>{workoutRes.name}</h1>
+          {workoutRes.movements.length === 0 ? (
+            <div>You have no movements yet :(</div>
+          ) : (
+            workoutRes.movements.map((movement) => (
+              <Movement_Card_View movement={movement} parent={this} />
+            ))
+          )}
+          <AddNewSetComponent workout_id={this.parsed._id} parent={this}/>
+        </div>
+      );
+    }
+  }
+}
+
+const Workout = (props) => {
+    const parsed = queryString.parse(props.location.search);
+    const { user, loading, loggedOut } = useUser();
+
+    //console.log(parsed);
+
+    if (loading || !user.username) return <div>Loading</div>;
+    if (loggedOut) return <Redirect to="/login" />;
+    if (!parsed._id) return <Redirect to="/" />;
+    return (
+      <WrapperClass user={user} parsed={parsed}/>
+    );
 };
 
 export default Workout;
