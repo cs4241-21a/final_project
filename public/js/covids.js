@@ -1,5 +1,5 @@
 let stars = []	//create empty list of stars
-let numOfStars = 15
+let numOfStars = 20
 
 let width = 500
 let height = 500
@@ -41,9 +41,13 @@ function generateStars(){
     
       star.init_x = x
       star.init_y = y
+      
+      star.inPlay = false
     
-      star.dx = -1*Math.sign(x)
-      star.dy = -1*Math.sign(y)
+      const speed = randomChoice([-1, -2])
+    
+      star.dx = speed*Math.sign(x)
+      star.dy = speed*Math.sign(y)
       
       const set = randomChoice([{life:1, size:small}, {life:2, size:medium}, {life:3, size:large}])
 	    star.diam = set.size
@@ -53,14 +57,16 @@ function generateStars(){
 }
 
 
-
 function drawStars(){
   for (let i = 0; i < numOfStars; i++) {
-    stars[i].x += stars[i].dx
-    stars[i].y += stars[i].dy
-    if ((stars[i].x >= width) || (stars[i].y >= height) || (stars[i].x <= 0) || (stars[i].y <= 0)) {
-      stars[i].x =
-      stars[i].y =
+    stars[i].x += randomChoice([stars[i].dx, 0])
+    stars[i].y += randomChoice([stars[i].dy, 0])
+    if ((stars[i].x <= width) && (stars[i].y <= height) && (stars[i].x >= 0) && (stars[i].y >= 0)) {
+      stars[i].inPlay = true
+    }
+    if (stars[i].inPlay && ((stars[i].x >= width+50) || (stars[i].y >= height+50) || (stars[i].x <= -50) || (stars[i].y <= -50))) {
+      stars[i].x = stars[i].init_x
+      stars[i].y = stars[i].init_y
     }
     image(virus_img, stars[i].x, stars[i].y, stars[i].diam, stars[i].diam)
   }
