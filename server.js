@@ -84,37 +84,64 @@ function IsWallBlockingDir(x, y, directionX, directionY) {
 // Check whether given pawn can move to given relative position
 function IsValidPawnMove(pawn, x, y) {
     
-    if (!IsValidPawnSpace(x, y))
+    if (!IsValidPawnSpace(x, y)){
         return false;
+    }
     
+    let otherPawn = pawnA
     if (pawn == pawnA) {
-        if (pawnB.x == x && pawnB.y == y)
-            return false;
-    } else {
-        if (pawnA.x == x && pawnA.y == y)
-            return false;
+        otherPawn = pawnB
+    }
+
+    if (otherPawn.x == x && otherPawn.y == y){
+        return false;
     }
 
     const directionX = x - pawn.x,
           directionY = y - pawn.y;
-
+    
     // Pawns shouldn't move too far or stay in place (if moving)
-    if (directionX != -1 && directionX != 1 && directionY != -1 || directionY != 1)
+    if (Math.abs(directionX) + Math.abs(directionY) > 2)
         return false;
 
     // Be suspicious of diagonals
     if (directionX != 0 && directionY != 0) {
         // Check if jumping is possible
-        if (pawn == pawnA) {
-            // Check if pawnB is adjacent 
-        } else {
-            // Check if pawnA is adjacent
+        // Check if otherPawn is adjacent
+        if (!(
+            otherPawn.x == pawn.x && otherPawn.y == y &&
+            (IsWallBlockingDir(otherPawn.x, otherPawn.y, 0, directionY) || IsValidPawnSpace(otherPawn.x, otherPawn.y + directionY)) &&
+            !IsWallBlockingDir(pawn.x, pawn.y, 0, directionY) &&
+            !IsWallBlockingDir(otherPawn.x, otherPawn.y, directionX, 0)
+            )){
+                return false
         }
-    } else {
-        // Check for walls if going straight
-        if (IsWallBlockingDir(pawn.x, pawn.y, directionX, directionY))
-            return false;
+        else if (!(
+            otherPawn.y == pawn.y && otherPawn.x == x &&
+            (IsWallBlockingDir(otherPawn.x, otherPawn.y, directionX, 0) || IsValidPawnSpace(otherPawn.x + directionX, otherPawn.y)) &&
+            !IsWallBlockingDir(pawn.x, pawn.y, directionX, 0) &&
+            !IsWallBlockingDir(otherPawn.x, otherPawn.y, 0, directionY)
+            )){
+                return false
+        }
     }
+    else if (Math.abs(directionX) == 2){
+        if (!(otherPawn.y == pawn.y && otherPawn.x == pawn.x + directionX/2 &&
+            !IsWallBlockingDir(pawn.x, pawn.y, directionX/2, 0) &&
+            !IsWallBlockingDir(otherPawn.x, otherPawn.y, directionX/2, 0))){
+                return false
+        }
+    }
+    else if (Math.abs(directionY) == 2){
+        if (!(otherPawn.x == pawn.x && otherPawn.y == pawn.y + directionY/2 &&
+            !IsWallBlockingDir(pawn.x, pawn.y, 0, directionY/2) &&
+            !IsWallBlockingDir(otherPawn.x, otherPawn.y, 0, directionY/2))){
+                return false
+        }
+    }
+    // Check for walls if going straight
+    else if (IsWallBlockingDir(pawn.x, pawn.y, directionX, directionY))
+        return false;
 
-    return 
+    return true;
 }
