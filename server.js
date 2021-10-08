@@ -515,6 +515,7 @@ app.get('/profile', (request, response) => {
 })
 
 app.post('/create_profile', bodyParser.json(), (request, response) => {
+    console.log("profileID: ", profileID)
     console.log("request: ", request.body)
 })
 
