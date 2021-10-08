@@ -1,13 +1,14 @@
 let stars = []	//create empty list of stars
-const numOfStars = 100,
+const numOfStars = 75,
       width = 750,
       height = 750,
       min_speed = .5,
       max_speed = 2,
       small = 22,
-      medium = 37,
-      large = 55,
-      gompei_size = 50
+      medium = 40,
+      large = 70,
+      gompei_size = 50,
+      thrust = 1
 
 let virus_img
 let sanitizer_img
@@ -87,9 +88,10 @@ function drawStars(){
 }
 
 function generateShip() {
-  ship.pos = createVector(width / 2, height / 2);
+  ship.pos = createVector(width/2, height/2);
   ship.vel = createVector(0, 0);
   ship.diam = gompei_size
+  ship.thrust = thrust
 }
 
 function moveShip(){
