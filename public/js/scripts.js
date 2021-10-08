@@ -1,5 +1,5 @@
-const myCalendar = new TavoCalendar('#my-calendar',
-    {date: "2021-10-1"})
+/* const myCalendar = new TavoCalendar('#my-calendar',
+    {date: "2021-10-1"}) */
 
 const loadEvents = function(){
     
