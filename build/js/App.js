@@ -1,7 +1,7 @@
-import React from "./_snowpack/pkg/react.js";
+import React from "../_snowpack/pkg/react.js";
 import Sidebar from "./Sidebar.js";
 import Calendar from "./Calendar.js";
-import "./App.css.proxy.js";
+import "../css/App.css.proxy.js";
 class App extends React.Component {
   render() {
     return /* @__PURE__ */ React.createElement("div", {

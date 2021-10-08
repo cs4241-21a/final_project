@@ -1,7 +1,7 @@
 import React from 'react';
 import Sidebar from './Sidebar';
 import Calendar from './Calendar';
-import './App.css'
+import '../css/App.css'
 
 
 class App extends React.Component {

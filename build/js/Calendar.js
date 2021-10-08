@@ -1,6 +1,6 @@
-import React, {Component} from "./_snowpack/pkg/react.js";
-import Popup from "./_snowpack/pkg/reactjs-popup.js";
-import "./_snowpack/pkg/reactjs-popup/dist/index.css.proxy.js";
+import React, {Component} from "../_snowpack/pkg/react.js";
+import Popup from "../_snowpack/pkg/reactjs-popup.js";
+import "../_snowpack/pkg/reactjs-popup/dist/index.css.proxy.js";
 const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const daysInWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const daysMap = {

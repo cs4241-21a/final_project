@@ -1,6 +1,6 @@
-import React, {Component} from "./_snowpack/pkg/react.js";
-import Popup from "./_snowpack/pkg/reactjs-popup.js";
-import "./_snowpack/pkg/reactjs-popup/dist/index.css.proxy.js";
+import React, {Component} from "../_snowpack/pkg/react.js";
+import Popup from "../_snowpack/pkg/reactjs-popup.js";
+import "../_snowpack/pkg/reactjs-popup/dist/index.css.proxy.js";
 class Sidebar extends Component {
   constructor(props) {
     super(props);

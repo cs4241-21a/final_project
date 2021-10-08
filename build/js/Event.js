@@ -1,4 +1,4 @@
-import React, {Component} from "./_snowpack/pkg/react.js";
+import React, {Component} from "../_snowpack/pkg/react.js";
 const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const daysInWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const daysMap = {

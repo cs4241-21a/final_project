@@ -1,17 +1,93 @@
 require('dotenv').config();
 const database = require('./database')(process.env.MONGODB_URI);
 const express  = require( 'express' );
+const passport = require('passport');
+const session = require('express-session');
+const GitHubStrategy = require('passport-github').Strategy;
 
+// Express app
 const app = express();
+const port = process.env.PORT || 8080;
+const domainName = "localhost";
 
-app.use(express.json())
-app.use(express.static('build'))
+// Middleware
+app.use(express.json());
+app.use('/js', express.static(__dirname + '/build/js'));
+app.use('/css', express.static(__dirname + '/build/css'));
+app.use('/_snowpack', express.static(__dirname + '/build/_snowpack'))
 
 
-app.get('/', function (req, res) {
-    res.sendFile(__dirname, '/build/index.html')
-})
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        secure: false,
+        maxAge: 30 * 60 * 1000,
+     }
+}));
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Github Authentication
+const githubClientID = process.env.GITHUB_ID;
+const githubClientSecret = process.env.GITHUB_SECRET;
+
+const isLoggedIn = (req, res, next) => {
+    if (req.user) next();
+    else res.redirect('/login');
+}
+
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+    done(null, user);
+});
+
+passport.use(new GitHubStrategy({
+    clientID: githubClientID,
+    clientSecret: githubClientSecret,
+    callbackURL: 'http://' + domainName + ':' + port + '/auth/github/callback'
+},
+function(accessToken, refreshToken, profile, cb) {
+    cb(null, profile);
+}));
+
+  // Homepage
+app.get('/', isLoggedIn, (req, res) => {
+    res.sendFile(__dirname + '/build/index.html');
+});
+
+app.get('/login', (req, res) => {
+    if(req.user) {
+        return res.redirect('/');
+    }
+    res.sendFile(__dirname + '/build/login.html');
+});
+
+app.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/login');
+});
+
+app.get('/auth/error', (req, res) => res.send('Unknown Error'));
+
+app.get('/auth/github', passport.authenticate('github', { scope: ['user:email'] }),
+function(req, res) {
+    // Nothing
+});
+
+app.get('/auth/github/callback',
+passport.authenticate('github', { failureRedirect: '/login' }),
+function(req, res) {
+    res.redirect('/');
+});
+
+// REST Endpoints
 app.post('/addCalendar', async function(req, res) {
     let response = await database.addCalendar(req.body);
     res.send(response)
@@ -57,5 +133,9 @@ app.post('/modifyTask', async function(req, res) {
     res.send(response)
 });
 
+app.post('/getUser', isLoggedIn, async function(req, res) {
+    res.send(req.user)
+});
 
-app.listen( process.env.PORT || 8080 )
+
+app.listen(port);
