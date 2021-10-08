@@ -197,7 +197,7 @@ app.get('/index', (req, res) =>{
 })
 
 app.get('/events', (req,  res) => {
-  EventEntry.find({attendees: req.session.username})
+  EventEntry.find({owner: req.session.username})
       .then(result => {
         res.render('events', {eventsList: result, sentUsername: req.session.username, title:"Events"})
       })
