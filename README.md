@@ -84,7 +84,6 @@ For authentication, we wanted to challenge ourselves more than we did in A3, whe
   - integrating kebab menu with posts on dashboard
   - profile page and related server side communication
 - Elaine
-  - profile page and related server side communication
 
 
 ### 6. Project Video
