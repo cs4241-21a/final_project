@@ -68,14 +68,133 @@ app.get("/views/login.html", (request, response) => {
 const server = app.listen(process.env.PORT || port);
 
 const wss = new ws.Server({ noServer: true });
-wss.on('connection', socket => {
+let allClients = [];
+let lobbies = [];
+
+function createLobby(password=undefined) {
+    let lobby = {
+        name: generateLobbyName(),
+        password,
+        clients: [],
+    };
+
+    lobby.addClient = nc => {
+        lobby.clients.forEach(c => {
+            c.send({packetType: "joined", id: c.id});
+        });
+        lobby.clients.push(nc);
+    }
+
+    return lobby;
+}
+
+function findLobbyWithClient(clientId) {
+    return lobbies.find(l => l.clients.some(c => c.id === clientId));
+}
+
+let _lobbyCounter = 0;
+function generateLobbyName() {
+    const name = "lobby" + _lobbyCounter;
+    _lobbyCounter++;
+    return name;
+}
+
+let _clientCounter = 0;
+function generateClientName() {
+    const name = "client" + _clientCounter;
+    _clientCounter++;
+    return name;
+}
+
+function createClient(id, socket, address){
+  return {id, socket, address, x: 0, y: 0, vx: 0, vy: 0, angle: 0};
+}
+
+wss.on('connection', (socket, req) => {
+    const clientId = generateClientName();
+    allClients.push(createClient(clientId, socket, req.socket.remoteAddress));
     socket.on('message', message => {
-        console.log("[WSS] " + message);
         socket.send("I got: " + message);
+
+        try{
+            const json = JSON.parse(message);
+            console.log("[" + req.socket.remoteAddress + "] " + json);
+            switch(json.packetType) {
+                case "update_pos":
+                    {
+                      const lobby = findLobbyWithClient(clientId);
+                      if(lobby !== undefined) {
+                        let clIndex = lobby.clients.findIndex(c => c.id == clientId);
+                        lobby.clients[clIndex].x = json.x;
+                        lobby.clients[clIndex].y = json.y;
+                        lobby.clients[clIndex].vx = json.vx;
+                        lobby.clients[clIndex].vy = json.vy;
+                        lobby.clients[clIndex].angle = json.angle;
+                      }else{
+                        console.log("Recieved " + json.packetType + " packet from client not in a lobby: " + clientId);
+                      }
+                    }
+                    break;
+                case "destroy_entity":
+                    {
+                      const lobby = findLobbyWithClient(clientId);
+                      if(lobby !== undefined) {
+                        lobby.clients.forEach(c => {
+                            if(c.id !== clientId) {
+                              c.send({packetType: "destroy_entity", eid: json.eid});
+                            }
+                        });
+                      }else{
+                        console.log("Recieved " + json.packetType + " packet from client not in a lobby: " + clientId);
+                      }
+                    }
+                    break;
+
+            }
+        }catch(e){
+            console.log("Recieved malformed packet from " + req.socket.remoteAddress + ": " + message);
+        }
     });
 });
 server.on('upgrade', (req, socket, head) => {
+    console.log("req.body.username = " + (req.body && req.body.username));
     wss.handleUpgrade(req, socket, head, socket => {
         wss.emit('connection', socket, req);
     });
 });
+
+// slow loop
+setInterval(() => {
+    let closedClients = allClients.filter(c => c.socket.readyState != 1);
+    closedClients.forEach(c => {
+        console.log("Client disconnected: " + c.address);
+    });
+    allClients = allClients.filter(c => c.socket.readyState == 1); // only keep open connections
+    allClients.forEach(c => {
+        console.log(c.address + ": " + c.socket.readyState);
+        c.socket.send("keepalive");
+    });
+
+    lobbies.forEach(l => {
+        let closedClients = l.clients.filter(c => c.socket.readyState != 1);
+        closedClients.forEach(closed => {
+            l.clients.forEach(c => {
+                c.socket.send(JSON.stringify({packetType: "disconnected", id: closed.id}));
+            });
+        });
+    });
+
+}, 1000);
+
+// fast loop
+setInterval(() => {
+    lobbies.forEach(l => {
+        l.clients.forEach(c => {
+            l.clients.forEach(c2 => {
+                if(c2.id !== c.id) {
+                    c.socket.send(JSON.stringify({packetType: "update_player", id: c2.id, x: c2.x, y: c2.y, vx: c2.vx, vy: c2.vy, angle: c2.angle}));
+                }
+            });
+        });
+    });
+}, 100);

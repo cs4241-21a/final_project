@@ -69,7 +69,6 @@ function generateStars(){
 	}
 }
 
-
 function drawStars(){
   for (let i = 0; i < numOfStars; i++) {
     let rando_speedx = random(min_speed,max_speed)
@@ -94,14 +93,25 @@ function generateShip() {
   ship.thrust = thrust
 }
 
-function moveShip(){
-  let acc = createVector(0,0);
-  if(keyIsDown(UP_ARROW)){
-     acc = createVector(0, ship.thrust );	//Add acceleration pointin along ship's axis (up)
-     acc.rotate(ship.rotation);		//Rotate by ship's rotation
+function turnShip() {
+
+  if (keyIsDown(LEFT_ARROW)) {
+    ship.rotation -= .1;
   }
-  ship.vel.add(acc);
-  ship.pos.add(ship.vel);
+  if (keyIsDown(RIGHT_ARROW)) {
+    ship.rotation += .1;
+  }
+
+}
+
+function moveShip(){
+  let acc = createVector(0,0)
+  if(keyIsDown(UP_ARROW)){
+     acc = createVector(0, ship.thrust ) //Add acceleration pointin along ship's axis (up)
+     acc.rotate(ship.rotation) //Rotate by ship's rotation
+  }
+  ship.vel.add(acc)
+  ship.pos.add(ship.vel)
 }
 
 function checkEdges(obj) {
@@ -124,7 +134,12 @@ function displayShip(){
   push();
   translate(ship.pos.x, ship.pos.y)
   rotate(ship.rotation)
-  image(gompei_img, ship.pos.x, ship.pos.y, ship.diam, ship.diam)
+  beginShape();
+  vertex(0, -25);
+  vertex(15, 15);
+  vertex(-15, 15);
+  endShape();
+  //image(gompei_img, ship.pos.x, ship.pos.y, ship.diam, ship.diam)
   pop();
 }
 
@@ -159,5 +174,6 @@ function draw() {
   background(255)
   drawStars()
   displayShip()
+  turnShip()
   moveShip()
 }
