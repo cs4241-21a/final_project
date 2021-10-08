@@ -37,10 +37,14 @@ function alert(message, type) {
 
 async function editEvent(eventID){
     let attendeesList = document.getElementById('attendees' + eventID).value.split(",");
+    let evntDate = document.getElementById('finalDate' + eventID).value;
+    let elementLoc = 'finalTime' + eventID + evntDate;
+    let startTime = document.getElementById(elementLoc);
+    console.log(startTime.text)
     const json = {
         eventID: eventID,
-        chosenEventDate: document.getElementById('finalDate' + eventID).value,
-        chosenStartTime: document.getElementById('finalTime' + eventID).value,
+        chosenEventDate: evntDate,
+        chosenStartTime: startTime,
         description: document.getElementById('description' + eventID).value,
         location: document.getElementById('location' + eventID).value,
         attendees: attendeesList,
@@ -57,6 +61,16 @@ async function editEvent(eventID){
     });
 
     window.location.reload();
+}
+let oldElementVal = "";
+function showDiv(element) {
+    if (element.value != oldElementVal) {
+        document.getElementById('hiddenTime' + element.value).style.display = 'block';
+        if (oldElementVal !== "") {
+            document.getElementById('hiddenTime' + oldElementVal).style.display = 'none';
+        }
+        oldElementVal = element.value;
+    }
 }
 
 
@@ -91,7 +105,7 @@ function getTimeRange(){
 }
 
 async function submitHandler() {
-    let attendeesList = attendees.value.split(",");
+    let attendeesList = attendees.value.split(", ");
     let timeRange = getTimeRange();
     
     let startDate = eventCalendar.getStartDate();
@@ -133,4 +147,24 @@ async function submitHandler() {
 function openEventMaker(){
     document.getElementById('eventMaker').style.display = "block";
     document.getElementById('eventMakerBtn').style.display = "none";
+}
+
+async function addUserAvail(eventID){
+
+    const json = {
+            eventID: eventID,
+
+        },
+        body = JSON.stringify(json);
+
+    // submit new value
+    await fetch('/addUserAvail', {
+        method: 'POST',
+        body,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+
+    window.location.reload();
 }

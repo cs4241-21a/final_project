@@ -23,7 +23,7 @@ const eventSchema = new Schema({
         required: true
     },
     chosenStartTime: {
-        type: Date,
+        type: String,
         required: false
     },
     meetingDuration:{
