@@ -4,17 +4,28 @@ class TournamentPage extends React.Component {
 
   constructor(props) {
     super(props)
+    console.log(this.props.match.params)
     this.state = { matches: [] }
     this.load()
   }
 
   load() {
-    fetch("htpp://localhost:3001/tournament/loadMatches", {
-      method: "GET",
+    console.log(this.props.match.params.tournamentId)
+    console.log(this.props.match.params.tournamentId)
+
+    const json = { 
+                  tournamentId:this.props.match.params.tournamentId },
+    body = JSON.stringify(json);
+    console.log(body)
+    fetch("http://localhost:3001/tournament/loadMatches", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+    },
+      body,
       credentials: "include"
     }).then(async (response) => {
       const json = await response.json();
-      this.setState({ matches: json })
     })
   }
   render() {

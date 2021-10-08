@@ -1,24 +1,33 @@
 import React from "react";
+import { useHistory, useParams } from "react-router";
 import Team from "../components/Team";
 
 class TournamentCreationPage extends React.Component {
+  
   constructor(props) {
     super(props);
-    this.state = { teams: [] };
+    
+     this.state = { teams: [],userId:this.props.match.params.userId};
+     this.load()
   }
 
   load() {
-    fetch("http://localhost:3001/loadTeams", {
+
+    fetch("http://localhost:3001/tournament/loadTeams", {
       method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+    },
       credentials: 'include'
     }).then(async (response) => {
       const json = await response.json();
       console.log(json);
-      // this.setState({ teams: json });
+      this.setState({ teams: json })
     });
   }
 
-  submit(e) {
+   submit(e) {
+    
     const teamName = document.querySelector("#teamName"),
       sum1 = document.querySelector("#summoner1"),
       sum2 = document.querySelector("#summoner2"),
@@ -26,14 +35,17 @@ class TournamentCreationPage extends React.Component {
       sum4 = document.querySelector("#summoner4"),
       sum5 = document.querySelector("#summoner5"),
       json = {
+        userId: this.props.match.params.userId,
         teamName: teamName.value,
         summoners: [sum1.value, sum2.value, sum3.value, sum4.value, sum5.value],
       },
       body = JSON.stringify(json);
 
-    fetch("http://localhost:3001/insertTeam", {
+     fetch("http://localhost:3001/tournament/insertTeam", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        'Content-Type': 'application/json',
+    },
       body,
       credentials: 'include'
     }).then(async (response) => {
@@ -50,15 +62,18 @@ class TournamentCreationPage extends React.Component {
       sum4 = document.querySelector("#sum4" + i),
       sum5 = document.querySelector("#sum5" + i),
       json = {
+        _id:id,
         teamName: teamName.value,
         summoners: [sum1.value, sum2.value, sum3.value, sum4.value, sum5.value],
       },
       body = JSON.stringify(json);
-    fetch("http://localhost:3001/updateTeam", {
+     fetch("http://localhost:3001/tournament/updateTeam", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        'Content-Type': 'application/json',
+    },
       body,
-      credentials: 'include'
+     credentials: 'include'
     }).then(async (response) => {
       const json = await response.json();
       this.setState({ teams: json });
@@ -69,25 +84,36 @@ class TournamentCreationPage extends React.Component {
     const json = { _id: id },
       body = JSON.stringify(json);
 
-    fetch("http://localhost:3001/deleteTeam", {
+    fetch("http://localhost:3001/tournament/deleteTeam", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        'Content-Type': 'application/json',
+    },
       body,
       credentials: 'include'
     }).then(async (response) => {
-      const data = await response.json();
-      this.setState({ locations: data });
-      // window.location.reload();
+      const json = await response.json();
+     this.setState({ teams: json });
 
 
     });
   }
 
   generateTournament(e) {
-    fetch("/generateTournament", {
+
+    fetch("http://localhost:3001/tournament/generateTournament", {
       method: "POST",
-      headers: { "Content-Type": "application/json" }
-    })
+      headers: {
+        'Content-Type': 'application/json',
+    },
+    credentials: 'include'
+    }).then(async (response) => {
+      const json = await response.json();
+      this.props.history.push(`/tournament/${json._id}`);
+
+
+
+    });
   }
   render() {
     return (

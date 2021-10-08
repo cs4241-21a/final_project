@@ -4,17 +4,10 @@ class Match extends React.Component {
     render() {
         return (
           <>
-            <tr>
-              <td>
-              </td>
-              <td>
-              </td>
-              <td>
-              </td>
-              <td>
-              </td>
-            </tr>
-          </>
+          <tr>
+            <td>{this.props.teamName1 + " VS " + this.props.teamName2}</td>
+          </tr>
+        </>
         );
       }
 }

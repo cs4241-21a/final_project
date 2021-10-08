@@ -14,7 +14,7 @@ function App() {
         <Route path='/login' component={LoginPage} />
         <Route path='/register' component={RegisterPage} />
         <Route path='/tournament-create/:userId' component={TournamentCreationPage} />
-        <Route path='/tournament/:userId' component={TournamentPage} />
+        <Route path='/tournament/:tournamentId' component={TournamentPage} />
         <Route path='*'>
           <ErrorPage errorCode={'404 Not Found'} errorMessage={'The page you are looking for does not exist.'} />
         </Route>
