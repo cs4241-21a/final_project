@@ -157,5 +157,5 @@ function draw() {
   stroke(255)
   strokeWeight(3)
   drawStars()
+  displayShip()
 }
-
