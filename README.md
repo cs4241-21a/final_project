@@ -68,8 +68,7 @@ For authentication, we wanted to challenge ourselves more than we did in A3, whe
 - Renee
   - project management, role delegation, meeting scheduling
   - login page and oauth functionality
-  - readme and proposal writeup
-  - video scripting 
+  - readme and proposal writeups, video scripting 
 - Chris
   - all database configuration, management, and querying
   - all styling
