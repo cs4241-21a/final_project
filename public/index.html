@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel=icon href='./img/favicon.ico' type="image/ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.css"
+          integrity="sha512-+VDbDxc9zesADd49pfvz7CgsOl2xREI/7gnzcdyA9XjuTxLXrdpuz21VVIqc5HPfZji2CypSbxx1lgD7BgBK5g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link href="style.css" rel="stylesheet">
+    <title>Meme Machine</title>
+</head>
+
+<body class="d-flex flex-row">
+<div class="editor">
+    <input type="file" id="imageInput" class="btn btn-outline-primary" accept="image/*"/>
+    <button class="btn btn-success" id="download">Download</button>
+    <button class="btn btn-danger" id="resetButton">Reset</button>
+    <br/>
+    <canvas id="imgCanvas" width="1000" height="800" style="padding-top: 10px; padding-right: 10px;">Your browser does not support canvas.</canvas>
+</div>
+<div class="imageHolder">
+
+</div>
+<div class="controlHolder">
+    <label class="sectionLabel">Captions</label>
+    <div class="textInputs">
+        <input type="text" class="form-control" id="topText" placeholder="TOP TEXT">
+        <label for="topText" class="input-group mb-3">
+            <input type="number" id="topTextSize" class="form-control" placeholder="Text Size">
+            <button class="btn btn-primary" id="topTextBtn">Add Text</button>
+        </label>
+        <br/>
+        <input type="text" class="form-control" id="bottomText" placeholder="BOTTOM TEXT">
+        <label for="bottomText" class="input-group mb-3">
+            <input type="number" id="bottomTextSize" class="form-control" placeholder="Text Size">
+            <button class="btn btn-primary" id="bottomTextBtn">Add Text</button>
+        </label>
+    </div>
+    <label class="sectionLabel">Image Transformations</label>
+    <div class="cropControls">
+        <button disabled class="btn btn-secondary" id="startCropBtn" value="Start Cropping">Start Cropping</button>
+        <button disabled class="btn btn-secondary" id="cropBtn" type="button" value="Crop">Crop Image</button>
+        <button disabled class="btn btn-secondary" id="restoreCropBtn" type="button" value="Restore">Reset Image</button>
+    </div>
+    <div class="rotators">
+        <button disabled class="btn btn-secondary" id="rotateLeft" type="button" value="Rotate Left">RotateLeft</button>
+        <button disabled class="btn btn-secondary" id="rotateRight" type="button" value="Rotate Right">RotateRight</button>
+    </div>
+    <div class="flippers">
+        <button disabled class="btn btn-secondary" id="flipX" type="button" value="Flip X">Flip X</button>
+        <button disabled class="btn btn-secondary" id="flipY" type="button" value="Flip Y">Flip Y</button>
+    </div>
+    <label class="sectionLabel">Color Edits</label>
+    <div class="sliderGroup">
+        <div class="sliderGroupLeft">
+            <label class="form-range"> Brightness: <input id="brightnessSlider" type="range" class="range-field" min="-100" max="100" value="0"> </label>
+            <label class="form-range"> Saturation: <input id="saturationSlider" type="range" class="range-field" min="-100" max="100" value="0"> </label>
+            <label class="form-range"> Vibrance: <input id="vibranceSlider" type="range" class="range-field" min="-100" max="100" value="0"> </label>
+            <label class="form-range"> Exposure: <input id="exposureSlider" type="range" class="range-field" min="-100" max="100" value="0"> </label>
+            <label class="form-range"> Hue: <input id="hueSlider" type="range" class="range-field" min="0" max="100" value="0"> </label>
+        </div>
+        <div class="sliderGroupRight">
+            <label class="form-range"> Sepia: <input id="sepiaSlider" type="range" class="range-field" min="0" max="100" value="0"> </label>
+            <label class="form-range"> Gamma: <input id="gammaSlider" type="range" class="range-field" min="1" max="10" value="1"> </label>
+            <label class="form-range"> Noise: <input id="noiseSlider" type="range" class="range-field" min="0" max="100" value="0"> </label>
+            <label class="form-range"> Clip: <input id="clipSlider" type="range" class="range-field" min="0" max="100" value="0"> </label>
+            <label class="form-range"> Sharpen: <input id="sharpenSlider" type="range" class="range-field" min="0" max="100" value="0"> </label>
+        </div>
+    </div>
+    <label class="sectionLabel">Premade Filters</label>
+    <div class="filtersHolder">
+        <div class="filterSubgroup">
+            <button id="compressBtn" class="btn btn-success" value="Compress">Compress</button>
+            <button id="greyscaleBtn" class="btn btn-success" value="Greyscale">Greyscale</button>
+        </div>
+        <div class="filterSubgroup">
+            <button id="embossBtn" class="btn btn-success" value="Emboss">Emboss</button>
+        </div>
+        <div class="filterSubgroup">
+            <button id="herMajestyBtn" class="btn btn-success" value="Her Majesty">Her Majesty</button>
+            <button id="orangePeelBtn" class="btn btn-success" value="Orange Peel">Orange Peel</button>
+            <button id="sinCityBtn" class="btn btn-success" value="Sin City">Sin City</button>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/caman"></script>
+<script src="https://cdn.jsdelivr.net/npm/cropperjs"></script>
+<script src="./scripts/editor.js"></script>
+
+</body>
+
+</html>

@@ -1,51 +1,25 @@
-# Final Project
-*Due before the start of class, October 11th (final day of the term)*
+### CS4241 Final Project
 
-For your final project, you'll implement a web application that exhibits understanding of the course materials. 
-This project should provide an opportunity to both be creative and to pursue individual research and learning goals.
+Group #: 21
 
-## General description
-Your project should consist of a complete Web application, exhibiting facets of the three main sections of the course material:
+Group Members: Aditya Kumar, Matthew Malone, William White
 
-- Static Web page content and design. You should have a project that is accessible, easily navigable, and features significant content.
-- Dynamic behavior implemented with JavaScript (TypeScript is also allowed if your group wants to explore it).
-- Server-side programming *using Node.js*. Typically this will take the form of some sort of persistent data (database), authentication, and possibly server-side computation. 
-- A video (less than five minutes) where each group member explains some aspect of the project. An easy way to produce this video is for you all the groups members to join a Zoom call that is recorded; each member can share their screen when they discuss the project or one member can "drive" the interface while other members narrate (this second option will probably work better.) The video should be posted on YouTube or some other accessible video hosting service. Make sure your video is less than five minutes, but long enough to successfully  explain your project and show it in action. There is no minimum video length.
-
-## Project ideation
-Excellent projects typically serve someone/some group; for this assignment you need to define your users and stakeholders. I encourage you to identify projects that will have impact, either artistically, politically, or in terms of productivity. 
-
-## Logistics
-### Team size
-Students are will work in teams of 3-5 students for the project; teams of two can be approved with the permission of the instructor. Working in teams should help enable you to build a good project in a limited amount of time.  Use the `#project-logistics` channel in Discord to pitch ideas for final projects and/or find fellow team members as needed.
-
-Teams must be in place by end of day on Saturday, September 25th. If you have not identified a team at this point, you will be assigned a team. You will be given some class time on Monday to work on your proposal, but please plan on reserving additional time as needed.
-
-### Deliverables
-
-__Proposal:__ 
-Provide an outline of your project direction and the names of associated team members. 
-The outline should have enough detail so that staff can determine if it meets the minimum expectations, or if it goes too far to be reasonable by the deadline. Please include a general description of a project, and list of key technologies/libraries you plan on using (e.g. React, Three.js, Svelte, TypeScript etc.). Name the file proposal.md and submit a pull request.
-Submit a PR to turn it in by Monday, September 27th at11:59 PM. Only one pull request is required per team.
-
-There are no other scheduled checkpoints for your project. 
-
-#### Turning in Your Outline / Project
-Submit a second PR on the final project repo to turn in your app and code. Again, only one pull request per team.
-
-Deploy your app, in the form of a webpage, to Glitch/Heroku/Digital Ocean or some other service; it is critical that the application functions correctly wherever you post it.
-
-The README for your second pull request doesn’t need to be a formal report, but it should contain:
-
-1. A brief description of what you created, and a link to the project itself (two paragraphs of text)
-2. Any additional instructions that might be needed to fully use your project (login information etc.)
-3. An outline of the technologies you used and how you used them.
-4. What challenges you faced in completing the project.
-5. What each group member was responsible for designing / developing.
-6. A link to your project video.
-
-Think of 1,3, and 4 in particular in a similar vein to the design / tech achievements for A1—A4… make a case for why what you did was challenging and why your implementation deserves a grade of 100%.
-
-## FAQs
-
-- **Can I use XYZ framework?** You can use any web-based frameworks or tools available, but for your server programming you need to use Node.js. Your client-side scripting language should be either JavaScript or TypeScript.
+1. This project is a simple photo editor using Javascript. The user can upload an image, and then manipulate it. The user can crop, rotate, and transform the image. Various filter and color manipulation options are also offered. We created a custom function that allows a user to "Jpegify" an image and introduce artifacts in order to distort it. The website can be found hosted on glitch at [Meme Machine](https://group21-meme-machine.glitch.me).
+2. Simply click the upload button and upload an image of reasonable size. The program will inform you if your image is too large. Note that because this uses the processing power of the client's computer, depending on the specs large images may cause lag or crashes, hence the automatic limiting of image sizes.
+3. We used three different libraries to do the bulk of the work in the project. We also used a CSS library to do the styling.
+   1. Canvas: We used canvas to display the image and make real time edits to it. This was difficult to implement as we had to make it dynamically update with any changes made to the photo, and keep it working with all the libraries.
+   2. Cropper-JS: CropperJS was chosen as a cropping tool library because of its integration to canvas. This allows the user to crop out sections of an image, rotate, and transform images. This was difficult to get working because we needed to get it imported to the client somehow. We wound up having to use Helmet-CSP to get all our scripts working properly. We also had to dynamically program all the controls to enable/disable themselves as necessary.
+   3. Caman: Caman is a third party library used to manipulate photos. It was chosen because of its easy integration to canvas. It was used to make all the sliders for editing brightness, saturation, etc. It was also used to apply several filters to the image. This was challenging to implement simply because the documentation wasn't that great, so we had to do a lot of experimentation to get it to work properly. It was implemented by use of buttons and sliders.
+   4. We used basic javascript photo manipulation to add a button that repeatedly converts an image into a jpeg to introduce artifacts. This can be used to distort any image and can be found by clicking the Compress button.
+   5. Bootstrap was used to design the layout and styling of the websites. It was used to make buttons look nicer, and we also used it to style sliders and div containers.
+   6. Helmet-CSP was used to set content security policy headers to allow inline scripts to be included from Javascript CDNs.
+4. Challenges:
+   1. The first challenge we found was getting the scripts to the client. We found out that we needed to set content security policy headers to get the Caman and CropperJS libraries included. We wound up using Helmet-CSP to set content security policy headers for the project.
+   2. The second challenge we faced was getting the libraries to cooperate with canvas. Cropper for example is good for making edits to a photo file, but we needed to write code to dynamically update the canvas to reflect changes to the image data.
+   3. Bootstrap was a completely new experience for us, so we needed to learn how to use it from scratch for this project.
+   4. The fourth challenge we encountered was that we needed a concise way to implement multiple listeners for the Caman JS sliders and make them apply in combination to each other. This was accomplished by writing one listener and applying it to the entire array of sliders.
+5. What each team member was responsible for:
+   1. Matthew Malone: Responsible for server backend, cropperJS implementation, and canvas setup. Creation of HTML controls for CropperJS.
+   2. Aditya Kumar: Responsible for Caman setup and sliders/filters. Video creation and editing. Creation of HTML controls for CamanJS.
+   3. Will White: Responsible for all styling of webpages. Learned and used bootstrap to accomplish styling of the editor.
+6. [Project Video](https://drive.google.com/file/d/1e4F3sxtnmZ6tdkjJp6dVW4bQ-zrbjwna/view?usp=sharing)

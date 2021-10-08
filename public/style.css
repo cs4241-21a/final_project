@@ -1,0 +1,148 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  margin: 2em 1em;
+  background-color: rgb(237, 250, 252);
+}
+
+h1 {
+  line-height: 1.1;
+}
+
+input {
+  border: 1px solid silver;
+  font-size: 16px;
+  padding: 5px;
+}
+
+div[class="editor"] {
+  margin-bottom: 5px;
+  margin-left: 15px;
+}
+
+label[class="sectionLabel"] {
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  font-size: large;
+  padding: 5px;
+}
+
+div[class="controlHolder"] {
+  border: 3px solid rgb(180, 187, 189);
+  border-radius: 25px;
+  background-color: rgb(192, 209, 212);
+  width: 500px;
+  flex-shrink: 0;
+  padding: 10px;
+  position: relative;
+
+}
+
+div[class="textInputs"] {
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+input [type="text"], [class="pull-left"]{
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+}
+
+label[class="topInputs"] {
+  padding: 10px;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+}
+
+label[class="bottomInputs"] {
+  padding: 10px;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+}
+
+div[class="cropControls"] {
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+div[class="rotators"] {
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+div[class="flippers"] {
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+div[class="sliderGroup"] {
+  border: 2px solid rgb(178, 184, 185);
+  border-radius: 5px;
+  background-color: rgb(185, 201, 204);
+  width: 100%;
+  flex-shrink: 0;
+  padding: 5px;
+  display: flex;
+}
+
+div[class="sliderGroupLeft"] {
+  text-align: left;
+  margin-left: 15px;
+}
+
+div[class="sliderGroupRight"] {
+  text-align: left;
+}
+
+label[class="sliderLabel"] {
+  min-width: 4.5em
+}
+
+input[type='range'],
+br {
+  -webkit-appearance: none;
+  background-color: #ecf0f1;
+  border: 1px solid #bdc3c7;
+  width: 200px;
+  height: 10px;
+  border-radius: 10px;
+  vertical-align: middle;
+  line-height: 1.6
+}
+
+input[type=range]::-webkit-slider-thumb {
+  border: 1px solid #363636;
+  height: 20px;
+  width: 15px;
+  border-radius: 5px;
+  background: #535252;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+
+div[class="filtersHolder"] {
+  border: 2px solid rgb(178, 184, 185);
+  border-radius: 5px;
+  background-color: rgb(185, 201, 204);
+  width: 100%;
+  flex-shrink: 0;
+  padding: 10px;
+  text-align: center;
+}
+
+div[class="filterSubgroup"] {
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+}

@@ -1,0 +1,25 @@
+{
+  "name": "a4-final-project",
+  "version": "1.0.0",
+  "description": "Submission for Group 21",
+  "author": "God",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": "https://github.com/hellofellowkids/final_project",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-validator": "^6.12.1",
+    "morgan": "^1.10.0",
+    "cors": "^2.8.5",
+    "browserify": "^17.0.0",
+    "cropperjs": "^1.5.12",
+    "helmet-csp": "^3.4.0",
+    "caman": "^4.1.2"
+  },
+  "engines": {
+    "node": "14.x"
+  },
+  "license": "NONE"
+}
