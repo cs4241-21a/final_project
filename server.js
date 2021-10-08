@@ -116,7 +116,7 @@ function getDates(startDate, stopDate) {
 }
 
 app.post('/editEvent', bodyparser.json(), async(req, res) => {
-  EventEntry.findByIdAndUpdate(req.body.eventID, {chosenEventDate: req.body.chosenEventDate, choseStartTime: req.body.choseStartTime, location: req.body.location, description: req.body.description, attendees: req.body.attendees})
+  EventEntry.findByIdAndUpdate(req.body.eventID, {chosenEventDate: req.body.chosenEventDate, chosenStartTime: req.body.chosenStartTime, location: req.body.location, description: req.body.description, attendees: req.body.attendees})
       .then(result =>{
         //console.log(result)
       })

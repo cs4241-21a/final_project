@@ -38,9 +38,7 @@ function alert(message, type) {
 async function editEvent(eventID){
     let attendeesList = document.getElementById('attendees' + eventID).value.split(",");
     let evntDate = document.getElementById('finalDate' + eventID).value;
-    let elementLoc = 'finalTime' + eventID + evntDate;
-    let startTime = document.getElementById(elementLoc);
-    console.log(startTime.text)
+    let startTime = document.getElementById('finalTime' + eventID + evntDate).value;
     const json = {
         eventID: eventID,
         chosenEventDate: evntDate,

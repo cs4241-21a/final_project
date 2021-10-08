@@ -134,18 +134,18 @@
                                 <%for (let j = 0; j < event.availableTimes[i].length; j++ ){ %>
                                     <% if (event.availableTimes[i][j] > 11.5){ %>
                                         <% if (event.availableTimes[i][j] === 12.5 || event.availableTimes[i][j] === 12){%>
-                                        <option value=<%event.availableTimes[i][j]%>>
+                                        <option value=<%=event.availableTimes[i][j]%>>
                                             <%= event.availableTimes[i][j]%>PM
                                         </option>
                                         <%} else if(event.availableTimes[i][j] === 24 || event.availableTimes[i][j] === 24.5){%>
                                             <%= event.availableTimes[i][j] - 12%>AM
                                         <% } else {%>
-                                        <option value=<%event.availableTimes[i][j]%>>
+                                        <option value=<%=event.availableTimes[i][j]%>>
                                             <%= event.availableTimes[i][j] - 12%>PM
                                         </option>
                                         <%}%>
                                     <%} else {%>
-                                    <option value=<%event.availableTimes[i][j]%>>
+                                    <option value=<%=event.availableTimes[i][j]%>>
                                         <%= event.availableTimes[i][j]%>AM
                                     </option>
                                     <%}%>
