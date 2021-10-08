@@ -5,14 +5,15 @@
     <script src="./js/eventsJS.js" defer></script>
     <%- include("./partials/nav.ejs")%>
     <div class="container-sm row mx-auto" style="width: 70%">
-        <div class="col-sm-5 m-5 p-2 bg-light border align-self-center">
-            <h4>Event Date Ranges:</h4>
-            <hr>
-            <div id="eventCalendar"></div>
-        </div>
-        <div class="col-md-4 m-5 p-3">
+        <button onclick="openEventMaker()" id="eventMakerBtn">Make Event</button>
+
+        <div class="col-md-4 m-5 p-3 hidden" id="eventMaker">
             <h2>Event Creator</h2>
             <hr>
+            <div>
+                <h4>Event Date Ranges:</h4>
+                <div id="eventCalendar"></div>
+            </div>
             <form id="createEventForm">
                 <label for="title">Title:</label>
                 <input id="title" name="title">
@@ -161,4 +162,3 @@
 <%- include("./partials/footer.ejs")%>
 </body>
 </html>
-                                

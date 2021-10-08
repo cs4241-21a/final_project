@@ -129,3 +129,8 @@ async function submitHandler() {
     eventCalendar.clear();
     window.location.reload();
 }
+
+function openEventMaker(){
+    document.getElementById('eventMaker').style.display = "block";
+    document.getElementById('eventMakerBtn').style.display = "none";
+}
