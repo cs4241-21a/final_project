@@ -1,7 +1,11 @@
-const express = require('express');
+import express from 'express';
+import path from 'path';
+import dotenv from 'dotenv';
+dotenv.config();
+import SpotifyService from "./SpotifyService.js";
 
 const port = 5000;
-const dir = `${__dirname}/client/build`;
+const dir = `${path.resolve()}/client/build`;
 
 // server
 const server = express();
