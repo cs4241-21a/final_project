@@ -10,6 +10,7 @@ import { mutate } from "swr";
 class AddNewSetComponent extends React.Component {
   constructor(props) {
     super(props);
+    this.props.obj.pointer = this; //change the this pointer to point to addnewsetcomponent
     this.onSetsChange = this.onSetsChange.bind(this);
   }
 
@@ -17,6 +18,7 @@ class AddNewSetComponent extends React.Component {
     oldNumSets: 0,
     newNumSets: 0,
   };
+
 
   onSetsChange = function (e) {
     console.log("Performing Number Of Sets Have Changed");
@@ -35,7 +37,7 @@ class AddNewSetComponent extends React.Component {
 
     if (this.state.oldNumSets < this.state.newNumSets) {
       for (let i = this.state.oldNumSets; i < this.state.newNumSets; ++i) {
-        children.push(<Set setNumber={i}></Set>);
+        children.push(<Set setNumber={i} ></Set>);
       }
     } else {
       for (let i = this.state.newNumSets; i < this.state.oldNumSets; ++i) {
@@ -45,7 +47,7 @@ class AddNewSetComponent extends React.Component {
     this.setState({ newNumSets: e.target.value });
   };
 
-  newMovement = async () => {
+  addModifyButtonAction = async () => {
     console.log("Adding new movement");
 
     //const formElement = document.getElementById("addNewMovementForm");
@@ -62,12 +64,23 @@ class AddNewSetComponent extends React.Component {
       sets.push(set);
     }
 
-    const res = await fetch(`/movement?workout_id=${this.props.workout_id}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ movementName, numSets, sets }),
-    });
+    if(document.getElementById('addModifyButton').innerHTML === 'Add New Movement') {
+      const res = await fetch(`/movement?workout_id=${this.props.workout_id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ movementName, numSets, sets }),
+      });
+    }else if (document.getElementById('addModifyButton').innerHTML === 'Edit') {
+      const res = await fetch(`/movement?workout_id=${this.props.workout_id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ movementName, numSets, sets }),
+      });
+    }
   };
+
+
+ 
 
   render() {
     const children = [];
@@ -91,7 +104,7 @@ class AddNewSetComponent extends React.Component {
           />
           <div id="setsDiv">{children}</div>
         </form>
-        <button onClick={this.newMovement}>Add New Movement</button>
+        <button id = 'addModifyButton' onClick={this.addModifyButtonAction} onChange = {this.copyMovementData}>Add New Movement</button>
       </div>
     );
   }
@@ -99,9 +112,9 @@ class AddNewSetComponent extends React.Component {
 
 const Set = (props) => (
   <div id={"set" + props.setNumber}>
-    <input id={"weight" + props.setNumber} placeholder="weight"></input>
-    <input id={"reps" + props.setNumber} placeholder="reps"></input>
-    <input id={"RPE" + props.setNumber} placeholder="RPE"></input>
+    <input id={"weight" + props.setNumber} placeholder="weight">{props.weight}</input>
+    <input id={"reps" + props.setNumber} placeholder="reps">{props.reps}</input>
+    <input id={"RPE" + props.setNumber} placeholder="RPE">{props.RPE}</input>
   </div>
 );
 
@@ -125,17 +138,20 @@ const Workout = (props) => {
     console.log("Couldn't find this workout, redirecting to /");
     return <Redirect to="/" />;
   } else {
+    let obj = {pointer: this}
+    let addModifyForm = <AddNewSetComponent workout_id={parsed._id} obj={obj}/>
     return (
       <div id="workoutPage">
+
         <h1>{workoutRes.name}</h1>
+        {addModifyForm}
         {workoutRes.movements.length === 0 ? (
           <div>You have no movements yet :(</div>
         ) : (
           workoutRes.movements.map((movement) => (
-            <Movement_Card_View movement={movement} />
+            <Movement_Card_View movement={movement} form={obj.pointer} />
           ))
         )}
-        <AddNewSetComponent workout_id={parsed._id} />
       </div>
     );
   }
