@@ -1,32 +1,34 @@
-let server = require('websocket').server,
+const ws = require('ws'),
       http = require('http');
 
-let wsServer = new server({  
-    httpServer: http.createServer().listen(3000)
-});
+const server = http.createServer(),
+      wsServer = new ws.Server({server}),
+      clients = [];
 
-wsServer.on('request', OnRequest);
-let clients = [];
+wsServer.on('connection', OnConnect);
+server.listen(3000);
 
-function OnRequest(request) {
-    let client = request.accept(null, request.origin);
+function OnConnect(client) {
     client.on('message', OnMessage);
     client.on('close', OnClose);
+    client.on('error', OnError);
     clients.push(client);
 };
 
-function OnMessage(message) {
-    console.log(`Received: ${toString(message.data)}`);
+function OnMessage(data) {
+    console.log(`Received: ${toString(data)}`);
 
     // Send a message to all the clients
-    clients.forEach( aClient => {
-        aClient.send('Got a message from someone!');
+    clients.forEach( client => {
+        client.send('Got a message from someone!');
     });
 };
 
-
-
 function OnClose(client) {
     console.log('connection closed');
-    clients = clients.filter(c => c != client); // Is this really the shortest way to remove something by value
+    console.log('disconnected');
+};
+
+function OnError(error) {
+    console.log('An error occurred!');
 };

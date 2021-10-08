@@ -19,6 +19,6 @@
   "homepage": "https://github.com/m-d-jo/final_project#readme",
   "dependencies": {
     "nodemon": "^2.0.13",
-    "websocket": "^1.0.34"
+    "ws": "^8.2.3"
   }
 }
