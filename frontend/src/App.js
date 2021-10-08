@@ -73,7 +73,10 @@ function App() {
           />
         )}
         {openRegister && (
-          <RegisterPage registerOpen={openRegister} handleClose={handleClose} />
+          <RegisterPage 
+            registerOpen={openRegister}
+            setToken={setToken} 
+            handleClose={handleClose} />
         )}
         <WelcomeMessage setFavorites={setShowFavorites} />
         <Switch>

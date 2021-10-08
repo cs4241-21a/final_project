@@ -94,21 +94,22 @@ function LoginPage(props) {
   const usernameRef = React.useRef();
   const passwordRef = React.useRef();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-    const username = usernameRef.current.value;
-    const password = passwordRef.current.value;
+    const u = usernameRef.current.value;
+    const p = passwordRef.current.value;
 
-    const registerData = {
-      username,
-      password,
+    const loginData = {
+      u,
+      p,
     };
 
-    const token = await loginUser(registerData);
+    const token = await loginUser(loginData);
     console.log(token.failed);
     if (token.failed === "false") {
       props.setToken(token);
+      props.handleClose();
       setError(false);
     } else {
       setError(true);
