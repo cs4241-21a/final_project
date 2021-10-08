@@ -3,11 +3,12 @@ import CircleIcon from "@mui/icons-material/Circle";
 import LocalLaundryServiceIcon from "@mui/icons-material/LocalLaundryService";
 import DryCleaningTwoToneIcon from "@mui/icons-material/DryCleaningTwoTone";
 
-function getColor(value) {
-  if (value >= 35) return "#fc647d";
+function getColor(value, status) {
+  if (value === null && status === "END OF CYCLE") return "#fdb996";
+  else if (value >= 35) return "#fc647d";
   else if (value >= 25) return "#fdb996";
   else if (value >= 15) return "#fdec96";
-  else if (value >= 0) return "#90ee90";
+  else if (value >= 0 && status !== "OFFLINE") return "#90ee90";
   else return "#000000";
 }
 
