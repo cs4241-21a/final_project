@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import PlaylistPage from "./pages/PlaylistPage/PlaylistPage";
 
 class App extends Component {
   state = {
@@ -35,6 +36,9 @@ class App extends Component {
             <Header />
             <div className="page">
                 <Switch>
+                    <Route path="/playlist/:genre">
+                        <PlaylistPage />
+                    </Route>
                     <Route path="/">
                         <HomePage />
                     </Route>
