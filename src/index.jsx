@@ -5,7 +5,7 @@ import MenuContainer from "./components/MenuContainer";
 
 ReactDOM.render(
     <MenuContainer />,
-    document.querySelector("#container")
+    document.querySelector("#contentContainer")
 );
 
 const mountNode = document.getElementById("app");
