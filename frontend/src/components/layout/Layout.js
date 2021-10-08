@@ -11,6 +11,7 @@ function Layout(props) {
           handleRegister={props.handleRegister}
           handleLogin={props.handleLogin}
           loggedIn={props.loggedIn}
+          handleLogout={props.handleLogout}
         />
       </div>
       <main className={calsses.main}>{props.children}</main>

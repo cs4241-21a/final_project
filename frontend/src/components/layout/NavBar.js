@@ -87,7 +87,7 @@ function NavBar(props) {
               {props.loggedIn && (
                 <div>
                   <MenuItem onClick={handleRegister}>My Account</MenuItem>
-                  <MenuItem onClick={handleLogin}>Sign Out</MenuItem>
+                  <MenuItem onClick={props.handleLogout}>Sign Out</MenuItem>
                 </div>
               )}
             </Menu>

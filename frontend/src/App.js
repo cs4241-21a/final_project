@@ -58,6 +58,16 @@ function App() {
       });
   }, []);
 
+  async function logoutUser() {
+    console.log("Within logout...");
+    return fetch("/logout", {
+      method: "GET",
+    }).then((data) => {
+      console.log("Logged out successfully!")
+      setToken(null)
+    });
+  }
+
   const [openLogin, setOpenLogin] = React.useState(false);
   const [openRegister, setOpenRegister] = React.useState(false);
 
@@ -66,6 +76,11 @@ function App() {
   const handleClickOpenLogin = () => {
     setOpenLogin(true);
   };
+  const handleClickOpenLogout = () => {
+    logoutUser();
+    console.log("Logging out user!");
+    setToken(null)
+  }
   const handleClickRegister = () => {
     setOpenRegister(true);
   };
@@ -79,6 +94,7 @@ function App() {
       <Layout
         handleRegister={handleClickRegister}
         handleLogin={handleClickOpenLogin}
+        handleLogout={handleClickOpenLogout}
         loggedIn={token}
       >
         {openLogin && (
@@ -89,12 +105,12 @@ function App() {
           />
         )}
         {openRegister && (
-          <RegisterPage 
+          <RegisterPage
             registerOpen={openRegister}
-            setToken={setToken} 
+            setToken={setToken}
             handleClose={handleClose} />
         )}
-        <WelcomeMessage setFavorites={setShowFavorites} timestamp={timestampData}/>
+        <WelcomeMessage setFavorites={setShowFavorites} timestamp={timestampData} />
         <Switch>
           <Route path="/" exact={true}>
             {!showFavorites && <BuildingList data={laundryData} />}
