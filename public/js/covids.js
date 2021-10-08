@@ -1,6 +1,9 @@
 let stars = []	//create empty list of stars
 let numOfStars = 100
 let virus_img
+let sanitizer_img
+let mask_img
+let gompei_img
 
 function randomChoice(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
@@ -27,11 +30,15 @@ function drawStars(){
 function setup() {
   createCanvas(500, 500)
   generateStars()
-  virus_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2FcoviBackground.png?v=1633552358358')
+  virus_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fcoronavirus.png?v=1633701999099')
+  sanitizer_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fhand-sanitizer.png?v=1633702007208')
+  mask_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fmedical-mask.png?v=1633702003055')
+  gompei_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fgoat%20(1).png?v=1633701995373')
+
 }
 
 function draw() {
-  background(0)
+  background(255)
   stroke(255)
   strokeWeight(3)
   drawStars()
