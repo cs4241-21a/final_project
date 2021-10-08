@@ -1,6 +1,6 @@
 import React from "react";
 
-class Dashboard extends React.Component{
+class Dashboard extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -12,21 +12,26 @@ class Dashboard extends React.Component{
         fetch(`/getSongs`, { method: 'get', 'no-cors': true })
             .then(res => res.json())
             .then(json => {
+                console.log(json)
                 this.setState({
                     songsJson: json
                 })
             })
     }
     render() {
-        const {songsJson} = this.state
+        const { songsJson } = this.state
         const trackList = songsJson.tracks
-        return(
-            <div>
-                {trackList.map(track => {
-                    <p>track.title</p>
-                })}
-            </div>
-        )
+        if (!trackList) {
+            return <p></p>
+        } else {
+            return (
+                <>
+                    {trackList.map(track => (
+                        <p>{track.title}</p>
+                    ))}
+                </>
+            )
+        }
     }
 }
 
