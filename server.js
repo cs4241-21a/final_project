@@ -4,7 +4,8 @@ const express = require("express"),
   app = express(),
   fs = require("fs"),
   mime = require("mime"),
-  mongodb = require("mongodb");
+  mongodb = require("mongodb"),
+  bodyParser = require("body-parser");
 MongoClient = mongodb.MongoClient;
 
 // OAuth Code
@@ -418,6 +419,7 @@ app.post("/submit", async (request, response) => {
   response.json(json);
 });
 
+
 app.post("/create_profile", async (request, response) => {
   console.log(request.user)
 
@@ -425,5 +427,73 @@ app.post("/create_profile", async (request, response) => {
 
 
 });
+
+
+app.post("/filter", async (request, response) => {
+  let json = await getAllPosts();
+  let noCourse = false;
+  let noSkills = false;
+  let noLanguages = false;
+  let course = request.body.course;
+  let skills = request.body.skills;
+  let languages = request.body.languages;
+
+  let newJson = [];
+  if (course === "") {
+    newJson = json;
+    noCourse = true;
+  }
+
+  if (!noCourse) {
+    for (let i = 0; i < json.length; i++) {
+      if (
+        `${json[i].forClassDepartment} ${json[i].forClassNumber}` === course ||
+        json[i].forClassDepartment === course
+      ) {
+        newJson.push(json[i]);
+      }
+    }
+  }
+
+  let newJson2 = [];
+  if (!skills.length) {
+    newJson2 = newJson;
+    noSkills = true;
+  }
+
+  if (!noSkills) {
+    for (let j = 0; j < newJson.length; j++) {
+      if (skills.every((x) => newJson[j].skills.includes(x))) {
+        newJson2.push(newJson[j]);
+      }
+    }
+  }
+
+  let newJson3 = [];
+  if (!languages.length) {
+    newJson3 = newJson2;
+    noLanguages = true;
+  }
+
+  if (!noLanguages) {
+    for (let k = 0; k < newJson2.length; k++) {
+      if (languages.every((v) => newJson2[k].languages.includes(v))) {
+        newJson3.push(newJson2[k]);
+      }
+    }
+  }
+  response.json(newJson3);
+});
+
+
+app.get('/profile', (request, response) => {
+    response.sendFile(__dirname + "/build/profile.html")
+})
+
+// app.post('/create_profile', bodyParser.json(), (request, response) => {
+//     console.log("profileID: ", profileID)
+//     console.log("request: ", request.body)
+// })
+
 
 app.listen(process.env.PORT || 3000);
