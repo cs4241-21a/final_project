@@ -29,6 +29,8 @@ function App() {
 
   const [laundryData, setData] = React.useState([]);
 
+  const [timestampData, setTimestampData] = React.useState([])
+
   React.useEffect(() => {
     fetch("/laundry", {
       method: "GET",
@@ -38,6 +40,19 @@ function App() {
       })
       .then((data) => {
         data.splice(data.length - 1);
+        setData(data);
+        console.log(data);
+      });
+  }, []);
+
+  React.useEffect(() => {
+    fetch("/timestamp", {
+      method: "GET",
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
         setData(data);
         console.log(data);
       });
@@ -64,6 +79,7 @@ function App() {
       <Layout
         handleRegister={handleClickRegister}
         handleLogin={handleClickOpenLogin}
+        loggedIn={token}
       >
         {openLogin && (
           <LoginPage

@@ -5,6 +5,7 @@ import DryCleaningTwoToneIcon from "@mui/icons-material/DryCleaningTwoTone";
 
 function getColor(value, status) {
   if (value === null && status === "END OF CYCLE") return "#fdb996";
+  else if (value === null && status === "READY TO START") return "#fdb996"
   else if (value >= 35) return "#fc647d";
   else if (value >= 25) return "#fdb996";
   else if (value >= 15) return "#fdec96";
@@ -45,11 +46,14 @@ function WasherItem(props) {
             flexWrap: "wrap",
           }}
         >
-          <span>{props.item.status}</span>
           <CircleIcon
             paddingfontsize="small"
             style={{ minWidth: "40px", color: washerColor }}
           />
+         
+          <span> {props.item.status} </span>
+          {(props.item.minutes_left !== null) && <span>  : { props.item.minutes_left}  Minutes</span>}
+          
         </div>
       </CardContent>
       {/* <CardActions>

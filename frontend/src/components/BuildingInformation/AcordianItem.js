@@ -52,8 +52,8 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 function getColor(value) {
   if (value >= 75) return "#90ee90";
-  else if (value >= 50) return "#fdb996";
-  else if (value >= 25) return "#fdec96";
+  else if (value >= 50) return "#fdec96";
+  else if (value >= 25) return "#fdb996";
   else if (value >= 0) return "#fc647d";
   else return "#000000";
 }
@@ -70,24 +70,24 @@ function AccordianItem(props) {
       >
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
           <Grid container direction={"row"} spacing={2}>
-            <Grid item>
+            <Grid item xs={3}>
               <Typography>{props.item.humanname}</Typography>{" "}
             </Grid>
-            <Grid item>
-              <CircleIcon fontSize="small" style={{ color: washerColor }} />
+            <Grid item xs={4}>
+              <div style={{display: "inline-flex"}}>
+                <CircleIcon fontSize="small" style={{ color: washerColor }} />&nbsp;
+                <Typography>
+                  {props.item.washeravailable_percent}% Washer Availability
+                </Typography>
+              </div>
             </Grid>
-            <Grid item>
-              <Typography>
-                {props.item.washeravailable_percent}% Washer Availability
-              </Typography>
-            </Grid>
-            <Grid item>
-              <CircleIcon fontSize="small" style={{ color: dryerColor }} />
-            </Grid>
-            <Grid item>
-              <Typography>
-                {props.item.dryeravailable_percent}% Dryer Availability
-              </Typography>
+            <Grid item xs={4}>
+              <div style={{display: "inline-flex"}}>
+                <CircleIcon fontSize="small" style={{ color: dryerColor }} />&nbsp;
+                <Typography>
+                  {props.item.dryeravailable_percent}% Dryer Availability
+                </Typography>
+              </div>
             </Grid>
           </Grid>
           <Grid item>

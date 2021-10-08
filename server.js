@@ -18,9 +18,9 @@ app.use(cookie({
 }))
 
 //DB_URL=mongodb+srv://cs4243:X2BtQlEN0aYxE0I@cluster0.q6pxv.mongodb.net/laundryData?retryWrites=true&w=majority
-const uri = 'mongodb+srv://' + process.env.USER + ':' + process.env.PASS + '@' + process.env.HOST
-let connectedDB = false;
-mongoose.connect(uri).then(
+const uri = "mongodb+srv://cs4243:X2BtQlEN0aYxE0I@cluster0.q6pxv.mongodb.net/laundryData?retryWrites=true&w=majority"
+let connectedDB = true;
+mongoose.connect("mongodb+srv://cs4243:X2BtQlEN0aYxE0I8@cluster0.q6pxv.mongodb.net/laundryData?retryWrites=true&w=majority").then(
     ()=>{
     let a = laundryRoom.model.find({}, function (err, all) {
         if (err) return handleError(err)
@@ -114,7 +114,7 @@ app.get('/laundry', (req, res) => {
 })
 
 app.get('/timestamp', (req, res) => {
-    timestamp.model.find({}, function (err, data){
+    timestamp.model.find({name: 'timestamp'}, function (err, data){
         res.json(data);
     });
 })

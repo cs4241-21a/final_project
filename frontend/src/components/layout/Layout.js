@@ -10,6 +10,7 @@ function Layout(props) {
         <NavBar
           handleRegister={props.handleRegister}
           handleLogin={props.handleLogin}
+          loggedIn={props.loggedIn}
         />
       </div>
       <main className={calsses.main}>{props.children}</main>

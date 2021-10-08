@@ -11,8 +11,11 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 
 function NavBar(props) {
-  const [auth, setAuth] = React.useState(true);
+  
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  console.log("Our login status: " + props.loggedIn);
+
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -74,14 +77,14 @@ function NavBar(props) {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              {auth && (
+              {!props.loggedIn && (
                 <div>
                   <MenuItem onClick={handleRegister}>Register</MenuItem>
                   <MenuItem onClick={handleLogin}>Sign In</MenuItem>
                 </div>
               )}
 
-              {!auth && (
+              {props.loggedIn && (
                 <div>
                   <MenuItem onClick={handleRegister}>My Account</MenuItem>
                   <MenuItem onClick={handleLogin}>Sign Out</MenuItem>
