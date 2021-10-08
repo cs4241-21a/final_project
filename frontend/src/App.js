@@ -79,6 +79,7 @@ function App() {
       <Layout
         handleRegister={handleClickRegister}
         handleLogin={handleClickOpenLogin}
+        loggedIn={token}
       >
         {openLogin && (
           <LoginPage
