@@ -2,6 +2,7 @@ import { Typography, Card, CardContent } from "@mui/material";
 import CircleIcon from "@mui/icons-material/Circle";
 import LocalLaundryServiceIcon from "@mui/icons-material/LocalLaundryService";
 import DryCleaningTwoToneIcon from "@mui/icons-material/DryCleaningTwoTone";
+import classes from '../WelcomeMessage.module.css';
 
 var orange = "fdb996"
 var yellow = "#fdec96"
@@ -26,7 +27,7 @@ function WasherItem(props) {
   const washerColor = getColor(props.item.minutes_left, props.item.status);
 
   return (
-    <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+    <Card className={classes.card} sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <CardContent sx={{ flexGrow: 1 }}>
         <div
           style={{

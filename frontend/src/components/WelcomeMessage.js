@@ -7,6 +7,12 @@ import {
 
 import * as React from "react";
 
+import Card from '@mui/material/Card';
+import CircleIcon from "@mui/icons-material/Circle";
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import classes from './WelcomeMessage.module.css';
+
 function WelcomeMessage(props) {
   const [alignment, setAlignment] = React.useState("All");
 
@@ -42,6 +48,51 @@ function WelcomeMessage(props) {
         <Typography variant="h6">
           Because Laundry Connect sucks at web design, and WPI deserves a better how-busy-is-the-laundry-room experience.
         </Typography>
+        <Card className={classes.card}>
+          <List>
+        <div style={{display: "inline-flex"}}>
+        <ListItem>
+        <CircleIcon fontSize="small" style={{ color: '#90ee90' }} />&nbsp;
+                <Typography>
+                  Available
+                </Typography>
+  </ListItem>
+                
+              </div>
+              <div style={{display: "inline-flex"}}>
+              <ListItem>
+        <CircleIcon fontSize="small" style={{ color: '#fdec96' }} />&nbsp;
+                <Typography>
+                  Almost Done
+                </Typography>
+                </ListItem>
+              </div>
+              <div style={{display: "inline-flex"}}>
+              <ListItem>
+        <CircleIcon fontSize="small" style={{ color: '#fdb996' }} />&nbsp;
+                <Typography>
+                  In Use
+                </Typography>
+                </ListItem>
+              </div>
+              <div style={{display: "inline-flex"}}>
+              <ListItem>
+        <CircleIcon fontSize="small" style={{ color: '#fc647d' }} />&nbsp;
+                <Typography>
+                  Just Started
+                </Typography>
+                </ListItem>
+              </div>
+              <div style={{display: "inline-flex"}}>
+              <ListItem>
+        <CircleIcon fontSize="small" style={{ color: '#000000' }} />&nbsp;
+                <Typography>
+                  Out of Order
+                </Typography>
+                </ListItem>
+              </div>
+              </List>
+        </Card>
         <Typography variant="small">
           Last updated: {timestring}
         </Typography>

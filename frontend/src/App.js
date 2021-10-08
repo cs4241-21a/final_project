@@ -13,9 +13,6 @@ import RegisterPage from "./modals/RegisterPage";
 
 import useToken from "./store/loginStore";
 
-const list = [1, 2, 3, 4];
-const list2 = [3, 4];
-
 const theme = createTheme({
   palette: {
     primary: {
