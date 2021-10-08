@@ -154,11 +154,11 @@ async function parseData(name, humanname, sitedata) {
             } else if (ALMOST_DONE_MODES.includes(machineclass)) {
                 machinedata['status'] = 'Almost Done'
             } else if (END_OF_CYCLE_MODES.includes(machineclass)) {
-                machinedata['status'] = 'END OF CYCLE'
+                machinedata['status'] = 'Ready For Pickup'
             } else if (OFFLINE_MODES.includes(machineclass)) {
-                machinedata['status'] = 'OFFLINE'
+                machinedata['status'] = 'Offline'
             } else {
-                machinedata['status'] = 'AVAILABLE'
+                machinedata['status'] = 'Available'
             }
 
             if (machinetime != undefined) {
