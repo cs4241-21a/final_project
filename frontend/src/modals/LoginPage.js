@@ -8,9 +8,18 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { withStyles } from "@material-ui/core/styles";
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import FormControl from '@mui/material/FormControl';
+import Input from '@mui/material/Input';
+import InputLabel from '@mui/material/InputLabel';
+import LockIcon from '@mui/icons-material/Lock';
 
 import TextField from "@mui/material/TextField";
 import { Typography, Box } from "@mui/material";
+
 
 const BootstrapDialogTitle = (props) => {
   const { children, onClose, ...other } = props;
@@ -58,6 +67,29 @@ async function loginUser(credentials) {
 }
 
 function LoginPage(props) {
+  const [values, setValues] = React.useState({
+    amount: '',
+    password: '',
+    weight: '',
+    weightRange: '',
+    showPassword: false,
+  });
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   const [inputError, setError] = React.useState(false);
   const usernameRef = React.useRef();
   const passwordRef = React.useRef();
@@ -99,27 +131,48 @@ function LoginPage(props) {
             <b>Login Credentials:</b>
           </Typography>
 
+          <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+          <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
           <TextField
             autoFocus
             inputRef={usernameRef}
             margin="dense"
-            id="username"
+            id="username standard-required input-with-icon-textfield"
             label="Username"
             type="text"
             fullWidth
             variant="standard"
           />
-
-          <TextField
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+        <LockIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+        <FormControl fullWidth variant="standard">
+        <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+          <Input
             autoFocus
+            required
             inputRef={passwordRef}
             margin="dense"
-            id="password"
-            label="Password"
-            type="password"
-            fullWidth
+            id="password standard-required standard-adornment-password"
+            type={values.showPassword ? 'text' : 'password'}
+            value={values.password}
+            onChange={handleChange('password')}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
             variant="standard"
+            fullWidth
           />
+          </FormControl>
+          </Box>
           {inputError && (
             <RedTypography variant="h7">
               The inputted username and password is incorrect.
