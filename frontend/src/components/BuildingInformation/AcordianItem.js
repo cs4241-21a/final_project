@@ -62,6 +62,9 @@ function AccordianItem(props) {
   const washerColor = getColor(props.item.washeravailable_percent);
   const dryerColor = getColor(props.item.dryeravailable_percent);
 
+  console.log("favorite: " + props.favorite);
+  const [isFav, setFav] = React.useState(props.favorite);
+
   return (
     <div>
       <Accordion
@@ -74,16 +77,18 @@ function AccordianItem(props) {
               <Typography>{props.item.humanname}</Typography>{" "}
             </Grid>
             <Grid item xs={4}>
-              <div style={{display: "inline-flex"}}>
-                <CircleIcon fontSize="small" style={{ color: washerColor }} />&nbsp;
+              <div style={{ display: "inline-flex" }}>
+                <CircleIcon fontSize="small" style={{ color: washerColor }} />
+                &nbsp;
                 <Typography>
                   {props.item.washeravailable_percent}% Washer Availability
                 </Typography>
               </div>
             </Grid>
             <Grid item xs={4}>
-              <div style={{display: "inline-flex"}}>
-                <CircleIcon fontSize="small" style={{ color: dryerColor }} />&nbsp;
+              <div style={{ display: "inline-flex" }}>
+                <CircleIcon fontSize="small" style={{ color: dryerColor }} />
+                &nbsp;
                 <Typography>
                   {props.item.dryeravailable_percent}% Dryer Availability
                 </Typography>
@@ -91,12 +96,24 @@ function AccordianItem(props) {
             </Grid>
           </Grid>
           <Grid item>
-            <StarOutlineIcon
-              onClick={() => {
-                console.log("HELLOS");
-              }}
-              fontSize="small"
-            />
+            {!isFav && (
+              <StarOutlineIcon
+                onClick={() => {
+                  setFav(true);
+                  console.log("HELLOS");
+                }}
+                fontSize="small"
+              />
+            )}
+            {isFav && (
+              <StarRateIcon
+                onClick={() => {
+                  setFav(false);
+                  console.log("HELLOS");
+                }}
+                fontSize="small"
+              />
+            )}
           </Grid>
         </AccordionSummary>
         <AccordionDetails>

@@ -23,6 +23,7 @@ function BuildingList(props) {
               key={index + 1}
               index={index + 1}
               item={item}
+              favorite={favoriteContext.contacts.includes(item.humanname)}
             />
           );
         })}
@@ -33,7 +34,7 @@ function BuildingList(props) {
     const filteredData = rawData.filter((item) =>
       favoriteContext.contacts.includes(item.humanname)
     );
-    console.log("data " + favoriteContext.contacts + " bad");
+
     return (
       <div>
         {filteredData.map((item, index) => {
@@ -46,6 +47,7 @@ function BuildingList(props) {
               key={index + 1}
               index={index + 1}
               item={item}
+              favorite={favoriteContext.contacts.includes(item.humanname)}
             />
           );
         })}
