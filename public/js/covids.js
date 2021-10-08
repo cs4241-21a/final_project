@@ -20,13 +20,31 @@ function randomChoice(arr) {
 function generateStars(){
 	for (let i = 0; i < numOfStars; i++) {
 	    let star = {} //Define star locally
-      const quad_1 = randomChoice([0, 1])
-      const quad_2 = randomChoice([0, 1])
-      if (quad_1) {
-        if ()
-        star.x = random(0, -10) //Add info as before
-        star.y = random(0, 400)
+      const quad = randomChoice([0, 1, 2, 3])
+      let x, y
+      if (quad === 0) { //x greater
+        x = random(500, 600)
+        y = random(0, 500)
+      } else if (quad === 1) { //y greater
+        x = random(0, 500)
+        y = random(500, 600)
+      } else if (quad === 2) { //x less
+        x = random(-100, 0)
+        y = random(0, 500)
+      } else if (quad === 3) {//y less
+        x = random(0, 500)
+        y = random(-100, 0)
       }
+      
+      star.x = x
+      star.y = y
+    
+      star.init_x = x
+      star.init_y = y
+    
+      star.dx = -1*Math.sign(x)
+      star.dy = -1*Math.sign(y)
+      
       const set = randomChoice([{life:1, size:small}, {life:2, size:medium}, {life:3, size:large}])
 	    star.diam = set.size
       star.lives = set.life
@@ -38,8 +56,12 @@ function generateStars(){
 
 function drawStars(){
   for (let i = 0; i < numOfStars; i++) {
-    stars[i].x += randomChoice([-3, -1, 0, 1, 3])
-    stars[i].y += randomChoice([-3, -1, 0, 1, 3])
+    stars[i].x += stars[i].dx
+    stars[i].y += stars[i].dy
+    if ((stars[i].x >= width) || (stars[i].y >= height) || (stars[i].x <= 0) || (stars[i].y <= 0)) {
+      stars[i].x =
+      stars[i].y =
+    }
     image(virus_img, stars[i].x, stars[i].y, stars[i].diam, stars[i].diam)
   }
 }
