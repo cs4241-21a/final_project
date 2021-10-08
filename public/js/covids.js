@@ -8,10 +8,14 @@ let small = 22
 let medium = 37
 let large = 55
 
+let gompei_size = 50
+
 let virus_img
 let sanitizer_img
 let mask_img
 let gompei_img
+
+let ship = {}
 
 function randomChoice(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
@@ -59,8 +63,8 @@ function generateStars(){
 
 function drawStars(){
   for (let i = 0; i < numOfStars; i++) {
-    stars[i].x += randomChoice([stars[i].dx, 0])
-    stars[i].y += randomChoice([stars[i].dy, 0])
+    stars[i].x += randomChoice([stars[i].dx, stars[i].dx, 0, -stars[i].dx])
+    stars[i].y += randomChoice([stars[i].dy, stars[i].dy, 0, -stars[i].dy])
     if ((stars[i].x <= width) && (stars[i].y <= height) && (stars[i].x >= 0) && (stars[i].y >= 0)) {
       stars[i].inPlay = true
     }
@@ -70,6 +74,30 @@ function drawStars(){
     }
     image(virus_img, stars[i].x, stars[i].y, stars[i].diam, stars[i].diam)
   }
+}
+
+function generateShip() {
+  ship.x = width/2;
+  ship.y = height/2;
+  ship.rotation = 0; //start with no rotation
+  ship.diam = gompei_size
+}
+
+function turnShip() {
+  if (keyIsDown(LEFT_ARROW)) {
+    ship.rotation -= .1;
+  }
+  if (keyIsDown(RIGHT_ARROW)) {
+    ship.rotation += .1;
+  }
+}
+
+function displayShip(){
+  push();
+  translate(ship.x, ship.y)
+  rotate(ship.rotation)
+  image(gompei_img, ship.x, ship.y, ship.diam, ship.diam)
+  pop();
 }
 
 function setup() {
