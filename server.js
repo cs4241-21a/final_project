@@ -119,6 +119,12 @@ app.get('/getSongs', (req, res) => {
 
 })
 
+app.get('/getUser', (req, res) => {
+    console.log(req.user)
+    res.send({ user: req.user })
+    res.end()
+})
+
 app.get('/getSongByName', (req, res) => {
     const options = {
         method: 'GET',
