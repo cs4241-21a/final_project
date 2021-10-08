@@ -1,5 +1,6 @@
-export default interface MaterialProps {
-  name: string,
+import NamedProps from "./NamedProps";
+
+export default interface MaterialProps extends NamedProps {
   fullname: {
     en: string,
     es?: string,

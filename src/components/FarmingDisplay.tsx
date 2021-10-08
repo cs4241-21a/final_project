@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import FarmableProps from "../props/api/FarmableProps";
-import FarmingSpotProps from "../props/api/FarmingSpotProps";
+import FarmableProps from "../types/props/FarmableProps";
+import FarmingSpotProps from "../types/props/FarmingSpotProps";
 
 interface FarmingDisplayProps {
   farmables: FarmableProps[],
