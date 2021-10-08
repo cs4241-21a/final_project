@@ -23,7 +23,6 @@
   .song__left {
     display: flex;
     align-items: center;
-    width: 60%;
 
     .song__index {
       width: 16px;
@@ -48,6 +47,10 @@
       flex-direction: column;
 
       .song__title {
+        width: 400px;
+        text-overflow: ellipsis;
+        overflow-x: clip;
+        white-space: nowrap;
         font-size: $font-size-lg;
         font-weight: 600;
         margin-bottom: $gap-xs;
