@@ -8,11 +8,23 @@ app.use(expressLayouts);
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-    res.render('welcome')
+    res.render('login')
 })
 
 app.get('/help', ((req, res) => {
     res.render('help')
+}))
+
+app.get('/user', ((req, res) => {
+    res.render('welcome')
+}))
+
+app.post('/login', ((req, res) => {
+    res.render('welcome')
+}))
+
+app.post('/register', ((req, res) => {
+    res.render('welcome')
 }))
 
 app.listen(port, () => {
