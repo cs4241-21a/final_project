@@ -5,7 +5,8 @@ const app1 = Vue.createApp({
             premium: true,
             shopping: false,
             CounterPage: false,
-            counter: 0
+            counter: 0,
+            username : null
         }
     },
     methods: {
@@ -32,6 +33,8 @@ const app1 = Vue.createApp({
               })
         }
     }
+        
+    
 })
 
 // this app2 is a new Vue used to control <div id="app2"> in html
