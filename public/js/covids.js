@@ -4,6 +4,8 @@ let numOfStars = 100
 let width = 750
 let height = 750
 
+let min_speed = 
+
 let small = 22
 let medium = 37
 let large = 55
@@ -46,8 +48,8 @@ function generateStar(){
   star.init_y = y
 
   star.inPlay = false
-  star.dx = randomChoice([-1, -2])*Math.sign(x)
-  star.dy = randomChoice([-1, -2])*Math.sign(y)
+  star.dx = -random(.5,3)*Math.sign(x)
+  star.dy = -random(.5,3)*Math.sign(y)
 
   const set = randomChoice([{life:1, size:small}, {life:2, size:medium}, {life:3, size:large}])
   star.diam = set.size
@@ -64,8 +66,8 @@ function generateStars(){
 
 function drawStars(){
   for (let i = 0; i < numOfStars; i++) {
-    stars[i].x += randomChoice([stars[i].dx, stars[i].dx, 0, -stars[i].dx])
-    stars[i].y += randomChoice([stars[i].dy, stars[i].dy, 0, -stars[i].dy])
+    stars[i].x += randomChoice([stars[i].dx, random(.5,3), -random(.5,3)])
+    stars[i].y += randomChoice([stars[i].dy, random(.5,3), -random(.5,3)])
     if ((stars[i].x <= width) && (stars[i].y <= height) && (stars[i].x >= 0) && (stars[i].y >= 0)) {
       stars[i].inPlay = true
     }
