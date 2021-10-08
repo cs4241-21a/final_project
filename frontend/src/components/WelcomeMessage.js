@@ -11,7 +11,6 @@ import Card from '@mui/material/Card';
 import CircleIcon from "@mui/icons-material/Circle";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import classes from './WelcomeMessage.module.css';
 
 function WelcomeMessage(props) {
   const [alignment, setAlignment] = React.useState("All");
@@ -48,7 +47,8 @@ function WelcomeMessage(props) {
         <Typography variant="h6">
           Because Laundry Connect sucks at web design, and WPI deserves a better how-busy-is-the-laundry-room experience.
         </Typography>
-        <Card className={classes.card}>
+        
+        <Card sx={{boxShadow: 3}}>
           <List>
         <div style={{display: "inline-flex"}}>
         <ListItem>

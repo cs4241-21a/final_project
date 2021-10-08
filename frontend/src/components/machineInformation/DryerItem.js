@@ -2,7 +2,6 @@ import { Typography, Card, CardContent } from "@mui/material";
 import CircleIcon from "@mui/icons-material/Circle";
 import LocalLaundryServiceIcon from "@mui/icons-material/LocalLaundryService";
 import DryCleaningTwoToneIcon from "@mui/icons-material/DryCleaningTwoTone";
-import classes from '../WelcomeMessage.module.css';
 
 var orange = "fdb996"
 var yellow = "#fdec96"
@@ -27,7 +26,7 @@ function DryerItem(props) {
 
 
   return (
-    <Card className={classes.card} sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+    <Card sx={{boxShadow: 3}} sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <CardContent sx={{ flexGrow: 1 }}>
         <div
           style={{
