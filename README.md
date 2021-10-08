@@ -41,16 +41,16 @@ While familiarity with relational models assisted in structuring data, the model
 <img width="913" alt="Screen Shot 2021-10-08 at 10 46 22 AM" src="https://user-images.githubusercontent.com/64321589/136577297-6edb1de4-cbe2-4922-b1ee-9fb3a8882647.png">
 
 #### Relational Schema
-PostStudentRelation(_id, postCommentID PK FK, studentProfileID PK FK)StudentProfile(_id, profileID PK, linkToProfilePic, bio, firstName, lastName, grade, phoneNum)
-Admin(_id, profileID PK FK)
-Skills(_id, skillName PK, skillTopic)
-Class(_id, coursNumber PK, courseDepartment PK)
-Post(_id PK, PostCommentHeader FK, forClass FK)
-PostComment(_id PK, bodyContent, header, date, postedByProfileID FK, postID FK)
+- PostStudentRelation(_id, postCommentID PK FK, studentProfileID PK FK)StudentProfile(_id, profileID PK, linkToProfilePic, bio, firstName, lastName, grade, phoneNum)
+- Admin(_id, profileID PK FK)
+- Skills(_id, skillName PK, skillTopic)
+- Class(_id, coursNumber PK, courseDepartment PK)
+- Post(_id PK, PostCommentHeader FK, forClass FK)
+- PostComment(_id PK, bodyContent, header, date, postedByProfileID FK, postID FK)
 
-StudentSkillRelation(_id, studentProfileID PK FK, skillName PK FK)
-StudentClassRelation(_id, studentProfileID PK FK, classCourseNumber PK FK, classDepartment PK FK)
-PostSkillRelation(_id, postID PK FK, skillName PK FK)
+- StudentSkillRelation(_id, studentProfileID PK FK, skillName PK FK)
+- StudentClassRelation(_id, studentProfileID PK FK, classCourseNumber PK FK, classDepartment PK FK)
+- PostSkillRelation(_id, postID PK FK, skillName PK FK)
 
 
 
