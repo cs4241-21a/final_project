@@ -1,6 +1,26 @@
-@import url("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css");
-
 h1 {
   color: white;
   background-color: black;
+}
+
+#addSongForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 50px;
+  background-color: #f3f3f3;
+  z-index: 50;
+}
+
+.closed#addSongForm {
+  display: none;
+}
+
+.opened#addSongForm {
+  display: block;
+}
+
+#songName {
+  margin-bottom: 20px;
 }

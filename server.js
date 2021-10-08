@@ -61,7 +61,7 @@ app.get('/login', function (req, res) {
 app.post('/login',
     passport.authenticate('local', { failureRedirect: '/login' }),
     function (req, res) {
-        res.redirect('profile');
+        res.redirect('index.html');
     });
 
 app.get('/signup',
@@ -92,18 +92,18 @@ app.get('/profile',
     function (req, res) {
         db.getContentForUser(req.user)
             .then(content => {
-                res.render('profile', { user: req.user, content: content, readonly: false })
+                res.sendFile(__dirname + "/build/profile.html")
             })
             .catch(error => {
                 return cb(error)
             });
     });
 
-app.get('/getSongs', (req, res) => {
+app.post('/addSong', (req, res) => {
     const options = {
         method: 'GET',
-        url: 'https://shazam.p.rapidapi.com/songs/list-recommendations',
-        qs: { key: '484129036', locale: 'en-US' },
+        url: 'https://shazam.p.rapidapi.com/search',
+        qs: { term: req.body.songName, locale: 'en-US', offset: '0', limit: '5' },
         headers: {
             'x-rapidapi-host': 'shazam.p.rapidapi.com',
             'x-rapidapi-key': 'd78b659621msh22ffdaa369a9cd9p123b29jsn8434a2c82d11',
@@ -113,10 +113,8 @@ app.get('/getSongs', (req, res) => {
 
     request(options, function (error, response, body) {
         if (error) throw new Error(error);
-        res.json(body)
-        res.end()
-    });
 
+    });
 })
 
 app.get('/getUser', (req, res) => {
