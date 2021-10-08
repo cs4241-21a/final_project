@@ -1,8 +1,8 @@
 let stars = []	//create empty list of stars
 let numOfStars = 20
 
-let width = 500
-let height = 500
+let width = 750
+let height = 750
 
 let small = 22
 let medium = 37
@@ -27,17 +27,17 @@ function generateStars(){
       const quad = randomChoice([0, 1, 2, 3])
       let x, y
       if (quad === 0) { //x greater
-        x = random(width, width+large*2)
-        y = random(0, 500)
+        x = random(width, width+(large*2))
+        y = random(1, 500)
       } else if (quad === 1) { //y greater
-        x = random(0, 500)
-        y = random(height, height+large*2)
+        x = random(1, 500)
+        y = random(height, height+(large*2))
       } else if (quad === 2) { //x less
-        x = random(-large*2, 0)
-        y = random(0, 500)
+        x = random(-1*(large*2), -1)
+        y = random(1, 500)
       } else if (quad === 3) {//y less
-        x = random(0, 500)
-        y = random(-large*2, 0)
+        x = random(1, 500)
+        y = random(-1*(large*2), -1)
       }
       
       star.x = x
@@ -133,7 +133,7 @@ function checkShipForCollisions(targets){
 }
 
 function setup() {
-  createCanvas(1000, 1000) //make the size of the display whatever size the window is
+  createCanvas(750, 750) //make the size of the display whatever size the window is
   generateStars()
   virus_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fcoronavirus.png?v=1633701999099')
   sanitizer_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fhand-sanitizer.png?v=1633702007208')
