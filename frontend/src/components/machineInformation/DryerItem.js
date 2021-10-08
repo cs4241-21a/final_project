@@ -3,11 +3,11 @@ import CircleIcon from "@mui/icons-material/Circle";
 import LocalLaundryServiceIcon from "@mui/icons-material/LocalLaundryService";
 import DryCleaningTwoToneIcon from "@mui/icons-material/DryCleaningTwoTone";
 
-var orange = "fdb996"
-var yellow = "#fdec96"
-var red = "#fc647d"
-var green = "#90ee90"
-var black = "#000000"
+var orange = "fdb996";
+var yellow = "#fdec96";
+var red = "#fc647d";
+var green = "#90ee90";
+var black = "#000000";
 
 function getColor(value, status) {
   if (value === null && status === "Ready For Pickup") return yellow;
@@ -24,9 +24,15 @@ function getColor(value, status) {
 function DryerItem(props) {
   const dryerColor = getColor(props.item.minutes_left, props.item.status);
 
-
   return (
-    <Card sx={{boxShadow: 3}} sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+    <Card
+      sx={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        boxShadow: 3,
+      }}
+    >
       <CardContent sx={{ flexGrow: 1 }}>
         <div
           style={{
@@ -55,14 +61,15 @@ function DryerItem(props) {
             flexWrap: "wrap",
           }}
         >
-           <CircleIcon
+          <CircleIcon
             paddingfontsize="small"
             style={{ minWidth: "40px", color: dryerColor }}
           />
-         
+
           <span> {props.item.status} </span>
-          {(props.item.minutes_left !== null) && <span>  : { props.item.minutes_left}  Minutes</span>}
-          
+          {props.item.minutes_left !== null && (
+            <span> : {props.item.minutes_left} Minutes</span>
+          )}
         </div>
       </CardContent>
       {/* <CardActions>

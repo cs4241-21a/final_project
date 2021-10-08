@@ -3,7 +3,6 @@ import WasherItem from "./WasherItem";
 import { Container, Grid } from "@mui/material";
 
 function MachineList(props) {
-  console.log(props.machineInfo);
   return (
     <Container sx={{ py: 4 }} maxWidth="lg">
       <Grid container spacing={3}>

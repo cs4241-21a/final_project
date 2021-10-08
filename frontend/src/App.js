@@ -12,6 +12,9 @@ import LoginPage from "./modals/LoginPage";
 import RegisterPage from "./modals/RegisterPage";
 
 import useToken from "./store/loginStore";
+import ContactsContext from "./store/favoriteContext";
+
+import { ContactsContextProvider } from "./store/favoriteContext";
 
 const theme = createTheme({
   palette: {
@@ -26,7 +29,7 @@ function App() {
 
   const [laundryData, setData] = React.useState([]);
 
-  const [timestampData, setTimestampData] = React.useState([])
+  const [timestampData, setTimestampData] = React.useState([]);
 
   React.useEffect(() => {
     fetch("/laundry", {
@@ -60,8 +63,9 @@ function App() {
     return fetch("/logout", {
       method: "GET",
     }).then((data) => {
-      console.log("Logged out successfully!")
-      setToken(null)
+      console.log("Logged out successfully!");
+
+      setToken(null);
     });
   }
 
@@ -76,8 +80,8 @@ function App() {
   const handleClickOpenLogout = () => {
     logoutUser();
     console.log("Logging out user!");
-    setToken(null)
-  }
+    setToken(null);
+  };
   const handleClickRegister = () => {
     setOpenRegister(true);
   };
@@ -105,13 +109,32 @@ function App() {
           <RegisterPage
             registerOpen={openRegister}
             setToken={setToken}
-            handleClose={handleClose} />
+            handleClose={handleClose}
+          />
         )}
-        <WelcomeMessage setFavorites={setShowFavorites} timestamp={timestampData} />
+        <WelcomeMessage
+          setFavorites={setShowFavorites}
+          timestamp={timestampData}
+          loggedIn={token}
+        />
         <Switch>
           <Route path="/" exact={true}>
-            {!showFavorites && <BuildingList data={laundryData} />}
-            {showFavorites && <BuildingList data={laundryData} />}
+            {token && (
+              <ContactsContextProvider>
+                <BuildingList
+                  data={laundryData}
+                  showFavorites={showFavorites}
+                />
+              </ContactsContextProvider>
+            )}
+            {!token && (
+              <div>
+                <BuildingList
+                  data={laundryData}
+                  showFavorites={showFavorites}
+                />
+              </div>
+            )}
           </Route>
 
           <Route path="/favorites"></Route>
