@@ -1,5 +1,7 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
+import Navbar from './components/Navbar';
+import LandingPage from './pages/LandingPage';
 import TournamentCreationPage from './pages/TournamentCreation';
 import TournamentPage from './pages/Tournament';
 import LoginPage from './pages/LoginPage';
@@ -9,8 +11,9 @@ import ErrorPage from './pages/ErrorPage';
 function App() {
   return (
     <BrowserRouter>
+      <Navbar />
       <Switch>
-        {/* <Route exact path='/' component={} /> */}
+        <Route exact path='/' component={LandingPage} />
         <Route path='/login' component={LoginPage} />
         <Route path='/register' component={RegisterPage} />
         <Route path='/tournament-create/:userId' component={TournamentCreationPage} />
