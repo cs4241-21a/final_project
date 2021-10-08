@@ -1,12 +1,14 @@
 .song {
   width: 100%;
   height: 64px;
-  padding: 0 $gap-md * 1.5;
+  padding: 0 $gap-md;
   border-radius: $border-radius;
   line-height: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  $button-width: 32px;
 
   &:hover {
     background: $background-tertiary;
@@ -25,10 +27,11 @@
     align-items: center;
 
     .song__index {
-      width: 16px;
+      text-align: center;
+      width: $button-width;
       font-size: $font-size-lg;
       font-family: $font-family-secondary;
-      margin-right: $gap-lg;
+      margin-right: $gap-md;
 
       span {
         margin-bottom: $gap-xs;
@@ -95,6 +98,8 @@
   }
 
   .song__button {
+    width: $button-width;
+    height: $button-width;
     display: none;
 
     svg {
