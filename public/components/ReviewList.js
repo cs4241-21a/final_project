@@ -1,4 +1,4 @@
-app.component('review-list', {
+app1.component('review-list', {
     props: {
       reviews: {
         type: Array,
