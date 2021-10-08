@@ -36,8 +36,9 @@ class TournamentPage extends React.Component {
   render() {
     return (
       <div className="container">
+        <h1 className='display-1'>Matches</h1>
         <div className="row">
-          <table class="table table-striped  w-50">
+          <table class="table table-striped table-hover">
             <thead>
               <tr>
                 <th>Teams</th>

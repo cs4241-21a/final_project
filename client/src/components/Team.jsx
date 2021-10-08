@@ -40,7 +40,7 @@ class Team extends React.Component {
           </td>
           <td>
             <button
-              className="update-button"
+              className="btn btn-warning"
               onClick={(e) => this.props.update(e, this.props.i, this.props._id)}
             >
               Update
@@ -48,7 +48,7 @@ class Team extends React.Component {
           </td>
           <td>
             <button
-              className="delete-button"
+              className="btn btn-danger"
               onClick={(e) => this.props.delete(e, this.props._id)}
             >
               Delete

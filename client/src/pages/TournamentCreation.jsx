@@ -119,10 +119,10 @@ class TournamentCreationPage extends React.Component {
 
   render() {
     return (
-      <>
+      <div className="container">
         <h1 className="text-center">Tournament Creation</h1>
 
-        <div className="d-flex justify-content-center my-5">
+        <div className="d-flex my-5">
           <form className="row row-cols-lg-auto g-3 align-items-center">
             <div className="col-12">
               <label htmlFor="teamName">Team Name</label>
@@ -162,7 +162,7 @@ class TournamentCreationPage extends React.Component {
         </div>
 
         <div className="text-center d-flex justify-content-center mt-5">
-          <table id="teamsTable" className="table table-striped  w-50">
+          <table id="teamsTable" className="table table-striped table-hover">
             <thead>
               <tr>
                 <th scope="col">Team Name</th>
@@ -190,8 +190,9 @@ class TournamentCreationPage extends React.Component {
             </tbody>
           </table>
         </div>
-        <button onClick={(e) => this.generateTournament(e)}>Generate Tournament</button>
-      </>
+        <button className='btn btn-primary' onClick={(e) => this.generateTournament(e)}>Generate Tournament</button>
+      </div>
+
     );
   }
 }

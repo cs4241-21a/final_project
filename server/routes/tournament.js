@@ -43,8 +43,6 @@ router.post('/updateTeam', async (req, res, next) => {
     const teams = await Team.find({})
 
     res.json(teams)
-
-
 });
 
 router.post('/deleteTeam', async (req, res, next) => {
@@ -54,8 +52,6 @@ router.post('/deleteTeam', async (req, res, next) => {
     const teams = await Team.find({})
 
     res.json(teams)
-
-
 });
 
 router.post('/generateTournament', async (req, res, next) => {
@@ -96,13 +92,11 @@ router.post('/generateTournament', async (req, res, next) => {
     res.json(tournament);
 });
 
-
 router.post('/loadMatches', async function (req, res, next) {
     const { tournamentId } = req.body
 
     let tournament = await Tournament.findOne({ _id: tournamentId })
 
-    //TODO
     const allMatches = [];
     for (let i = 0; i < tournament.matches.length; i++) {
         const match = await Match.findById(tournament.matches[i]);
@@ -115,7 +109,6 @@ router.post('/loadMatches', async function (req, res, next) {
         });
     }
 
-    console.log(allMatches);
     res.json(allMatches);
 });
 
