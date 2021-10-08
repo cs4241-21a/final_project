@@ -1,58 +1,33 @@
-let viruses = []
-let canvasSize = (400, 400)
-let DETECTION_RADIUS = 10
+let stars = []	//create empty list of stars
+let numOfStars = 10
 
-function Entity(x, y) {
-  this.x = x
-  this.y = y
-  this.radius = DETECTION_RADIUS
-}
-
-function MovableEntity(x, y) {
-  Entity.call()
-  this.dx = 0
-  this.dy = 0
-}
-
-function CollectableEntity(x, y) {
-  Entity.call()
-}
-
-function Vaccine(x, y) {
-  CollectableEntity.call(x,y)
-}
-
-function Mask(x, y) {
-  CollectableEntity.call(x,y)
-}
-
-function Ship(x, y, player) {
-  MovableEntity.call(x,y)
-  this.player = player
-  this.rotation = 0
-}
-
-function Virus(x, y, size, variant) {
-  MovableEntity.call(x,y)
-  this.size = size
-  this.variant = variant
-}
-
-Object.setPrototypeOf(MovableEntity.prototype, Entity.prototype)
-Object.setPrototypeOf(CollectableEntity.prototype, Entity.prototype)
-Object.setPrototypeOf(Vaccine.prototype, CollectableEntity.prototype)
-Object.setPrototypeOf(Mask.prototype, CollectableEntity.prototype)
-Object.setPrototypeOf(Ship.prototype, MovableEntity.prototype)
-Object.setPrototypeOf(Virus.prototype, MovableEntity.prototype)
-
-Entity.prototype.Contacted = function(targets) {
-  
-}
-
-MovableEntity.prototype.Move = function(dx,dy) {
-  this.dx += dx
-  this.dy += dy
+function generateStars(){
+	for (let i = 0; i < numOfStars; i++) {
+	    let star = {}; //Define star locally
+	    star.x = random(0, 500); //Add info as before
+	    star.y = random(0, 500);
+	    star.diam = random(1,3);
+	    stars.push(star); //Now add the star to the list
+	}
 }
 
 function setup() {
+  createCanvas(500, 500);
+  generateStars();
 }
+
+function draw() {
+
+  background(0);
+
+  stroke(255);
+  strokeWeight(3);
+
+  for (let i = 0; i < 10; i++) {
+    stars[i].x = stars[i].x + 
+    stars[i].y++
+	  point(stars[i].x, stars[i].y);
+  }
+
+}
+
