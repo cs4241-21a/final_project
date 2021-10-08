@@ -145,7 +145,7 @@ function LoginPage(props) {
             variant="standard"
           />
           </Box>
-          <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+          <Box sx={{ display: 'flex', alignItems: 'flex-end', my: 1.5 }}>
         <LockIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
         <FormControl fullWidth variant="standard">
         <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>

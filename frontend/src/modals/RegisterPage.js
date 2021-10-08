@@ -152,7 +152,7 @@ function RegisterPage(props) {
               The inputted username is taken.
             </RedTypography>
           )}
-          <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+          <Box sx={{ display: 'flex', alignItems: 'flex-end', mt: 1.5 }}>
           <EmailIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
           <FormControl fullWidth variant="standard">
           <InputLabel htmlFor="standard-adornment-email">Email</InputLabel>
@@ -168,7 +168,7 @@ function RegisterPage(props) {
           />
            </FormControl>
           </Box>
-          <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+          <Box sx={{ display: 'flex', alignItems: 'flex-end', my: 1.5 }}>
         <LockIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
         <FormControl fullWidth variant="standard">
         <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
