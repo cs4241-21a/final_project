@@ -47,14 +47,15 @@ const RegisterPage = () => {
                 username: state.formData.username,
                 password: state.formData.password,
                 confirmPassword: state.formData.confirmPassword
-            })
+            }),
+            credentials: 'include'
         })
             .then(async function (response) {
                 const data = await response.json();
 
                 if (data.loggedIn) {
                     console.log('Registered');
-                    // history.push(`/user/${data.userId}`);
+                    history.push(`/tournament-create/${data.id}`);
                 }
 
                 if (data.error) {

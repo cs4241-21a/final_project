@@ -38,7 +38,8 @@ const LoginPage = () => {
             body: JSON.stringify({
                 username: state.formData.username,
                 password: state.formData.password
-            },)
+            },),
+            credentials: 'include'
         }).then(async function (response) {
             const data = await response.json();
 
@@ -57,7 +58,7 @@ const LoginPage = () => {
             // Redirect to  page on login
             if (data.loggedIn) {
                 console.log('Logged in');
-                // history.push(`/user/${data.id}`)
+                history.push(`/tournament-create/${data.id}`)
             }
         }).catch((err) => {
             alert('Login Request failed');

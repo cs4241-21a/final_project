@@ -23,7 +23,7 @@ if (env === 'development') {
 const MONGODB = process.env.MONGODB;
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const tournmentRouter = require('./routes/tournament');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -32,7 +32,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'build'))); // won't do anything until deployment time
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/tournament', tournmentRouter);
+// app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
