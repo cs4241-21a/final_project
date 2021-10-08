@@ -53,7 +53,7 @@ function App() {
         return response.json();
       })
       .then((data) => {
-        setData(data);
+        setTimestampData(data);
         console.log(data);
       });
   }, []);
