@@ -96,7 +96,42 @@ class Dashboard extends React.Component {
       .then((data) => {
         document.querySelector("form").reset();
         this.setState({ posts: data });
+        document.getElementById("list_class_filter").selectedIndex = 0;
+        document.getElementById("list_skills_filter").selectedIndex = -1;
+        document.getElementById("list_languages_filter").selectedIndex = -1;
       });
+  }
+
+  filter(e) {
+    const filterClass = document.getElementById("list_class_filter"),
+      filterSkills = document.getElementById("list_skills_filter"),
+      filterLanguages = document.getElementById("list_languages_filter"),
+      selected_skills = [...filterSkills.selectedOptions].map(
+        (option) => option.value
+      ),
+      selected_languages = [...filterLanguages.selectedOptions].map(
+        (option) => option.value
+      ),
+      json = {
+        course: filterClass.value,
+        skills: selected_skills,
+        languages: selected_languages,
+      },
+      body = JSON.stringify(json);
+    fetch("/filter", {
+      method: "post",
+      body,
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((data) => this.setState({ posts: data }));
+  }
+
+  resetFilter(e) {
+    this.load();
+    document.getElementById("list_class_filter").selectedIndex = 0;
+    document.getElementById("list_skills_filter").selectedIndex = -1;
+    document.getElementById("list_languages_filter").selectedIndex = -1;
   }
 
   render() {
@@ -105,7 +140,9 @@ class Dashboard extends React.Component {
         <div class="dashboard_grid_layout">
           <div class="header_bar_area">
             {/* <header class="header_area"> */}
-            <h1 class="app_title"><b>Super Cool App Title</b></h1>
+            <h1 class="app_title">
+              <b>Tech Teammate Tagup</b>
+            </h1>
             <a href="/profile" type="button" class="profile_link">
               Profile
             </a>
@@ -129,7 +166,9 @@ class Dashboard extends React.Component {
             <form class="input_area">
               <ul class="input_area_list">
                 <li class="input_field_item">
-                  <label for="post_title"><b>Title:</b></label>
+                  <label for="post_title">
+                    <b>Title:</b>
+                  </label>
                   <input
                     type="text"
                     id="post_title"
@@ -137,7 +176,9 @@ class Dashboard extends React.Component {
                   />
                 </li>
                 <li class="input_field_item">
-                  <label for="class_name"><b>Class:</b></label>
+                  <label for="class_name">
+                    <b>Class:</b>
+                  </label>
                   <select name="classes" id="class_name" multiple="">
                     <option value="" disabled selected hidden>
                       Choose a class
@@ -248,7 +289,9 @@ class Dashboard extends React.Component {
                   </select>
                 </li>
                 <li class="input_field_item">
-                  <label for="list_skills"><b>Skills:</b></label>
+                  <label for="list_skills">
+                    <b>Skills:</b>
+                  </label>
                   <select
                     name="skills"
                     id="list_skills"
@@ -280,7 +323,9 @@ class Dashboard extends React.Component {
                 </li>
 
                 <li class="input_field_item">
-                  <label for="list_languages"><b>Programming Languages:</b></label>
+                  <label for="list_languages">
+                    <b>Programming Languages:</b>
+                  </label>
                   <select
                     name="skills"
                     id="list_languages"
@@ -310,7 +355,9 @@ class Dashboard extends React.Component {
                 </li>
 
                 <li class="input_field_item">
-                  <label for="post_description"><b>Description:</b></label>
+                  <label for="post_description">
+                    <b>Description:</b>
+                  </label>
                   <textarea
                     id="post_description"
                     class="input_table_item"
@@ -326,6 +373,129 @@ class Dashboard extends React.Component {
           <div class="post_headers_area">
             <table class="post_entry_table">
               <h1 class="section_title">Posts</h1>
+
+              <div class="filter_area">
+                <label for="list_class_filter">
+                  <b>Filter by course:</b>
+                </label>
+                <select id="list_class_filter">
+                  <option value="" selected disabled hidden>
+                    Choose a course
+                  </option>
+                  <option>Personal Project</option>
+                  <option>CS 1004</option>
+                  <option>CS 1101</option>
+                  <option>CS 1102</option>
+                  <option>CS 2011</option>
+                  <option>CS 2022</option>
+                  <option>CS 2102</option>
+                  <option>CS 2103</option>
+                  <option>CS 2119</option>
+                  <option>CS 2223</option>
+                  <option>CS 2301</option>
+                  <option>CS 2303</option>
+                  <option>CS 3013</option>
+                  <option>CS 3041</option>
+                  <option>CS 3043</option>
+                  <option>CS 3133</option>
+                  <option>CS 3431</option>
+                  <option>CS 3516</option>
+                  <option>CS 3733</option>
+                  <option>CS 4032</option>
+                  <option>CS 4033</option>
+                  <option>CS 4100</option>
+                  <option>CS 4120</option>
+                  <option>CS 4123</option>
+                  <option>CS 4233</option>
+                  <option>CS 4241</option>
+                  <option>CS 4341</option>
+                  <option>CS 4342</option>
+                  <option>CS 4401</option>
+                  <option>CS 4404</option>
+                  <option>CS 4432</option>
+                  <option>CS 4445</option>
+                  <option>CS 4513</option>
+                  <option>CS 4515</option>
+                  <option>CS 4516</option>
+                  <option>CS 4518</option>
+                  <option>CS 4533</option>
+                  <option>CS 4536</option>
+                  <option>CS 4731</option>
+                  <option>CS 4801</option>
+                  <option>CS 4802</option>
+                  <option>CS 4803</option>
+                </select>
+
+                <label for="list_skills_filter">
+                  <b>Filter by skills:</b>
+                </label>
+                <select
+                  id="list_skills_filter"
+                  class="selectpicker"
+                  multiple
+                  data-live-search="true"
+                >
+                  <option>Debugging</option>
+                  <option>User Design</option>
+                  <option>Front-end Development</option>
+                  <option>Back-end Development</option>
+                  <option>Full-stack Development</option>
+                  <option>Web Development</option>
+                  <option>QA Testing</option>
+                  <option>Algorithms</option>
+                  <option>Databases</option>
+                  <option>Functional Testing</option>
+                  <option>Unit Testing</option>
+                  <option>Load/Performance Testing</option>
+                  <option>GitHub</option>
+                  <option>Linux</option>
+                  <option>Operating Systems</option>
+                  <option>Scripting</option>
+                  <option>Natural Language Processing</option>
+                  <option>Cybersecurity</option>
+                  <option>Cloud</option>
+                  <option>Project Management</option>
+                </select>
+
+                <label for="list_languages_filter">
+                  <b>Filter by languages:</b>
+                </label>
+                <select
+                  id="list_languages_filter"
+                  class="selectpicker"
+                  multiple
+                  data-live-search="true"
+                >
+                  <option>Java</option>
+                  <option>C</option>
+                  <option>C++</option>
+                  <option>Python</option>
+                  <option>JavaScript</option>
+                  <option>C#</option>
+                  <option>PHP</option>
+                  <option>SQL</option>
+                  <option>Objective-C</option>
+                  <option>R</option>
+                  <option>Perl</option>
+                  <option>Assembly Language</option>
+                  <option>Swift</option>
+                  <option>Go</option>
+                  <option>Ruby</option>
+                  <option>MATLAB</option>
+                  <option>Kotlin</option>
+                  <option>Racket</option>
+                </select>
+
+                <button class="filter_button" onClick={(e) => this.filter(e)}>
+                  Filter
+                </button>
+                <button
+                  class="reset_filter_button"
+                  onClick={(e) => this.resetFilter(e)}
+                >
+                  Reset Filters
+                </button>
+              </div>
               {/* <tbody> */}
               {this.state.posts.map((post, i) => (
                 <Post
