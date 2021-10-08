@@ -21,14 +21,14 @@ var canvas
 
 wss.on('connection', client => {
 
-    client.send(canvas)
+    client.send(JSON.stringify(canvas))
 
     client.on('message', message => {
-        console.log(`Received message => ${message}`)
+        console.log('Received message => ' + JSON.parse(message).width + ", " + JSON.parse(message).height)
+        canvas = JSON.parse(message)
         clients.forEach( c => {
             if( c !== client ){
-                c.send( message )
-                canvas = message
+                c.send( JSON.stringify(canvas) )
             }
         } )
     })
@@ -43,7 +43,7 @@ wss.on('connection', client => {
     // }, randomInteger(2,9)*100);
 
     client.on('close', function close() {
-        clearInterval(interval);
+        // clearInterval(interval);
     });
 })
 

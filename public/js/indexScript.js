@@ -22,7 +22,7 @@ function setup() {
 
     myCanvas.style('border', '1px solid #000')
 
-    myCanvas.mousePressed(saveForUndo)
+    myCanvas.mouseReleased(saveForUndo)
 
     const colorSelector = document.querySelector( '#colorSelector')
     colorSelector.addEventListener('change', changeColor);
@@ -41,7 +41,8 @@ function setup() {
     connection = new WebSocket('ws://localhost:3323')
 
     connection.onmessage = e => {
-        image(e.data, 0, 0)
+        // console.log(e.data)
+        loadCanvasFromServer(e.data)
     }
   }
   
@@ -76,7 +77,29 @@ function windowResized() {
 
 function saveForUndo(){
     undoList.push(get())
-    connection.send(get())
+    sendCanvasToServer()
+}
+
+function sendCanvasToServer(){
+    let canvas = get()
+    canvas.loadPixels()
+    // console.log(canvas.width, canvas.height)
+    let data = {
+        width: canvas.width,
+        height: canvas.height,
+        pixels: canvas.pixels
+    }
+
+    connection.send(JSON.stringify(data))
+}
+
+function loadCanvasFromServer(canvas){
+    // console.log(canvas)
+    let myImage = createImage(canvas.width, canvas.height)
+    myImage.loadPixels()
+    myImage.pixels = canvas.pixels
+    myImage.updatePixels()
+    image(myImage, 0, 0, canvas.width, canvas.height)
 }
 
 const redo = function(event){
