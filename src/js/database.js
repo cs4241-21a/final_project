@@ -1,4 +1,4 @@
-/*function addCalendar(calID, calName, calColor) {
+export function addCalendar(calID, calName, calColor) {
     let cal = {
         parent = getCalendarByID(calID),
         children = [],
@@ -16,7 +16,7 @@
     })
 }
 
-function removeCalendar(calID) {
+export function removeCalendar(calID) {
     fetch('/removeCalendar', {
         method: 'post',
         body: calID
@@ -28,7 +28,7 @@ function removeCalendar(calID) {
 }
 
 // TODO: Prototype function, do not use yet
-function getCalendarByID(calID) {
+export function getCalendarByID(calID) {
     if (calID === NULL) {
         return calID;
     }
@@ -43,7 +43,7 @@ function getCalendarByID(calID) {
     })
 }
 
-function modifyCalendar(calID, calName, calColor){
+export function modifyCalendar(calID, calName, calColor){
     let cal = {
         parent: getCalendarByID(calID),
         children: [],
@@ -61,7 +61,7 @@ function modifyCalendar(calID, calName, calColor){
     })
 }
 
-function createEvent(uID, eDate, eName, eStartTime, eEndTime, eAllDay) {
+export function createEvent(uID, eDate, eName, eStartTime, eEndTime, eAllDay) {
     let event = {
         userID: uID,
         date: eDate,
@@ -84,7 +84,7 @@ function createEvent(uID, eDate, eName, eStartTime, eEndTime, eAllDay) {
     // Mongo push to events collection
 }
 
-function removeEvent(uID, eID) {
+export function removeEvent(uID, eID) {
     let info = {
         userID: uID,
         eventID: eID
@@ -100,7 +100,7 @@ function removeEvent(uID, eID) {
     })
 }
 
-function modifyEvent(uID, eDate, eName, eStartTime, eEndTime, eAllDay) {
+export function modifyEvent(uID, eDate, eName, eStartTime, eEndTime, eAllDay) {
     let event = {
         userID: uID,
         date: eDate,
@@ -121,4 +121,4 @@ function modifyEvent(uID, eDate, eName, eStartTime, eEndTime, eAllDay) {
     })
 
     // Mongo push to events collection
-}*/
+}
