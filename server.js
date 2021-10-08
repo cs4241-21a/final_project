@@ -1,12 +1,16 @@
 const express = require("express"),
   mongodb = require("mongodb"),
   bodyParser = require("body-parser"),
+  session  = require('express-session'),
   ws = require('ws'),
   app = express(),
   port = 3001;
 
 app.use("/", express.static("public/"));
 app.use(bodyParser());
+
+let sessionParser = session({ secret: 'who even needs security', cookie: { maxAge: 60000 }});
+app.use(sessionParser);
 
 const mongoclient = mongodb.MongoClient;
 const uri =
@@ -39,6 +43,7 @@ app.post("/login", bodyParser.json(), function(req, res) {
     .toArray()
     .then(result => res.json(result));
   player = req.body.username;
+  req.session.username = req.body.username;
 });
 
 app.post("/register", bodyParser.json(), function(req, res) {
@@ -47,6 +52,7 @@ app.post("/register", bodyParser.json(), function(req, res) {
     .then(insertResponse => playerInfo.findOne(insertResponse.insertedId))
     .then(findResponse => res.json(findResponse));
   player = req.body.username;
+  req.session.username = req.body.username;
 });
 
 app.get("/", (request, response) => {
@@ -111,8 +117,11 @@ function createClient(id, socket, address){
 }
 
 wss.on('connection', (socket, req) => {
+  sessionParser(req.upgradeReq, {}, function(){
+        console.log(req.upgradeReq.session);
     const clientId = generateClientName();
     allClients.push(createClient(clientId, socket, req.socket.remoteAddress));
+    socket.send("Hello World! req.session.username = " + (req.session && req.session.username));
     socket.on('message', message => {
         socket.send("I got: " + message);
 

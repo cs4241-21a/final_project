@@ -8,7 +8,7 @@ const numOfStars = 75,
       medium = 40,
       large = 70,
       gompei_size = 50,
-      thrust = 1
+      ship_thrust = 1
 
 let virus_img
 let sanitizer_img
@@ -90,11 +90,10 @@ function generateShip() {
   ship.pos = createVector(width/2, height/2);
   ship.vel = createVector(0, 0);
   ship.diam = gompei_size
-  ship.thrust = thrust
+  ship.thrust = ship_thrust
 }
 
 function turnShip() {
-
   if (keyIsDown(LEFT_ARROW)) {
     ship.rotation -= .1;
   }
@@ -107,7 +106,7 @@ function turnShip() {
 function moveShip(){
   let acc = createVector(0,0)
   if(keyIsDown(UP_ARROW)){
-     acc = createVector(0, ship.thrust ) //Add acceleration pointin along ship's axis (up)
+     acc = createVector(0, ship.thrust) //Add acceleration pointin along ship's axis (up)
      acc.rotate(ship.rotation) //Rotate by ship's rotation
   }
   ship.vel.add(acc)
@@ -132,7 +131,7 @@ function checkEdges(obj) {
 
 function displayShip(){
   push();
-  translate(ship.pos.x, ship.pos.y)
+  //translate(ship.pos.x, ship.pos.y)
   rotate(ship.rotation)
   beginShape();
   vertex(0, -25);
@@ -167,7 +166,6 @@ function setup() {
   sanitizer_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fhand-sanitizer.png?v=1633702007208')
   mask_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fmedical-mask.png?v=1633702003055')
   gompei_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fgoat%20(1).png?v=1633701995373')
-
 }
 
 function draw() {
