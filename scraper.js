@@ -146,19 +146,19 @@ async function parseData(name, humanname, sitedata) {
             
             // Enum the statuses
             if (AVAILABLE_MODES.includes(machineclass)) {
-                machinedata['status'] = 'AVAILABLE'
+                machinedata['status'] = 'Available'
             } else if (READY_MODES.includes(machineclass)) {
-                machinedata['status'] = 'READY TO START'
+                machinedata['status'] = 'Ready To Start'
             } else if (IN_USE_MODES.includes(machineclass)) {
-                machinedata['status'] = 'IN USE'
+                machinedata['status'] = 'In Use'
             } else if (ALMOST_DONE_MODES.includes(machineclass)) {
-                machinedata['status'] = 'ALMOST DONE'
+                machinedata['status'] = 'Almost Done'
             } else if (END_OF_CYCLE_MODES.includes(machineclass)) {
-                machinedata['status'] = 'END OF CYCLE'
+                machinedata['status'] = 'Ready For Pickup'
             } else if (OFFLINE_MODES.includes(machineclass)) {
-                machinedata['status'] = 'OFFLINE'
+                machinedata['status'] = 'Offline'
             } else {
-                machinedata['status'] = 'AVAILABLE'
+                machinedata['status'] = 'Available'
             }
 
             if (machinetime != undefined) {

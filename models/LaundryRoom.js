@@ -15,8 +15,8 @@ const LaundryRoom = new Schema({
             machinenumber: Number,
             status: {
                 type: String,
-                enum: ['AVAILABLE', 'READY TO START', 'IN USE', 'ALMOST DONE', 'END OF CYCLE', 'OFFLINE'],
-                default: 'AVAILABLE'
+                enum: ['Available', 'Ready To Start', 'In Use', 'Almost Done', 'Ready For Pickup', 'Offline'],
+                default: 'Available'
             },
             rawstatus: String,
             minutes_left: Number
@@ -27,8 +27,8 @@ const LaundryRoom = new Schema({
             machinenumber: Number,
             status: {
                 type: String,
-                enum: ['AVAILABLE', 'IN USE', 'ALMOST DONE', 'END OF CYCLE', 'OFFLINE'],
-                default: 'AVAILABLE'
+                enum: ['Available', 'Ready To Start', 'In Use', 'Almost Done', 'Ready For Pickup', 'Offline'],
+                default: 'Available'
             },
             rawstatus: String,
             minutes_left: Number
