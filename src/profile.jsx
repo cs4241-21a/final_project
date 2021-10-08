@@ -5,19 +5,78 @@ import "./css/styles.css";
 
 
 class Profile extends React.Component{
+    first_name = ""
+    last_name = ""
+    grade = ""
+    ph
+    courses_taken = []
+    skills = []
+    programming_languages = []
+    bio = ""
+
     constructor(props){
         super(props)
         // [value, setValue] = useState()
         this.state = {
             number: '',
           };
+
+        this.submit  = this.submit.bind(this)
+        this.update_selected_courses = this.update_selected_courses.bind(this)
+        this.update_selected_skills = this.update_selected_skills.bind(this)
+        this.update_selected_programming_languages = this.update_selected_programming_languages.bind(this)
     }
-    
-    handleOnChange(value) {
-        this.setState({
-           phone: value
-        });
-     }
+
+    submit(){
+        let json = {
+            first_name: this.first_name,
+            last_name: this.last_name,
+            phone_number: this.state.phone_number,
+            grade: this.grade,
+            courses_taken: this.courses_taken,
+            skills: this.skills,
+            programming_languages: this.programming_languages,
+            bio: this.bio
+        }
+        fetch('/create_profile', {
+            method: 'POST',
+            body: JSON.stringify(json),
+            headers:{
+                "Content-Type": "application/json"
+            }
+        })
+        console.log("submitting json: ", json)
+    }
+
+    update_selected_courses(e){
+        let coursesDropdown = e.currentTarget;
+
+        let selected_courses = [...coursesDropdown.selectedOptions].map(
+            (option) => option.value
+        )
+
+        this.courses_taken = selected_courses
+    }
+
+    update_selected_skills(e){
+        let skillsDropdown = e.currentTarget;
+
+        let selected_skills = [...skillsDropdown.selectedOptions].map(
+            (option) => option.value
+        )
+
+        this.skills = selected_skills
+    }
+
+    update_selected_programming_languages(e){
+        let languagesDropdown = e.currentTarget;
+
+        let selected_languages = [...languagesDropdown.selectedOptions].map(
+            (option) => option.value
+        )
+
+        this.programming_languages = selected_languages
+    }
 
     render(){
         return(
@@ -42,14 +101,22 @@ class Profile extends React.Component{
                         <label for="profile_first_name">
                             <b>First Name:</b>
                         </label>
-                        <input type="text" id="profile_first_name" placeholder="First Name"/>
+                        <input 
+                            type="text" 
+                            id="profile_first_name" 
+                            placeholder="First Name"
+                            onKeyUp={(e) => this.first_name = e.target.value}/>
                     </li>
 
                     <li class="input_field_item">
                         <label for="profile_last_name">
                             <b>Last Name:</b>
                         </label>
-                        <input type="text" id="profile_last_name" placeholder="Last Name"/>
+                        <input 
+                            type="text" 
+                            id="profile_last_name" 
+                            placeholder="Last Name"
+                            onKeyUp={(e) => this.last_name = e.target.value}/>
                     </li>
 
                     <li class="input_field_item">
@@ -68,7 +135,7 @@ class Profile extends React.Component{
                         <label for="grade_select">
                             <b>Grade:</b>
                         </label>
-                        <select name="grade_select" id="grade_select" multiple="">
+                        <select name="grade_select" id="grade_select" multiple="" onChange={(e) => this.grade = e.target.value}>
                             <option value="" disabled selected hidden>Choose a class</option>
                             <option value="Freshman">Freshman</option>
                             <option value="Junior">Junior</option>
@@ -83,7 +150,7 @@ class Profile extends React.Component{
                         <label for="class_name">
                             <b>Courses Taken:</b>
                         </label>
-                        <select name="classes" id="class_name" multiple="">
+                        <select name="classes" id="class_name" class="selectpicker" multiple data-live-search="true" onChange={this.update_selected_courses}>
                             <option value="" disabled selected hidden>Choose a class</option>
                             <option value="personal">Personal Project</option>
                             <option value="1004">CS 1004: Introduction to programming for non-majors</option>
@@ -134,7 +201,7 @@ class Profile extends React.Component{
                         <label for="list_skills">
                             <b>Skills:</b>
                         </label>
-                        <select name="skills" id="list_skills" class="selectpicker" multiple data-live-search="true">
+                        <select name="skills" id="list_skills" class="selectpicker" multiple data-live-search="true" onChange={this.update_selected_skills}>
                             <option>Debugging</option>
                             <option>User Design</option>
                             <option>Front-end Development</option>
@@ -162,7 +229,7 @@ class Profile extends React.Component{
                         <label for="list_languages">
                             <b>Programming Languages:</b>
                         </label>
-                        <select name="skills" id="list_languages" class="selectpicker" multiple data-live-search="true">
+                        <select name="skills" id="list_languages" class="selectpicker" multiple data-live-search="true" onChange={this.update_selected_programming_languages}>
                             <option>Java</option>
                             <option>C</option>
                             <option>C++</option>
@@ -188,7 +255,11 @@ class Profile extends React.Component{
                         <label for="profile_bio">
                             <b>Profile Bio:</b>
                         </label>
-                        <textarea id="profile_bio" class="input_table_item" placeholder="Enter relevant info about yourself, you want others to see">
+                        <textarea 
+                            id="profile_bio" 
+                            class="input_table_item" 
+                            placeholder="Enter relevant info about yourself, you want others to see"
+                            onKeyUp={(e) => this.bio = e.target.value}>
                         </textarea>
                     </li>
                     <button class="submit_button" onClick={(e) => this.submit(e)}>

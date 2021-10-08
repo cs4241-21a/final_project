@@ -4,7 +4,8 @@ const express = require("express"),
   app = express(),
   fs = require("fs"),
   mime = require("mime"),
-  mongodb = require("mongodb");
+  mongodb = require("mongodb"),
+  bodyParser = require("body-parser");
 MongoClient = mongodb.MongoClient;
 
 // OAuth Code
@@ -512,5 +513,11 @@ app.post("/filter", async (request, response) => {
 app.get('/profile', (request, response) => {
     response.sendFile(__dirname + "/build/profile.html")
 })
+
+app.post('/create_profile', bodyParser.json(), (request, response) => {
+    console.log("request: ", request.body)
+})
+
+
 
 app.listen(process.env.PORT || 3000);
