@@ -8,6 +8,7 @@ $background-secondary: lighten($background-primary, 6.5%);
 $background-tertiary: lighten($background-primary, 13%);
 
 $accent-primary: #C82929;
+$accent-secondary: darken($accent-primary, 6.5%);
 
 // fonts
 $font-family-primary: 'Roboto', sans-serif;
@@ -15,5 +16,19 @@ $font-family-secondary: 'Paytone One', sans-serif;
 
 $font-size-sm: 0.875rem;
 $font-size-md: 1rem;
-$font-size-lg: 1.25rem;
-$font-size-xl: 2rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.5rem;
+$font-size-xxl: 2rem;
+
+button {
+  font-family: $font-family-primary;
+  font-size: $font-size-md;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
