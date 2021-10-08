@@ -66,7 +66,7 @@ For authentication, we wanted to challenge ourselves more than we did in A3, whe
 ### 5. Group Member Design/Development Responsibilities 
 
 - Renee
-  - project management, role delegation, meeting scheduling
+  - project management: role delegation & meeting/deadling scheduling
   - login page and oauth functionality
   - readme and proposal writeups, video scripting 
 - Chris
