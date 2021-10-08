@@ -11,7 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 
 function NavBar(props) {
-  
+  const [auth, setAuth] = React.useState(false)
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   console.log("Our login status: " + props.loggedIn);
