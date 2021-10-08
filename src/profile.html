@@ -3,9 +3,46 @@
     <head>
         <title>Profile Page</title>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="css/style.css"/>
+
     </head>
     <body>
-        <!-- <div id="app"></div> -->
-        <!-- <script type="module" src="index.js"></script> -->
+        <body>
+            <!-- Default Profile Pic & Header -->
+            <img src="avatar.png" alt="Avatar" class="avatar">
+            <h1>Profile Information</h1>
+    
+            <!-- Forms Needed -->
+            <form>
+                <label for="fname">First name:</label>
+                <input type="text" size = "50" id="fname" name="fname" value="">
+                <label for="lname">Last name:</label> 
+                <input type="text" size = "50" id="lname" name="lname" value=""><br>
+                <label for="fname">Phone Number:</label>
+                <input type="text" id="fname" name="fname" value=""><br>
+                <label for="fname">Courses</label><br>
+                <input type="text" id="fname" name="fname" value=""><br>
+                <label for="fname">Skills:</label><br>
+                <input type="text" id="fname" name="fname" value=""><br>
+                <label for="fname">Languages:</label><br>
+                <input type="text" id="fname" name="fname" value=""><br>
+                <label for="fname">Biography</label><br>
+                <TEXTAREA Name="content" ROWS="10" COLS="50"></TEXTAREA>
+            </form>
+    
+        <!-- Save and Back Buttons -->    
+        <div id="container">
+            <button type="submit" id="edit-button">Save</button>
+            <button type="submit" id="end-editing">Back</button>
+        </div>
+    
+        <!-- Log Out Button -->
+        <div style="float:right">
+            <form align="right" name="form1" method="post" action="log_out.php">
+                <label class="logoutLblPos">
+                    <input name="submit2" type="submit" id="submit2" value="Log Out">
+                </label>
+            </form>
+        </div>
     </body>
 </html>
