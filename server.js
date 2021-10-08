@@ -130,6 +130,7 @@ app.post('/createEvent', bodyparser.json(), async (req,res) => {
   let endDate = new Date(req.body.endDate);
 
 
+
   const entry = new EventEntry({
     owner: req.session.username,
     eventName: req.body.title,
@@ -142,13 +143,8 @@ app.post('/createEvent', bodyparser.json(), async (req,res) => {
     location: req.body.location
   })
   await entry.save()
-      .then(async result => {
-        //res.send(result);
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  res.render('events');
+  let result = await EventEntry.find({})
+  res.render('events', {eventsList: result, sentUsername: req.session.username, title:"Events"})
 })
 
 
@@ -175,10 +171,6 @@ app.use( function( req,res,next) {
     res.render('login')
   }
 })
-
-// Use body parser to parse JSON when necessary
-/*app.use(bodyparser.urlencoded({ extended: true }))
-app.use(bodyparser.json())*/
 
 // Serve static files when necessary
 app.use(express.static(staticDir));
