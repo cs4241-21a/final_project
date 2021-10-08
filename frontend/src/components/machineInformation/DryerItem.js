@@ -10,13 +10,13 @@ var green = "#90ee90"
 var black = "#000000"
 
 function getColor(value, status) {
-  if (value === null && status === "Ready For Pickup") return green;
+  if (value === null && status === "Ready For Pickup") return yellow;
+  else if (status === "Available") return green;
   else if (status === "Offline") return black;
   else if (value === null && status === "Ready To Start") return red;
   else if (value >= 35) return red;
-  else if (value >= 20) return orange;
-  else if (value >= 5) return yellow;
-  else if (value >= 0 && status !== "Offline") return green;
+  else if (value >= 15) return orange;
+  else if (value >= 0) return yellow;
   else if (status === "Offline") return black;
   else return black;
 }
