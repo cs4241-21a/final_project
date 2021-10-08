@@ -145,6 +145,7 @@ function checkShipForCollisions(targets){
 function setup() {
   createCanvas(750, 750) //make the size of the display whatever size the window is
   generateStars()
+  generateShip()
   virus_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fcoronavirus.png?v=1633701999099')
   sanitizer_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fhand-sanitizer.png?v=1633702007208')
   mask_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fmedical-mask.png?v=1633702003055')
@@ -154,8 +155,7 @@ function setup() {
 
 function draw() {
   background(255)
-  stroke(255)
-  strokeWeight(3)
   drawStars()
   displayShip()
+  moveShip()
 }
