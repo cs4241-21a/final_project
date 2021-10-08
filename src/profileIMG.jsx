@@ -12,11 +12,14 @@ class ProfileImage extends React.Component{
         this.state = {
             imagePath: this.props.imagePath
         }
+
+        // this.updateProfileImg = this.updateProfileImg.bind(this)
     }
 
-    updateProfileImg(){
+    // updateProfileImg(base64){
+    //     console.log("base64: ", base64)
 
-    }
+    // }
 
     render() {
         return(
@@ -29,7 +32,7 @@ class ProfileImage extends React.Component{
                 <ImagePicker
                     extensions={['jpg', 'jpeg', 'png']}
                     dims={{minWidth: 100, maxWidth: 500, minHeight: 100, maxHeight: 500}}
-                    // onChange={base64 => ()}
+                    // onChange={base64 => (this.updateProfileImg(base64))}
                     // onError={errMsg => ()}
                     >     
                     <div id="profileImg" style={{height: '50px', width: '50px', backgroundColor: 'white'}}>
