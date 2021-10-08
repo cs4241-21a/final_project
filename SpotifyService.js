@@ -26,12 +26,14 @@ export default (new class SpotifyService {
 
     _getAccessToken = async () => {
         console.log('Retrieving Spotify access token...');
+
         const credentials = base64.encode(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`);
-        const { access_token, expires_in } = await this.POST('/api/token', {
+        const { access_token, expires_in } = await this.request('POST', '/api/token', {
             'grant_type': 'client_credentials'
         }, {
             'Authorization': `Basic ${credentials}`
         }).catch(console.error);
+
         console.log(`Spotify access token retrieved (${ access_token }).`);
         return {
             token: access_token,
@@ -39,12 +41,11 @@ export default (new class SpotifyService {
         }
     }
 
-
-    POST = (endpoint, data, headers) => {
+    request = (method, endpoint, data, headers) => {
         const body = Object.keys(data).map(k => `${k}=${ data[k] }`).join('&'); // url encoding of data
         return new Promise((resolve, reject) => {
             fetch(`${ this.uri }${ endpoint }`, {
-                method: 'POST',
+                method: method,
                 body,
                 headers: new Headers({ ...headers, ...this.defaultHeaders }),
             }).then(response => {
