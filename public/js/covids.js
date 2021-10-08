@@ -1,6 +1,9 @@
 let stars = []	//create empty list of stars
 let numOfStars = 15
 
+let width = 500
+let height = 500
+
 let small = 22
 let medium = 37
 let large = 55
@@ -17,14 +20,21 @@ function randomChoice(arr) {
 function generateStars(){
 	for (let i = 0; i < numOfStars; i++) {
 	    let star = {} //Define star locally
-	    star.x = random(500, 600) //Add info as before
-	    star.y = random(500, 560)
+      const quad_1 = randomChoice([0, 1])
+      const quad_2 = randomChoice([0, 1])
+      if (quad_1) {
+        if ()
+        star.x = random(0, -10) //Add info as before
+        star.y = random(0, 400)
+      }
       const set = randomChoice([{life:1, size:small}, {life:2, size:medium}, {life:3, size:large}])
 	    star.diam = set.size
       star.lives = set.life
 	    stars.push(star) //Now add the star to the list
 	}
 }
+
+
 
 function drawStars(){
   for (let i = 0; i < numOfStars; i++) {
