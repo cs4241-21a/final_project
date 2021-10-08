@@ -14,7 +14,7 @@ class Dashboard extends React.Component {
             .then(json => {
                 console.log(json)
                 this.setState({
-                    songsJson: json
+                    songsJson: JSON.parse(json)
                 })
             })
     }
@@ -24,6 +24,7 @@ class Dashboard extends React.Component {
         if (!trackList) {
             return <p></p>
         } else {
+            console.log(trackList)
             return (
                 <div class="card" style={{ width: "100%", left: "20px", fontSize: "20px" }}>
                     <div class="card-body" style={{ paddingLeft: "20px" }}>
@@ -33,13 +34,15 @@ class Dashboard extends React.Component {
                                 <th>Artist</th>
                                 <th>Coverart</th>
                             </tr>
-                            {trackList.map(track => (
-                                <tr>
-                                    <td id={`title_${track._id}`}>{track.title} </td>
-                                    <td id={`Artist_${track._id}`}>{track.subtitle} </td>
-                                    <td><img src={track.images.coverarthq} style={{ wdith: "10vw", height: "10vw" }}></img></td>
-                                </tr>
-                            ))}
+                            {
+                                trackList.map(track => (
+                                    <tr>
+                                        <td id={`title_${track._id}`}>{track.title} </td>
+                                        <td id={`Artist_${track._id}`}>{track.subtitle} </td>
+                                        <td><img src={track.images.coverarthq} style={{ wdith: "10vw", height: "10vw" }}></img></td>
+                                    </tr>
+                                ))
+                            }
                         </table>
                     </div>
                 </div>
