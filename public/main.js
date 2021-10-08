@@ -2,12 +2,34 @@ const app1 = Vue.createApp({
     data() {
         return {
             cart: [],
-            premium: true
+            premium: true,
+            shopping: false,
+            CounterPage: false,
+            counter: 0
         }
     },
     methods: {
         updateCart(id) {
             this.cart.push(id)
+        },
+        add() {
+            this.counter++;
+        },
+        sendRequest() {
+            // window.location.replace('/aboutus');
+            var json = { name: "wangyonghua" },
+            body = JSON.stringify( json );
+            fetch( '/addData', {
+                method:'POST',
+                body,
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              })
+              .then( response => response.json() )
+              .then( function( response ) {
+                console.log(response.result);
+              })
         }
     }
 })
@@ -20,7 +42,7 @@ const app2 = Vue.createApp({
     methods: {
         add() {
             this.counter++;
-        }
+        },
+        
     }
-
 })
