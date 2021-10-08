@@ -87,9 +87,27 @@ const sendFile = function (response, filename) {
 };
 
 app.get("/logout", (request, response) => {
+  console.log(request.user)
   request.logOut();
   response.redirect("/login");
 });
+
+async function handle_login(req, res) {
+  let user = null;
+  let dbPromise_user = collection_profile
+    .findOne({ profileID: profileID })
+    .then((read_data) => (user = read_data));
+
+  await dbPromise_user;
+
+  // console.log(user);
+
+  if (user) {
+    res.redirect("/dashboard.html");
+  } else {
+    res.redirect("/profile.html");
+  }
+}
 
 passport.use(
   new OutlookStrategy(
@@ -120,20 +138,7 @@ app.get(
   passport.authenticate("windowslive", { failureRedirect: "/login" }),
   async function (req, res) {
     // Successful authentication
-    // check if they have an account, redirect accordingly
-
-    let user = null;
-    let dbPromise_user = collection_profile
-      .findOne({ profileID: profileID })
-      .then((read_data) => (user = read_data));
-
-    await dbPromise_user;
-
-    if (user) {
-      res.redirect("/dashboard.html");
-    } else {
-      res.redirect("/profile.html");
-    }
+    handle_login(req, res);
   }
 );
 
@@ -145,11 +150,11 @@ passport.use(
       callbackURL: process.env.GIT_CALLBACK_URL,
     },
     function (accessToken, refreshToken, profile, cb) {
-      profileID = profile.id;
+      // profileID = profile.id;
 
-      collection_profile.insertOne({
-        profileID: profile.id,
-      });
+      // collection_profile.insertOne({
+      //   profileID: profile.id,
+      // });
 
       cb(null, profile);
     }
@@ -163,20 +168,7 @@ app.get(
   passport.authenticate("github", { failureRedirect: "/" }),
   async function (req, res) {
     // Successful authentication
-    // check if they have an account, redirect accordingly
-
-    let user = null;
-    let dbPromise_user = collection_profile
-      .findOne({ profileID: profileID })
-      .then((read_data) => (user = read_data));
-
-    await dbPromise_user;
-
-    // if (user) {
-    res.redirect("/dashboard.html");
-    // } else {
-    // res.redirect("/profile.html");
-    // }
+    handle_login(req, res);
   }
 );
 
@@ -216,20 +208,7 @@ app.get(
 
   async function (req, res) {
     // Successful authentication
-    // check if they have an account, redirect accordingly
-
-    let user = null;
-    let dbPromise_user = collection_profile
-      .findOne({ profileID: profileID })
-      .then((read_data) => (user = read_data));
-
-    await dbPromise_user;
-
-    if (user) {
-      res.redirect("/dashboard.html");
-    } else {
-      res.redirect("/profile.html");
-    }
+    handle_login(req, res);
   }
 );
 
@@ -262,20 +241,7 @@ app.get(
   }),
   async function (req, res) {
     // Successful authentication
-    // check if they have an account, redirect accordingly
-
-    let user = null;
-    let dbPromise_user = collection_profile
-      .findOne({ profileID: profileID })
-      .then((read_data) => (user = read_data));
-
-    await dbPromise_user;
-
-    if (user) {
-      res.redirect("/dashboard.html");
-    } else {
-      res.redirect("/profile.html");
-    }
+    handle_login(req, res);
   }
 );
 
@@ -450,6 +416,14 @@ app.post("/submit", async (request, response) => {
 
   let json = await getAllPosts();
   response.json(json);
+});
+
+app.post("/create_profile", async (request, response) => {
+  console.log(request.user)
+
+  console.log(request.body)
+
+
 });
 
 app.listen(process.env.PORT || 3000);
