@@ -3,31 +3,31 @@ import { useHistory, useParams } from "react-router";
 import Team from "../components/Team";
 
 class TournamentCreationPage extends React.Component {
-  
+
   constructor(props) {
     super(props);
-    
-     this.state = { teams: [],userId:this.props.match.params.userId};
-     this.load()
+
+    this.state = { teams: [], userId: this.props.match.params.userId };
   }
 
-  load() {
-
+  componentDidMount() {
     fetch("http://localhost:3001/tournament/loadTeams", {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
-    },
+      },
       credentials: 'include'
     }).then(async (response) => {
       const json = await response.json();
       console.log(json);
-      this.setState({ teams: json })
+      this.setState({ ...this.state, teams: json });
     });
   }
 
-   submit(e) {
-    
+  submit(e) {
+    e.preventDefault();
+    console.log('submit called')
+
     const teamName = document.querySelector("#teamName"),
       sum1 = document.querySelector("#summoner1"),
       sum2 = document.querySelector("#summoner2"),
@@ -41,15 +41,21 @@ class TournamentCreationPage extends React.Component {
       },
       body = JSON.stringify(json);
 
-     fetch("http://localhost:3001/tournament/insertTeam", {
+    fetch("http://localhost:3001/tournament/insertTeam", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
-    },
+      },
       body,
       credentials: 'include'
     }).then(async (response) => {
       const json = await response.json();
+
+      if (json.error) {
+        alert(json.error);
+        return;
+      }
+
       this.setState({ teams: json });
     });
   }
@@ -62,18 +68,18 @@ class TournamentCreationPage extends React.Component {
       sum4 = document.querySelector("#sum4" + i),
       sum5 = document.querySelector("#sum5" + i),
       json = {
-        _id:id,
+        _id: id,
         teamName: teamName.value,
         summoners: [sum1.value, sum2.value, sum3.value, sum4.value, sum5.value],
       },
       body = JSON.stringify(json);
-     fetch("http://localhost:3001/tournament/updateTeam", {
+    fetch("http://localhost:3001/tournament/updateTeam", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
-    },
+      },
       body,
-     credentials: 'include'
+      credentials: 'include'
     }).then(async (response) => {
       const json = await response.json();
       this.setState({ teams: json });
@@ -88,14 +94,12 @@ class TournamentCreationPage extends React.Component {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
-    },
+      },
       body,
       credentials: 'include'
     }).then(async (response) => {
       const json = await response.json();
-     this.setState({ teams: json });
-
-
+      this.setState({ teams: json });
     });
   }
 
@@ -105,52 +109,50 @@ class TournamentCreationPage extends React.Component {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
-    },
-    credentials: 'include'
+      },
+      credentials: 'include'
     }).then(async (response) => {
       const json = await response.json();
       this.props.history.push(`/tournament/${json._id}`);
-
-
-
     });
   }
+
   render() {
     return (
       <>
-        <h1 class="text-center">Tournament Creation</h1>
+        <h1 className="text-center">Tournament Creation</h1>
 
-        <div class="d-flex justify-content-center my-5">
-          <form class="row row-cols-lg-auto g-3 align-items-center">
-            <div class="col-12">
-              <label for="teamName">Team Name</label>
-              <input type="text" class="form-control" id="teamName" required />
+        <div className="d-flex justify-content-center my-5">
+          <form className="row row-cols-lg-auto g-3 align-items-center">
+            <div className="col-12">
+              <label htmlFor="teamName">Team Name</label>
+              <input type="text" className="form-control" id="teamName" required />
             </div>
-            <div class="col-12">
-              <label for="summoner1">Summoner #1</label>
-              <input type="text" class="form-control" id="summoner1" required />
+            <div className="col-12">
+              <label htmlFor="summoner1">Summoner #1</label>
+              <input type="text" className="form-control" id="summoner1" required />
             </div>
-            <div class="col-12">
-              <label for="summoner2">Summoner #2</label>
-              <input type="text" class="form-control" id="summoner2" required />
+            <div className="col-12">
+              <label htmlFor="summoner2">Summoner #2</label>
+              <input type="text" className="form-control" id="summoner2" required />
             </div>
-            <div class="col-12">
-              <label for="summoner3">Summoner #3</label>
-              <input type="text" class="form-control" id="summoner3" required />
+            <div className="col-12">
+              <label htmlFor="summoner3">Summoner #3</label>
+              <input type="text" className="form-control" id="summoner3" required />
             </div>
-            <div class="col-12">
-              <label for="summoner4">Summoner #4</label>
-              <input type="text" class="form-control" id="summoner4" required />
+            <div className="col-12">
+              <label htmlFor="summoner4">Summoner #4</label>
+              <input type="text" className="form-control" id="summoner4" required />
             </div>
-            <div class="col-12">
-              <label for="summoner5">Summoner #5</label>
-              <input type="text" class="form-control" id="summoner5" required />
+            <div className="col-12">
+              <label htmlFor="summoner5">Summoner #5</label>
+              <input type="text" className="form-control" id="summoner5" required />
             </div>
-            <div class="col-12">
+            <div className="col-12">
               <button
                 id="submit-button"
                 type="submit"
-                class="btn btn-primary mt-4"
+                className="btn btn-primary mt-4"
                 onClick={(e) => this.submit(e)}
               >
                 Submit
@@ -159,8 +161,8 @@ class TournamentCreationPage extends React.Component {
           </form>
         </div>
 
-        <div class="text-center d-flex justify-content-center mt-5">
-          <table id="teamsTable" class="table table-striped  w-50">
+        <div className="text-center d-flex justify-content-center mt-5">
+          <table id="teamsTable" className="table table-striped  w-50">
             <thead>
               <tr>
                 <th scope="col">Team Name</th>

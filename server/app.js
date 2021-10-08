@@ -23,7 +23,6 @@ if (env === 'development') {
 const MONGODB = process.env.MONGODB;
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 const tournmentRouter = require('./routes/tournament');
 
 app.use(logger('dev'));

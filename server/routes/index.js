@@ -13,6 +13,7 @@ router.get('/', function (req, res, next) {
 
 // Post request to login
 router.post('/login', async (req, res, next) => {
+  console.log(req.cookies)
   const { username, password } = req.body;
 
   if (!username || !password) {

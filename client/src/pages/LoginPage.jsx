@@ -38,7 +38,8 @@ const LoginPage = () => {
             body: JSON.stringify({
                 username: state.formData.username,
                 password: state.formData.password
-            },)
+            },),
+            credentials: 'include'
         }).then(async function (response) {
             const data = await response.json();
 

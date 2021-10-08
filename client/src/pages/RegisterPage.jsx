@@ -47,7 +47,8 @@ const RegisterPage = () => {
                 username: state.formData.username,
                 password: state.formData.password,
                 confirmPassword: state.formData.confirmPassword
-            })
+            }),
+            credentials: 'include'
         })
             .then(async function (response) {
                 const data = await response.json();
