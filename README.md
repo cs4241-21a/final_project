@@ -68,14 +68,17 @@ For authentication, we wanted to challenge ourselves more than we did in A3, whe
 - Renee
   - project management: role delegation & meeting/deadling scheduling
   - login page and oauth functionality
+  - page routing
   - readme and proposal writeups, video scripting 
 - Chris
   - all database configuration, management, and querying
   - all styling
-  - oauth capability
+  - page routing
   - proposal writeup
+  - oauth functionality
 - Stefano
   - dashboard page and server side communication
+  - initial dummy server
   - React pointman
 - Ashley
   - integrating kebab menu with posts on dashboard
