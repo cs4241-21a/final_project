@@ -244,7 +244,7 @@ app.delete("/movement", async (req, res) => {
     .collection("users")
     .updateOne(
       { username: req.session.username },
-      { $pull: { workouts: {$elemMatch: { _id: req.query._id } }} }
+      { $pull: { workouts: {$elemMatch: { _id: req.query._id } }} }//should drop entire movement elem but not workout
     );
 
   res.status(200).end();
