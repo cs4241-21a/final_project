@@ -13,6 +13,17 @@ function WelcomeMessage(props) {
   const handleChange = (event, newAlignment) => {
     if (newAlignment !== null) setAlignment(newAlignment);
   };
+
+  console.log(props.timestamp)
+  let timestring
+
+  try {
+    const lu = new Date(props.timestamp[0].timestamp * 1000)
+    timestring = lu.toLocaleString(navigator.language, {year: 'numeric', month: 'long', day: 'numeric'}) + " at " + lu.toLocaleString(navigator.language, {hour: 'numeric', minute: 'numeric'})
+  } catch (e) {
+    timestring = "Loading..."
+  }
+
   return (
     <div>
       <Box
@@ -31,7 +42,9 @@ function WelcomeMessage(props) {
         <Typography variant="h6">
           Because Laundry Connect sucks at web design, and WPI deserves a better how-busy-is-the-laundry-room experience.
         </Typography>
-        
+        <Typography variant="small">
+          Last updated: {timestring}
+        </Typography>
         <ToggleButtonGroup
           color="primary"
           value={alignment}

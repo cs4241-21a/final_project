@@ -94,7 +94,7 @@ function App() {
             setToken={setToken} 
             handleClose={handleClose} />
         )}
-        <WelcomeMessage setFavorites={setShowFavorites} />
+        <WelcomeMessage setFavorites={setShowFavorites} timestamp={timestampData}/>
         <Switch>
           <Route path="/" exact={true}>
             {!showFavorites && <BuildingList data={laundryData} />}
