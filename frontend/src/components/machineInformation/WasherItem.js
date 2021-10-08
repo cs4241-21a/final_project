@@ -4,12 +4,14 @@ import LocalLaundryServiceIcon from "@mui/icons-material/LocalLaundryService";
 import DryCleaningTwoToneIcon from "@mui/icons-material/DryCleaningTwoTone";
 
 function getColor(value, status) {
-  if (value === null && status === "END OF CYCLE") return "#fdb996";
-  else if (value === null && status === "READY TO START") return "#fdb996"
+  if (value === null && status === "Ready For Pickup") return "#fdb996";
+  else if (status === "Offline") return "#000000";
+  else if (value === null && status === "Ready To Start") return "#fc647d"
   else if (value >= 35) return "#fc647d";
-  else if (value >= 25) return "#fdb996";
-  else if (value >= 15) return "#fdec96";
-  else if (value >= 0 && status !== "OFFLINE") return "#90ee90";
+  else if (value >= 25) return "#fdec96";
+  else if (value >= 15) return "#fdb996";
+  else if (value >= 0 && status !== "Offline") return "#90ee90";
+  else if (status === "Offline") return "#000000";
   else return "#000000";
 }
 
