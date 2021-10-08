@@ -1,5 +1,5 @@
 let stars = []	//create empty list of stars
-let numOfStars = 100
+let numOfStars = 10
 let virus_img
 let sanitizer_img
 let mask_img
@@ -23,12 +23,12 @@ function drawStars(){
   for (let i = 0; i < numOfStars; i++) {
     stars[i].x += randomChoice([-3, -1, 0, 1, 3])
     stars[i].y += randomChoice([-3, -1, 0, 1, 3])
-    image(virus_img, stars[i].x, stars[i].y)
+    image(virus_img, stars[i].x, stars[i].y, 50, 50)
   }
 }
 
 function setup() {
-  createCanvas(500, 500)
+  createCanvas(500, 500) //make the size of the display whatever size the window is
   generateStars()
   virus_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fcoronavirus.png?v=1633701999099')
   sanitizer_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fhand-sanitizer.png?v=1633702007208')
