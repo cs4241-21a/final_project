@@ -1,5 +1,5 @@
 let stars = []	//create empty list of stars
-let numOfStars = 20
+let numOfStars = 100
 
 let width = 750
 let height = 750
@@ -21,42 +21,43 @@ function randomChoice(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
 }
 
+function generateStar(){
+  let star = {} //Define star locally
+  const quad = randomChoice([0, 1, 2, 3])
+  let x, y
+  if (quad === 0) { //x greater
+    x = random(width, width+(large*2))
+    y = random(1, 500)
+  } else if (quad === 1) { //y greater
+    x = random(1, 500)
+    y = random(height, height+(large*2))
+  } else if (quad === 2) { //x less
+    x = random(-1*(large*2), -1)
+    y = random(1, 500)
+  } else if (quad === 3) {//y less
+    x = random(1, 500)
+    y = random(-1*(large*2), -1)
+  }
+
+  star.x = x
+  star.y = y
+
+  star.init_x = x
+  star.init_y = y
+
+  star.inPlay = false
+  star.dx = randomChoice([-1, -2])*Math.sign(x)
+  star.dy = randomChoice([-1, -2])*Math.sign(y)
+
+  const set = randomChoice([{life:1, size:small}, {life:2, size:medium}, {life:3, size:large}])
+  star.diam = set.size
+  star.lives = set.life
+  stars.push(star) //Now add the star to the list
+}
+
 function generateStars(){
 	for (let i = 0; i < numOfStars; i++) {
-	    let star = {} //Define star locally
-      const quad = randomChoice([0, 1, 2, 3])
-      let x, y
-      if (quad === 0) { //x greater
-        x = random(width, width+(large*2))
-        y = random(1, 500)
-      } else if (quad === 1) { //y greater
-        x = random(1, 500)
-        y = random(height, height+(large*2))
-      } else if (quad === 2) { //x less
-        x = random(-1*(large*2), -1)
-        y = random(1, 500)
-      } else if (quad === 3) {//y less
-        x = random(1, 500)
-        y = random(-1*(large*2), -1)
-      }
-      
-      star.x = x
-      star.y = y
-    
-      star.init_x = x
-      star.init_y = y
-      
-      star.inPlay = false
-    
-      const speed = randomChoice([-1, -2])
-    
-      star.dx = speed*Math.sign(x)
-      star.dy = speed*Math.sign(y)
-      
-      const set = randomChoice([{life:1, size:small}, {life:2, size:medium}, {life:3, size:large}])
-	    star.diam = set.size
-      star.lives = set.life
-	    stars.push(star) //Now add the star to the list
+	    generateStar()
 	}
 }
 
@@ -68,7 +69,7 @@ function drawStars(){
     if ((stars[i].x <= width) && (stars[i].y <= height) && (stars[i].x >= 0) && (stars[i].y >= 0)) {
       stars[i].inPlay = true
     }
-    if (stars[i].inPlay && ((stars[i].x >= width+50) || (stars[i].y >= height+50) || (stars[i].x <= -50) || (stars[i].y <= -50))) {
+    if (stars[i].inPlay && ((stars[i].x >= width+(large*2)) || (stars[i].y >= height+(large*2)) || (stars[i].x <= -(large*2)) || (stars[i].y <= -(large*2)))) {
       stars[i].x = stars[i].init_x
       stars[i].y = stars[i].init_y
     }
