@@ -3,7 +3,7 @@ import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
-const LoginButton = (): JSX.Element => {
+const LoginButton = (props: { initPrefs: () => void; }): JSX.Element => {
   const [loggedin, setLoggedIn] = React.useState<Boolean>(false);
   const [text, setText] = React.useState<String>("");
 
@@ -18,12 +18,12 @@ const LoginButton = (): JSX.Element => {
         if (id !== "") {
           setLoggedIn(true);
           setText("Logout");
+          props.initPrefs();
         } else {
           setLoggedIn(false);
           setText("Log In With Github");
         }
       });
-    console.log("fetching login");
   };
 
   const handleUser = () => {
