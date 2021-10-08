@@ -3,6 +3,7 @@
 
   .playlist-page__details {
     width: 100%;
+    margin-bottom: $gap-lg;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -21,6 +22,37 @@
 
     button {
       @include mix-button-primary;
+    }
+  }
+
+  .playlist-page__song-fields {
+    color: $color-tertiary;
+    text-transform: capitalize;
+    font-size: $font-size-sm;
+    padding: 0 $gap-md;
+    margin-bottom: $gap-md;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .song-fields__left {
+      width: 480px;
+      display: flex;
+
+      > div {
+        width: 32px;
+        text-align: center;
+        margin-right: $gap-md;
+      }
+    }
+
+    .song-fields__middle {
+      width: 80px;
+      text-align: center;
+    }
+
+    .song-fields__right {
+      width: 140px;
     }
   }
 }

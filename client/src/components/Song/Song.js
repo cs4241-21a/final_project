@@ -16,11 +16,11 @@ export default function Song(props) {
                     <div className="song__author">{ props.song.author }</div>
                 </div>
             </div>
-            <div className="song__duration">{ getDuration(props.song.duration_ms) }</div>
+            <div className="song__middle">{ getDuration(props.song.duration_ms) }</div>
             <div className="song__right">
                 <div className="song__popularity">
                     { props.song.popularity > 50 && <div>
-                        <FlameIcon /> Popular
+                        <FlameIcon /> Trending
                     </div> }
                 </div>
                 <button className="song__button" aria-label="Remove song"><RemoveIcon /></button>

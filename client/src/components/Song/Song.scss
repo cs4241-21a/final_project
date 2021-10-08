@@ -23,6 +23,7 @@
   }
 
   .song__left {
+    width: 480px;
     display: flex;
     align-items: center;
 
@@ -50,7 +51,7 @@
       flex-direction: column;
 
       .song__title {
-        width: 400px;
+        width: 360px;
         text-overflow: ellipsis;
         overflow-x: clip;
         white-space: nowrap;
@@ -66,7 +67,7 @@
     }
   }
 
-  .song__duration {
+  .song__middle {
     width: 80px;
     text-align: center;
   }
