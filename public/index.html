@@ -5,6 +5,7 @@
     <title>Vue Mastery</title>
     <!-- Import Styles -->
     <link rel="stylesheet" href="./assets/styles.css" />
+    <link href=’https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel=”stylesheet”>
     <!-- Import Vue.js -->
     <script src="https://unpkg.com/vue@3.0.0-beta.12/dist/vue.global.js"></script>
   </head>
@@ -14,6 +15,10 @@
 
       <div class="cart">Cart({{ cart.length }})</div>
       <product-display :premium="premium" @add-to-cart="updateCart"></product-display>
+    </div>
+
+    <div id="app2">
+      <h2>Counter: {{counter}} <button v-on:click="add">+</button></h2>
     </div>
 
     <!-- Import App -->
@@ -26,7 +31,8 @@
 
     <!-- Mount App -->
     <script>
-      const mountedApp = app.mount('#app')
+      const mountedApp1 = app1.mount('#app')
+      const mountedApp2 = app2.mount('#app2')
     </script>
   </body>
 </html>

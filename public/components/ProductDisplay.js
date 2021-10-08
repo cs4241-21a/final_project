@@ -1,4 +1,4 @@
-app.component('product-display', {
+app1.component('product-display', {
     props: {
       premium: {
         type: Boolean,
@@ -58,10 +58,10 @@ app.component('product-display', {
     },
     methods: {
         addToCart() {
-            this.$emit('add-to-cart', this.variants[this.selectedVariant].id)
+          this.$emit('add-to-cart', this.variants[this.selectedVariant].id)
         },
         updateVariant(index) {
-            this.selectedVariant = index
+          this.selectedVariant = index
         },
         addReview(review) {
           this.reviews.push(review)

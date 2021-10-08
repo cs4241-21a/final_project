@@ -1,4 +1,4 @@
-app.component('review-form', {
+app1.component('review-form', {
     template:
     /*html*/
     `<form class="review-form" @submit.prevent="onSubmit">
