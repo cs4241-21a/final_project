@@ -29,6 +29,7 @@ function Mask(x, y) {
 function Ship(x, y, player) {
   MovableEntity.call(x,y)
   this.player = player
+  this.rotation = 0
 }
 
 function Virus(x, y, size, variant) {
