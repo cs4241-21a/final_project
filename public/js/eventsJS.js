@@ -147,11 +147,29 @@ function openEventMaker(){
     document.getElementById('eventMakerBtn').style.display = "none";
 }
 
-async function addUserAvail(eventID){
+async function addUserAvail(eventID, dateList){
+    let newAvailTimes = [];
+    let newDateList = dateList.split(",");
+
+    for (let i = 0; i < newDateList.length; i++) {
+        let times = []
+        for (let j = 0; j < 48; j++) {
+            if (document.getElementById('limitingTimes' + eventID + i + j) !== null) {
+                if (document.getElementById('limitingTimes' + eventID + i + j).checked) {
+                    times.push(document.getElementById('limitingTimes' + eventID + i + j).value)
+                }
+            } else {
+                j = 48;
+            }
+        }
+        newAvailTimes.push(times);
+    }
+
+    console.log(newAvailTimes);
 
     const json = {
             eventID: eventID,
-
+            availableTimes: newAvailTimes
         },
         body = JSON.stringify(json);
 

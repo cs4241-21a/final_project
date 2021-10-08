@@ -130,7 +130,7 @@
                         <%for (let i = 0; i < event.availableDates.length; i++ ){ %>
                         <div class="hidden" id="hiddenTime<%=event.availableDates[i]%>">
                             <label for="finalTime<%=event._id%><%=event.availableDates[i]%>">Choose Event Time:</label>
-                            <select id="finalTime<%=event._id%><%=event.availableDates[i]%>" name="finalTime<%=event._id%>">
+                            <select id="finalTime<%=event._id%><%=event.availableDates[i]%>" name="finalTime<%=event._id%><%=event.availableDates[i]%>">
                                 <%for (let j = 0; j < event.availableTimes[i].length; j++ ){ %>
                                     <% if (event.availableTimes[i][j] > 11.5){ %>
                                         <% if (event.availableTimes[i][j] === 12.5 || event.availableTimes[i][j] === 12){%>
@@ -155,7 +155,7 @@
                         <br>
                         <%}%>
 
-                            <button onclick="editEvent(parentNode.id, )">Edit Event</button>
+                            <button onclick="editEvent(parentNode.id)">Edit Event</button>
                         <%}%>
                         <hr>
                     </form>
@@ -180,11 +180,23 @@
                         <br>
                         <p>Attendees: <%= event.attendees%></p>
                         <br>
-                        <hr>
                         <form id=<%= event._id%>>
-
-                            <button onclick="addUserAvail(parentNode.id)">Accept Invite</button>
+                            <p>Open Days and Time Slots: Click and submit to update availability</p>
+                            <%for (let i = 0; i < event.availableDates.length; i++ ){ %>
+                            <fieldset>
+                            <div id="dayTimes<%=event._id%>">
+                                    <p><%=event.availableDates[i]%></p>
+                                        <%for (let j = 0; j < event.availableTimes[i].length; j++){%>
+                                        <label for="limitingTimes<%=event._id%><%=i%><%=j%>"><%=event.availableTimes[i][j]%></label>
+                                        <input id="limitingTimes<%=event._id%><%=i%><%=j%>" type="checkbox" value=<%=event.availableTimes[i][j]%>>
+                                        <%}%>
+                                </div>
+                            <br>
+                            </fieldset>
+                            <%}%>
+                            <button id="<%=event.availableDates%>" onclick="addUserAvail(parentNode.id, id)">Accept Invite</button>
                         </form>
+                        <hr>
                     </div>
                 <%})%>
             <%}%>

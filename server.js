@@ -122,6 +122,13 @@ app.post('/editEvent', bodyparser.json(), async(req, res) => {
       })
 })
 
+app.post('/addUserAvail', bodyparser.json(), async (req, res) => {
+  EventEntry.findByIdAndUpdate(req.body.eventID, {availableTimes: req.body.availableTimes})
+      .then(result => {
+
+      })
+})
+
 
 app.post('/createEvent', bodyparser.json(), async (req,res) => {
   console.log(req.body);
