@@ -88,6 +88,11 @@ function(req, res) {
 });
 
 // REST Endpoints
+app.get('/getAllCalendars', isLoggedIn, async function(req, res) {
+    let response = await database.getAllCalendars(req.user.id);
+    res.send(response);
+});
+
 app.post('/addCalendar', async function(req, res) {
     let response = await database.addCalendar(req.body);
     res.send(response)
@@ -103,6 +108,11 @@ app.post('/modifyCalendar', async function(req, res) {
     res.send(response)
 });
 
+app.get('/getAllEvents', isLoggedIn, async function(req, res) {
+    let response = await database.getAllEvents(req.user.id);
+    res.send(response);
+});
+
 app.post('/addEvent', async function(req, res) {
     let response = await database.addEvent(req.body);
     res.send(response)
@@ -116,6 +126,11 @@ app.post('/deleteEvent', async function(req, res) {
 app.post('/modifyEvent', async function(req, res) {
     let response = await database.updateEvent(req.body);
     res.send(response)
+});
+
+app.get('/getAllTasks', isLoggedIn, async function(req, res) {
+    let response = await database.getAllTasks(req.user.id);
+    res.send(response);
 });
 
 app.post('/addTask', async function(req, res) {

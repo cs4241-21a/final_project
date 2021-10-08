@@ -9,7 +9,7 @@ const ObjectId = mongoose.Types.ObjectId;
 const eventObj = {
     user: {
         type: String,
-        required: false
+        required: true
     },
     name: {
         type: String,
@@ -38,7 +38,7 @@ const Event = mongoose.model('Event', eventSchema);
 const taskObj = {
     user: {
         type: String,
-        required: false
+        required: true
     },
     name: {
         type: String,
@@ -67,7 +67,7 @@ const Task = mongoose.model('Task', taskSchema);
 const calendarObj = {
     user: {
         type: String,
-        required: false
+        required: true
     },
     parent: {
         type: String,
@@ -91,6 +91,12 @@ const Calendar = mongoose.model('Calendar', calendarSchema);
 
 module.exports = function(db){
     let module = {};
+
+    module.getAllEvents = async function(userID) {
+        await mongoose.connect(db);
+        const events = await Event.find({ user: userID });
+        return events;
+    }
 
     module.addEvent = async function(event) {
         await mongoose.connect(db);
@@ -131,6 +137,12 @@ module.exports = function(db){
         return 'Completed';
     }
 
+    module.getAllCalendars = async function(userID) {
+        await mongoose.connect(db);
+        const calendars = await Calendar.find({ user: userID });
+        return calendars;
+    }
+
     module.addCalendar = async function(calendar) {
         await mongoose.connect(db);
         let newObjId = '';
@@ -168,6 +180,12 @@ module.exports = function(db){
         .catch(err => console.log(err));
         if(error) return error;
         return 'Completed';
+    }
+
+    module.getAllTasks = async function(userID) {
+        await mongoose.connect(db);
+        const tasks = await Task.find({ user: userID });
+        return tasks;
     }
 
     module.addTask = async function(task) {
