@@ -8,7 +8,7 @@
 <div>
     <form id="createEventForm">
         <label for="title">Event Title:</label>
-        <input id="title" name="title"></textarea>
+        <input id="title" name="title">
         <br><br>
 
         <!--
@@ -106,6 +106,54 @@
 
     </form>
 </div>
+<div>
+    <h2>My Events</h2>
+    <hr>
+        <% if (eventsList.length > 0) { %>
+            <% eventsList.forEach(event => { %>
+            <form id=<%= event._id%>>
+                <h3><%= event.eventName%></h3>
+                <br>
+                <label for="description<%=event._id%>">Description:</label>
+                <textarea id="description<%=event._id%>" form=<%= event._id%> name="description<%=event._id%>"><%=event.description%></textarea>
+                <br>
+                <label for="location<%=event._id%>">Location:</label>
+                <input id="location<%=event._id%>" form=<%= event._id%> name="location" value=<%=event.location%>>
+                <br>
+                <label for="attendees<%=event._id%>">Attendees:</label>
+                <textarea id="attendees<%=event._id%>" form=<%=event._id%> name="attendees<%=event._id%>"><%=event.attendees%></textarea>
+                <br>
+                <% if(event.owner === sentUsername){%>
+                    <label for="finalDate<%=event._id%>">Choose Date:</label>
+                    <select id="finalDate<%=event._id%>" name="finalDate<%=event._id%>">
+                        <%for (let i = 0; i < event.availableDates.length; i++ ){ %>
+                            <option value=<%event.availableDates[i]%>><%= event.availableDates[i]%></option>
+                        <%   }%>
+                    </select>
+                    <br>
+                    <label for="finalTime<%=event._id%>">Choose Event Time:</label>
+                    <select id="finalTime<%=event._id%>" name="finalTime<%=event._id%>">
+                        <%for (let i = 0; i < event.availableTimes.length; i++ ){ %>
+                        <% if (event.availableTimes[i] > 12){ %>
+                        <option value=<%event.availableTimes[i]%>>
+                            <%= event.availableTimes[i] - 12%>PM
+                        </option>
+                            <%} else {%>
+                            <option value=<%event.availableTimes[i]%>>
+                                <%= event.availableTimes[i]%>AM
+                            </option>
+                            <%}%>
+                        <%   }%>
+                    </select>
+
+                    <button onclick="editEvent(parentNode.id)">Edit Event</button>
+                <% }%>
+                <hr>
+            </form>
+            <% }) %>
+        <% } %>
+</div>
+
 <%- include("./partials/footer.ejs")%>
 </body>
 </html>

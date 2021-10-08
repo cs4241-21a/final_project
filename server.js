@@ -115,6 +115,14 @@ function getDates(startDate, stopDate) {
   return dateArray;
 }
 
+app.post('/editEvent', bodyparser.json(), async(req, res) => {
+  EventEntry.findByIdAndUpdate(req.body.eventID, {chosenEventDate: req.body.chosenEventDate, choseStartTime: req.body.choseStartTime, location: req.body.location, description: req.body.description, attendees: req.body.attendees})
+      .then(result =>{
+        //console.log(result)
+      })
+})
+
+
 app.post('/createEvent', bodyparser.json(), async (req,res) => {
   console.log(req.body);
 
@@ -189,7 +197,10 @@ app.get('/index', (req, res) =>{
 })
 
 app.get('/events', (req,  res) => {
-  res.render('events');
+  EventEntry.find({attendees: req.session.username})
+      .then(result => {
+        res.render('events', {eventsList: result, sentUsername: req.session.username, title:"Events"})
+      })
 })
 
 app.get('/signUpPage', (req,res) =>{

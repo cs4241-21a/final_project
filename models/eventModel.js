@@ -26,10 +26,6 @@ const eventSchema = new Schema({
         type: Date,
         required: false
     },
-    chosenEndTime: {
-        type: Date,
-        required: false
-    },
     meetingDuration:{
         type: Number,
         required: true

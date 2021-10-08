@@ -12,6 +12,35 @@ const endTimeHr = document.getElementById('timeEnd');
 const endTimeMin = document.getElementById('timeEndMin');
 const duration = document.getElementById('duration');
 
+async function editEvent(eventID){
+    let attendeesList = document.getElementById('attendees' + eventID).value.split(",");
+    const json = {
+            eventID: eventID,
+            chosenEventDate: document.getElementById('finalDate' + eventID).value,
+            chosenStartTime: document.getElementById('finalTime' + eventID).value,
+            description: document.getElementById('description' + eventID).value,
+            location: document.getElementById('location' + eventID).value,
+            attendees: attendeesList,
+        },
+        body = JSON.stringify(json);
+
+    // submit new value
+    await fetch('/editEvent', {
+        method: 'POST',
+        body,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then(response => {
+            //return response.json();
+        })
+        .then(json => {
+
+        })
+    window.location.reload();
+}
+
 
 function getTimeRange(){
     let timeRange = [];
@@ -37,7 +66,7 @@ function getTimeRange(){
 
     while (startTime <= (endTime - meetingDur)){
         timeRange.push(startTime);
-        startTime += meetingDur;
+        startTime += .5;
     }
 
     return timeRange;
@@ -47,9 +76,6 @@ async function submitHandler() {
 
     let attendeesList = attendees.value.split(",");
     let timeRange = getTimeRange();
-
-
-
 
     const json = {
             title: eventName.value,
