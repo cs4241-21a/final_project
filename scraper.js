@@ -174,8 +174,11 @@ async function parseData(name, humanname, sitedata) {
             }
         }
     }
-    data["washeravailable_percent"] = parseFloat(((data["washeravailable"] / data["washermachines"]) * 100).toFixed(2))
-    data["dryeravailable_percent"] = parseFloat(((data["dryeravailable"] / data["dryermachines"]) * 100).toFixed(2))
+    data["washeravailable_percent"] = Math.round((data['washeravailable'] / data['washermachines']) * 100)
+    data["dryeravailable_percent"] = Math.round((data["dryeravailable"] / data["dryermachines"]) * 100)
+
+    //data["washeravailable_percent"] = parseFloat(((data["washeravailable"] / data["washermachines"]) * 100).toFixed(2))
+    //data["dryeravailable_percent"] = parseFloat(((data["dryeravailable"] / data["dryermachines"]) * 100).toFixed(2))
 
     //console.log(data)
     return data
