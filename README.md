@@ -57,4 +57,32 @@ Although the React portion of the dashboard page was similar to what we had work
 
 For authentication, we wanted to challenge ourselves more than we did in A3, where several of us implemented OAuth with GitHub to control access to our websites. For our web application we enabled the option for users to sign in with multiple different external platforms. This was more challenging than the more basic GitHub implementation because we had to manage having multiple client secrets, ids, and callback urls as well as handling the routing. Additionally, establishing OAuth services on platforms such as Microsoft Azure was a lot more challenging than GitHub because it was significantly more difficult to navigate. For authentication through Discord and Google, each website resulted in immensely different difficulty levels. Discord was incredibly simple to set up an OAuth service with minimal work required. Once logged into Discord, we just needed to create an application and then create a key. Google, on the other hand, required more than double the steps. It also established that if we wanted the website to work on a full scale, it would need to be submitted for review. That being said, the server side code for all three was incredibly similar with minor differences for each service’s API. 
 
+### 4. Challenges Faced
+- While pages and responsibilities were delegated in a fashion that kept them relatively distinct there were still instances were merging branches of work led to some conflicts or development on a certain branch required direct communication so the work of two people did not overlap.
+- Having to scale our expectations back and being more realistic about what we can accomplish in time we have.
+  - Wanting to do more with individual sections that were completed but having to prioritize a working implementation and switch to help carry out other responsibilities.
+- Larger scale project thant previous assignments, lots more moving parts to keep track of.
 
+### 5. Group Member Design/Development Responsibilities 
+
+- Renee
+  - project management, role delegation, meeting scheduling
+  - login page and oauth functionality
+  - readme and proposal writeup
+  - video scripting 
+- Chris
+  - all database configuration, management, and querying
+  - all styling
+  - oauth capability
+  - proposal writeup
+- Stefano
+  - dashboard page and server side communication
+  - React pointman
+- Ashley
+  - integrating kebab menu with posts on dashboard
+  - profile page and related server side communication
+- Elaine
+  - profile page and related server side communication
+
+
+### 6. Project Video
