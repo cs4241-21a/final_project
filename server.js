@@ -134,7 +134,7 @@ app.post('/modifyTask', async function(req, res) {
 });
 
 app.post('/getUser', isLoggedIn, async function(req, res) {
-    res.send(req.user)
+    res.send(req.user.id)
 });
 
 
