@@ -10,15 +10,47 @@
     <script src="https://unpkg.com/vue@3.0.0-beta.12/dist/vue.global.js"></script>
   </head>
   <body>
+    
     <div id="app">
-      <div class="nav-bar"></div>
+      <div class="nav-bar">
+        <div class="top">
+          <center> 
+           <ul>
+           <li><a @click="shopping=true; CounterPage=false" style="cursor:pointer">Shopping Area</a></li>
+           <li><a @click="shopping=false; CounterPage=true" style="cursor:pointer">Counter</a></li>
+           <li><a href="#">一级菜单</a></li>
+           <li><a href="#"><b>一级菜单</b></a></li>
+           <li><a href="#">一级菜单</a></li>
+           <li>
+               <a href="#">一级菜单</a>
+               <ul>
+                   <li><a href="#">二级菜单</a></li>
+                   <li><a href="#">二级菜单</a></li>
+               </ul>
+            </li>        
+            </ul>
+          </center>      
+        </div>
+      </div>
 
-      <div class="cart">Cart({{ cart.length }})</div>
-      <product-display :premium="premium" @add-to-cart="updateCart"></product-display>
+      <!--Shopping Area Page start here!-->
+      <div v-if="shopping">
+        <div class="cart" >Cart({{ cart.length }})</div>
+        <product-display :premium="premium" @add-to-cart="updateCart"></product-display>
+      </div>
+      
+
+      <!--Counter Page start here!-->
+      <div v-if="CounterPage">
+        <h2>Counter: {{counter}} <button v-on:click="add">+</button></h2>
+        <button @click="sendRequest">send request to server</button>
+      </div>
+      
+
+
     </div>
 
     <div id="app2">
-      <h2>Counter: {{counter}} <button v-on:click="add">+</button></h2>
     </div>
 
     <!-- Import App -->
