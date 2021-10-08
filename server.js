@@ -114,7 +114,7 @@ app.get('/laundry', (req, res) => {
 })
 
 app.get('/timestamp', (req, res) => {
-    timestamp.model.find({}, function (err, data){
+    timestamp.model.find({name: 'timestamp'}, function (err, data){
         res.json(data);
     });
 })

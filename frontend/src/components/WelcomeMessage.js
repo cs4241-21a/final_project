@@ -31,6 +31,7 @@ function WelcomeMessage(props) {
         <Typography variant="h6">
           Because Laundry Connect sucks at web design, and WPI deserves a better how-busy-is-the-laundry-room experience.
         </Typography>
+        
         <ToggleButtonGroup
           color="primary"
           value={alignment}
