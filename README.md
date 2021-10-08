@@ -75,10 +75,13 @@ For authentication, we wanted to challenge ourselves more than we did in A3, whe
   - all styling
   - page routing
   - proposal writeup
+  - contributed to readme writeup
   - oauth functionality
 - Stefano
-  - dashboard page and server side communication
+  - dashboard page (submit functionality and filtering) and server side communication
+  - implemented server POST routes for dashboard page
   - initial dummy server
+  - contributed to readme writeup
   - React pointman
 - Ashley
   - integrating kebab menu with posts on dashboard
