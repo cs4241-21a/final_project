@@ -7,6 +7,7 @@ import "./css/styles.css";
 class Profile extends React.Component{
     first_name = ""
     last_name = ""
+    phone_number = ""
     grade = ""
     ph
     courses_taken = []
@@ -28,10 +29,12 @@ class Profile extends React.Component{
     }
 
     submit(){
+
+        
         let json = {
             first_name: this.first_name,
             last_name: this.last_name,
-            phone_number: this.state.phone_number,
+            phone_number: this.phone_number,
             grade: this.grade,
             courses_taken: this.courses_taken,
             skills: this.skills,
@@ -125,7 +128,10 @@ class Profile extends React.Component{
                         </label>
                         <div style={{backgroundColor: 'white'}}>
                             <MuiPhoneNumber defaultCountry={'us'} 
-                                onChange={(e) => {this.setState({ number: e })}
+                                onChange={(e) => {
+                                    this.phone_number = e.toString()
+                                    this.setState({ number: e })
+                                }
                             }/>
                         </div>
                         
