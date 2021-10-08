@@ -3,7 +3,6 @@ const GitHubStrategy = require("passport-github2").Strategy;
 const express = require("express");
 const mongodb = require("mongodb");
 const cookie = require("cookie-session");
-const helmet = require("helmet");
 const serveStatic = require("serve-static");
 const path = require("path");
 const dotenv = require("dotenv");
@@ -15,7 +14,6 @@ const port = 3000;
 
 const clientID = "66f056183e981d1a11b2";
 
-app.use(helmet());
 app.use(serveStatic(path.join(__dirname, "static")));
 app.use(express.static("build"));
 app.use(express.json());
@@ -40,7 +38,7 @@ passport.use(
     {
       clientID: clientID,
       clientSecret: process.env.GITHUB_SECRET,
-      callbackURL: "http://localhost:8080/github/callback",
+      callbackURL: "/github/callback",
     },
     function (accessToken, refreshToken, profile, done) {
       return done(null, profile);
@@ -73,7 +71,7 @@ app.get("/id", (req, res) => {
 app.get("/logout", (req, res) => {
   req.session.id = "";
   req.logout();
-  res.redirect("/");
+  res.status(200).send("Logout Successful");
 });
 
 const uri =
@@ -109,8 +107,7 @@ app.get("/", (request, response) => {
 app.get("/prefs", (req, res) => {
   if (collection !== null) {
     collection
-      // .find({ userID: req.session.id })
-      .find({ userID: "1" })
+      .find({ userID: req.session.id })
       .toArray()
       .then((result) => res.json(result));
   }
@@ -119,8 +116,11 @@ app.get("/prefs", (req, res) => {
 app.post("/submit", (req, res) => {
   // assumes only one object to insert
   const dataJSON = JSON.parse(req.body);
-  // dataJSON.userID = req.session.id;
-  dataJSON.userID = "1";
+  if(req.session.id === "") {
+    res.status(500).send("No User Logged In");
+    return;
+  }
+  dataJSON.userID = req.session.id;
   collection
     .findOne({
       userID: dataJSON.userID,
@@ -130,7 +130,7 @@ app.post("/submit", (req, res) => {
     })
     .then(function (data) {
       if (data === null) {
-        collection.insertOne(dataJSON).then((result) => res.json(result));
+        collection.insertOne(dataJSON).then((result) => res.status(200).json(result));
       } else {
         collection
           .replaceOne(
@@ -139,7 +139,7 @@ app.post("/submit", (req, res) => {
             },
             dataJSON
           )
-          .then((result) => res.json(result));
+          .then((result) => res.status(200).json(result));
       }
     });
 });

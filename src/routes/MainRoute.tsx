@@ -13,6 +13,7 @@ import CharacterSelect from "../components/CharacterSelect";
 import WeaponSelect from "../components/WeaponSelect";
 import ArtifactSelect from "../components/ArtifactSelect";
 import FarmingDisplay from "../components/FarmingDisplay";
+import LoginButton from '../components/LoginButton';
 
 
 const MainRoute = () : JSX.Element => { 
@@ -66,6 +67,12 @@ const MainRoute = () : JSX.Element => {
       headers: {
         "Content-Type": "application/json",
       },
+    }).then(function(res) {
+      if(res.status === 500) {
+        // handle notifying users that they need to be logged in to save
+      } else if(res.status === 200) {
+        // valid response, the id of object and if succeeded will be retured as json
+      }
     })
   }
 
@@ -83,6 +90,7 @@ const MainRoute = () : JSX.Element => {
   return (
     <>
     {/* !!! TODO (UI): Organize these components for displaying the page */}
+      <LoginButton />
       <CharacterSelect 
         characters={characters} 
         preferences={charPrefs} 
