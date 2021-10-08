@@ -1,0 +1,11 @@
+@import './styles/themes';
+@import './styles/variables';
+@import './styles/mixins';
+@import './styles/fonts';
+@import './styles/global';
+
+@import './App';
+@import './pages/HomePage/HomePage';
+@import './components/Header/Header';
+@import './components/Footer/Footer';
+@import './components/GenreCard/GenreCard';

@@ -1,0 +1,32 @@
+// shadows
+@mixin mix-shadow-down() {
+  box-shadow: 0 $shadow-offset $shadow-blur rgba(0, 0, 0, $shadow-intensity);
+}
+
+// frameworks
+@mixin mix-framework {
+  @include mix-framework-dynamic($framework-width);
+}
+
+@mixin mix-framework-extended {
+  @include mix-framework-dynamic($framework-width-extended);
+}
+
+@mixin mix-framework-dynamic($width) {
+  box-sizing: content-box;
+  width: $width;
+  padding-left: $framework-padding;
+  padding-right: $framework-padding;
+}
+
+// texts
+@mixin mix-text-title {
+  font-family: $font-family-secondary;
+  font-size: $font-size-xl;
+  margin-bottom: $gap-sm;
+}
+
+@mixin mix-text-subtitle {
+  font-size: $font-size-md;
+  color: $color-secondary;
+}
