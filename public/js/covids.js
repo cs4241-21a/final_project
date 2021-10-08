@@ -8,7 +8,7 @@ const numOfStars = 75,
       medium = 40,
       large = 70,
       gompei_size = 50,
-      ship_thrust = 1
+      ship_thrust = .1
 
 let virus_img
 let sanitizer_img
@@ -91,6 +91,7 @@ function generateShip() {
   ship.vel = createVector(0, 0);
   ship.diam = gompei_size
   ship.thrust = ship_thrust
+  ship.rotation = 0
 }
 
 function turnShip() {
@@ -131,14 +132,14 @@ function checkEdges(obj) {
 
 function displayShip(){
   push();
-  //translate(ship.pos.x, ship.pos.y)
+  translate(ship.pos.x, ship.pos.y)
   rotate(ship.rotation)
-  beginShape();
+  /*beginShape();
   vertex(0, -25);
   vertex(15, 15);
   vertex(-15, 15);
-  endShape();
-  //image(gompei_img, ship.pos.x, ship.pos.y, ship.diam, ship.diam)
+  endShape();*/
+  image(gompei_img, ship.pos.x, ship.pos.y, ship.diam, ship.diam)
   pop();
 }
 

@@ -117,52 +117,52 @@ function createClient(id, socket, address){
 }
 
 wss.on('connection', (socket, req) => {
-  sessionParser(req.upgradeReq, {}, function(){
-        console.log(req.upgradeReq.session);
-    const clientId = generateClientName();
-    allClients.push(createClient(clientId, socket, req.socket.remoteAddress));
-    socket.send("Hello World! req.session.username = " + (req.session && req.session.username));
-    socket.on('message', message => {
-        socket.send("I got: " + message);
+    sessionParser(req.upgradeReq, {}, function(){
+      const clientId = generateClientName();
+      allClients.push(createClient(clientId, socket, req.socket.remoteAddress));
+      socket.send("Hello World! session.username = " + (req.upgradeReq.session && req.upgradeReq.session.username));
+      socket.on('message', message => {
+          socket.send("I got: " + message);
 
-        try{
-            const json = JSON.parse(message);
-            console.log("[" + req.socket.remoteAddress + "] " + json);
-            switch(json.packetType) {
-                case "update_pos":
-                    {
-                      const lobby = findLobbyWithClient(clientId);
-                      if(lobby !== undefined) {
-                        let clIndex = lobby.clients.findIndex(c => c.id == clientId);
-                        lobby.clients[clIndex].x = json.x;
-                        lobby.clients[clIndex].y = json.y;
-                        lobby.clients[clIndex].vx = json.vx;
-                        lobby.clients[clIndex].vy = json.vy;
-                        lobby.clients[clIndex].angle = json.angle;
-                      }else{
-                        console.log("Recieved " + json.packetType + " packet from client not in a lobby: " + clientId);
+          try{
+              const json = JSON.parse(message);
+              console.log("[" + req.socket.remoteAddress + "] " + json);
+              switch(json.packetType) {
+                  case "update_pos":
+                      {
+                        const lobby = findLobbyWithClient(clientId);
+                        if(lobby !== undefined) {
+                          let clIndex = lobby.clients.findIndex(c => c.id == clientId);
+                          lobby.clients[clIndex].x = json.x;
+                          lobby.clients[clIndex].y = json.y;
+                          lobby.clients[clIndex].vx = json.vx;
+                          lobby.clients[clIndex].vy = json.vy;
+                          lobby.clients[clIndex].angle = json.angle;
+                        }else{
+                          console.log("Recieved " + json.packetType + " packet from client not in a lobby: " + clientId);
+                        }
                       }
-                    }
-                    break;
-                case "destroy_entity":
-                    {
-                      const lobby = findLobbyWithClient(clientId);
-                      if(lobby !== undefined) {
-                        lobby.clients.forEach(c => {
-                            if(c.id !== clientId) {
-                              c.send({packetType: "destroy_entity", eid: json.eid});
-                            }
-                        });
-                      }else{
-                        console.log("Recieved " + json.packetType + " packet from client not in a lobby: " + clientId);
+                      break;
+                  case "destroy_entity":
+                      {
+                        const lobby = findLobbyWithClient(clientId);
+                        if(lobby !== undefined) {
+                          lobby.clients.forEach(c => {
+                              if(c.id !== clientId) {
+                                c.send({packetType: "destroy_entity", eid: json.eid});
+                              }
+                          });
+                        }else{
+                          console.log("Recieved " + json.packetType + " packet from client not in a lobby: " + clientId);
+                        }
                       }
-                    }
-                    break;
+                      break;
 
-            }
-        }catch(e){
-            console.log("Recieved malformed packet from " + req.socket.remoteAddress + ": " + message);
-        }
+              }
+          }catch(e){
+              console.log("Recieved malformed packet from " + req.socket.remoteAddress + ": " + message);
+          }
+      });
     });
 });
 server.on('upgrade', (req, socket, head) => {
