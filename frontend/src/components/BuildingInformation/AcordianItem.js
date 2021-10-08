@@ -52,8 +52,8 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 function getColor(value) {
   if (value >= 75) return "#90ee90";
-  else if (value >= 50) return "#fdb996";
-  else if (value >= 25) return "#fdec96";
+  else if (value >= 50) return "#fdec96";
+  else if (value >= 25) return "#fdb996";
   else if (value >= 0) return "#fc647d";
   else return "#000000";
 }
