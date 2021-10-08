@@ -115,8 +115,9 @@ app.get("/prefs", (req, res) => {
 
 app.post("/submit", (req, res) => {
   // assumes only one object to insert
-  const dataJSON = JSON.parse(req.body);
-  if(req.session.id === "") {
+  const dataJSON = req.body;
+  console.log(req.body);
+  if (req.session.id === "") {
     res.status(500).send("No User Logged In");
     return;
   }
@@ -130,7 +131,9 @@ app.post("/submit", (req, res) => {
     })
     .then(function (data) {
       if (data === null) {
-        collection.insertOne(dataJSON).then((result) => res.status(200).json(result));
+        collection
+          .insertOne(dataJSON)
+          .then((result) => res.status(200).json(result));
       } else {
         collection
           .replaceOne(

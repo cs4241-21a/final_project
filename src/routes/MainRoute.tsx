@@ -14,6 +14,7 @@ import WeaponSelect from "../components/WeaponSelect";
 import ArtifactSelect from "../components/ArtifactSelect";
 import FarmingDisplay from "../components/FarmingDisplay";
 import LoginButton from '../components/LoginButton';
+import SaveButton from '../components/SaveButton';
 
 
 const MainRoute = () : JSX.Element => { 
@@ -70,8 +71,9 @@ const MainRoute = () : JSX.Element => {
     }).then(function(res) {
       if(res.status === 500) {
         // handle notifying users that they need to be logged in to save
+        console.log("user not logged in")
       } else if(res.status === 200) {
-        // valid response, the id of object and if succeeded will be retured as json
+        console.log("update successfull");
       }
     })
   }
@@ -85,12 +87,17 @@ const MainRoute = () : JSX.Element => {
     // !!! TODO (Micheal): Write useEffect function to refilter based off of the selected prefs changing
     // "activeFarmables" should be the artifacts selected by artifactPrefs and materials associated with selected characters 
     // "activeLocations" should be the locations listed per each activeFarmable's farm_at string
+    //debug prints for now: 
+    console.log(charPrefs);
+    console.log(weaponPrefs);
+    console.log(artifactPrefs);
   }, [charPrefs, weaponPrefs, artifactPrefs]);
 
   return (
     <>
     {/* !!! TODO (UI): Organize these components for displaying the page */}
-      <LoginButton />
+      <LoginButton initPrefs={initPrefs} />
+      <SaveButton updatePrefs={updatePrefs} />
       <CharacterSelect 
         characters={characters} 
         preferences={charPrefs} 
