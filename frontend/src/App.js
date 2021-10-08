@@ -27,6 +27,22 @@ const theme = createTheme({
 function App() {
   const { token, setToken } = useToken();
 
+  const [laundryData, setData] = React.useState([]);
+
+  React.useEffect(() => {
+    fetch("/laundry", {
+      method: "GET",
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        data.splice(data.length - 1);
+        setData(data);
+        console.log(data);
+      });
+  }, []);
+
   const [openLogin, setOpenLogin] = React.useState(false);
   const [openRegister, setOpenRegister] = React.useState(false);
 
@@ -62,8 +78,8 @@ function App() {
         <WelcomeMessage setFavorites={setShowFavorites} />
         <Switch>
           <Route path="/" exact={true}>
-            {!showFavorites && <BuildingList data={list} />}
-            {showFavorites && <BuildingList data={list2} />}
+            {!showFavorites && <BuildingList data={laundryData} />}
+            {showFavorites && <BuildingList data={laundryData} />}
           </Route>
 
           <Route path="/favorites"></Route>

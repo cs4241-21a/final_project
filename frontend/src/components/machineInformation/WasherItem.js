@@ -3,7 +3,17 @@ import CircleIcon from "@mui/icons-material/Circle";
 import LocalLaundryServiceIcon from "@mui/icons-material/LocalLaundryService";
 import DryCleaningTwoToneIcon from "@mui/icons-material/DryCleaningTwoTone";
 
-function MachineItem(props) {
+function getColor(value) {
+  if (value >= 35) return "#fc647d";
+  else if (value >= 25) return "#fdb996";
+  else if (value >= 15) return "#fdec96";
+  else if (value >= 0) return "#90ee90";
+  else return "#000000";
+}
+
+function WasherItem(props) {
+  const washerColor = getColor(props.item.minutes_left, props.item.status);
+
   return (
     <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <CardContent sx={{ flexGrow: 1 }}>
@@ -15,11 +25,11 @@ function MachineItem(props) {
           }}
         >
           <Typography gutterBottom variant="h6">
-            Washer #1
+            Washer - #{props.index}
           </Typography>
           <LocalLaundryServiceIcon
-            style={{ minWidth: "120px" }}
-            paddingfontsize="large"
+            style={{ minWidth: "100px" }}
+            paddingfontsize="small"
           />
           {/* <DryCleaningTwoToneIcon
             style={{ minWidth: "40px" }}
@@ -34,10 +44,10 @@ function MachineItem(props) {
             flexWrap: "wrap",
           }}
         >
-          <span>Empty</span>
+          <span>{props.item.status}</span>
           <CircleIcon
             paddingfontsize="small"
-            style={{ minWidth: "40px", color: "#90ee90" }}
+            style={{ minWidth: "40px", color: washerColor }}
           />
         </div>
       </CardContent>
@@ -49,4 +59,4 @@ function MachineItem(props) {
   );
 }
 
-export default MachineItem;
+export default WasherItem;

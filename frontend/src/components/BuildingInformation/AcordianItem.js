@@ -14,11 +14,6 @@ import { styled } from "@mui/material/styles";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MachineList from "../machineInformation/MachineList";
 
-const list = [
-  32, 2, 2, 2, 1, 2, 1, 1, 1, 32, 2, 2, 2, 1, 2, 1, 1, 1, 32, 2, 2, 2, 1, 2, 1,
-  1, 1, 32, 2, 2, 2, 1, 2, 1, 1, 1, 32, 2, 2, 2, 1, 2,
-];
-
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -55,7 +50,18 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 
+function getColor(value) {
+  if (value >= 75) return "#90ee90";
+  else if (value >= 50) return "#fdb996";
+  else if (value >= 25) return "#fdec96";
+  else if (value >= 0) return "#fc647d";
+  else return "#000000";
+}
+
 function AccordianItem(props) {
+  const washerColor = getColor(props.item.washeravailable_percent);
+  const dryerColor = getColor(props.item.dryeravailable_percent);
+
   return (
     <div>
       <Accordion
@@ -65,13 +71,23 @@ function AccordianItem(props) {
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
           <Grid container direction={"row"} spacing={2}>
             <Grid item>
-              <Typography>Building Number {props.item}</Typography>{" "}
+              <Typography>{props.item.humanname}</Typography>{" "}
             </Grid>
             <Grid item>
-              <CircleIcon fontSize="small" style={{ color: "#90ee90" }} />
+              <CircleIcon fontSize="small" style={{ color: washerColor }} />
             </Grid>
-            <Grid item xl={9} md={9} sm={10} xs={10}>
-              <Typography>79% Availability</Typography>
+            <Grid item>
+              <Typography>
+                {props.item.washeravailable_percent}% Washer Availability
+              </Typography>
+            </Grid>
+            <Grid item>
+              <CircleIcon fontSize="small" style={{ color: dryerColor }} />
+            </Grid>
+            <Grid item>
+              <Typography>
+                {props.item.dryeravailable_percent}% Dryer Availability
+              </Typography>
             </Grid>
           </Grid>
           <Grid item>
@@ -84,7 +100,10 @@ function AccordianItem(props) {
           </Grid>
         </AccordionSummary>
         <AccordionDetails>
-          <MachineList machineInfo={list} />
+          <MachineList
+            washerInfo={props.item.washers}
+            dryerInfo={props.item.dryers}
+          />
         </AccordionDetails>
       </Accordion>
     </div>
