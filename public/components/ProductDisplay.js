@@ -84,5 +84,4 @@ app1.component('product-display', {
           return 2.99
         }
     }
-    
   })
