@@ -6,7 +6,7 @@ const Match = require('../schemas/Match')
 
 const Tournament = require('../schemas/Tournament');
 process.env.LEAGUE_API_PLATFORM_ID = 'na1'
-process.env.LEAGUE_API_KEY ='RGAPI-efcff50e-1534-4aac-8063-7477147e0352'
+process.env.LEAGUE_API_KEY =''
 const LeagueJS = require('leaguejs');
 require('dotenv').config()
 const api = new LeagueJS(process.env.LEAGUE_API_KEY);
