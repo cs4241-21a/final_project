@@ -16,9 +16,6 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({ server })
 const clients = []
 
-var data = "Real-Time Update 1";
-var number = 1;
-
 let canvas
 
 wss.on('connection', client => {
@@ -49,10 +46,6 @@ wss.on('connection', client => {
     });
 })
 
-function randomInteger(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 server.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`)
 })
@@ -68,7 +61,6 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(serveStatic('public'));
 app.use(favicon(path.join(__dirname,'public','favicon.ico')))
 
 app.set('views', path.join(__dirname, 'public'));
@@ -80,5 +72,6 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login', loginRouter)
 app.use(express.static(path.join(__dirname, 'public'))); //Needs to be at end or you need to change the homepage file to something that's not index.html
+app.use(serveStatic('public'));
 
 module.exports = app;
