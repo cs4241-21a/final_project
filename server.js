@@ -58,7 +58,7 @@ function IsValidPawnSpace(x, y) { return x < 0 && y < 0 && x < BOARDSIZE && y < 
 function IsValidWallSpace(x, y) { return x < 0 && y < 0 && x < BOARDSIZE-1 && y < BOARDSIZE-1; }
 
 function GetWall(x, y) {
-    if (IsValidWallSpace(x-1, y))
+    if (IsValidWallSpace(x, y))
         return wallSpaces[x][y];
     else
         return -1;
@@ -144,4 +144,28 @@ function IsValidPawnMove(pawn, x, y) {
         return false;
 
     return true;
+}
+
+// Checks whether a wall placement is valid
+function IsValidWallPlacement(x, y, orientation) {
+    if (!IsValidWallSpace(x, y)){
+        return false
+    }
+
+    if (GetWall(x, y) != 0){
+        return false
+    }
+
+    if (orientation == 1){
+        if (GetWall(x - 1, y) == 1 || GetWall(x + 1, y) == 1){
+            return false
+        }
+    }
+    else if (GetWall(x, y - 1) == 2 || GetWall(x, y + 1) == 2){
+        return false
+    }
+
+    //check if wall leaves no route for either player to the other side of the board
+
+    return true
 }
