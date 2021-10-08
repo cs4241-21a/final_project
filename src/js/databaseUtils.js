@@ -1,124 +1,125 @@
-export function addCalendar(calID, calName, calColor) {
-    let cal = {
-        parent = getCalendarByID(calID),
-        children = [],
-        name = calName,
-        color = calColor
+// All CRUD operations expect a JSON object or an ObjectId
+
+// import { CallMissed } from "@material-ui/icons";
+
+const databaseUtils = {
+    getAllCalendars: async function() {
+        // Returns the calendars or an error
+        let calendars;
+        await fetch('/getAllCalendars')
+        .then(response => response.text())
+        .then(text => calendars = text)
+        return calendars;
+    },
+
+    addCalendar: async function(calendar) {
+        let calId;
+        await fetch('/addCalendar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(calendar)
+        }).then(response => response.text())
+        .then(text => calId = text);
+        return calId;
+    },
+    
+    deleteCalendar: async function(calID) {
+        // Returns either a success or failure message
+        let resp;
+        await fetch('/removeCalendar', {method: 'POST', body: calID })
+        .then(response => response.text())
+        .then(response => resp = response);
+        return response;
+    },
+    
+    modifyCalendar: async function(calendar){
+        // Returns completed or failure message
+        let resp;
+        await fetch('/modifyCalendar', { method: 'POST', body: JSON.stringify(calendar)})
+        .then(response => response.text())
+        .then(text => resp = text);
+        return resp;
+    },
+
+    getAllEvents: async function() {
+        // Returns the calendars or an error
+        let events;
+        await fetch('/getAllEvents')
+        .then(response => response.text())
+        .then(text => events = text)
+        return events;
+    },
+    
+    addEvent: async function(event) {
+        // return the object ID of the event, error message on failure
+        let eventId;
+        await fetch('/addEvent',{ method: 'POST', body: JSON.stringify(event) })
+        .then(response => response.text())
+        .then(text => eventId = text);
+        return eventId;
+    },
+    
+    deleteEvent: async function(eventID) {
+        // return a success message upon deletion, or error message if failure
+        let resp;
+        await fetch('/deleteEvent', { method: 'POST', body: JSON.stringify(eventID) })
+        .then(response => response.text())
+        .then(text => resp = text);
+        return resp;
+    },
+    
+    modifyEvent: async function(event) {
+        // return the object ID of the modified event, error message on failure
+        let resp;
+        fetch('/modifyEvent',{ method: 'POST', body: JSON.stringify(event) })
+        .then(response => response.text())
+        .then(text => resp = text);
+        return resp;
+    },
+
+    getAllTasks: async function() {
+        // Returns the calendars or an error
+        let tasks;
+        await fetch('/getAllTasks')
+        .then(response => response.text())
+        .then(text => tasks = text)
+        return tasks;
+    },
+    
+    addTask: async function(task) {
+        // return the object ID of the task, error message on failure
+        let taskId;
+        await fetch('/addTask',{ method: 'POST', body: JSON.stringify(task) })
+        .then(response => response.text())
+        .then(text => taskId = text);
+        return taskId;
+    },
+    
+    deleteTask: async function(taskID) {
+        // return a success message upon deletion, or error message if failure
+        let resp;
+        await fetch('/deleteTask', { method: 'POST', body: JSON.stringify(taskID) })
+        .then(response => response.text())
+        .then(text => resp = text);
+        return resp;
+    },
+    
+    modifyTask: async function(task) {
+        // return the object ID of the modified task, error message on failure
+        let resp;
+        fetch('/modifyTask',{ method: 'POST', body: JSON.stringify(task) })
+        .then(response => response.text())
+        .then(text => resp = text);
+        return resp;
+    },
+    
+    getUserID: async function() {
+        let userId;
+        await fetch('/getUserID')
+        .then(response => response.text())
+        .then(text => userId = text);
+        return userId;
     }
-
-    fetch('/addCalendar', {
-        method: 'post',
-        body: JSON.stringify(cal)
-    }).then(function(response){
-        return response.text(); // returns either the objectID on success, or an error message on failure
-    }).then(function(response){
-        console.log(response.text());
-    })
 }
 
-export function removeCalendar(calID) {
-    fetch('/removeCalendar', {
-        method: 'post',
-        body: calID
-    }).then(function(response){
-        return response.text(); // Returns either a success or failure message, depending on outcome
-    }).then(function(response){
-        console.log(response.text());
-    })
-}
-
-// TODO: Prototype function, do not use yet
-export function getCalendarByID(calID) {
-    if (calID === NULL) {
-        return calID;
-    }
-
-    fetch('/getCalendar', {
-        method: 'post',
-        body: calID
-    }).then(function(response){
-        return response.text(); // Return the calendar ID if exists, return error if else
-    }).then(function(response){
-        console.log(response.text());
-    })
-}
-
-export function modifyCalendar(calID, calName, calColor){
-    let cal = {
-        parent: getCalendarByID(calID),
-        children: [],
-        name: calName,
-        color: calColor
-    }
-
-    fetch('/modifyCalendar', {
-        method: 'post',
-        body: JSON.stringify(cal)
-    }).then(function(response){
-        return response.text(); // returns either the objectID of the modified calendar on success, or an error message on failure
-    }).then(function(response){
-        console.log(response.text());
-    })
-}
-
-export function createEvent(uID, eDate, eName, eStartTime, eEndTime, eAllDay) {
-    let event = {
-        userID: uID,
-        date: eDate,
-        name: eName,
-        //repeat = eRepeat, // depending on if repeat is "WEEKLY", "DAILY", "MONTHLY", or NULL, create additional tasks and push those
-        startTime: eStartTime, // will be set to 12:00am on the specified date if allDay is true
-        endTime: eEndTime, // will be set to NULL if allDay is true
-        allDay: eAllDay
-    }
-
-    fetch('/addEvent',{
-        method: 'post',
-        body: JSON.stringify(event)
-    }).then(function(response){
-        return response.text() // return the object ID of the event, error message on failure
-    }).then(function(response){
-        console.log(response.text())
-    })
-
-    // Mongo push to events collection
-}
-
-export function removeEvent(uID, eID) {
-    let info = {
-        userID: uID,
-        eventID: eID
-    }
-
-    fetch('/deleteEvent', {
-        method: 'post',
-        body: JSON.stringify(info)
-    }).then(function(response){
-        return response.text() // return a success message upon deletion, or error message if failure
-    }).then(function(response){
-        console.log(reponse.text())
-    })
-}
-
-export function modifyEvent(uID, eDate, eName, eStartTime, eEndTime, eAllDay) {
-    let event = {
-        userID: uID,
-        date: eDate,
-        name: eName,
-        //repeat = eRepeat, // depending on if repeat is "WEEKLY", "DAILY", "MONTHLY", or NULL, create additional tasks and push those
-        startTime: eStartTime, // will be set to 12:00am on the specified date if allDay is true
-        endTime: eEndTime, // will be set to NULL if allDay is true
-        allDay: eAllDay
-    }
-
-    fetch('/modifyEvent',{
-        method: 'post',
-        body: JSON.stringify(event)
-    }).then(function(response){
-        return response.text() // return the object ID of the modified event, error message on failure
-    }).then(function(response){
-        console.log(response.text())
-    })
-
-    // Mongo push to events collection
-}
+export default databaseUtils;

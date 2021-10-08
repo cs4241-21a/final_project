@@ -1,5 +1,6 @@
 export const GLOBAL_VARIABLES = {
     events: [],
     calendars: [],
-    tasks: []
+    tasks: [],
+    userId: ''
 }
