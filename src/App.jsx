@@ -9,12 +9,17 @@ import 'bootstrap/dist/js/bootstrap.js';
 class App extends React.Component {
   constructor(props) {
     super(props)
+    this.toggleMenu = this.toggleMenu.bind(this)
     this.state = {
       musicJson: {},
-      user: undefined
+      user: undefined,
+      menu: false
     }
     this.load()
   }
+
+  toggleMenu() { this.setState({ menu: !this.state.menu }) }
+
   load(songName) {
     //   fetch(`/getSongByName?term=${songName}`, { method: 'get', 'no-cors': true })
     //     .then(res => res.json())
@@ -36,6 +41,7 @@ class App extends React.Component {
   render() {
     const { musicJson } = this.state;
     const user = this.state.user
+    const menuClass = `dropdown-menu dropdown-menu-right${this.state.menu ? " show" : ""}`;
     console.log(user)
     return (<>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -54,10 +60,10 @@ class App extends React.Component {
             <div class="nav-item dropdown">
               <button class="btn btn-outline-success my-2 my-sm-0 dropdown-toggle" href="#" id="navbarDropdown" role="button"
                 data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
+                aria-haspopup="true" aria-expanded="false" onClick={this.toggleMenu}>
                 {user.displayName}
               </button>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <div class={menuClass} aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="/profile">My</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="/logout">Log out</a>
