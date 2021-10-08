@@ -18,6 +18,138 @@ const RedTypography = withStyles({
   },
 })(Typography);
 
+async function registerUser(credentials) {
+  return fetch("/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  }).then((data) => data.json());
+}
+
+async function loginUser(credentials) {
+  return fetch("/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  }).then((data) => data.json());
+}
+
+function RegisterPage(props) {
+  const [existsError, setExistsError] = React.useState(false);
+  const [emptyError, setEmptyError] = React.useState(false);
+  const usernameRef = React.useRef();
+  const passwordRef = React.useRef();
+  const emailRef = React.useRef();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const u = usernameRef.current.value;
+    const p = passwordRef.current.value;
+    const e = emailRef.current.value;
+
+    const registerData = {
+      u,
+      p,
+      e,
+    };
+
+    const token = await registerUser(registerData);
+    console.log(token.failed);
+    if (token.failed === "exists") {
+      setExistsError(true);
+      console.log("This user already exists!");
+    } else if (token.failed === "empty") {
+      setEmptyError(true);
+    } else {
+      console.log("Registration success!");
+      
+      const loginData = {
+        u,
+        p,
+      };
+
+      const token = await loginUser(loginData);
+      console.log(token.failed);
+      if (token.failed === "false") {
+        props.setToken(token);
+        props.handleClose();
+      } else {
+        console.log("Error logging in after registration");
+      }
+    }
+    console.log(registerData);
+  };
+  return (
+    <Box>
+      <Dialog
+        fullWidth
+        maxWidth="xs"
+        onClose={props.handleClose}
+        open={props.registerOpen}
+      >
+        <BootstrapDialogTitle onClose={props.handleClose}>
+          Register
+        </BootstrapDialogTitle>
+        <DialogContent dividers>
+          <Typography gutterBottom>
+            <b>Account Credentials:</b>
+          </Typography>
+          <TextField
+            inputRef={usernameRef}
+            autoFocus
+            margin="dense"
+            id="username"
+            label="Username"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+          {existsError && !emptyError && (
+            <RedTypography variant="h7">
+              The inputted username is taken.
+            </RedTypography>
+          )}
+          <TextField
+            inputRef={emailRef}
+            autoFocus
+            margin="dense"
+            id="email"
+            label="Email"
+            type="email"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            inputRef={passwordRef}
+            autoFocus
+            margin="dense"
+            id="password"
+            label="Password"
+            type="password"
+            fullWidth
+            variant="standard"
+          />
+          {emptyError && (
+            <RedTypography variant="h7">
+              The inputted username and password cannot be blank.
+            </RedTypography>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleSubmit}>
+            Register
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
+  );
+}
+
 const BootstrapDialogTitle = (props) => {
   const { children, onClose, ...other } = props;
 
@@ -46,87 +178,5 @@ BootstrapDialogTitle.propTypes = {
   children: PropTypes.node,
   onClose: PropTypes.func.isRequired,
 };
-
-function RegisterPage(props) {
-  const usernameRef = React.useRef();
-  const passwordRef = React.useRef();
-  const emailRef = React.useRef();
-
-  function submitHandler(event) {
-    event.preventDefault();
-
-    const username = usernameRef.current.value;
-    const password = passwordRef.current.value;
-    const email = emailRef.current.value;
-
-    const registerData = {
-      username,
-      password,
-      email,
-    };
-
-    console.log(registerData);
-  }
-  return (
-    <Box>
-      <Dialog
-        fullWidth
-        maxWidth="xs"
-        onClose={props.handleClose}
-        open={props.registerOpen}
-      >
-        <BootstrapDialogTitle onClose={props.handleClose}>
-          Register
-        </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <Typography gutterBottom>
-            <b>Account Credentials:</b>
-          </Typography>
-          <TextField
-            inputRef={usernameRef}
-            autoFocus
-            margin="dense"
-            id="username"
-            label="Username"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            inputRef={passwordRef}
-            autoFocus
-            margin="dense"
-            id="email"
-            label="Email"
-            type="email"
-            fullWidth
-            variant="standard"
-          />
-          {true && (
-            <RedTypography variant="h7">
-              The inputted username and password is incorrect.
-            </RedTypography>
-          )}
-
-          <TextField
-            inputRef={emailRef}
-            autoFocus
-            margin="dense"
-            id="password"
-            label="Password"
-            type="password"
-            fullWidth
-            variant="standard"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={submitHandler}>
-            Register
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </Box>
-  );
-}
 
 export default RegisterPage;
