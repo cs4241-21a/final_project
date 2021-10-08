@@ -27,17 +27,17 @@ function generateStars(){
       const quad = randomChoice([0, 1, 2, 3])
       let x, y
       if (quad === 0) { //x greater
-        x = random(500, 600)
+        x = random(width, width+large*2)
         y = random(0, 500)
       } else if (quad === 1) { //y greater
         x = random(0, 500)
-        y = random(500, 600)
+        y = random(height, height+large*2)
       } else if (quad === 2) { //x less
-        x = random(-100, 0)
+        x = random(-large*2, 0)
         y = random(0, 500)
       } else if (quad === 3) {//y less
         x = random(0, 500)
-        y = random(-100, 0)
+        y = random(-large*2, 0)
       }
       
       star.x = x
@@ -77,31 +77,63 @@ function drawStars(){
 }
 
 function generateShip() {
-  ship.x = width/2;
-  ship.y = height/2;
-  ship.rotation = 0; //start with no rotation
+  ship.pos = createVector(width / 2, height / 2);
+  ship.vel = createVector(0, 0);
   ship.diam = gompei_size
 }
 
-function turnShip() {
-  if (keyIsDown(LEFT_ARROW)) {
-    ship.rotation -= .1;
+function moveShip(){
+  let acc = createVector(0,0);
+  if(keyIsDown(UP_ARROW)){
+     acc = createVector(0, ship.thrust );	//Add acceleration pointin along ship's axis (up)
+     acc.rotate(ship.rotation);		//Rotate by ship's rotation
   }
-  if (keyIsDown(RIGHT_ARROW)) {
-    ship.rotation += .1;
+  ship.vel.add(acc);
+  ship.pos.add(ship.vel);
+}
+
+function checkEdges(obj) {
+  if (obj.pos.x < 0) {
+    obj.pos.x = width;
+  }
+  if (obj.pos.x > width) {
+    obj.pos.x = 0;
+  }
+
+  if (obj.pos.y < 0) {
+    obj.pos.y = height;
+  }
+  if (obj.pos.y > height) {
+    obj.pos.y = 0;
   }
 }
 
 function displayShip(){
   push();
-  translate(ship.x, ship.y)
+  translate(ship.pos.x, ship.pos.y)
   rotate(ship.rotation)
-  image(gompei_img, ship.x, ship.y, ship.diam, ship.diam)
+  image(gompei_img, ship.pos.x, ship.pos.y, ship.diam, ship.diam)
   pop();
 }
 
+function checkShipForCollisions(targets){
+  
+  //Note this will crash if the target object does not contain a 'pos' vector.
+  for (let i = 0; i < targets.length; i++){
+    let t = targets[i];
+    let distance = dist(ship.pos.x, ship.pos.y, t.pos.x, t.pos.y);
+
+    let sumOfRadii = ship.diam/2 + t.diam/2;
+
+    if(sumOfRadii > distance){
+      //We have a collision!
+      print("HIT");
+    }
+  }
+}
+
 function setup() {
-  createCanvas(500, 500) //make the size of the display whatever size the window is
+  createCanvas(1000, 1000) //make the size of the display whatever size the window is
   generateStars()
   virus_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fcoronavirus.png?v=1633701999099')
   sanitizer_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fhand-sanitizer.png?v=1633702007208')
