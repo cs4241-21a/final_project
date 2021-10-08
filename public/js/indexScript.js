@@ -42,7 +42,18 @@ function setup() {
 
     connection.onmessage = e => {
         // console.log(e.data)
-        loadCanvasFromServer(e.data)
+        let data
+        let failed = false
+        try {
+            data = JSON.parse(e.data)
+        }catch (e){
+            failed = true
+            console.log(e.data, " is not JSON")
+        }
+        if (!failed){
+            console.log("Got canvas of size (", data.width, ", ", data.height, ") from the server!")
+            loadCanvasFromServer(data)
+        }
     }
   }
   
@@ -72,7 +83,7 @@ function clearCanvas(){
 }
 
 function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
+    // resizeCanvas(windowWidth, windowHeight);
 }
 
 function saveForUndo(){
@@ -95,9 +106,12 @@ function sendCanvasToServer(){
 
 function loadCanvasFromServer(canvas){
     // console.log(canvas)
-    let myImage = createImage(canvas.width, canvas.height)
+    let myImage = get()
     myImage.loadPixels()
-    myImage.pixels = canvas.pixels
+    // myImage.pixels = canvas.pixels
+    for (let i = 0; i < myImage.pixels.length; i++){
+        myImage.pixels[i] = canvas.pixels[i]
+    }
     myImage.updatePixels()
     image(myImage, 0, 0, canvas.width, canvas.height)
 }

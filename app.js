@@ -17,7 +17,7 @@ const clients = []
 var data = "Real-Time Update 1";
 var number = 1;
 
-var canvas
+let canvas
 
 wss.on('connection', client => {
 
