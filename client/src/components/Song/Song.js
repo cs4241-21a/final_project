@@ -1,10 +1,15 @@
 import FlameIcon from "../icons/FlameIcon";
+import RemoveIcon from "../icons/RemoveIcon";
+import PlayIcon from "../icons/PlayIcon";
 
 export default function Song(props) {
     return (
         <div className="song">
             <div className="song__left">
-                <div className="song__index">{ props.index }</div>
+                <div className="song__index">
+                    <span>{ props.index }</span>
+                    <button className="song__button" aria-label="Play song"><PlayIcon /></button>
+                </div>
                 <div className="song__image" />
                 <div className="song__details">
                     <div className="song__title">{ props.song.title }</div>
@@ -12,11 +17,13 @@ export default function Song(props) {
                 </div>
             </div>
             <div className="song__duration">{ getDuration(props.song.duration_ms) }</div>
-            <div className="song__popularity">
-                { props.song.popularity > 50 && <div>
-                    <FlameIcon />
-                    Popular
-                </div> }
+            <div className="song__right">
+                <div className="song__popularity">
+                    { props.song.popularity > 50 && <div>
+                        <FlameIcon /> Popular
+                    </div> }
+                </div>
+                <button className="song__button" aria-label="Remove song"><RemoveIcon /></button>
             </div>
         </div>
     );
