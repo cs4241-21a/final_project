@@ -1,3 +1,26 @@
 .playlist-page {
   padding: $page-padding 0;
+
+  .playlist-page__details {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .details__title {
+      font-family: $font-family-secondary;
+      font-size: $font-size-lg;
+      line-height: 100%;
+      margin-bottom: $gap-sm;
+    }
+
+    .details__subtitle {
+      font-size: $font-size-sm;
+      color: $color-secondary;
+    }
+
+    button {
+      @include mix-button-primary;
+    }
+  }
 }
