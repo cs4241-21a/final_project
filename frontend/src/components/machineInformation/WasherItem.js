@@ -3,16 +3,23 @@ import CircleIcon from "@mui/icons-material/Circle";
 import LocalLaundryServiceIcon from "@mui/icons-material/LocalLaundryService";
 import DryCleaningTwoToneIcon from "@mui/icons-material/DryCleaningTwoTone";
 
+var orange = "fdb996"
+var yellow = "#fdec96"
+var red = "#fc647d"
+var green = "#90ee90"
+var black = "#000000"
+
+
 function getColor(value, status) {
-  if (value === null && status === "Ready For Pickup") return "#fdb996";
-  else if (status === "Offline") return "#000000";
-  else if (value === null && status === "Ready To Start") return "#fc647d"
-  else if (value >= 35) return "#fc647d";
-  else if (value >= 25) return "#fdec96";
-  else if (value >= 15) return "#fdb996";
-  else if (value >= 0 && status !== "Offline") return "#90ee90";
-  else if (status === "Offline") return "#000000";
-  else return "#000000";
+  if (value === null && status === "Ready For Pickup") return green;
+  else if (status === "Offline") return black;
+  else if (value === null && status === "Ready To Start") return red;
+  else if (value >= 20) return red;
+  else if (value >= 10) return orange;
+  else if (value >= 5) return yellow;
+  else if (value >= 0 && status !== "Offline") return green;
+  else if (status === "Offline") return black;
+  else return black;
 }
 
 function WasherItem(props) {
