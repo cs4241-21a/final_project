@@ -1,9 +1,10 @@
 
 import React from "react";
 import Dashboard from "./Dashbord";
+import './styles.css'
 
 class App extends React.Component {
-  constructor( props ) {
+  constructor(props) {
     super(props)
     this.state = {
       musicJson: {}
@@ -11,13 +12,13 @@ class App extends React.Component {
     // this.load('Kiss the rain')
   }
   load(songName) {
-    fetch(`/getSongByName?term=${songName}`, {method:'get', 'no-cors':true})
+    fetch(`/getSongByName?term=${songName}`, { method: 'get', 'no-cors': true })
       .then(res => res.json())
       .then(json => {
         this.setState({
           musicJson: json
         })
-      }) 
+      })
   }
 
   render() {
