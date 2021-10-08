@@ -8,7 +8,9 @@ class Post extends React.Component {
     return (
       <tr class="post_entry_container_outer">
         <td class="post_entry_container_inner">
+          
           <h3 class="post_title">{this.props.header}</h3>
+         
           <div class="post_data_container">
             <b>Post Author: </b>
             {`${this.props.firstName} ${this.props.lastName}`}
@@ -46,7 +48,10 @@ class Dashboard extends React.Component {
   load() {
     fetch("/posts", { method: "get", "no-cors": true })
       .then((response) => response.json())
-      .then((json) => this.setState({ posts: json }));
+      .then((json) => {
+          this.setState({ posts: json })
+          console.log("json: ", json)
+        });
   }
 
   submit(e) {
@@ -153,8 +158,8 @@ class Dashboard extends React.Component {
               <a href="/profile" type="button" class="forum_cell_button">
                 Profile
               </a>
-            </button>
-            <button>
+            </button> */}
+            {/*<button>
               <a href="/logout" type="button" class="forum_cell_button">
                 Log Out
               </a>
@@ -498,6 +503,7 @@ class Dashboard extends React.Component {
               </div>
               {/* <tbody> */}
               {this.state.posts.map((post, i) => (
+                  
                 <Post
                   key={i}
                   firstName={post.firstName}

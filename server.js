@@ -508,4 +508,9 @@ app.post("/filter", async (request, response) => {
   response.json(newJson3);
 });
 
+
+app.get('/profile', (request, response) => {
+    response.sendFile(__dirname + "/build/profile.html")
+})
+
 app.listen(process.env.PORT || 3000);
