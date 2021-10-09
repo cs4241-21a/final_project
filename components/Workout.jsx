@@ -139,14 +139,19 @@ class WrapperClass extends React.Component {
       return (      
       <div id="workoutPage">
           <h1>{workoutRes.name}</h1>
-          {workoutRes.movements.length === 0 ? (
+        {workoutRes.movements.length === 0 ? (
             <div>You have no movements yet :(</div>
-          ) : (
-            workoutRes.movements.map((movement) => (
-              <Movement_Card_View movement={movement} parent={this} />
-            ))
-          )}
-          <AddNewSetComponent workout_id={this.parsed._id} parent={this}/>
+        ) : (
+                <div id='cards'> {
+                  workoutRes.movements.map((movement) => (
+                      <Movement_Card_View movement={movement} parent={this}/>
+                  ))
+                }
+                </div>
+            )}
+        {
+            < AddNewSetComponent workout_id={this.parsed._id} parent={this}/>
+        }
         </div>
       );
     }
