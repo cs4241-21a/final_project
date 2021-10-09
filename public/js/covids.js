@@ -95,9 +95,12 @@ function drawStars(){
 }
 
 function generateMask(){
-  mask.pos = createVector(ship.pos.x, ship.pos.y-50).rotate(ship.rotation)
+  let mask = {}
+  let newVel = ship
+  mask.pos = createVector(newVel.pos.x, newVel.pos.y-50)
   let div = Math.sqrt(Math.pow(ship.vel.x, 2) + Math.pow(ship.vel.y, 2))
-  mask.vel = ship.vel.add(createVector(0,1).rotate(ship.rotation))
+  newVel.vel.add(createVector(0,1).rotate(ship.rotation))
+  mask.vel = newVel.vel
   mask.diam = mask_size
   mask.rotation = ship.rotation
   masks.push(mask)
@@ -111,6 +114,7 @@ function generateShip() {
   sh.diam = gompei_size
   sh.thrust = ship_thrust
   sh.rotation = 0
+  sh.desRot = 0
   sh.lives = num_lives
   return sh;
 }
@@ -126,7 +130,7 @@ function turnShip() {
 }
 
 function keyPressed() {
-  if (keyCode === "SpaceBar"){
+  if (keyCode === 32){
     print("SPACE")
     generateMask()
   }
@@ -172,8 +176,8 @@ function displayShip(obj=ship){
 function displayMasks(){
   for (let i = 0; i < masks.length; i++){
     push();
-    translate(masks[i].pos.x, masks[i].pos.y)
     masks[i].rotation += 1
+    translate(masks[i].pos.x, masks[i].pos.y)
     rotate(masks[i].rotation)
     image(mask_img, -25, -25, masks[i].diam, masks[i].diam)
     pop();
@@ -245,6 +249,7 @@ function draw() {
   for (let [k, v] of Object.entries(otherShips)) {
     displayShip(v);
     v.pos.add(v.vel);
+    v.rotation += (v.desRot - v.rotation) * 0.5;
   }
   turnShip()
   moveShip()
@@ -286,7 +291,7 @@ function connectWS(){
             otherShips[json.id].pos.y = json.y;
             otherShips[json.id].vel.x = json.vx;
             otherShips[json.id].vel.y = json.vy;
-            otherShips[json.id].rotation = json.angle;
+            otherShips[json.id].desRot = json.angle;
           }
           break;
       }
@@ -304,7 +309,7 @@ function sendShipPos() {
   socket.send(JSON.stringify({packetType: "update_pos", x: ship.pos.x, y: ship.pos.y, vx: ship.vel.x, vy: ship.vel.y, angle: ship.rotation }));
 }
 
-setInterval(tickWS, 150);
+setInterval(tickWS, 100);
 function tickWS(){
   if(inLobby) {
     sendShipPos();

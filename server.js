@@ -159,6 +159,12 @@ wss.on('connection', (socket, req) => {
                           lobby.clients[clIndex].vx = json.vx;
                           lobby.clients[clIndex].vy = json.vy;
                           lobby.clients[clIndex].angle = json.angle;
+                          
+                          lobby.clients.forEach(c => {
+                              if(lobby.clients[clIndex].id !== c.id) {
+                                  c.socket.send(JSON.stringify({packetType: "update_player", id: lobby.clients[clIndex].id, x: lobby.clients[clIndex].x, y: lobby.clients[clIndex].y, vx: lobby.clients[clIndex].vx, vy: lobby.clients[clIndex].vy, angle: lobby.clients[clIndex].angle}));
+                              }
+                          });
                         }else{
                           console.log("Recieved " + json.packetType + " packet from client not in a lobby: " + clientId);
                         }
@@ -220,13 +226,13 @@ setInterval(() => {
 
 // fast loop
 setInterval(() => {
-    lobbies.forEach(l => {
-        l.clients.forEach(c => {
-            l.clients.forEach(c2 => {
-                if(c2.id !== c.id) {
-                    c.socket.send(JSON.stringify({packetType: "update_player", id: c2.id, x: c2.x, y: c2.y, vx: c2.vx, vy: c2.vy, angle: c2.angle}));
-                }
-            });
-        });
-    });
+    // lobbies.forEach(l => {
+    //     l.clients.forEach(c => {
+    //         l.clients.forEach(c2 => {
+    //             if(c2.id !== c.id) {
+    //                 c.socket.send(JSON.stringify({packetType: "update_player", id: c2.id, x: c2.x, y: c2.y, vx: c2.vx, vy: c2.vy, angle: c2.angle}));
+    //             }
+    //         });
+    //     });
+    // });
 }, 100);
