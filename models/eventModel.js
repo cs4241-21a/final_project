@@ -41,6 +41,14 @@ const eventSchema = new Schema({
     attendees: {
         type: [],
         required: true
+    },
+    attendeesResponded: {
+        type: [],
+        required: true
+    },
+    attendeesAvailability: {
+        type: [],
+        required: true
     }
 
 }, {timestamps: true });

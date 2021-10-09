@@ -148,14 +148,24 @@ app.post('/createEvent', bodyparser.json(), async (req,res) => {
     if(req.body.attendees[count] !== "")fullAttendees.push(req.body.attendees[count])
   }
 
+  let attendeesRespList = [];
+  let attendeesAvailList = [];
+  for (let i = 0; i < fullAttendees.length; i++){
+    attendeesRespList.push({name: fullAttendees[i], response: false});
+    attendeesAvailList.push({name: fullAttendees[i], filledOut:false, availability: []});
+  }
+
   const entry = new EventEntry({
     owner: req.session.username,
     eventName: req.body.title,
     availableDates: dateRange,
     availableTimes: timeRangeArray,
     attendees: fullAttendees,
+    attendeesResponded: attendeesRespList,
+    attendeesAvailability: attendeesAvailList,
     meetingDuration: req.body.duration,
     description: req.body.description,
+    chosenEventDate: null,
     location: req.body.location
   })
   await entry.save()
