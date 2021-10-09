@@ -5,12 +5,13 @@ const    port = 3000;
 const   mysql = require("mysql");
 const  dotenv = require('dotenv');
 const  path = require("path");
+const  bodyparser = require('body-parser');
 
 const publicDirectory = path.join(__dirname, './public')
 app.use(express.static(publicDirectory));
 
-app.set('view engine', 'html');
-app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'hbs');
+//app.engine('hbs', require('ejs').renderFile);
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
@@ -45,6 +46,19 @@ const db = mysql.createConnection({
     console.log("Items Table created");
   });  */
 });
+
+var users = [
+  { 'username': 'lauren', 'password': 'pw' },
+]
+
+var lists = [
+  { 'listName': 'Example List Name', 'description': 'Example Description', 'username': 'Example Username' },
+]
+
+var items = [
+  { 'itemName': 'Example Item Name', 'link': 'Example Link', 'price': 100.99, 'store': 'Example Store', 'picture': 'Example picture', 'listName': 'Example List Name' },
+]
+
 
 
 // ROUTES
