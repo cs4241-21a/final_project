@@ -19,66 +19,72 @@ class Profile extends React.Component{
     constructor(props){
         super(props)
         // [value, setValue] = useState()
-        this.state = {
-            number: '',
-          };
 
-        this.submit  = this.submit.bind(this)
+        fetch('/get_profile', {
+            method:'POST',
+            body: JSON.stringify({}),
+            headers:{
+                "Content-Type": "application/json"
+            }
+        }).then(response => response.json())
+        .then(profile => {
+            this.first_name = profile.firstName
+        })
+
+
+        console.log("this.first_name", this.first_name)
+       
+        this.submit = this.submit.bind(this)
         this.update_selected_courses = this.update_selected_courses.bind(this)
         this.update_selected_skills = this.update_selected_skills.bind(this)
         this.update_selected_programming_languages = this.update_selected_programming_languages.bind(this)
     }
 
     submit(){
-
-        
         let json = {
-            first_name: this.first_name,
-            last_name: this.last_name,
-            phone_number: this.phone_number,
+            firstName: this.first_name,
+            lastName: this.last_name,
+            phoneNum: this.phone_number,
             grade: this.grade,
-            courses_taken: this.courses_taken,
+            courses: this.courses_taken,
             skills: this.skills,
-            programming_languages: this.programming_languages,
+            languages: this.programming_languages,
             bio: this.bio
         }
+
         fetch('/create_profile', {
             method: 'POST',
             body: JSON.stringify(json),
             headers:{
                 "Content-Type": "application/json"
             }
-        })
+        }).then(response => response.json())
+        .then(console.log)
+        
         console.log("submitting json: ", json)
     }
 
     update_selected_courses(e){
         let coursesDropdown = e.currentTarget;
-
         let selected_courses = [...coursesDropdown.selectedOptions].map(
             (option) => option.value
         )
-
         this.courses_taken = selected_courses
     }
 
     update_selected_skills(e){
         let skillsDropdown = e.currentTarget;
-
         let selected_skills = [...skillsDropdown.selectedOptions].map(
             (option) => option.value
         )
-
         this.skills = selected_skills
     }
 
     update_selected_programming_languages(e){
         let languagesDropdown = e.currentTarget;
-
         let selected_languages = [...languagesDropdown.selectedOptions].map(
             (option) => option.value
         )
-
         this.programming_languages = selected_languages
     }
 
@@ -86,12 +92,12 @@ class Profile extends React.Component{
         return(
         <div class="dashboard_grid_layout">
             <div class="header_bar_area">
-                {/* <header class="header_area"> */}
+                {/* <header class="header_area"> */} 
                 <h1 class="app_title">
                 <b>Tech Teammate Tagup</b>
                 </h1>
-                <a href="/profile" type="button" class="profile_link">
-                Profile
+                <a href="/dashboard.html" type="button" class="profile_link">
+                Dashboard
                 </a>
                 <a href="/logout" type="button" class="logout_link">
                 Log Out
@@ -115,6 +121,7 @@ class Profile extends React.Component{
                             type="text" 
                             id="profile_first_name" 
                             placeholder="First Name"
+                            defaultValue={this.first_name}
                             onKeyUp={(e) => this.first_name = e.target.value}/>
                     </li>
 
@@ -126,6 +133,7 @@ class Profile extends React.Component{
                             type="text" 
                             id="profile_last_name" 
                             placeholder="Last Name"
+                            defaultValue={this.last_name}
                             onKeyUp={(e) => this.last_name = e.target.value}/>
                     </li>
 
@@ -286,6 +294,14 @@ class Profile extends React.Component{
         )
     }
 }
+
+fetch('/get_profile', {
+    method:'POST',
+    body: JSON.stringify({}),
+    headers:{
+        "Content-Type": "application/json"
+    }
+})
 
 var mountNode = document.getElementById("profile");
 ReactDOM.render(<Profile />, mountNode);

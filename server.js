@@ -15,6 +15,8 @@ const OutlookStrategy = require("passport-outlook").Strategy;
 const GitHubStrategy = require("passport-github").Strategy;
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const DiscordStrategy = require("passport-discord").Strategy;
+const { profile } = require("console");
+const { LensTwoTone } = require("@mui/icons-material");
 scopes = ["identify"];
 
 app.use(
@@ -420,13 +422,7 @@ app.post("/submit", async (request, response) => {
 });
 
 
-app.post("/create_profile", async (request, response) => {
-  console.log(request.user)
 
-  console.log(request.body)
-
-
-});
 
 
 app.post("/filter", async (request, response) => {
@@ -490,10 +486,119 @@ app.get('/profile', (request, response) => {
     response.sendFile(__dirname + "/build/profile.html")
 })
 
-// app.post('/create_profile', bodyParser.json(), (request, response) => {
-//     console.log("profileID: ", profileID)
-//     console.log("request: ", request.body)
-// })
+
+let sample_db ={
+    firstName: "Ashley",
+    lastName: "Burke",
+    phoneNum: 7818798775,
+    grade: "Freshman",
+    courses: [],
+    skills: [],
+    languages: [],
+    bio: "My bio"
+}
+
+app.post('/create_profile', bodyParser.json(), (request, response) => {
+
+    console.log("profileID: ", profileID)
+    console.log("request: ", request.body)
+    collection_profile.find({profileID}).toArray()
+    .then( dbJSON => {
+
+        if(dbJSON.length === 0){
+            console.log("user does not exist")
+            // insertStudentClassRelation(request.body.courses)
+            // collection_profile.insertOne(request.body)
+            // .then( result => {
+            //     console.log(result)
+            // })
+            
+        }
+        
+        insertStudentClassRelation(request.body.courses)
+        insertStudentSkillRelation(request.body.skills)
+        // console.log("user already exists")
+
+
+        // updateJson = {}
+
+        
+        // console.log("updateJSON: ", updateJson)
+
+        // collection_profile.updateMany(
+        //     {profileID},
+        //     {$set: {firstName: request.body.firstName,
+        //             lastName: request.body.lastName,
+        //             phoneNum: request.body.phoneNum,
+        //             grade: request.body.grade,
+        //             courses: request.body.courses,
+        //             skills: request.body.skills,
+        //             languages: request.body.languages,
+        //             bio: request.body.bio}
+        //     }
+        // )
+        
+        // console.log("found profiles", dbJSON)
+        response.json(dbJSON)
+    })
+
+})
+
+app.post('/get_profile', bodyParser.json(), (request, response) => {
+    collection_profile.find({profileID}).toArray()
+    .then( dbJSON => { 
+        console.log(dbJSON)
+        if(dbJSON.length > 0){
+            response.json(dbJSON[0])
+        }
+        else{
+            response.json({})
+        }
+    })
+})
+
+function insertStudentClassRelation(classNames){
+    let i = 0;
+
+    collection_studentClassRelation.deleteMany({profileID})
+
+    console.log("removed courses already there. ")
+
+    for(i = 0; i < classNames.length; i++){
+        json = {
+            profileID, 
+            classCourseNumber: classNames[i]
+        }
+        console.log("insert into studentClassRElation: ", json)
+
+        collection_studentClassRelation.insertOne(json)
+        .then( result => {
+            console.log(result)
+        })
+    }
+}
+
+
+function insertStudentSkillRelation(classNames){
+    let i = 0;
+
+    collection_studentSkillRelation.deleteMany({profileID})
+
+    console.log("removed courses already there. ")
+
+    for(i = 0; i < classNames.length; i++){
+        json = {
+            profileID, 
+            classCourseNumber: classNames[i]
+        }
+        console.log("insert into studentSkillRelation: ", json)
+
+        collection_studentSkillRelation.insertOne(json)
+        .then( result => {
+            console.log(result)
+        })
+    }
+}
 
 
 app.listen(process.env.PORT || 3000);
