@@ -4,18 +4,21 @@ import Collapsible from 'react-collapsible';
 import 'reactjs-popup/dist/index.css';
 import databaseUtils from './databaseUtils';
 import {GLOBAL_VARIABLES} from './globals';
+import Task from './Task'
 
 class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       calendars: GLOBAL_VARIABLES.calendars,
+      tasks: GLOBAL_VARIABLES.tasks,
       calendarSidebarItems: [],
       color: '#000000'
     };
     this.newCalendarSubmit = this.newCalendarSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     console.log(GLOBAL_VARIABLES.calendars);
+    console.log(GLOBAL_VARIABLES.tasks);
   }
 
   selectCalendar(event) {
@@ -41,7 +44,37 @@ class Sidebar extends Component {
       });
     })
   }
+
+  newTaskSubmit(e) {
+    e.preventDefault();
+
+    let tempDesc = "";
+    if (this.state.description !== undefined){
+      tempDesc = this.state.description;
+    }
+    let newTask = {
+      user: GLOBAL_VARIABLES.userId,
+      name: this.state.name,
+      dueDate: this.state.dueDate,
+      description: tempDesc
+    };
+    databaseUtils.addTask(newTask)
+    .then(newTaskId => {
+      newTask._id = newTaskId;
+      GLOBAL_VARIABLES.tasks.push(newTask);
+    })
+  }
   
+  handleChange(e) {
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+        [name]: value
+    });
+  }
+
   handleChange(e) {
     const target = e.target;
     const value = target.value;
@@ -57,6 +90,9 @@ class Sidebar extends Component {
     this.state.calendars.forEach(calendar => {
       calendarSidebarItems.push(<CalendarSidebarItem calendar={calendar} onClick={this.selectCalendar}/>);
     });
+    this.state.tasks.forEach(task => {
+      calendarSidebarItems.push(<Task task={task}/>);
+    });
 
     return (
       <div className='sidebar'>
@@ -71,13 +107,41 @@ class Sidebar extends Component {
                   <input type='text' 
                          name='name'
                          placeholder="Calendar Name" 
-                         onChange={this.handleChange}/>
+                         onChange={this.handleChange}
+                         required/>
                   <br />
                   <input type="color" name="color" onChange={this.handleChange} />
                   <button onClick={this.newCalendarSubmit}>Create Calendar</button>
                 </form>
               </div>
             )}
+          </Popup>
+          <Popup trigger={<button>New Task</button>} position="right center">
+              {close => (
+                <div classname="taskSubmit">
+                  <form>
+                    <label htmlFor="name">New Task</label>
+                    <input type='text'
+                           name='name'
+                           placeholder="Task Name"
+                           onChange={this.handleChange}
+                           required/>
+                    <br />
+                    <label htmlFor="description">Description</label>
+                    <input type="text" 
+                           name="description"
+                           placeholder="Description"
+                           onChange={this.handleChange}></input>
+                           
+                    <label htmlFor="dueDate">Due Date</label>
+                    <input type="time"
+                           name="dueDate"
+                           onChange={this.handleTaskChange}
+                           required></input>
+                    <button onClick={this.newTaskSubmit}>Create Task</button>
+                  </form>
+                </div>  
+              )}
           </Popup>
           <div className="calendarSidebarItems">
             {calendarSidebarItems}
