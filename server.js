@@ -77,14 +77,15 @@ const wss = new ws.Server({ noServer: true });
 let allClients = [];
 let lobbies = [];
 
-function createLobby(password=undefined) {
+function createLobby(name, password=undefined) {
     let lobby = {
-        name: generateLobbyName(),
+        name,
         password,
         clients: [],
     };
 
     lobby.addClient = nc => {
+        console.log("Adding " + nc.id + " to lobby " + lobby.name);
         lobby.clients.forEach(c => {
             c.send({packetType: "joined", id: nc.id, username: nc.username});
             nc.send({packetType: "joined", id: c.id, username: c.username});
@@ -137,13 +138,13 @@ wss.on('connection', (socket, req) => {
                       if(lobby !== undefined) {
                         if(lobby.password === pass) {
                           socket.send(JSON.stringify({packetType: "joined_lobby", name: lobby.name}));
-                          lobby.addClient(lobby.clients.find(c => c.id == clientId));
+                          lobby.addClient(allClients.find(c => c.id == clientId));
                         }
                       }else{
-                        lobby = createLobby(pass);
+                        lobby = createLobby(json.name, pass);
                         lobbies.push(lobby);
                         socket.send(JSON.stringify({packetType: "joined_lobby", name: lobby.name}));
-                        lobby.addClient(lobby.clients.find(c => c.id == clientId));
+                        lobby.addClient(allClients.find(c => c.id == clientId));
                       }
                     }
                     break;
