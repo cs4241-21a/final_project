@@ -26,10 +26,13 @@ const databaseUtils = {
     deleteCalendar: async function(calID) {
         // Returns either a success or failure message
         let resp;
-        await fetch('/removeCalendar', {method: 'POST', body: calID })
+        await fetch('/deleteCalendar', {
+            method: 'POST', 
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ _id: calID}) })
         .then(response => response.text())
-        .then(response => resp = response);
-        return response;
+        .then(text => resp = text);
+        return resp;
     },
     
     modifyCalendar: async function(calendar){
@@ -62,7 +65,10 @@ const databaseUtils = {
     deleteEvent: async function(eventID) {
         // return a success message upon deletion, or error message if failure
         let resp;
-        await fetch('/deleteEvent', { method: 'POST', body: JSON.stringify(eventID) })
+        await fetch('/deleteEvent', { 
+            method: 'POST', 
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ _id: eventID }) })
         .then(response => response.text())
         .then(text => resp = text);
         return resp;
@@ -98,7 +104,10 @@ const databaseUtils = {
     deleteTask: async function(taskID) {
         // return a success message upon deletion, or error message if failure
         let resp;
-        await fetch('/deleteTask', { method: 'POST', body: JSON.stringify(taskID) })
+        await fetch('/deleteTask', { 
+            method: 'POST', 
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({_id: taskID}) })
         .then(response => response.text())
         .then(text => resp = text);
         return resp;

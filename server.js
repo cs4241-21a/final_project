@@ -99,7 +99,8 @@ app.post('/addCalendar', isLoggedIn, async function(req, res) {
 });
 
 app.post('/deleteCalendar', isLoggedIn, async function(req, res) {
-    let response = await database.deleteCalendar(req.body);
+    console.log(req.body);
+    let response = await database.deleteCalendar(req.body._id);
     res.send(response)
 });
 
@@ -119,7 +120,7 @@ app.post('/addEvent', isLoggedIn, async function(req, res) {
 });
 
 app.post('/deleteEvent', isLoggedIn, async function(req, res) {
-    let response = await database.deleteEvent(req.body);
+    let response = await database.deleteEvent(req.body._id);
     res.send(response)
 });
 
@@ -140,7 +141,7 @@ app.post('/addTask', isLoggedIn, async function(req, res) {
 });
 
 app.post('/deleteTask', isLoggedIn, async function(req, res) {
-    let response = await database.deleteTask(req.body);
+    let response = await database.deleteTask(req.body._id);
     res.send(response)
 });
 

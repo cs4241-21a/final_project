@@ -17,6 +17,8 @@ class Sidebar extends Component {
       color: '#000000'
     };
     this.newCalendarSubmit = this.newCalendarSubmit.bind(this);
+    this.deleteCalendar = this.deleteCalendar.bind(this);
+    this.modifyCalendar = this.modifyCalendar.bind(this);
     this.newTaskSubmit = this.newTaskSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.selectCalendar = this.selectCalendar.bind(this);
@@ -31,6 +33,38 @@ class Sidebar extends Component {
   deselectCalendar(calId) {
     GLOBAL_VARIABLES.selectedCalendarId = '';
     console.log(GLOBAL_VARIABLES.selectedCalendarId);
+  }
+
+  deleteCalendar(calId) {
+    let toUpdateCalendars = JSON.parse(JSON.stringify(this.state.calendars));
+    let calToDelete = toUpdateCalendars[calId];
+    let childrenToDelete = calToDelete.children;
+    let parentToUpdate = calToDelete.parent !== '' ? undefined : toUpdateCalendars[calToDelete.parent];
+    // Delete all children of calendar
+    childrenToDelete.forEach(childId => {
+      databaseUtils.deleteCalendar(childId);
+      delete toUpdateCalendars[childId];
+    });
+
+    // Delete all references to calendar in parent
+    if(parentToUpdate) {
+      let idToRemoveIndex = parentToUpdate.children.indexOf(calId);
+      parentToUpdate.children.splice(idToRemoveIndex, 1);
+      databaseUtils.modifyCalendar(parentToUpdate);
+    }
+
+    // Delete calendar
+    databaseUtils.deleteCalendar(calId);
+    delete toUpdateCalendars[calId];
+
+    // Reset state
+    this.setState({
+      calendars: toUpdateCalendars
+    });
+  }
+
+  modifyCalendar(calId) {
+    // TODO: Write function
   }
 
   newCalendarSubmit(e) {
@@ -116,6 +150,7 @@ class Sidebar extends Component {
                                   calendarId={calId}
                                   delete={this.deleteCalendar}
                                   modify={this.modifyCalendar}
+                                  handleChange={this.handleChange}
                                   customOnClick={this.selectCalendar}/>);
       }
     }
@@ -201,16 +236,19 @@ function CalendarSidebarItem(props) {
       children.push(<CalendarSidebarItem calendars={props.calendars}
                                          calendarId={child}
                                          style={{padding: '10px'}}
+                                         delete={props.delete}
+                                         modify={props.modify}
+                                         handleChange={props.handleChange}
                                          customOnClick={() => props.customOnClick(child)}/>)});
   }
   console.log(count);
 
   return (
     <div>
-      <button onClick={props.deleteCalendar}><i class="far fa-trash-alt"></i></button>
+      <button onClick={() => props.delete(props.calendarId)}><i class="far fa-trash-alt"></i></button>
       <Popup trigger={<button><i class="far fa-edit"></i></button>} position="right center">
         {close => (
-              <div classname="calendarSubmit">
+              <div classname="calendarEdit">
                 <form>
                   <label htmlFor="name">Edit Calendar</label>
                   <input type='text' 
@@ -220,7 +258,7 @@ function CalendarSidebarItem(props) {
                          required/>
                   <br />
                   <input type="color" name="color" onChange={props.handleChange} />
-                  <button onClick={props.newCalendarSubmit}>Update</button>
+                  <button onClick={() => props.modify(props.calendarId)}>Update</button>
                 </form>
               </div>
               )}

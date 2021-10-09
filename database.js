@@ -114,7 +114,7 @@ module.exports = function(db){
     module.deleteEvent = async function(objectId) {
         await mongoose.connect(db);
         let error;
-        await Event.deleteOne({ id: ObjectId(objectId) }, err => {
+        await Event.deleteOne({ _id: ObjectId(objectId) }, err => {
             if(err) error = err;
         })
         .clone();
@@ -161,7 +161,7 @@ module.exports = function(db){
     module.deleteCalendar = async function(objectId) {
         await mongoose.connect(db);
         let error;
-        await Calendar.deleteOne({ id: ObjectId(objectId) }, err => {
+        await Calendar.deleteOne({ _id: ObjectId(objectId) }, err => {
             if(err) error = err;
         })
         .clone();
@@ -207,7 +207,7 @@ module.exports = function(db){
     module.deleteTask = async function(objectId) {
         await mongoose.connect(db);
         let error;
-        await Task.deleteOne({ id: ObjectId(objectId) }, err => {
+        await Task.deleteOne({ _id: ObjectId(objectId) }, err => {
             if(err) error = err;
         })
         .clone();
