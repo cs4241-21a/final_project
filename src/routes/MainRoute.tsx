@@ -16,7 +16,7 @@ import WeaponSelect from "../components/selects/WeaponSelect";
 import ArtifactSelect from "../components/selects/ArtifactSelect";
 import FarmingDisplay from "../components/FarmingDisplay";
 import LoginButton from '../components/LoginButton';
-import SaveButton from '../components/SaveButton';
+import ResetButton from '../components/ResetButton';
 
 
 const MainRoute = () : JSX.Element => { 
@@ -34,11 +34,13 @@ const MainRoute = () : JSX.Element => {
   const [charPrefs, setCharPrefs] = React.useState<CharacterPrefs[]>([]);
   const [weaponPrefs, setWeaponsPrefs] = React.useState<EnablablePrefs[]>([]);
   const [artifactPrefs, setArtifactPrefs] = React.useState<EnablablePrefs[]>([]);
+  const [loading, setLoading] = React.useState<Boolean>(true);
 
   /**
    * initPrefs() fetches the user preferences from the database
    */
   function initPrefs() {
+    setLoading(true);
     fetch("/prefs",{
       method: "GET"
     }).then(function(res) {
@@ -49,13 +51,13 @@ const MainRoute = () : JSX.Element => {
         setWeaponsPrefs(data[0].weapons);
         setArtifactPrefs(data[0].artifacts);
       }
-    })
+    }).then(() => setLoading(false))
   }
 
   /**
-   * updatePrefs() updates the user preferences to the database
+   * updateDB() updates the user preferences to the database
    */
-  function updatePrefs() {
+  function updateDB() {
     const json = {
       characters: charPrefs,
       weapons: weaponPrefs,
@@ -77,6 +79,12 @@ const MainRoute = () : JSX.Element => {
         console.log("update successfull");
       }
     })
+  }
+
+  const handleReset = () => {
+    setCharPrefs([]);
+    setWeaponsPrefs([]);
+    setArtifactPrefs([]);
   }
 
 
@@ -168,9 +176,9 @@ const MainRoute = () : JSX.Element => {
     // "activeFarmables" should be the artifacts selected by artifactPrefs and materials associated with selected characters 
     // "activeLocations" should be the locations listed per each activeFarmable's farm_at string
     //debug prints for now: 
-    // console.log(charPrefs);
-    // console.log(weaponPrefs);
-    // console.log(artifactPrefs);
+    if(!loading) {
+      updateDB();
+    }
   }, [charPrefs, weaponPrefs, artifactPrefs]);
 
   return (
@@ -196,7 +204,7 @@ const MainRoute = () : JSX.Element => {
         locations={activeLocations}
       />
       <LoginButton initPrefs={initPrefs} />
-      <SaveButton updatePrefs={updatePrefs} />
+      <ResetButton handleReset={handleReset} />
     </>
   );
 }
