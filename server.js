@@ -499,18 +499,6 @@ app.get('/profile', (request, response) => {
     response.sendFile(__dirname + "/build/profile.html")
 })
 
-
-let sample_db ={
-    firstName: "Ashley",
-    lastName: "Burke",
-    phoneNum: 7818798775,
-    grade: "Freshman",
-    courses: [],
-    skills: [],
-    languages: [],
-    bio: "My bio"
-}
-
 app.post('/create_profile', bodyParser.json(), (request, response) => {
 
     collection_profile.deleteMany({profileID})
@@ -526,14 +514,12 @@ app.post('/create_profile', bodyParser.json(), (request, response) => {
 
     jsonToInsert = {
         profileID: profileID,
+        linkToProfilePic: "",
+        bio: request.body.bio,
         firstName: request.body.firstName,
         lastName: request.body.lastName,
-        phoneNum: request.body.phoneNum,
         grade: request.body.grade,
-        courses: request.body.courses,
-        skills: request.body.skills,
-        languages: request.body.languages,
-        bio: request.body.bio
+        phoneNum: request.body.phoneNum,
     }
 
 
