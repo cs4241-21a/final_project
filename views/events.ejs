@@ -128,7 +128,6 @@
                                 <%}%>
                             </select>
                         <br>
-                        <br>
                         <%for (let i = 0; i < event.availableDates.length; i++ ){ %>
                         <div class="hidden" id="hiddenTime<%=event._id%><%=event.availableDates[i]%>">
                             <label for="finalTime<%=event._id%><%=event.availableDates[i]%>">Choose Event Time:</label>
@@ -155,6 +154,26 @@
                             </select>
                         </div>
                         <%}%>
+                        <div>
+                            <p>Accepted Invites:</p>
+                            <ul>
+                                <%for (let k = 0; k < event.attendeesAvailability.length; k++){%>
+                                <li><%=event.attendeesAvailability[k].name%></li>
+                                <%}%>
+                            </ul>
+                            <p>Pending Invites:</p>
+                            <ul>
+                                <%if (event.attendees.length <= event.attendeesAvailability.length){%>
+                                    <li>No pending Invitations</li>
+                                <%}%>
+                                <%for (let i = 0; i < event.attendees.length; i++){%>
+                                <%if (!event.attendeesAvailability.some(e => e.name === event.attendees[i])){%>
+                                <li><%=event.attendees[i]%></li>
+                                <%}%>
+                                <%}%>
+                            </ul>
+                        </div>
+                        <br>
                         <br>
                             <button type="button" onclick="editEvent(parentNode.id)">Edit Event</button>
                         <%}%>
@@ -181,6 +200,22 @@
                         <br>
                         <p>Attendees: <%= event.attendees%></p>
                         <br>
+                        <p>Event Date:</p>
+                        <%if(event.chosenEventDate === null){%>
+                        <p>Event date has not been chosen yet</p>
+                        <%} else {%>
+                            <p><%=event.chosenEventDate%></p>
+                        <%}%>
+                        <br>
+                        <p>Event Time:</p>
+                        <%if(event.chosenEventDate === null){%>
+                            <p>Event time has not been chosen yet</p>
+                        <%} else {%>
+                        <p><%=event.chosenStartTime%></p>
+                        <%}%>
+                        <br>
+                        <%if (!event.attendeesAvailability.some(e => e.name === sentUsername)){%>
+
                         <form id=<%= event._id%>>
                             <p>Open Days and Time Slots: Click and submit to update availability</p>
                             <%for (let i = 0; i < event.availableDates.length; i++ ){ %>
@@ -197,6 +232,7 @@
                             <%}%>
                             <button type="button" id="<%=event.availableDates%>" onclick="addUserAvail(parentNode.id, id)">Accept Invite</button>
                         </form>
+                            <%}%>
                         <hr>
                     </div>
                 <%})%>

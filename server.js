@@ -151,6 +151,9 @@ app.post('/createEvent', bodyparser.json(), async (req,res) => {
   }
 
   let attendeesAvailList = [];
+  /*for (let i = 0; i < fullAttendees.length; i++){
+    attendeesAvailList.push({name: fullAttendees[i], filledOut:false, availability: []});
+  }*/
 
   const entry = new EventEntry({
     owner: req.session.username,
@@ -213,8 +216,7 @@ app.get('/index', (req, res) =>{
 app.get('/events', (req,  res) => {
   EventEntry.find({owner: req.session.username})
       .then(result1 => {
-        EventEntry.find({$and: [{attendees: req.session.username}, {owner: {$ne: req.session.username}},
-                                {chosenEventDate: null}]})
+        EventEntry.find({$and: [{attendees: req.session.username}]}) // {owner: {$ne: req.session.username}}, {chosenEventDate: null}
             .then(result2 =>{
               res.render('events', {eventsList: result1, pendingList:result2, sentUsername: req.session.username, title:"Events"});
             })
