@@ -147,6 +147,14 @@ app.get('/getUserSongs', (req, res) => {
     })
 })
 
+app.get('/getAllSongs', (req, res) => {
+    db.getAllContent()
+        .then(result => {
+            res.send(result)
+            res.end()
+        })
+})
+
 app.get('/getUser', (req, res) => {
     console.log(req.user)
     res.send({ user: req.user })

@@ -9,22 +9,22 @@ class Dashboard extends React.Component {
         this.load()
     }
     load() {
-        fetch(`/getSongs`, { method: 'get', 'no-cors': true })
+        fetch(`/getAllSongs`, { method: 'get', 'no-cors': true })
             .then(res => res.json())
             .then(json => {
                 console.log(json)
                 this.setState({
-                    songsJson: JSON.parse(json)
+                    songsJson: json
                 })
             })
     }
     render() {
         const { songsJson } = this.state
-        const trackList = songsJson.tracks
-        if (!trackList) {
+        const trackList = songsJson
+        if (!trackList.length) {
             return <p></p>
         } else {
-            console.log(trackList)
+            console.log(trackList.length)
             return (
                 <div class="card" style={{ width: "100%", left: "20px", fontSize: "20px" }}>
                     <div class="card-body" style={{ paddingLeft: "20px" }}>
@@ -36,10 +36,10 @@ class Dashboard extends React.Component {
                             </tr>
                             {
                                 trackList.map(track => (
-                                    <tr>
+                                    <tr id={track._id}>
                                         <td id={`title_${track._id}`}>{track.title} </td>
-                                        <td id={`Artist_${track._id}`}>{track.subtitle} </td>
-                                        <td><img src={track.images.coverarthq} style={{ wdith: "10vw", height: "10vw" }}></img></td>
+                                        <td id={`Artist_${track._id}`}>{track.artist} </td>
+                                        <td><img src={track.coverart} style={{ wdith: "10vw", height: "10vw" }}></img></td>
                                     </tr>
                                 ))
                             }
