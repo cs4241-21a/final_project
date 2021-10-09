@@ -130,7 +130,14 @@ app.post('/addData', bodyparser.json(), function(request, response) {
   console.log(request.body);
   response.json({result: "success!"});
 })
+app.get('/logout', auth, function (req, res) {
+  req.logout();
+  req.session.destroy(function(err) {
+      res.clearCookie('sid');
+      res.redirect('/login.html');
+  });
+});
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 
-app.listen(3000)
+app.listen(3030)
