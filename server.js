@@ -520,62 +520,67 @@ app.post("/create_profile", bodyParser.json(), (request, response) => {
 
 app.post("/get_profile", bodyParser.json(), async (request, response) => {
   let profile = null;
-  let allSkills = null;
-  let studentSkills = null;
-  let studentClasses = null;
-
   await collection_profile
     .find({ profileID: Number(profileID) })
     .toArray()
-    .then((read_data) => (profile = read_data[0]));
+    .then(async (read_data) => {
+      if (read_data.length > 0) {
+        profile = read_data[0];
+        let allSkills = null;
+        let studentSkills = null;
+        let studentClasses = null;
 
-  await collection_studentSkillRelation
-    .find({ profileID: Number(profileID) })
-    .toArray()
-    .then((read_data) => (studentSkills = read_data));
+        await collection_studentSkillRelation
+          .find({ profileID: Number(profileID) })
+          .toArray()
+          .then((read_data) => (studentSkills = read_data));
 
-  await collection_studentClassRelation
-    .find({ profileID: Number(profileID) })
-    .toArray()
-    .then((read_data) => (studentClasses = read_data));
+        await collection_studentClassRelation
+          .find({ profileID: Number(profileID) })
+          .toArray()
+          .then((read_data) => (studentClasses = read_data));
 
-  await collection_skill
-    .find({})
-    .toArray()
-    .then((read_data) => (allSkills = read_data));
+        await collection_skill
+          .find({})
+          .toArray()
+          .then((read_data) => (allSkills = read_data));
 
-  let skills = [];
-  let languages = [];
-  let courses = [];
-  
-  for (let i = 0; i < studentClasses.length; i++) {
-    if (studentClasses[i].classDepartment === "personal") {
-      courses.push("personal");
-    } else {
-      courses.push(studentClasses[i].classCourseNumber);
-    }
-  }
+        let skills = [];
+        let languages = [];
+        let courses = [];
 
-  for (let j = 0; j < studentSkills.length; j++) {
-    let skillName = studentSkills[j].skill;
-    for (let k = 0; k < allSkills.length; k++) {
-      if (allSkills[k].skill === skillName) {
-        if (allSkills[k].category === "Programming Languages") {
-          languages.push(skillName);
-          break;
-        } else {
-          skills.push(skillName);
-          break;
+        for (let i = 0; i < studentClasses.length; i++) {
+          if (studentClasses[i].classDepartment === "personal") {
+            courses.push("personal");
+          } else {
+            courses.push(studentClasses[i].classCourseNumber);
+          }
         }
+
+        for (let j = 0; j < studentSkills.length; j++) {
+          let skillName = studentSkills[j].skill;
+          for (let k = 0; k < allSkills.length; k++) {
+            if (allSkills[k].skill === skillName) {
+              if (allSkills[k].category === "Programming Languages") {
+                languages.push(skillName);
+                break;
+              } else {
+                skills.push(skillName);
+                break;
+              }
+            }
+          }
+        }
+
+        profile.courses = courses;
+        profile.skills = skills;
+        profile.languages = languages;
+
+        response.json(profile);
+      } else {
+        response.json({});
       }
-    }
-  }
-
-  profile.courses = courses;
-  profile.skills = skills;
-  profile.languages = languages;
-
-  response.json(profile);
+    });
 });
 
 function insertStudentClassRelation(classNames) {

@@ -9,7 +9,6 @@ class Profile extends React.Component {
   last_name = "";
   phone_number = "";
   grade = "";
-  ph;
   courses_taken = [];
   skills = [];
   programming_languages = [];
@@ -181,12 +180,6 @@ class Profile extends React.Component {
           <h1 class="section_title">Profile</h1>
           <form class="input_area">
             <ul class="input_area_list">
-              <li class="input_field_item">
-                <label for="profile_image">
-                  <b>Profile Image:</b>
-                </label>
-                <ProfileImage />
-              </li>
               <li class="input_field_item">
                 <label for="profile_first_name">
                   <b>First Name:</b>
