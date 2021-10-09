@@ -501,8 +501,10 @@ app.post("/create_profile", bodyParser.json(), (request, response) => {
   //console.log("profileID: ", profileID)
   //console.log("request: ", request.body)
 
+  let allSkills = request.body.skills.concat(request.body.languages);
+
   insertStudentClassRelation(request.body.courses);
-  insertStudentSkillRelation(request.body.skills);
+  insertStudentSkillRelation(allSkills);
 
   jsonToInsert = {
     profileID: Number(profileID),
@@ -561,17 +563,15 @@ function insertStudentClassRelation(classNames) {
   }
 }
 
-function insertStudentSkillRelation(classNames) {
-  let i = 0;
-
+function insertStudentSkillRelation(skills) {
   collection_studentSkillRelation.deleteMany({ profileID });
 
   //console.log("removed courses already there. ")
 
-  for (i = 0; i < classNames.length; i++) {
-    json = {
-      profileID,
-      classCourseNumber: classNames[i],
+  for (let i = 0; i < skills.length; i++) {
+    let json = {
+      profileID: Number(profileID),
+      skill: skills[i],
     };
     //console.log("insert into studentSkillRelation: ", json)
 
