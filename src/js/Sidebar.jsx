@@ -75,16 +75,6 @@ class Sidebar extends Component {
     });
   }
 
-  handleChange(e) {
-    const target = e.target;
-    const value = target.value;
-    const name = target.name;
-
-    this.setState({
-        [name]: value
-    });
-  }
-
   render() {
     let calendarSidebarItems = [];
     this.state.calendars.forEach(calendar => {
