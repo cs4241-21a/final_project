@@ -4,7 +4,7 @@ const createList = function( e ) {
   const fname = document.querySelector( '#fname' ),
       fdescription = document.querySelector( '#fdescription' ),
       username = document.querySelector( '#usernameInList' ),
-      json = { name: fname.value, description: fdescription.value, username: username.innerHTML },
+      json = { listName: fname.value, description: fdescription.value, username: username.innerHTML },
       body = JSON.stringify( json )
 
   fetch( '/create-list', {
