@@ -117,7 +117,8 @@ function getTimeRange(){
 }
 
 async function submitHandler() {
-    let attendeesList = attendees.value.split(", ");
+    let attendeesList = []
+    if(attendees !== ""){attendeesList = attendees.value.split(", ")}
     let timeRange = getTimeRange();
     
     let startDate = eventCalendar.getStartDate();

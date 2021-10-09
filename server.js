@@ -142,13 +142,18 @@ app.post('/createEvent', bodyparser.json(), async (req,res) => {
     timeRangeArray.push(req.body.timeRange);
   }
 
+  let fullAttendees = []
+  fullAttendees.push(req.session.username)
+  for(let count = 0; count<req.body.attendees.length; count++){
+    if(req.body.attendees[count] !== "")fullAttendees.push(req.body.attendees[count])
+  }
 
   const entry = new EventEntry({
     owner: req.session.username,
     eventName: req.body.title,
     availableDates: dateRange,
     availableTimes: timeRangeArray,
-    attendees: req.body.attendees,
+    attendees: fullAttendees,
     meetingDuration: req.body.duration,
     description: req.body.description,
     location: req.body.location
