@@ -88,6 +88,7 @@ app.post('/login', function (req, res) {
           bcrypt.compare(req.body.password, result.password, function(err, ok) {
               if (ok) {
                   req.session.userId = result._id;
+                  req.session.username = req.body.username;
                   res.json({code: 200, msg: "success"});
               } else {
                   res.json({code: 400, msg: "invalid credentials"});
@@ -131,6 +132,10 @@ app.get('/aboutus', function(request, response) {
 
 app.get('/watchlist',auth, function(request, response) {
   response.sendFile( __dirname + '/public/watchlist.html' )
+})
+
+app.get('/search_anime',auth, function(request, response) {
+  response.sendFile( __dirname + '/public/search_anime.html' )
 })
 
 app.post('/addData', bodyparser.json(), function(request, response) {

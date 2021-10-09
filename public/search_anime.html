@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Watch List</title>
+    <meta charset="utf-8" />
+   
+    <link
+      href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+
+
+    <style>
+        body {
+          font-family: Arial;
+          background-image: url('https://cdn.hipwallpaper.com/m/78/76/OvAMJh.jpg');
+          background-repeat: no-repeat;
+        }
+        
+        /* Style the tab */
+        .tab {
+          overflow: hidden;
+          border: 1px solid rgb(3, 0, 0);
+          background-color: #41528b;
+        }
+        
+        /* Style the buttons inside the tab */
+        .tab button {
+          background-color: inherit;
+          float: left;
+          border: none;
+          outline: none;
+          cursor: pointer;
+          padding: 14px 16px;
+          transition: 0.3s;
+          font-size: 17px;
+        }
+        
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+          background-color: rgb(0, 0, 0);
+        }
+        
+        /* Create an active/current tablink class */
+        .tab button.active {
+          background-color: rgb(56, 21, 21);
+        }
+        
+        /* Style the tab content */
+        .tabcontent {
+          display: none;
+          padding: 6px 12px;
+          border: 1px solid rgb(0, 0, 0);
+          border-top: none;
+        }
+        </style>
+      
+    </head>
+
+  <body>
+    <div id="nav-placeholder"></div>
+
+    <div class="boxHolder">
+      <div class="box">
+        <h1>Not sure which anime? Start searching!</h1>
+        <a href="/logout">LOGOUT</a>
+        <img src="https://cdn.hipwallpaper.com/m/81/89/1vnrg8.jpg" />
+      </div>
+    </div>
+
+    <div class="boxHolder">
+      <div class="box">
+        <form id="search_by_image" enctype="multipart/form-data">
+          <h2>Search by uploading screenshot</h2>
+          <label for="screenshot">Upload the image below 25MB here: </label>
+          <input type="file" id="screenshot" name="screenshot" />
+          <button id="submit_screenshot">Submit</button>
+        </form>
+      </div>
+
+      <!-- <div class="box">
+        <form id="search_by_url">
+          <h2>Search by providing url with an image</h2>
+          <label for="url">leave the url here: </label>
+          <input type="text" id="url" name="url" />
+          <button id="submit_url">Submit</button>
+        </form>
+      </div> -->
+    </div>
+<h2>
+  Search results
+  <h3>result whose similarity below 90% might not be reliable</h3>
+</h2>
+    <div id="results" class="boxHolder">
+    
+    </div>
+
+
+
+    <script>
+      const generateResults = (result)=>{
+        // episode, filename, from, to, image, similarity
+        return '<div class="card" style="width: 18rem;"><div class="card" style="width: 18rem;">'
+          +'<img src='+result.image+' '+'class="card-img-top">'
+          +'<video src='+result.video+' '+'class="card-img-top" volume="0" autoplay playsinline>'+' </video>'
+          +'<div class="card-body">'
+          +'<h5 class="card-title">name: '+result.filename+'</h5>'
+          +'<p class="card-text">episode: '+result.episode+'</p>'
+          +'<p class="card-text">similarity: '+result.similarity+'</p>'
+          +'<p class="card-text">from: '+result.from+'</p>'
+          +'<p class="card-text">to: '+result.to+'</p>'
+          + '</div></div></div>'
+      }
+     // nav bar import function
+      $(function(){
+        
+        $("#nav-placeholder").load("nav.html");
+
+      });
+
+
+        const MAX_FILE_SIZE = 24 * 1024 * 1024
+        $(document).ready(function () {
+          $('#screenshot').change(function () {
+            fileSize = this.files[0].size;
+            if (fileSize > MAX_FILE_SIZE) {
+              this.setCustomValidity("File must not exceed 25 MB!");
+              this.reportValidity();
+            } else {
+              this.setCustomValidity("");
+            }
+          });
+
+          $('#submit_screenshot').click(e => {
+            e.preventDefault()
+            const form = document.getElementById('search_by_image')
+            const formData = new FormData(form)
+            //formData.append('screenshot', imageBlob)
+            fetch("https://api.trace.moe/search", {
+              method: "POST",
+              body: formData,
+            })
+            .then((e) => e.json())
+            .then(json => {
+              const result = json.result
+              console.log(result)
+              str = ""
+              for(let i=0;i<3;i++){
+                str += generateResults(result[i])
+              }
+              console.log(str)
+              $("#results").html(str)
+            }
+
+            
+            )
+
+
+      })
+
+    $('#submit_url').click(e=>{
+        e.preventDefault()
+      })
+
+
+})
+
+
+    </script>
+    
+
+  </body>
+</html>
