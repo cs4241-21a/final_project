@@ -38,6 +38,15 @@ function App() {
 
   const [showFavorites, setShowFavorites] = React.useState(false);
 
+  const [time, setTime] = React.useState(Date.now());
+
+  React.useEffect(() => {
+    const interval = setInterval(() => setTime(Date.now()), 120000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   React.useEffect(() => {
     fetch("/laundry", {
       method: "GET",
@@ -50,7 +59,7 @@ function App() {
         setData(data);
         console.log(data);
       });
-  }, []);
+  }, [time]);
 
   React.useEffect(() => {
     fetch("/timestamp", {
@@ -63,7 +72,7 @@ function App() {
         setTimestampData(data);
         console.log(data);
       });
-  }, []);
+  }, [time]);
 
   async function logoutUser() {
     console.log("Within logout...");

@@ -14,6 +14,10 @@ import { styled } from "@mui/material/styles";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MachineList from "../machineInformation/MachineList";
 
+import ContactsContext from "../../store/favoriteContext";
+
+import { useState, useContext } from "react";
+
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -50,6 +54,26 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 
+async function addFavorite(credentials) {
+  return fetch("/addFavorite", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  }).then((data) => data.json());
+}
+
+async function removeFavorite(credentials) {
+  return fetch("/delFavorite", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  }).then((data) => data.json());
+}
+
 function getColor(value) {
   if (value >= 75) return "#90ee90";
   else if (value >= 50) return "#fdec96";
@@ -64,6 +88,35 @@ function AccordianItem(props) {
 
   console.log("favorite: " + props.favorite);
   const [isFav, setFav] = React.useState(props.favorite);
+
+  const handleAddFavorite = async (event) => {
+    event.preventDefault();
+
+    const favoriteItem = {
+      fav: props.item.humanname,
+    };
+
+    const token = await addFavorite(favoriteItem);
+    console.log(token.failed);
+    if (token.failed === "false") {
+      setFav(true);
+      props.addContactHandler(props.item.humanname);
+    }
+  };
+
+  const handleRemoveFavorite = async (event) => {
+    event.preventDefault();
+
+    const favoriteItem = {
+      fav: props.item.humanname,
+    };
+
+    const token = await removeFavorite(favoriteItem);
+    console.log(token.failed);
+    if (token.failed === "false") {
+      props.removeContactHandler(props.item.humanname);
+    }
+  };
 
   return (
     <div>
@@ -96,23 +149,11 @@ function AccordianItem(props) {
             </Grid>
           </Grid>
           <Grid item>
-            {!isFav && (
-              <StarOutlineIcon
-                onClick={() => {
-                  setFav(true);
-                  console.log("HELLOS");
-                }}
-                fontSize="small"
-              />
+            {!props.favorite && (
+              <StarOutlineIcon onClick={handleAddFavorite} fontSize="small" />
             )}
-            {isFav && (
-              <StarRateIcon
-                onClick={() => {
-                  setFav(false);
-                  console.log("HELLOS");
-                }}
-                fontSize="small"
-              />
+            {props.favorite && (
+              <StarRateIcon onClick={handleRemoveFavorite} fontSize="small" />
             )}
           </Grid>
         </AccordionSummary>

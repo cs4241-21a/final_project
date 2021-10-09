@@ -6,7 +6,6 @@ const ContactsContext = createContext({
   removeContactHandler: (contactId) => {},
   getContactHandler: (id) => {},
   editContactHandler: (contact) => {},
-  removeAll: () => {},
 });
 
 export function ContactsContextProvider(props) {
@@ -49,7 +48,7 @@ export function ContactsContextProvider(props) {
 
   function removeContactHandler(contactId) {
     setData((periousContacts) => {
-      return periousContacts.filter((contact) => contact._id !== contactId);
+      return periousContacts.filter((contact) => contact !== contactId);
     });
   }
 

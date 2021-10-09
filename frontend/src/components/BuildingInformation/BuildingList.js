@@ -10,10 +10,13 @@ function BuildingList(props) {
     setExpanded(newExpanded ? panel : false);
   };
 
+  console.log(favoriteContext.contacts);
+
   if (!props.showFavorites) {
     return (
       <div>
         {props.data.map((item, index) => {
+          console.log(favoriteContext.contacts);
           return (
             <AccordianItem
               expanded={expanded}
@@ -24,6 +27,8 @@ function BuildingList(props) {
               index={index + 1}
               item={item}
               favorite={favoriteContext.contacts.includes(item.humanname)}
+              removeContactHandler={favoriteContext.removeContactHandler}
+              addContactHandler={favoriteContext.addContactHandler}
             />
           );
         })}
@@ -38,6 +43,7 @@ function BuildingList(props) {
     return (
       <div>
         {filteredData.map((item, index) => {
+          console.log(favoriteContext.contacts);
           return (
             <AccordianItem
               expanded={expanded}
@@ -48,6 +54,8 @@ function BuildingList(props) {
               index={index + 1}
               item={item}
               favorite={favoriteContext.contacts.includes(item.humanname)}
+              removeContactHandler={favoriteContext.removeContactHandler}
+              addContactHandler={favoriteContext.addContactHandler}
             />
           );
         })}
