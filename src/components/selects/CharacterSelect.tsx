@@ -5,6 +5,8 @@ import { addPref, removePref, updatePref } from "../../functions/selectFunctions
 import CharacterProps from "../../types/props/CharacterProps";
 import CharacterPrefs from "../../types/prefs/CharacterPrefs";
 
+import SelectPrefButton from "../primitives/SelectPrefButton";
+
 interface CharacterSelectProps {
   characters: CharacterProps[],
   preferences: CharacterPrefs[],
@@ -28,10 +30,32 @@ const CharacterSelect = ({
   // characterPref is the CharacterPrefs returned by addCharacter
   const updateCharacter = updatePref(preferences, setter);
 
+  // Demo Data !!!
+  const charTest: CharacterProps[] = [
+    {
+      name: "Character_Aether_Thumb"
+    },
+    {
+      name: "Character_Albedo_Thumb"
+    },
+    {
+      name: "Character_Ayaka_Thumb"
+    }
+  ];
 
   return (
-    // !!! TODO (UI): Create and implement JSX components for CharacterSelect
-    <></>
+    <>
+      {/* Demo Functionality !!! */}
+      {charTest.map((char) => {
+        return <SelectPrefButton<CharacterPrefs> 
+          addPref={addCharacter}
+          removePref={removeCharacter}
+          preferences={preferences}  
+          prop={char}
+          imgFolder="chara"
+        />
+      })}
+    </>
   );
 }
 
