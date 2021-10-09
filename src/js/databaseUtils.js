@@ -35,7 +35,7 @@ const databaseUtils = {
     modifyCalendar: async function(calendar){
         // Returns completed or failure message
         let resp;
-        await fetch('/modifyCalendar', { method: 'POST', body: JSON.stringify(calendar)})
+        await fetch('/modifyCalendar', { method: 'POST', headers: { 'Content-Type': 'application/json' },body: JSON.stringify(calendar)})
         .then(response => response.text())
         .then(text => resp = text);
         return resp;
@@ -53,7 +53,7 @@ const databaseUtils = {
     addEvent: async function(event) {
         // return the object ID of the event, error message on failure
         let eventId;
-        await fetch('/addEvent',{ method: 'POST', body: JSON.stringify(event) })
+        await fetch('/addEvent',{ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(event) })
         .then(response => response.text())
         .then(text => eventId = text);
         return eventId;
@@ -71,7 +71,7 @@ const databaseUtils = {
     modifyEvent: async function(event) {
         // return the object ID of the modified event, error message on failure
         let resp;
-        fetch('/modifyEvent',{ method: 'POST', body: JSON.stringify(event) })
+        fetch('/modifyEvent',{ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(event) })
         .then(response => response.text())
         .then(text => resp = text);
         return resp;
@@ -89,7 +89,7 @@ const databaseUtils = {
     addTask: async function(task) {
         // return the object ID of the task, error message on failure
         let taskId;
-        await fetch('/addTask',{ method: 'POST', body: JSON.stringify(task) })
+        await fetch('/addTask',{ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(task) })
         .then(response => response.text())
         .then(text => taskId = text);
         return taskId;
@@ -107,7 +107,7 @@ const databaseUtils = {
     modifyTask: async function(task) {
         // return the object ID of the modified task, error message on failure
         let resp;
-        fetch('/modifyTask',{ method: 'POST', body: JSON.stringify(task) })
+        fetch('/modifyTask',{ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(task) })
         .then(response => response.text())
         .then(text => resp = text);
         return resp;

@@ -93,17 +93,17 @@ app.get('/getAllCalendars', isLoggedIn, async function(req, res) {
     res.send(response);
 });
 
-app.post('/addCalendar', async function(req, res) {
+app.post('/addCalendar', isLoggedIn, async function(req, res) {
     let response = await database.addCalendar(req.body);
     res.send(response)
 });
 
-app.post('/deleteCalendar', async function(req, res) {
+app.post('/deleteCalendar', isLoggedIn, async function(req, res) {
     let response = await database.deleteCalendar(req.body);
     res.send(response)
 });
 
-app.post('/modifyCalendar', async function(req, res) {
+app.post('/modifyCalendar', isLoggedIn, async function(req, res) {
     let response = await database.updateCalendar(req.body);
     res.send(response)
 });
@@ -113,17 +113,17 @@ app.get('/getAllEvents', isLoggedIn, async function(req, res) {
     res.send(response);
 });
 
-app.post('/addEvent', async function(req, res) {
+app.post('/addEvent', isLoggedIn, async function(req, res) {
     let response = await database.addEvent(req.body);
     res.send(response)
 });
 
-app.post('/deleteEvent', async function(req, res) {
+app.post('/deleteEvent', isLoggedIn, async function(req, res) {
     let response = await database.deleteEvent(req.body);
     res.send(response)
 });
 
-app.post('/modifyEvent', async function(req, res) {
+app.post('/modifyEvent', isLoggedIn, async function(req, res) {
     let response = await database.updateEvent(req.body);
     res.send(response)
 });
@@ -133,17 +133,18 @@ app.get('/getAllTasks', isLoggedIn, async function(req, res) {
     res.send(response);
 });
 
-app.post('/addTask', async function(req, res) {
+app.post('/addTask', isLoggedIn, async function(req, res) {
+    console.log(req.body);
     let response = await database.addTask(req.body);
     res.send(response)
 });
 
-app.post('/deleteTask', async function(req, res) {
+app.post('/deleteTask', isLoggedIn, async function(req, res) {
     let response = await database.deleteTask(req.body);
     res.send(response)
 });
 
-app.post('/modifyTask', async function(req, res) {
+app.post('/modifyTask', isLoggedIn, async function(req, res) {
     let response = await database.updateTask(req.body);
     res.send(response)
 });
