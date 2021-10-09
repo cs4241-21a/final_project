@@ -119,7 +119,7 @@ app.post('/reg', function (req, res) {
 });
 
 app.get('/',auth, function(request, response) {
-    response.sendFile( __dirname + '/public/index.html' )
+    response.sendFile( __dirname + '/public/watchlist.html' )
 })
 
 app.get('/aboutus', function(request, response) {
