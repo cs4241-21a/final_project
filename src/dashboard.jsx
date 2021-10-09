@@ -9,14 +9,17 @@ class Post extends React.Component {
     constructor(props){
         super(props)
 
+        // console.log("this.props.postID", this.props.postID)
+
         this.click = this.click.bind(this)
     }
 
     click(event){
         // console.log("icon clicked")
-        console.log("creatorID: ", this.props.profileID)
+        // console.log("creatorID: ", this.props.profileID)
         let request = {
-            creatorID: this.props.profileID
+            creatorID: this.props.profileID,
+            postID: this.props.postID
         }
         
         fetch('/delete_post', {
@@ -27,7 +30,7 @@ class Post extends React.Component {
             }
         })
         .then(response => response.json())
-        .then(json => console.log(json))
+        // .then(json => console.log(json))
 
         
     }
@@ -80,7 +83,7 @@ class Dashboard extends React.Component {
       .then((response) => response.json())
       .then((json) => {
           this.setState({ posts: json })
-          console.log("json: ", json)
+        //   console.log("json: ", json)
         });
   }
 
@@ -524,6 +527,7 @@ class Dashboard extends React.Component {
               {this.state.posts.map((post, i) => (
                 <Post
                   key={i}
+                  postID={post._id}
                   firstName={post.firstName}
                   lastName={post.lastName}
                   profilePic={post.linkToProfilePic}
@@ -548,18 +552,3 @@ class Dashboard extends React.Component {
 
 var mountNode = document.getElementById("dashboard");
 ReactDOM.render(<Dashboard />, mountNode);
-
-
-var icons = document.querySelectorAll(".delete_post_icon");
-
-let i = 0
-for(i=0; i<icons.length; i++){
-    icons[i].addEventListener("mouseover", changeDef);
-}
-
-
-
-
-function changeDef(){
-    console.log("hovered icon")
-}

@@ -507,8 +507,10 @@ app.post("/create_profile", bodyParser.json(), async (request, response) => {
 
   let allSkills = request.body.skills.concat(request.body.languages);
 
+
   await insertStudentClassRelation(request.body.courses);
   await insertStudentSkillRelation(allSkills);
+
 
   jsonToInsert = {
     profileID: Number(profileID),
@@ -592,6 +594,7 @@ app.post("/get_profile", bodyParser.json(), async (request, response) => {
     });
 });
 
+
 async function insertStudentClassRelation(classNames) {
   await collection_studentClassRelation.deleteMany({ profileID: Number(profileID) });
 
@@ -611,6 +614,7 @@ async function insertStudentClassRelation(classNames) {
         classCourseNumber: classNames[i],
         classDepartment: "CS",
       };
+
     }
     //console.log("insert into studentClassRElation: ", json)
 
@@ -622,6 +626,7 @@ async function insertStudentClassRelation(classNames) {
 
 async function insertStudentSkillRelation(skills) {
   await collection_studentSkillRelation.deleteMany({ profileID: Number(profileID) });
+
 
   //console.log("removed courses already there. ")
 
@@ -638,12 +643,27 @@ async function insertStudentSkillRelation(skills) {
   }
 }
 
-app.post("/delete_post", bodyParser.json(), (request, response) => {
-  if (request.body.creatorID === profileID) {
-    // console.log("same user");
-  } else {
-    // console.log("different user");
-  }
-});
+
+app.post('/delete_post', bodyParser.json(), (request, response) => {
+    // console.log("deleting post with id: ", request.body.postID)
+    if(request.body.creatorID === profileID){
+        // console.log("deleting post with id: ", request.body.postID)
+        collection_post.deleteOne({_id: mongodb.ObjectId(request.body.postID)})
+        .then(confirmation => {
+            // console.log("confirmation,", confirmation)
+            collection_postSkillRelation.deleteMany({postID: mongodb.ObjectID(request.body.postID)})
+            // .then(con => console.log("con,", con))
+
+            
+        })
+        
+        
+        // collection_postSkillRelation.deleteMany({postID: request.body.postID})
+        // console.log("same user")
+    }
+    // else{
+    //     console.log("different user")
+    // }
+})
 
 app.listen(process.env.PORT || 3000);
