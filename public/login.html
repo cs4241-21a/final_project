@@ -1,84 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-  <link rel="stylesheet" href="https://unpkg.com/98.css">
-  <head>
+<link rel="stylesheet" href="https://unpkg.com/98.css">
+<body>
+<div class="window" style="margin: 32px; width: 25%">
+  <div class="title-bar">
+    <div class="title-bar-text">
+      Welcome to Paint, Please Log In!
+    </div>
+    <div class="title-bar-controls">
+      <button aria-label="Minimize"></button>
+      <button aria-label="Maximize"></button>
+      <button aria-label="Close"></button>
+    </div>
+  </div>
+  <div class="window-body">
 
-  <h2>Welcome!</h1>
-  </head>
-  <body>
     <h3>Login</h3>
-    <div style="width: 14%; margin-left: 5%; margin-right: 42.5%" role = "table" aria-label="Login Table">
+    <div style="width: 14%; margin-left: 50%;" role = "table" aria-label="Login Table">
       <form action="/login" method="POST" id="form" autocomplete="off">
         <div class="flex-container2" role="row" aria-label="Username row">
-        <div class = "flex-child" role="columnheader">
-          <label for="user" style="margin-left: -20%;" class="theLabels2">Username: </label>
-        </div>
+          <div class = "flex-child" role="columnheader">
+            <label for="user" style="margin-left: -20%;" class="theLabels2">Username: </label>
+          </div>
           <div class="flex-child" style="margin-left: -20%;" role="columnheader">
-          <input
-            type="text"
-            name="username"
-            placeholder="username"
-            class="theInputs2"
-            id="uname"
-          />
+            <input
+                    type="text"
+                    name="username"
+                    placeholder="username"
+                    class="theInputs2"
+                    id="uname"
+            />
+          </div>
         </div>
-      </div>
-      <div class="flex-container2" role="row">
-        <div class = "flex-child" role = "columnheader">
-          <label for="password" style="margin-left: -20%;  margin-top: 5%;" class="theLabels2">Password: </label>
-        </div>
+        <div class="flex-container2" role="row">
+          <div class = "flex-child" role = "columnheader">
+            <label for="password" style="margin-left: -20%;  margin-top: 5%;" class="theLabels2">Password: </label>
+          </div>
           <div class="flex-child" style="margin-left: -20%;" role="columnheader">
-          <input
-            type="password"
-            name="password"
-            placeholder="password"
-            class="theInputs2"
-            id="pword"/>
+            <input
+                    type="password"
+                    name="password"
+                    placeholder="password"
+                    class="theInputs2"
+                    id="pword"/>
+          </div>
         </div>
-        </div>
-        <div style="margin-top: 5%; padding-top: 20 px;">
-          <input type="submit" style="margin-left: -20%;" id ="submit"/>
-        </div>
-      </form>
-    </div> 
-
-    <h3>Sign Up</h3>
-    <div style="width: 14%; margin-left: 5%; margin-right: 42.5%" role = "table" aria-label="Login Table">
-      <form action="/signup" method="POST" id="form2">
-        <div class="flex-container2" role="row" aria-label="Username row">
-        <div class = "flex-child" role="columnheader">
-          <label for="user" class="theLabels2" style="margin-left: -20%;">Username: </label>
-        </div>
-          <div class="flex-child" style="margin-left: -20%;" role="columnheader">
-          <input
-            type="text"
-            name="username"
-            placeholder="username"
-            class="theInputs2"
-            id="uname2"
-            autocomplete="off"
-          />
-        
-        </div>
-      </div>
-      <div class="flex-container2" role="row">
-        <div class = "flex-child" role = "columnheader">
-          <label for="password" class="theLabels2" style="margin-left: -20%;  margin-top: 5%;">Password: </label>
-        </div>
-          <div class="flex-child" style="margin-left: -20%;" role="columnheader">
-          <input
-            type="password"
-            name="password"
-            placeholder="password"
-            class="theInputs2"
-            id="pword2"
-            autocomplete="off"/>
-        </div>
-        <div style="margin-top: 5%; padding-top: 20 px;">
-          <input type="submit" style="margin-left: -20%;" id ="signup"/>
+        <div style="margin-top: 5%; padding-top: 20px;">
+<!--          <input type="submit" style="margin-left: -20%;" id ="submit"/>-->
+          <button id="submit">submit</button>
         </div>
       </form>
     </div>
-  </body>
-  <script src="js/loginScript.js"></script>
+
+    <h3>Sign Up</h3>
+    <div style="width: 14%; margin-left: 50%; " role = "table" aria-label="Login Table">
+      <form action="/signup" method="POST" id="form2">
+        <div class="flex-container2" role="row" aria-label="Username row">
+          <div class = "flex-child" role="columnheader">
+            <label for="user" class="theLabels2" style="margin-left: -20%;">Username: </label>
+          </div>
+
+          <div class="flex-child" style="margin-left: -20%;" role="columnheader">
+            <input
+                    type="text"
+                    name="username"
+                    placeholder="username"
+                    class="theInputs2"
+                    id="uname2"
+                    autocomplete="off"
+            />
+          </div>
+
+        </div>
+
+        <div class="flex-container2" role="row" aria-label="Password row">
+          <div class = "flex-child" role = "columnheader">
+            <label for="password" class="theLabels2" style="margin-left: -20%;  margin-top: 5%;">Password: </label>
+          </div>
+
+          <div class="flex-child" style="margin-left: -20%;" role="columnheader">
+            <input
+                    type="password"
+                    name="password"
+                    placeholder="password"
+                    class="theInputs2"
+                    id="pword2"
+                    autocomplete="off"
+            />
+          </div>
+        </div>
+        <div style="margin-top: 5%; padding-top: 20px;">
+<!--          <input type="submit" style="margin-left: -20%;" id ="signup"/>-->
+          <button id="signup">submit</button>
+        </div>
+      </form>
+      </div>
+
+  </div>
+</div>
+</body>
+<script src="js/loginScript.js"></script>
 </html>

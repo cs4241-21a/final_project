@@ -37,10 +37,10 @@ function setup() {
     clearBtn.onclick = clearCanvas
 
     const lineWidth = document.querySelector('#lineWidth')
-    lineWidth.onclick = changeWidth
+    lineWidth.oninput = changeWidth
 
     image(initImg, 0, 0);
-    connection = new WebSocket('ws://localhost:3323')
+    connection = new WebSocket('ws://' + window.location.hostname + ':3323')
 
     connection.onmessage = e => {
         let data
