@@ -2,6 +2,12 @@ let color = 'black'
 let lineWidth = 50
 let undoList = []
 let redoList = []
+let history = [{shape: "draw", 
+                mX: 0, 
+                mY:0, 
+                pmX:100, 
+                pmY:100, 
+                lineWidth:50,}]
 let connection
 
 const changeColor = function(event){
@@ -14,10 +20,23 @@ const changeWidth = function(event){
 
 function clearCanvas(){
     clear()
+    let data = {
+        shape: "clear"
+    }
+    connection.send(JSON.stringify(data))
+
 }
 
 function setup() {
     let myCanvas = createCanvas(1000, 500)
+
+   // data = history.pop()
+   // helpDrawLine(data.color, data.lineWidth, data.mX, data.mY, data.pmX, data.pmY)
+    //history.forEach(Element => {
+      //      helpDrawLine(data.color, data.lineWidth, data.mX, data.mY, data.pmX, data.pmY)
+    //});
+    //console.log(history.length)
+
 
     myCanvas.style('border', '1px solid #000')
 
@@ -62,6 +81,9 @@ function setup() {
             }
             else if (data.shape === "erase"){
                 helpErase(data.lineWidth, data.mX, data.mY, data.pmX, data.pmY)
+            }
+            else if (data.shape === "clear"){
+                clear()
             }
         }
     }
@@ -121,6 +143,7 @@ function draw() {
                 pmY:pmouseY, 
                 lineWidth:lineWidth,
             }
+
             connection.send(JSON.stringify(data))
         } 
         else if (checkDrawType === "Draw") {
@@ -136,6 +159,8 @@ function draw() {
                 color:color, 
                 lineWidth:lineWidth,
             }
+            history.push(data)
+
             connection.send(JSON.stringify(data))
         }
     } 
