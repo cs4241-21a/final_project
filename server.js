@@ -500,47 +500,34 @@ let sample_db ={
 
 app.post('/create_profile', bodyParser.json(), (request, response) => {
 
+    collection_profile.deleteMany({profileID})
+    
+    console.log("removed_courses already there")
+
     console.log("profileID: ", profileID)
     console.log("request: ", request.body)
-    collection_profile.find({profileID}).toArray()
-    .then( dbJSON => {
-
-        if(dbJSON.length === 0){
-            console.log("user does not exist")
-            // insertStudentClassRelation(request.body.courses)
-            // collection_profile.insertOne(request.body)
-            // .then( result => {
-            //     console.log(result)
-            // })
-            
-        }
-        
-        insertStudentClassRelation(request.body.courses)
-        insertStudentSkillRelation(request.body.skills)
-        // console.log("user already exists")
-
-
-        // updateJson = {}
 
         
-        // console.log("updateJSON: ", updateJson)
+    // insertStudentClassRelation(request.body.courses)
+    // insertStudentSkillRelation(request.body.skills)
 
-        // collection_profile.updateMany(
-        //     {profileID},
-        //     {$set: {firstName: request.body.firstName,
-        //             lastName: request.body.lastName,
-        //             phoneNum: request.body.phoneNum,
-        //             grade: request.body.grade,
-        //             courses: request.body.courses,
-        //             skills: request.body.skills,
-        //             languages: request.body.languages,
-        //             bio: request.body.bio}
-        //     }
-        // )
-        
-        // console.log("found profiles", dbJSON)
-        response.json(dbJSON)
-    })
+    jsonToInsert = {
+        profileID: profileID,
+        firstName: request.body.firstName,
+        lastName: request.body.lastName,
+        phoneNum: request.body.phoneNum,
+        grade: request.body.grade,
+        courses: request.body.courses,
+        skills: request.body.skills,
+        languages: request.body.languages,
+        bio: request.body.bio
+    }
+
+
+        collection_profile.insertOne(jsonToInsert)
+        .then( result => {
+            console.log(result)
+        })
 
 })
 

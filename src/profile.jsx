@@ -18,7 +18,6 @@ class Profile extends React.Component{
 
     constructor(props){
         super(props)
-        // [value, setValue] = useState()
 
         fetch('/get_profile', {
             method:'POST',
@@ -29,6 +28,13 @@ class Profile extends React.Component{
         }).then(response => response.json())
         .then(profile => {
             this.first_name = profile.firstName
+            this.last_name = profile.lastName
+            this.phone_number = profile.phoneNum
+            this.grade = profile.grade
+            this.courses_taken = profile.courses
+            this.skills = profile.skills
+            this.programming_languages = profile.languages
+            this.bio = profile.bio
         })
 
 
@@ -59,7 +65,7 @@ class Profile extends React.Component{
                 "Content-Type": "application/json"
             }
         }).then(response => response.json())
-        .then(console.log)
+        .then(json =>console.log)
         
         console.log("submitting json: ", json)
     }
@@ -295,13 +301,13 @@ class Profile extends React.Component{
     }
 }
 
-fetch('/get_profile', {
-    method:'POST',
-    body: JSON.stringify({}),
-    headers:{
-        "Content-Type": "application/json"
-    }
-})
+// fetch('/get_profile', {
+//     method:'POST',
+//     body: JSON.stringify({}),
+//     headers:{
+//         "Content-Type": "application/json"
+//     }
+// })
 
 var mountNode = document.getElementById("profile");
 ReactDOM.render(<Profile />, mountNode);
