@@ -27,7 +27,7 @@ class Profile extends React.Component {
     })
       .then((response) => response.json())
       .then((profile) => {
-        console.log(profile);
+        // console.log(profile);
 
         this.first_name = profile.firstName;
         this.last_name = profile.lastName;
@@ -38,7 +38,7 @@ class Profile extends React.Component {
         this.programming_languages = profile.languages;
         this.bio = profile.bio;
 
-        console.log(this);
+        // console.log(this);
 
         this.setState({});
 
