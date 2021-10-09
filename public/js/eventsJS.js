@@ -38,7 +38,14 @@ function alert(message, type) {
 async function editEvent(eventID){
     let attendeesList = document.getElementById('attendees' + eventID).value.split(",");
     let evntDate = document.getElementById('finalDate' + eventID).value;
-    let startTime = document.getElementById('finalTime' + eventID + evntDate).value;
+    let startTime = -1
+
+    if (evntDate === "null"){
+        evntDate = null;
+        startTime = null;
+    } else {
+        startTime = document.getElementById('finalTime' + eventID + evntDate).value;
+    }
     const json = {
         eventID: eventID,
         chosenEventDate: evntDate,
@@ -61,13 +68,16 @@ async function editEvent(eventID){
     window.location.reload();
 }
 let oldElementVal = "";
-function showDiv(element) {
-    if (element.value != oldElementVal) {
+function showDiv(element, options) {
+    console.log(element.value)
+    if (element.value !== oldElementVal && element.value !== "null") {
         document.getElementById('hiddenTime' + element.value).style.display = 'block';
         if (oldElementVal !== "") {
             document.getElementById('hiddenTime' + oldElementVal).style.display = 'none';
         }
         oldElementVal = element.value;
+    } else if (oldElementVal !== "" && element.value === "null"){
+        document.getElementById('hiddenTime'+ oldElementVal).style.display = 'none';
     }
 }
 
@@ -164,8 +174,6 @@ async function addUserAvail(eventID, dateList){
         }
         newAvailTimes.push(times);
     }
-
-    console.log(newAvailTimes);
 
     const json = {
             eventID: eventID,

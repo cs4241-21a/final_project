@@ -121,7 +121,8 @@
                         <br>
                         <% if(event.owner === sentUsername){%>
                             <label for="finalDate<%=event._id%>">Choose Date:</label>
-                            <select id="finalDate<%=event._id%>" name="finalDate<%=event._id%>" onchange="showDiv(this)">
+                            <select id="finalDate<%=event._id%>" name="<%=event.availableDates.length%>" onchange="showDiv(this)">
+                                    <option value="null"> No Date</option>
                                 <%for (let i = 0; i < event.availableDates.length; i++ ){ %>
                                     <option value="<%=event.availableDates[i]%>"><%= event.availableDates[i]%></option>
                                 <%}%>
