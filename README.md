@@ -84,7 +84,7 @@ For authentication, we wanted to challenge ourselves more than we did in A3, whe
   - contributed to readme writeup
   - React pointman
 - Ashley
-  - integrating kebab menu with posts on dashboard
+  - integrating delete button posts on dashboard and related server side communicationn
   - profile page and related server side communication
 - Elaine
 
