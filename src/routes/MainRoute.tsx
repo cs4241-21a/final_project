@@ -83,6 +83,85 @@ const MainRoute = () : JSX.Element => {
     // This calculates the farmable items to be displayed and their related locations
   const [activeFarmables, setActiveFarmables] = React.useState<FarmableProps[]>([]);
   const [activeLocations, setActiveLocations] = React.useState<FarmingSpotProps[]>([]);
+
+  // const loadFarmablesLocations = () => {
+  //   setActiveFarmables([]);
+  //   setActiveLocations([]);
+  //   charPrefs.forEach(c => {
+  //     if(c.enabled) {
+  //       let character = characters.find(res => {
+  //         return res.name == c.name;
+  //       });
+  //       if(c.ascension == true && character !== undefined) {
+  //         character.ascension.forEach(a => {
+  //           let mat = materials.find(res => {
+  //             return res.name == a;
+  //           })
+  //           if(mat !== undefined) {
+  //             if(!activeFarmables.includes(mat)) {
+  //               activeFarmables.push(mat);
+  //             }
+  //           }
+  //         })
+  //       }
+  //       if(c.talent == true && character !== undefined) {
+  //         character.talent.forEach(a => {
+  //           let mat = materials.find(res => {
+  //             return res.name == a;
+  //           })
+  //           if(mat !== undefined) {
+  //             if(!activeFarmables.includes(mat)) {
+  //               activeFarmables.push(mat);
+  //             }
+  //           }
+  //         })
+  //       }
+  //     }
+  //   })
+  //   weaponPrefs.forEach(w => {
+  //     if(w.enabled) {
+  //       let weapon = weapons.find(res => {
+  //         return res.name == w.name;
+  //       })
+  //       //add all ascension to active farmables
+  //       if(weapon !== undefined) {
+  //         weapon.ascension.forEach(a => {
+  //           let mat = materials.find(res => {
+  //             return res.name == a;
+  //           })
+  //           if(mat !== undefined) {
+  //             if(!activeFarmables.includes(mat)) {
+  //               activeFarmables.push(mat);
+  //             }
+  //           }
+  //         })
+  //       }
+  //     }
+  //   })
+  //   artifactPrefs.forEach(a => {
+  //     if(a.enabled) {
+  //       let artifact = artifacts.find(res => {
+  //         return res.name == a.name;
+  //       })
+  //       if(artifact !== undefined) {
+  //         if(!activeFarmables.includes(artifact)) {
+  //           activeFarmables.push(artifact);
+  //         }
+  //       }
+  //     }
+  //   })
+
+  //   activeFarmables.forEach(f => {
+  //     let location = locations.find(res => {
+  //       return res.name == f.farm_at;
+  //     })
+  //     if(location !== undefined) {
+  //       if(!activeLocations.includes(location)) {
+  //         activeLocations.push(location);
+  //       }
+  //     }
+  //   })
+  // }
   
   React.useEffect(() => {
     // !!! TODO (Micheal): Write useEffect function to refilter based off of the selected prefs changing
