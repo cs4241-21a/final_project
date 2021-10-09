@@ -98,14 +98,22 @@ class AddNewSetComponent extends React.Component {
   }
 }
 
-export const Set = (props) => (
-  <div id={"set" + props.setNumber}>
-    <input id={"weight" + props.setNumber} placeholder="weight" value={props.weight}></input>
-    <input id={"reps" + props.setNumber} placeholder="reps" value={props.reps}></input>
-    <input id={"RPE" + props.setNumber} placeholder="RPE" value={props.RPE}></input>
-  </div>
-);
+export class Set  extends React.Component {
+  constructor(props){
+    super(props)
+  }
 
+  render() {
+    return(
+      <div id={"set" + this.props.setNumber}>
+        <input id={"weight" + this.props.setNumber} placeholder="weight" />
+        <input id={"reps" + this.props.setNumber} placeholder="reps" />
+        <input id={"RPE" + this.props.setNumber} placeholder="RPE" />
+      </div>
+    );
+  }
+}
+  
 class WrapperClass extends React.Component {
   constructor(props) {
     super(props);

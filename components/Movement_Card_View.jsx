@@ -21,17 +21,23 @@ const Movement_Card_View = (props) => {
     props.parent.state.sets = [];
 
     for (let i = 0; i < numSets; ++i) {
-      let newWeight = document.getElementById(`${movementName}weight${i}`).innerHTML
-      let newReps = document.getElementById(`${movementName}reps${i}`).innerHTML
-      let newRPE = document.getElementById(`${movementName}RPE${i}`).innerHTML
-
-      props.parent.state.sets.push(<Set setNumber={i} weight={newWeight} reps={newReps} RPE={newRPE}></Set>)
+      props.parent.state.sets.push(<Set setNumber={i}></Set>)
     }
 
     props.parent.setState({ 
       oldNumSets: numSets,
       newNumSets: numSets
     });
+
+    for (let i = 0; i < numSets; ++i) {
+      let newWeight = document.getElementById(`${movementName}weight${i}`).innerHTML
+      let newReps = document.getElementById(`${movementName}reps${i}`).innerHTML
+      let newRPE = document.getElementById(`${movementName}RPE${i}`).innerHTML
+
+      document.getElementById(`weight${i}`).value = newWeight
+      document.getElementById(`reps${i}`).value = newReps
+      document.getElementById(`RPE${i}`).value = newRPE
+    }
   };
 
   let cardRows = [];
