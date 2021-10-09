@@ -98,24 +98,31 @@ class Sidebar extends Component {
       <div className='sidebar'>
         <div className='sidebar-calendars'>
           <br />
-          <h3>Calendars</h3>
-          <Popup trigger={<button>New Calendar</button>} position="right center">
-            {close => (
-              <div classname="calendarSubmit">
-                <form>
-                  <label htmlFor="name">New Calendar</label>
-                  <input type='text' 
-                         name='name'
-                         placeholder="Calendar Name" 
-                         onChange={this.handleChange}
-                         required/>
-                  <br />
-                  <input type="color" name="color" onChange={this.handleChange} />
-                  <button onClick={this.newCalendarSubmit}>Create Calendar</button>
-                </form>
-              </div>
-            )}
-          </Popup>
+          <div className="calendarSidebarView">
+            <h3>Calendars</h3>
+            <Popup trigger={<button>New Calendar</button>} position="right center">
+              {close => (
+                <div classname="calendarSubmit">
+                  <form>
+                    <label htmlFor="name">New Calendar</label>
+                    <input type='text' 
+                           name='name'
+                           placeholder="Calendar Name" 
+                           onChange={this.handleChange}
+                           required/>
+                    <br />
+                    <input type="color" name="color" onChange={this.handleChange} />
+                    <button onClick={this.newCalendarSubmit}>Create Calendar</button>
+                  </form>
+                </div>
+              )}
+            </Popup>
+            <div className="calendarSidebarItems">
+              {calendarSidebarItems}
+            </div>
+          </div>
+          <div className="taskSidebarView">
+          <h3>Tasks</h3>
           <Popup trigger={<button>New Task</button>} position="right center">
               {close => (
                 <div classname="taskSubmit">
@@ -143,8 +150,7 @@ class Sidebar extends Component {
                 </div>  
               )}
           </Popup>
-          <div className="calendarSidebarItems">
-            {calendarSidebarItems}
+
           </div>
         </div>
       </div>
