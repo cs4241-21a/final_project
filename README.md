@@ -69,13 +69,13 @@ For authentication, we wanted to challenge ourselves more than we did in A3, whe
   - project management: role delegation & meeting/deadling scheduling
   - login page and oauth functionality
   - page routing
-  - readme and proposal writeups, video scripting 
+  - readme and proposal writeups 
+  - video scripting 
 - Chris
   - all database configuration, management, and querying
   - all styling
   - page routing
-  - proposal writeup
-  - contributed to readme writeup
+  - proposal writeup contributed to readme
   - oauth functionality
 - Stefano
   - dashboard page (submit functionality and filtering) and server side communication
