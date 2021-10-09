@@ -147,7 +147,7 @@ function draw() {
 function drawShapes() {
     //keep track of undo
     //undoList.push(get())
-
+    
     //drawing shapes
     if (mouseIsPressed) {
         //Check which drawing mode it is in -> shapes get stamped
