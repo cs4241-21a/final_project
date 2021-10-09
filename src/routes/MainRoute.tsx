@@ -35,7 +35,6 @@ const MainRoute = () : JSX.Element => {
   const [weaponPrefs, setWeaponsPrefs] = React.useState<EnablablePrefs[]>([]);
   const [artifactPrefs, setArtifactPrefs] = React.useState<EnablablePrefs[]>([]);
 
-  // !!! TODO (Andrew): Write fetch requests to DB to initialize preferences
   /**
    * initPrefs() fetches the user preferences from the database
    */
@@ -192,20 +191,6 @@ const MainRoute = () : JSX.Element => {
         preferences={artifactPrefs} 
         setter={setArtifactPrefs}
       />
-      <br />
-      <div id="testContent">
-          <p>Consectetur adipiscing elit duis tristique. Urna id volutpat lacus laoreet non. Aliquam etiam erat velit scelerisque in dictum.</p>
-          <ul>
-              <li>Orci</li>
-              <li>dapibus</li>
-              <li>ultrices</li>
-              <li>in</li>
-              <li>iaculis</li>
-              <li>nunc</li>
-              <li>sed</li>
-          </ul>
-      </div>
-      <br />
       <FarmingDisplay
         farmables={activeFarmables}
         locations={activeLocations}

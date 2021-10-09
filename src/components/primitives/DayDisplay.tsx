@@ -10,15 +10,21 @@ const DayDisplay = (props: {
 
   return (
     <>
-      <div id="day">
-        <div id="day-title">{props.days}</div>
+      <div className="day">
+        <div className="day-title">{props.days}</div>
         {props.locations.map(e => {
             let mats = props.farmables.filter(m => m.farm_at === e.name);
             return (
-                <div id="loc">
-                    <h2>{e.fullname}</h2>
+                <div className="loc">
+                    <h2>{e.fullname.en}</h2>
                     {mats.map(mat => {
-                        return <p>{mat.fullname}</p>
+                        return (
+                            <div>
+                                {/* TODO: Have this get the image of that material */}
+                                <img className="icon" src="/img/artifacts/Adventurer.png" /> 
+                                <p>{mat.fullname.en}</p>
+                            </div>
+                        )
                     })}
                 </div>
             )

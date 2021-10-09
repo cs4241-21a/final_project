@@ -4,20 +4,25 @@
     text-align: center;
 }
 
-#day {
+.day {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     flex: 1;
 }
 
-#day-title {
+.day-title {
     width: 100%;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
 }
 
-#loc {
+.loc {
     border: black 1px solid;
+}
+
+.icon {
+    height: 20%;
+    width: 20%;
 }
