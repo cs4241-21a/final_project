@@ -121,9 +121,9 @@ passport.use(
     function (accessToken, refreshToken, profile, done) {
       profileID = profile.id;
 
-      collection_profile.insertOne({
-        profileID: profile.id,
-      });
+      // collection_profile.insertOne({
+      //   profileID: profile.id,
+      // });
       cb(null, profile);
     }
   )
@@ -153,7 +153,7 @@ passport.use(
       callbackURL: process.env.GIT_CALLBACK_URL,
     },
     function (accessToken, refreshToken, profile, cb) {
-      // profileID = profile.id;
+      profileID = profile.id;
 
       // collection_profile.insertOne({
       //   profileID: profile.id,
@@ -188,9 +188,9 @@ passport.use(
     function (request, accessToken, refreshToken, profile, done) {
       profileID = profile.id;
 
-      collection_profile.insertOne({
-        profileID: profile.id,
-      });
+      // collection_profile.insertOne({
+      //   profileID: profile.id,
+      // });
 
       return done(null, profile);
     }
@@ -226,9 +226,9 @@ passport.use(
     function (accessToken, refreshToken, profile, cb) {
       profileID = profile.id;
 
-      collection_profile.insertOne({
-        profileID: profile.id,
-      });
+      // collection_profile.insertOne({
+      //   profileID: profile.id,
+      // });
 
       return cb(null, profile);
     }
