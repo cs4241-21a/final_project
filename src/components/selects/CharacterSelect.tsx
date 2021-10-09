@@ -16,15 +16,16 @@ const CharacterSelect = ({
   preferences,
   setter
 }: CharacterSelectProps) : JSX.Element => { 
-  // !!! TODO (Nick): Create logic for setting character preferences using the setter
-
-  // Add Pref using: addCharacter(character);
+  // Add Pref using: characterPref = addCharacter(character);
+  // character is a CharacterProp from characters
   const addCharacter = addPref(CharacterPrefs, preferences, setter);
 
   // Remove Pref using: removeCharacter(characterPref)
+  // characterPref is the CharacterPrefs returned by addCharacter
   const removeCharacter = removePref(preferences, setter);
 
   // Update Pref using: updateCharacter(characterPref)
+  // characterPref is the CharacterPrefs returned by addCharacter
   const updateCharacter = updatePref(preferences, setter);
 
 

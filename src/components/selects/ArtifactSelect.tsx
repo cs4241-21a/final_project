@@ -16,20 +16,17 @@ const ArtifactSelect = ({
   preferences,
   setter
 }: ArtifactSelectProps) : JSX.Element => { 
-  // !!! TODO (Nick): Create logic for setting artifact preferences using the setter
-
-  // Add Pref using: addArtifact(artifact);
+  // Add Pref using: artifactPref = addArtifact(artifact);
+  // artifact is an ArtifactProp from artifacts
   const addArtifact = addPref(EnablablePrefs, preferences, setter);
 
   // Remove Pref using: removeArtifact(artifactPref)
+  // artifactPref is the EnablablePrefs returned by addArtifact
   const removeArtifact = removePref(preferences, setter);
 
   // Update Pref using: updateArtifact(artifactPref)
+  // artifactPref is the EnablablePrefs returned by addArtifact
   const updateArtifact = updatePref(preferences, setter);
-
-  // Enable Pref
-
-  // Disable Pref
 
   return (
     // !!! TODO (UI): Create and implement JSX components for ArtifactSelect
