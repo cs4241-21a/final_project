@@ -126,8 +126,10 @@ module.exports = function(db){
         await mongoose.connect(db);
         let error;
         let updateEventObj = event;
+        let eventId = ObjectId(updateEventObj._id);
+        delete updateEventObj._id;
         updateEventObj._id = ObjectId(updateEventObj._id);
-        await Event.updateOne(updateEventObj, (err, res) => {
+        await Event.findByIdAndUpdate({_id: eventId }, updateEventObj, (err, res) => {
             if(err) error = err;
             console.log('Done', res);
         })
@@ -171,8 +173,9 @@ module.exports = function(db){
         await mongoose.connect(db);
         let error;
         let updateCalendarObj = calendar;
-        updateCalendarObj._id = ObjectId(updateCalendarObj._id);
-        await Calendar.updateOne(updateCalendarObj, (err, res) => {
+        let calendarId = ObjectId(updateCalendarObj._id);
+        delete updateCalendarObj._id;
+        await Calendar.findByIdAndUpdate({_id: calendarId}, updateCalendarObj, (err, res) => {
             if(err) error = err;
             console.log('Done', res);
         })
@@ -216,8 +219,9 @@ module.exports = function(db){
         await mongoose.connect(db);
         let error;
         let updateTaskObj = task;
-        updateTaskObj._id = ObjectId(updateTaskObj._id);
-        await Task.updateOne(updateTaskObj, (err, res) => {
+        let taskId = ObjectId(updateTaskObj._id);
+        delete updateTaskObj._id;
+        await Task.findByIdAndUpdate({ _id: taskId }, updateTaskObj, (err, res) => {
             if(err) error = err;
             console.log('Done', res);
         })

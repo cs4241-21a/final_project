@@ -39,9 +39,16 @@ class App extends React.Component {
 
     databaseUtils.getAllCalendars()
     .then(calendars => {
-      GLOBAL_VARIABLES.calendars = JSON.parse(calendars);
+      let calArray = JSON.parse(calendars);
+      let calendarsObj = {};
+
+      calArray.forEach(calendar => {
+        calendarsObj[calendar._id] = calendar;
+      })
+
+      GLOBAL_VARIABLES.calendars = calendarsObj;
       this.setState({
-        calendars: calendars,
+        calendars: GLOBAL_VARIABLES.calendars,
         calendarsLoaded: true
       });
     });

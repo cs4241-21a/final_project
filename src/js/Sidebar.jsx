@@ -20,14 +20,17 @@ class Sidebar extends Component {
     this.newTaskSubmit = this.newTaskSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.selectCalendar = this.selectCalendar.bind(this);
-    console.log(GLOBAL_VARIABLES.calendars);
-    console.log(GLOBAL_VARIABLES.tasks);
+    this.deselectCalendar = this.deselectCalendar.bind(this);
   }
 
   selectCalendar(calId) {
-    console.log(calId);
-    // GLOBAL_VARIABLES.selectedCalendarId = calendarId;
-    // console.log(calendarId);
+    GLOBAL_VARIABLES.selectedCalendarId = calId;
+  }
+
+  // TODO: Need to implement this somewhere
+  deselectCalendar(calId) {
+    GLOBAL_VARIABLES.selectedCalendarId = '';
+    console.log(GLOBAL_VARIABLES.selectedCalendarId);
   }
 
   newCalendarSubmit(e) {
@@ -42,9 +45,30 @@ class Sidebar extends Component {
     databaseUtils.addCalendar(newCalendar)
     .then(newCalId => {
       newCalendar._id = newCalId;
-      this.setState({
-        calendars: [...this.state.calendars, newCalendar]
-      });
+      // Update children, locally and on database
+      let selectedCalendarId = GLOBAL_VARIABLES.selectedCalendarId;
+      // Update local
+      if(selectedCalendarId !== '') {
+        // Append to children the new calendar
+        let currentStateCalendars = JSON.parse(JSON.stringify(this.state.calendars));
+        currentStateCalendars[selectedCalendarId].children.push(newCalId);
+        currentStateCalendars[newCalId] = newCalendar;
+        // Update locally and on database
+        this.setState({
+          calendars: currentStateCalendars
+        }, () => {
+          GLOBAL_VARIABLES.calendars = this.state.calendars
+          databaseUtils.modifyCalendar(this.state.calendars[selectedCalendarId]);
+        })
+
+      } else {
+        // Just add the calendar to the list of global calendars
+        let currentStateCalendars = JSON.parse(JSON.stringify(this.state.calendars));
+        currentStateCalendars[newCalId] = newCalendar;
+        this.setState({
+          calendars: currentStateCalendars
+        }, () => { GLOBAL_VARIABLES.calendars = this.state.calendars });
+      }
     })
   }
 
@@ -71,6 +95,8 @@ class Sidebar extends Component {
     })
   }
   
+  // Handles the change of a form field; useful for updating state which is
+  // needed to send right variables to server
   handleChange(e) {
     const target = e.target;
     const value = target.value;
@@ -82,11 +108,18 @@ class Sidebar extends Component {
   }
 
   render() {
+    console.log(this.state);
     let calendarSidebarItems = [];
-    this.state.calendars.forEach(calendar => {
-      calendarSidebarItems.push(<CalendarSidebarItem calendar={calendar} 
-                                customOnClick={this.selectCalendar}/>);
-    });
+    for(const [calId, calendar] of Object.entries(this.state.calendars)) {
+      if(calendar.parent === '') {
+        calendarSidebarItems.push(<CalendarSidebarItem calendars={this.state.calendars}
+                                  calendarId={calId}
+                                  delete={this.deleteCalendar}
+                                  modify={this.modifyCalendar}
+                                  customOnClick={this.selectCalendar}/>);
+      }
+    }
+
     let taskSidebarItems = [];
     this.state.tasks.forEach(task => {
       taskSidebarItems.push(<Task task={task}/>);
@@ -120,37 +153,37 @@ class Sidebar extends Component {
             </div>
           </div>
           <div className="taskSidebarView">
-          <h3>Tasks</h3>
-          <Popup trigger={<button>New Task</button>} position="right center">
-              {close => (
-                <div classname="taskSubmit">
-                  <form>
-                    <label htmlFor="name">New Task</label>
-                    <input type='text'
-                           name='name'
-                           placeholder="Task Name"
-                           onChange={this.handleChange}
-                           required/>
-                    <br />
-                    <label htmlFor="description">Description</label>
-                    <input type="text" 
-                           name="description"
-                           placeholder="Description"
-                           onChange={this.handleChange}></input>
-                           
-                    <label htmlFor="dueDate">Due Date</label>
-                    <input type="datetime-local"
-                           name="dueDate"
-                           onChange={this.handleChange}
-                           required></input>
-                    <button onClick={this.newTaskSubmit}>Create Task</button>
-                  </form>
-                </div>  
-              )}
-          </Popup>
-          <div className="taskSidebarItems">
-              {taskSidebarItems}
-          </div>
+            <h3>Tasks</h3>
+            <Popup trigger={<button>New Task</button>} position="right center">
+                {close => (
+                  <div classname="taskSubmit">
+                    <form>
+                      <label htmlFor="name">New Task</label>
+                      <input type='text'
+                             name='name'
+                             placeholder="Task Name"
+                             onChange={this.handleChange}
+                             required/>
+                      <br />
+                      <label htmlFor="description">Description</label>
+                      <input type="text" 
+                             name="description"
+                             placeholder="Description"
+                             onChange={this.handleChange}></input>
+
+                      <label htmlFor="dueDate">Due Date</label>
+                      <input type="datetime-local"
+                             name="dueDate"
+                             onChange={this.handleChange}
+                             required></input>
+                      <button onClick={this.newTaskSubmit}>Create Task</button>
+                    </form>
+                  </div>  
+                )}
+            </Popup>
+            <div className="taskSidebarItems">
+                {taskSidebarItems}
+            </div>
         </div>
       </div>
     </div>
@@ -158,33 +191,49 @@ class Sidebar extends Component {
   }
 }
 
-class CalendarSidebarItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = props;
+function CalendarSidebarItem(props) {
+  console.log(props);
+  let children = [];
+  let count = 0;
+  if(props.calendars[props.calendarId].children.length !== 0) {
+    props.calendars[props.calendarId].children.forEach(child => {
+      count++;
+      children.push(<CalendarSidebarItem calendars={props.calendars}
+                                         calendarId={child}
+                                         style={{padding: '10px'}}
+                                         customOnClick={() => props.customOnClick(child)}/>)});
   }
+  console.log(count);
 
-  render() {
-    let children = [];
-    if(!this.state.calendar.children.length === 0) {
-      console.log(this.state.calendar.children)
-      this.state.calendar.children.forEach(child => {
-        children.push(<CalendarSidebarItem name={child.name} 
-                                           children={child.children} 
-                                           style={{padding: '10px'}} 
-                                           customOnClick={() => this.state.customOnClick(this.state.calendar._id)}/>)});
-    }
-
-    return (
+  return (
+    <div>
+      <button onClick={props.deleteCalendar}><i class="far fa-trash-alt"></i></button>
+      <Popup trigger={<button><i class="far fa-edit"></i></button>} position="right center">
+        {close => (
+              <div classname="calendarSubmit">
+                <form>
+                  <label htmlFor="name">Edit Calendar</label>
+                  <input type='text' 
+                         name='name'
+                         placeholder="Calendar Name" 
+                         onChange={props.handleChange}
+                         required/>
+                  <br />
+                  <input type="color" name="color" onChange={props.handleChange} />
+                  <button onClick={props.newCalendarSubmit}>Update</button>
+                </form>
+              </div>
+              )}
+      </Popup>
       <Collapsible 
-          trigger={this.state.calendar.name} 
-          style={this.state.style} 
-          onOpening={() => this.state.customOnClick(this.state.calendar._id)}
-          onClosing={() => this.state.customOnClick(this.state.calendar._id)}>
+          trigger={props.calendars[props.calendarId].name} 
+          style={props.style} 
+          onOpening={() => props.customOnClick(props.calendarId)}
+          onClosing={() => props.customOnClick(props.calendarId)}>
         {children}
       </Collapsible>
-    );
-  }
+    </div>
+  );
 }
 
 export default Sidebar;
