@@ -71,6 +71,7 @@ For authentication, we wanted to challenge ourselves more than we did in A3, whe
   - page routing
   - readme and proposal writeups 
   - video scripting 
+  - lighthouse testing and site validation
 - Chris
   - all database configuration, management, and querying
   - all styling
@@ -82,6 +83,7 @@ For authentication, we wanted to challenge ourselves more than we did in A3, whe
   - implemented server POST routes for dashboard page
   - initial dummy server
   - contributed to readme writeup
+  - profile autofill work
   - React pointman
 - Ashley
   - integrating delete button posts on dashboard and related server side communicationn
