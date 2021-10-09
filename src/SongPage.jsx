@@ -19,11 +19,11 @@ class SongPage extends React.Component {
         fetch(`/getSongById?songID=${songID}`, { method: 'get', 'no-cors': true })
             .then(res => res.json())
             .then(json => {
-              console.log(json)
-              this.setState({
-                  song: json
-              })
-          })
+                console.log(json)
+                this.setState({
+                    song: json
+                })
+            })
     }
 
     addComment(e) {
@@ -35,54 +35,54 @@ class SongPage extends React.Component {
         }
 
         fetch("/addComment", {
-        method: "POST",
-        body: JSON.stringify(json),
-        headers: {
-            "Content-Type": "application/json",
-        }
+            method: "POST",
+            body: JSON.stringify(json),
+            headers: {
+                "Content-Type": "application/json",
+            }
         }).then(res => res.json())
-          .then(json => {
-              console.log(json)
-            window.location.reload()
-        })
+            .then(json => {
+                console.log(json)
+                window.location.reload()
+            })
     }
 
     render() {
         const { song } = this.state
-        return(
+        return (
             <>
                 <Navbar />
                 {
                     song ? (
                         <div className="container">
-                    <div className="row">
-                        <div className="col-sm-4">{song.title}</div>
-                        <div className="col-sm-4">{song.artist}</div>
-                        <div className="col-sm-4"><img src={song.coverart} style={{ wdith: "20vh", height: "20vh" }}></img></div>
-                    </div>
-                    <div className="row">
-                        <div className="col-sm-6">
-                            {
-                                song.comments.map(comment => {
-                                    return (
-                                        <div className="row">
-                                            <p><strong>{comment.username}</strong>: {comment.text}</p>
-                                        </div>
-                                    )
-                                })
-                            }
                             <div className="row">
-                                <form>
-                                    <label for="comment">Add your comment:</label><br />
-                                    <input type="textarea" name="comment" id="comment"></input><br />
-                                    <button onClick={ e => this.addComment(e) }>Comment</button>
-                                </form>
+                                <div className="col-sm-4"><h1>{song.title}</h1></div>
+                                <div className="col-sm-4"><h2>By: {song.artist}</h2></div>
+                                <div className="col-sm-4"><img src={song.coverart} style={{ wdith: "30vh", height: "30vh" }}></img></div>
+                            </div>
+                            <div className="row">
+                                <div className="col-sm-6">
+                                    {
+                                        song.comments.map(comment => {
+                                            return (
+                                                <div className="row">
+                                                    <p><strong>{comment.username}</strong>: {comment.text}</p>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                    <div className="row form-group">
+                                        <form>
+                                            <label for="comment">Add your comment:</label><br />
+                                            <input className="form-control" type="textarea" name="comment" id="comment"></input><br />
+                                            <button className="btn btn-primary btn-block" onClick={e => this.addComment(e)}>Comment</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                    ) : 
-                    (<p>LOADING...</p>)
+                    ) :
+                        (<p>LOADING...</p>)
                 }
             </>
         )

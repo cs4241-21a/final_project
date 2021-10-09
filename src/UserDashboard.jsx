@@ -81,9 +81,9 @@ class App extends React.Component {
         <div id="addSongForm" className={formClass}>
           <form class=" form form-signin card-body">
             {addMessage ? <div class="alert alert-danger">{addMessage}</div> : <></>}
-            <label class='sr-only' for="songName">Title of the song</label><br />
+            <label class='' for="songName">Title of the song</label><br />
             <input class="form-control" id="songName" name="songName" type="text" placeholder="Song Title" required></input>
-            <label class='sr-only' for="artistName">Name of the Artist</label><br />
+            <label class='' for="artistName">Name of the Artist</label><br />
             <input class="form-control" id="artistName" name="artistName" type="text" placeholder="Artist Name" required></input>
             <button class="btn btn-lg btn-success btn-block" type="submit" onClick={(e) => this.addSong(e)}>Add Song</button>
           </form>
