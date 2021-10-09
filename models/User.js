@@ -6,7 +6,7 @@ const User = new Schema({
   un: String,
   pw: String,
   em: String,
-  favs: [],
+  favs: [String]
 });
 
 module.exports = {

@@ -20,12 +20,10 @@ app.use(
 
 //DB_URL=mongodb+srv://cs4243:X2BtQlEN0aYxE0I@cluster0.q6pxv.mongodb.net/laundryData?retryWrites=true&w=majority
 const uri =
-  "mongodb+srv://cs4243:X2BtQlEN0aYxE0I@cluster0.q6pxv.mongodb.net/laundryData?retryWrites=true&w=majority";
-let connectedDB = true;
+  "mongodb+srv://cs4243:X2BtQlEN0aYxE0I8@cluster0.q6pxv.mongodb.net/laundryData?retryWrites=true&w=majority";
+let connectedDB = false;
 mongoose
-  .connect(
-    "mongodb+srv://cs4243:X2BtQlEN0aYxE0I8@cluster0.q6pxv.mongodb.net/laundryData?retryWrites=true&w=majority"
-  )
+  .connect(uri)
   .then(
     () => {
       let a = laundryRoom.model.find({}, function (err, all) {
@@ -43,8 +41,6 @@ const client = new mongodb.MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-
-let collection = null;
 
 //TODO: once database framework is set up, set the rooms var
 //that way, dont have to request database each time for it
@@ -110,22 +106,41 @@ app.post("/login", (req, res) => {
 
 app.get("/favBuildings", (req, res) => {
   if (req.session.login) {
-    user.model.find({ un: req.session.user }, function (err, item) {
-      console.log("check l");
-      if (item.length > 0) {
-        console.log(item[0].favs);
-        console.log("check 2");
-
-        //send back the favorite data
-        res.json(item[0].favs);
-      } else {
-        res.json({ failed: "incorrect" });
-      }
+    user.model.findOne({ un: req.session.user }, function (err, item) {
+        res.json(item.favs);
     });
   } else {
     res.json({ failed: "Not Logged In" });
   }
 });
+
+app.post("/addFavorite", (req, res) =>{
+    //should also check?: does the favorite exist
+    if (req.session.login){
+        user.model.findOneAndUpdate({un: req.session.user}, {$push: {favs: req.body.fav}}, function (err, item){
+            //item will NOT be the updated doc here
+            //you have to set an optional param to make that be the case, lmk if you need that...
+        })
+        res.json({failed: "false"});
+    }
+    else {
+        res.json({ failed: "Not Logged In" });
+    }
+})
+
+app.post("/delFavorite", (req, res) =>{
+    //should also check?: does the favorite exist
+    if (req.session.login){
+        user.model.findOneAndUpdate({un: req.session.user}, {$pull: {favs: req.body.fav}}, function(err, item){
+            //item will NOT be the updated doc here
+            //you have to set an optional param to make that be the case, lmk if you need that...
+        })
+        res.json({failed: "false"});
+    }
+    else {
+        res.json({ failed: "Not Logged In" });
+    }
+})
 
 app.get("/logout", (req, res) => {
   req.session.login = false;
