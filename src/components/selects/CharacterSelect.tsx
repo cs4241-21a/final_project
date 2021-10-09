@@ -47,13 +47,19 @@ const CharacterSelect = ({
     <>
       {/* Demo Functionality !!! */}
       {charTest.map((char) => {
-        return <SelectPrefButton<CharacterPrefs> 
-          addPref={addCharacter}
-          removePref={removeCharacter}
-          preferences={preferences}  
-          prop={char}
-          imgFolder="chara"
-        />
+        const imgSrc = `img/chara/${char.name}.png`;
+
+        return (
+          <SelectPrefButton<CharacterPrefs> 
+            addPref={addCharacter}
+            removePref={removeCharacter}
+            preferences={preferences}  
+            prop={char}
+          >
+            <img src={imgSrc} alt={`${char.name}-image`} width="100px" />
+            <p>{char.name}</p>
+          </SelectPrefButton>
+        )
       })}
     </>
   );
