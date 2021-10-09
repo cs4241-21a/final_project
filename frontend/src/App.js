@@ -25,11 +25,18 @@ const theme = createTheme({
 });
 
 function App() {
+  const [alignment, setAlignment] = React.useState("All");
+
   const { token, setToken } = useToken();
 
   const [laundryData, setData] = React.useState([]);
 
   const [timestampData, setTimestampData] = React.useState([]);
+
+  const [openLogin, setOpenLogin] = React.useState(false);
+  const [openRegister, setOpenRegister] = React.useState(false);
+
+  const [showFavorites, setShowFavorites] = React.useState(false);
 
   React.useEffect(() => {
     fetch("/laundry", {
@@ -64,23 +71,20 @@ function App() {
       method: "GET",
     }).then((data) => {
       console.log("Logged out successfully!");
-
+      console.log(alignment);
+      setAlignment("All");
+      setShowFavorites(false);
       setToken(null);
     });
   }
 
-  const [openLogin, setOpenLogin] = React.useState(false);
-  const [openRegister, setOpenRegister] = React.useState(false);
-
-  const [showFavorites, setShowFavorites] = React.useState(false);
-
   const handleClickOpenLogin = () => {
     setOpenLogin(true);
   };
-  const handleClickOpenLogout = () => {
-    logoutUser();
-    console.log("Logging out user!");
-    setToken(null);
+  const handleClickOpenLogout = async (event) => {
+    event.preventDefault();
+    const result = await logoutUser();
+    console.log("Logging out user!" + result);
   };
   const handleClickRegister = () => {
     setOpenRegister(true);
@@ -103,6 +107,8 @@ function App() {
             loginOpen={openLogin}
             setToken={setToken}
             handleClose={handleClose}
+            handleFavorite={setShowFavorites}
+            favoriteButton={setAlignment}
           />
         )}
         {openRegister && (
@@ -116,6 +122,8 @@ function App() {
           setFavorites={setShowFavorites}
           timestamp={timestampData}
           loggedIn={token}
+          alignment={alignment}
+          setAlignment={setAlignment}
         />
         <Switch>
           <Route path="/" exact={true}>

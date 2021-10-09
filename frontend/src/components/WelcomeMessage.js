@@ -13,10 +13,8 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 
 function WelcomeMessage(props) {
-  const [alignment, setAlignment] = React.useState("All");
-
   const handleChange = (event, newAlignment) => {
-    if (newAlignment !== null) setAlignment(newAlignment);
+    if (newAlignment !== null) props.setAlignment(newAlignment);
   };
 
   console.log(props.timestamp);
@@ -101,7 +99,7 @@ function WelcomeMessage(props) {
         <Typography variant="small">Last updated: {timestring}</Typography>
         <ToggleButtonGroup
           color="primary"
-          value={alignment}
+          value={props.alignment}
           exclusive
           onChange={handleChange}
         >

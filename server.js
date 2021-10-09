@@ -130,6 +130,7 @@ app.get("/favBuildings", (req, res) => {
 app.get("/logout", (req, res) => {
   req.session.login = false;
   req.session.user = null;
+  res.json({ result: "Logged Out" });
   //What response to be sent depends on what frontend people want, if any
 });
 
