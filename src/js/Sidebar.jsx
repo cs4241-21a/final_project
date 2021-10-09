@@ -9,10 +9,13 @@ class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      calendars: GLOBAL_VARIABLES.calendars
+      calendars: GLOBAL_VARIABLES.calendars,
+      calendarSidebarItems: [],
+      color: '#000000'
     };
     this.newCalendarSubmit = this.newCalendarSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    console.log(GLOBAL_VARIABLES.calendars);
   }
 
   newCalendarSubmit(e) {
@@ -27,13 +30,14 @@ class Sidebar extends Component {
     databaseUtils.addCalendar(newCalendar)
     .then(newCalId => {
       newCalendar._id = newCalId;
-      GLOBAL_VARIABLES.calendars.push(newCalendar);
-      this.state.calendars.push(newCalendar);
+      this.setState({
+        calendars: [...this.state.calendars, newCalendar]
+      });
     })
   }
   
-  handleChange(event) {
-    const target = event.target;
+  handleChange(e) {
+    const target = e.target;
     const value = target.value;
     const name = target.name;
 
@@ -45,11 +49,8 @@ class Sidebar extends Component {
   render() {
     let calendarSidebarItems = [];
     this.state.calendars.forEach(calendar => {
-      calendarSidebarItems.push(<CalendarSidebarItem name={calendar.name} children={calendar.children}/>)
-    })
-    // this.setState({
-    //   calendarSidebarItems: calendarSidebarItems
-    // });
+      calendarSidebarItems.push(<CalendarSidebarItem calendar={calendar}/>)
+    });
 
     return (
       <div className='sidebar'>
@@ -89,11 +90,11 @@ class CalendarSidebarItem extends Component {
 
   render() {
     let children = [];
-    this.state.children.forEach(child => {
+    this.state.calendar.children.forEach(child => {
       children.push(<CalendarSidebarItem name={child.name} children={child.children}/>)
     });
     return (
-      <Collapsible trigger={this.state.name}>
+      <Collapsible trigger={this.state.calendar.name} onClick={}>
         {children}
       </Collapsible>
     );
