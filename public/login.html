@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-  <link rel="stylesheet" href="stylesheets/style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/98.css">
   <head>
 
-  <h1>Welcome!</h1>
+  <h2>Welcome!</h1>
   </head>
   <body>
-    <h2>Login</h2>
-    <div style="width: 14%; margin-left: 42.5%; margin-right: 42.5%" role = "table" aria-label="Login Table">
+    <h3>Login</h3>
+    <div style="width: 14%; margin-left: 5%; margin-right: 42.5%" role = "table" aria-label="Login Table">
       <form action="/login" method="POST" id="form" autocomplete="off">
         <div class="flex-container2" role="row" aria-label="Username row">
         <div class = "flex-child" role="columnheader">
-          <label for="user" class="theLabels2">Username: </label
-          >
+          <label for="user" style="margin-left: -20%;" class="theLabels2">Username: </label>
         </div>
           <div class="flex-child" style="margin-left: -20%;" role="columnheader">
           <input
@@ -22,13 +21,11 @@
             class="theInputs2"
             id="uname"
           />
-        
         </div>
       </div>
       <div class="flex-container2" role="row">
         <div class = "flex-child" role = "columnheader">
-          <label for="password" class="theLabels2">Password: </label
-          >
+          <label for="password" style="margin-left: -20%;  margin-top: 5%;" class="theLabels2">Password: </label>
         </div>
           <div class="flex-child" style="margin-left: -20%;" role="columnheader">
           <input
@@ -36,21 +33,21 @@
             name="password"
             placeholder="password"
             class="theInputs2"
-            id="pword"
-          />
+            id="pword"/>
         </div>
         </div>
-        <div style="margin-top: 10%; margin-left: 42%; padding-top: 20px;"><input type="submit" id ="submit"/></div>
+        <div style="margin-top: 5%; padding-top: 20 px;">
+          <input type="submit" style="margin-left: -20%;" id ="submit"/>
+        </div>
       </form>
-    </div>
+    </div> 
 
-    <h2>Sign Up</h2>
-    <div style="width: 14%; margin-left: 42.5%; margin-right: 42.5%" role = "table" aria-label="Login Table">
+    <h3>Sign Up</h3>
+    <div style="width: 14%; margin-left: 5%; margin-right: 42.5%" role = "table" aria-label="Login Table">
       <form action="/signup" method="POST" id="form2">
         <div class="flex-container2" role="row" aria-label="Username row">
         <div class = "flex-child" role="columnheader">
-          <label for="user" class="theLabels2">Username: </label
-          >
+          <label for="user" class="theLabels2" style="margin-left: -20%;">Username: </label>
         </div>
           <div class="flex-child" style="margin-left: -20%;" role="columnheader">
           <input
@@ -66,8 +63,7 @@
       </div>
       <div class="flex-container2" role="row">
         <div class = "flex-child" role = "columnheader">
-          <label for="password" class="theLabels2">Password: </label
-          >
+          <label for="password" class="theLabels2" style="margin-left: -20%;  margin-top: 5%;">Password: </label>
         </div>
           <div class="flex-child" style="margin-left: -20%;" role="columnheader">
           <input
@@ -76,11 +72,11 @@
             placeholder="password"
             class="theInputs2"
             id="pword2"
-            autocomplete="off"
-          />
+            autocomplete="off"/>
         </div>
+        <div style="margin-top: 5%; padding-top: 20 px;">
+          <input type="submit" style="margin-left: -20%;" id ="signup"/>
         </div>
-        <div style="margin-top: 10%; margin-left: 42%; padding-top: 20px;"><input type="submit" id="signup" /></div>
       </form>
     </div>
   </body>
