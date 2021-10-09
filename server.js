@@ -48,30 +48,49 @@ passport.deserializeUser(function (id, cb) {
   cb(null, id);
 });
 
-const isAuth = (req, res, next) => {
-  if (req.user) {
-    next();
-  } else {
-    res.redirect("/build/login.html");
-  }
-};
-
-app.get("/login", (request, response) => {
+app.get(["/login.html", "/login"], (request, response) => {
   if (request.user) {
-    return response.redirect("/"); // redirect according to profile
+    return response.redirect("/dashboard.html"); // redirect according to profile
   }
   sendFile(response, __dirname + "/build/login.html");
 });
 
 // simple testing to route to login initially -> change for final version
-app.get("/", (request, response) =>
-  sendFile(response, __dirname + "/build/login.html")
+app.get(
+  "/",
+  (request, response) => response.redirect("/login.html") // redirect according to profile
 );
-app.get("/build/dashboard.html", (request, response) =>
-  sendFile(response, __dirname + "/build/dashboard.html")
+
+app.get(
+  ["/build/dashboard.html", "/dashboard.html", "/dashboard"],
+  async (request, response) => {
+    if (request.user) {
+      let user = null;
+      let dbPromise_user = collection_profile
+        .findOne({ profileID: profileID })
+        .then((read_data) => (user = read_data));
+
+      await dbPromise_user;
+
+      if (user) {
+        sendFile(response, __dirname + "/build/dashboard.html");
+      } else {
+        response.redirect("/profile.html");
+      }
+    } else {
+      return response.redirect("/login");
+    }
+  }
 );
-app.get("/build/profile.html", (request, response) =>
-  sendFile(response, __dirname + "/build/profile.html")
+app.get(
+  ["/build/profile.html", "/profile.html", "/profile"],
+  async (request, response) => {
+    if (request.user) {
+      sendFile(response, __dirname + "/build/profile.html");
+    } else {
+      return response.redirect("/login");
+    }
+  }
 );
 
 // Handles sending a file over to the front end
@@ -93,7 +112,7 @@ const sendFile = function (response, filename) {
 };
 
 app.get("/logout", (request, response) => {
-  //console.log(request.user)
+  // console.log(request.user);
   request.logOut();
   response.redirect("/login");
 });
@@ -124,9 +143,6 @@ passport.use(
     function (accessToken, refreshToken, profile, done) {
       profileID = profile.id;
 
-      // collection_profile.insertOne({
-      //   profileID: profile.id,
-      // });
       cb(null, profile);
     }
   )
@@ -158,10 +174,6 @@ passport.use(
     function (accessToken, refreshToken, profile, cb) {
       profileID = profile.id;
 
-      // collection_profile.insertOne({
-      //   profileID: profile.id,
-      // });
-
       cb(null, profile);
     }
   )
@@ -190,10 +202,6 @@ passport.use(
     },
     function (request, accessToken, refreshToken, profile, done) {
       profileID = profile.id;
-
-      // collection_profile.insertOne({
-      //   profileID: profile.id,
-      // });
 
       return done(null, profile);
     }
@@ -228,10 +236,6 @@ passport.use(
     },
     function (accessToken, refreshToken, profile, cb) {
       profileID = profile.id;
-
-      // collection_profile.insertOne({
-      //   profileID: profile.id,
-      // });
 
       return cb(null, profile);
     }
@@ -386,7 +390,8 @@ const getAllPosts = async function () {
     }
   }
 
-  //console.log(json)
+
+  // console.log(json);
 
   return json;
 };
@@ -495,6 +500,7 @@ app.post("/filter", async (request, response) => {
 app.get("/profile", (request, response) => {
   response.sendFile(__dirname + "/build/profile.html");
 });
+
 
 app.post("/create_profile", bodyParser.json(), async (request, response) => {
   await collection_profile.deleteMany({ profileID: Number(profileID) });
@@ -634,9 +640,9 @@ async function insertStudentSkillRelation(skills) {
 
 app.post("/delete_post", bodyParser.json(), (request, response) => {
   if (request.body.creatorID === profileID) {
-    //console.log("same user")
+    // console.log("same user");
   } else {
-    //console.log("different user")
+    // console.log("different user");
   }
 });
 

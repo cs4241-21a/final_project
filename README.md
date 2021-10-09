@@ -41,7 +41,8 @@ While familiarity with relational models assisted in structuring data, the model
 <img width="913" alt="Screen Shot 2021-10-08 at 10 46 22 AM" src="https://user-images.githubusercontent.com/64321589/136577297-6edb1de4-cbe2-4922-b1ee-9fb3a8882647.png">
 
 #### Relational Schema
-- PostStudentRelation(_id, postCommentID PK FK, studentProfileID PK FK)StudentProfile(_id, profileID PK, linkToProfilePic, bio, firstName, lastName, grade, phoneNum)
+- PostStudentRelation(_id, postCommentID PK FK, studentProfileID PK FK)
+- StudentProfile(_id, profileID PK, linkToProfilePic, bio, firstName, lastName, grade, phoneNum)
 - Admin(_id, profileID PK FK)
 - Skills(_id, skillName PK, skillTopic)
 - Class(_id, coursNumber PK, courseDepartment PK)
@@ -83,7 +84,8 @@ For authentication, we wanted to challenge ourselves more than we did in A3, whe
   - implemented server POST routes for dashboard page
   - initial dummy server
   - contributed to readme writeup
-  - profile autofill work
+  - back-end work for profile page
+  - server queries to database for profile page
   - React pointman
 - Ashley
   - integrating delete button posts on dashboard and related server side communicationn
