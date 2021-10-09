@@ -1,8 +1,5 @@
 
 import React from "react";
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.js';
 import Navbar from "./Navbar";
 
 class App extends React.Component {
@@ -92,7 +89,7 @@ class App extends React.Component {
             <button class="btn btn-lg btn-success btn-block" type="submit" onCkick={(e) => this.addSong(e)}>Add Song</button>
           </form>
         </div>
-        <div class="card" style={{ width: "100%", left: "20px", fontSize: "20px" }}>
+        <div class="card" style={{ width: "95%", left: "2.5%", fontSize: "20px" }}>
           <div class="card-body" style={{ paddingLeft: "20px" }}>
             <table class="table table-striped">
               <tr>

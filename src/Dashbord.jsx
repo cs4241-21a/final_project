@@ -26,7 +26,7 @@ class Dashboard extends React.Component {
         } else {
             console.log(trackList.length)
             return (
-                <div class="card" style={{ width: "100%", left: "20px", fontSize: "20px" }}>
+                <div class="card" style={{ width: "95%", left: "2.5%", fontSize: "20px" }}>
                     <div class="card-body" style={{ paddingLeft: "20px" }}>
                         <table class="table table-striped">
                             <tr>
@@ -39,7 +39,7 @@ class Dashboard extends React.Component {
                                     <tr id={track._id}>
                                         <td id={`title_${track._id}`}>{track.title} </td>
                                         <td id={`Artist_${track._id}`}>{track.artist} </td>
-                                        <td><img src={track.coverart} style={{ wdith: "10vw", height: "10vw" }}></img></td>
+                                        <td><img src={track.coverart} style={{ wdith: "10vh", height: "10vh" }}></img></td>
                                     </tr>
                                 ))
                             }

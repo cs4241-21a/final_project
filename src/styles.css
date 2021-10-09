@@ -28,3 +28,7 @@ h1 {
 #artistName{
   margin-bottom: 20px;
 }
+
+.navbar-brand {
+  margin-left: 1em;
+}
