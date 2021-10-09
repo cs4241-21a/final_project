@@ -12,13 +12,15 @@ body {
     overflow: auto;
 }
 
-#testContent {
+#farm {
     background-color: rgba(255,255,255,0.1);
     border-radius: 25px;
-    padding: 50px;
+    padding: 10px;
+    margin-bottom: 25px;
+    margin-top: 25px;
 }
 
-#testContent li {
+#farm li {
     margin-bottom: 10px;
 }
 
