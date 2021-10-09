@@ -515,14 +515,14 @@ app.post('/create_profile', bodyParser.json(), (request, response) => {
 
     collection_profile.deleteMany({profileID})
     
-    console.log("removed_courses already there")
+    // console.log("removed_courses already there")
 
-    console.log("profileID: ", profileID)
-    console.log("request: ", request.body)
+    // console.log("profileID: ", profileID)
+    // console.log("request: ", request.body)
 
         
-    // insertStudentClassRelation(request.body.courses)
-    // insertStudentSkillRelation(request.body.skills)
+    insertStudentClassRelation(request.body.courses)
+    insertStudentSkillRelation(request.body.skills)
 
     jsonToInsert = {
         profileID: profileID,
@@ -562,19 +562,19 @@ function insertStudentClassRelation(classNames){
 
     collection_studentClassRelation.deleteMany({profileID})
 
-    console.log("removed courses already there. ")
+    // console.log("removed courses already there. ")
 
     for(i = 0; i < classNames.length; i++){
         json = {
             profileID, 
             classCourseNumber: classNames[i]
         }
-        console.log("insert into studentClassRElation: ", json)
+        // console.log("insert into studentClassRElation: ", json)
 
         collection_studentClassRelation.insertOne(json)
-        .then( result => {
-            console.log(result)
-        })
+        // .then( result => {
+        //     console.log(result)
+        // })
     }
 }
 
@@ -584,30 +584,43 @@ function insertStudentSkillRelation(classNames){
 
     collection_studentSkillRelation.deleteMany({profileID})
 
-    console.log("removed courses already there. ")
+    // console.log("removed courses already there. ")
 
     for(i = 0; i < classNames.length; i++){
         json = {
             profileID, 
             classCourseNumber: classNames[i]
         }
-        console.log("insert into studentSkillRelation: ", json)
+        // console.log("insert into studentSkillRelation: ", json)
 
         collection_studentSkillRelation.insertOne(json)
-        .then( result => {
-            console.log(result)
-        })
+        // .then( result => {
+        //     console.log(result)
+        // })
     }
 }
 
 
 app.post('/delete_post', bodyParser.json(), (request, response) => {
+    // console.log("deleting post with id: ", request.body.postID)
     if(request.body.creatorID === profileID){
-        console.log("same user")
+        // console.log("deleting post with id: ", request.body.postID)
+        collection_post.deleteOne({_id: mongodb.ObjectId(request.body.postID)})
+        .then(confirmation => {
+            // console.log("confirmation,", confirmation)
+            collection_postSkillRelation.deleteMany({postID: mongodb.ObjectID(request.body.postID)})
+            // .then(con => console.log("con,", con))
+
+            
+        })
+        
+        
+        // collection_postSkillRelation.deleteMany({postID: request.body.postID})
+        // console.log("same user")
     }
-    else{
-        console.log("different user")
-    }
+    // else{
+    //     console.log("different user")
+    // }
 })
 
 
