@@ -85,7 +85,7 @@ app.post('/login', function (req, res) {
           bcrypt.compare(req.body.password, result.password, function(err, ok) {
               if (ok) {
                   req.session.userId = result._id;
-                  req.session.username = req.body.username
+                  req.session.username = req.body.username;
                   res.json({code: 200, msg: "success"});
               } else {
                   res.json({code: 400, msg: "invalid credentials"});
