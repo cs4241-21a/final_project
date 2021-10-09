@@ -84,7 +84,7 @@ For authentication, we wanted to challenge ourselves more than we did in A3, whe
   - implemented server POST routes for dashboard page
   - initial dummy server
   - contributed to readme writeup
-  - profile autofill work
+  - back-end work for profile page
   - React pointman
 - Ashley
   - integrating delete button posts on dashboard and related server side communicationn
