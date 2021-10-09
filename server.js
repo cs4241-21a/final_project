@@ -65,6 +65,7 @@ const BOARDSIZE = 9;
 class Room {
     gameState = {
         // Walls: 2D array, 1 unit smaller than actual board; 0 = none, 1 = horizontal, 2 = vertical
+        // A column on the board is a row in the array, so we can use wallSpaces[x][y]
         wallSpaces: new Array(BOARDSIZE - 1),
 
         // Pawns
@@ -97,11 +98,11 @@ class Room {
     }
 }
 
-function IsValidPawnSpace(x, y) { return x < 0 && y < 0 && x < BOARDSIZE && y < BOARDSIZE; }
-function IsValidWallSpace(x, y) { return x < 0 && y < 0 && x < BOARDSIZE-1 && y < BOARDSIZE-1; }
+function IsValidPawnSpace(x, y) { return x >= 0 && y >= 0 && x < BOARDSIZE && y < BOARDSIZE; }
+function IsValidWallSpace(x, y) { return x >= 0 && y >= 0 && x < BOARDSIZE-1 && y < BOARDSIZE-1; }
 
 function GetWall(g, x, y) {
-    if (IsValidWallSpace(g, x, y))
+    if (IsValidWallSpace(x, y))
         return g.wallSpaces[x][y];
     else
         return -1;
@@ -126,6 +127,7 @@ function IsWallBlockingDir(g, x, y, directionX, directionY) {
 
 // Check whether given pawn can move to given relative position
 function IsValidPawnMove(g, pawn, x, y) {
+
     
     if (!IsValidPawnSpace(x, y)){
         return false;
@@ -135,18 +137,18 @@ function IsValidPawnMove(g, pawn, x, y) {
     if (pawn == g.pawnA) {
         otherPawn = g.pawnB
     }
-
+    
     if (otherPawn.x == x && otherPawn.y == y){
         return false;
     }
-
+    
     const directionX = x - pawn.x,
-          directionY = y - pawn.y;
+    directionY = y - pawn.y;
     
     // Pawns shouldn't move too far or stay in place (if moving)
     if (Math.abs(directionX) + Math.abs(directionY) > 2)
         return false;
-
+    
     // Be suspicious of diagonals
     if (directionX != 0 && directionY != 0) {
         // Check if jumping is possible
@@ -183,9 +185,9 @@ function IsValidPawnMove(g, pawn, x, y) {
         }
     }
     // Check for walls if going straight
-    else if (IsWallBlockingDir(g, pawn.x, pawn.y, directionX, directionY))
+    else if (IsWallBlockingDir(g, pawn.x, pawn.y, directionX, directionY)) {
         return false;
-
+    }
     return true;
 }
 
@@ -216,3 +218,147 @@ function IsValidWallPlacement(g, walls, x, y, orientation) {
 
     return true
 }
+
+
+
+// -- SAMPLE GAME STATE --
+// For testing purposes
+
+const sampleGame = {
+    // Walls: 2D array, 1 unit smaller than actual board; 0 = none, 1 = horizontal, 2 = vertical
+    // A column on the board is a row in the array, so we can use wallSpaces[x][y]
+    wallSpaces: [
+        [2,0,2,1,0,0,0,2],
+        [0,1,0,1,1,1,0,0],
+        [0,0,0,1,0,1,1,0],
+        [0,1,0,0,1,0,0,0],
+        [0,0,2,0,2,1,0,0],
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,2,1,0],
+        [0,0,0,2,0,1,0,0],
+    ],
+
+    // Pawns
+    pawnA: {x: 0, y: 0, walls: 10},
+    pawnB: {x: 0, y: 6, walls: 10},
+
+    // Whose turn is it
+    currentPlayer: true, //true is pawnA, false is pawnB
+    player: true
+};
+
+
+// -- PATHFINDING HELPERS --
+
+function ReachableFrom(g, pawn, x, y) {
+    const origX = pawn.x;
+    const origY = pawn.y;
+
+    pawn.x = x;
+    pawn.y = y;
+
+    const dirs = [{x:  1, y:  0}, {x:  0, y:  1},
+                  {x: -1, y:  0}, {x:  0, y: -1},
+                  {x:  2, y:  0}, {x:  0, y:  2},
+                  {x: -2, y:  0}, {x:  0, y: -2},
+                  {x:  1, y:  1}, {x: -1, y:  1},
+                  {x:  1, y: -1}, {x: -1, y: -1}
+                ];
+    const result = [];
+    for (let i = 0; i < dirs.length; i++) {
+        const checkX = x + dirs[i].x, checkY = y + dirs[i].y;
+        if (IsValidPawnMove(g, pawn, checkX, checkY))
+            result.push({x: checkX, y: checkY});
+    }
+    pawn.x = origX;
+    pawn.y = origY;
+    return result;
+}
+
+// Checks whether the given pawn can reach the other side of the board in any way
+function DoesPathExistForPawn(g, pawn) {
+
+    const graph = new Array(BOARDSIZE)
+    for (let i = 0; i < BOARDSIZE; i++) {
+        const column = new Array(BOARDSIZE);
+        for (let j = 0; j < BOARDSIZE; j++) {
+            column[j] = ReachableFrom(g, pawn, i, j);
+        }
+        graph[i] = column;
+    }
+    
+    let visited = [];
+    let pos = {x: pawn.x, y: pawn.y};
+    const isFindingEndOfBoard = (pawn === g.pawnA)
+    return ExpandNode(graph, pos, visited, isFindingEndOfBoard);
+}
+
+// Depth-first search node expansion
+function ExpandNode(graph, pos, visited, isFindingEndOfBoard) {
+
+    // Mark this node as visited
+    visited.push(pos)
+
+    // Check if the end has been reached
+    let goalY = BOARDSIZE-1;
+    if (!isFindingEndOfBoard)
+        goalY = 0;
+    
+    if (pos.y === goalY)
+        return true;
+    
+    // Pick candidates - reachable nodes that haven't been visited yet
+    let candidates = []
+    for (let i = 0; i < (graph[pos.x][pos.y]).length; i++) {
+        let entry = graph[pos.x][pos.y][i]
+        if (!visited.some((pos) => pos.x === entry.x && pos.y === entry.y)) {
+            candidates.push(entry)
+        }
+    }
+
+    // Search along each new path until it ends or reaches the other side of the board
+    for (let i = 0; i < candidates.length; i++) {
+        if (ExpandNode(graph, candidates[i], visited, isFindingEndOfBoard))
+            return true
+    }
+    return false;
+}
+
+// Just prints the board to the console
+function PrintBoard(g) {
+    for (let row = 0; row < BOARDSIZE; row++) {
+        let row1Text = '', row2Text = '';
+        for (let col = 0; col < BOARDSIZE; col++) {
+
+            if (g.pawnA.x === col && g.pawnA.y === row) {
+                row1Text += 'A'
+            } else if (g.pawnB.x === col && g.pawnB.y === row) {
+                row1Text += 'B'
+            } else {
+                row1Text += ' '
+            }
+
+            if (col < BOARDSIZE - 1) {
+                if (((row < BOARDSIZE - 1 && (g.wallSpaces)[col][row] === 2) || (row > 0 && g.wallSpaces[col][row-1] === 2)))
+                    row1Text += '|'
+                else
+                    row1Text += ' '
+            }
+
+            if (row < BOARDSIZE - 1) {
+                if (((col < BOARDSIZE - 1 && (g.wallSpaces)[col][row] === 1) || (col > 0 && g.wallSpaces[col-1][row] === 1)))
+                    row2Text += '-'
+                else
+                    row2Text += ' '
+                if (col < BOARDSIZE - 1)
+                    row2Text += '+'
+            }
+        }
+        console.log('.'+row1Text +'.\n.'+ row2Text +'.')
+    }
+}
+
+console.log(DoesPathExistForPawn(sampleGame, sampleGame.pawnA));
+console.log(DoesPathExistForPawn(sampleGame, sampleGame.pawnB));
+
+PrintBoard(sampleGame);
