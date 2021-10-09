@@ -24,7 +24,7 @@ const Login = (props) => {
     });
 
     if (res.status === 400) {
-      alert("Bad login fuck u");
+      alert("Bad login");
       return;
     }
 

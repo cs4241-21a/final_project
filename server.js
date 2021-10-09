@@ -146,7 +146,7 @@ app.post("/workout", async (req, res) => {
 });
 
 app.patch("/movement", async (req, res) => {
-  console.log("Received PATCH to /movement")
+  console.log("Received PATCH to /movement");
   if (!req.session.username) {
     console.log("Not even logged in wtf");
     res.status(401).end();
@@ -161,18 +161,18 @@ app.patch("/movement", async (req, res) => {
       {
         username: req.session.username,
         "workouts._id": req.query.workout_id,
-        "workouts.movements.name": req.body.name
+        "workouts.movements.name": req.body.name,
       },
 
-      { $set:
-        {
-         "workouts.$.movements.$": req.body 
-        } 
-      } 
+      {
+        $set: {
+          "workouts.$.movements[$]": req.body,
+        },
+      }
     );
 
   res.status(200).end();
-})
+});
 
 app.post("/movement", async (req, res) => {
   console.log("Received POST to /movement");
@@ -236,7 +236,6 @@ app.delete("/workout", async (req, res) => {
 });
 
 app.delete("/movement", async (req, res) => {
-  
   console.log("Deleting movement " + req.query._id);
 
   await mongoClient
@@ -244,7 +243,7 @@ app.delete("/movement", async (req, res) => {
     .collection("users")
     .updateOne(
       { username: req.session.username },
-      { $pull: { workouts: {$elemMatch: { _id: req.query._id } }} }//should drop entire movement elem but not workout
+      { $pull: { workouts: { $elemMatch: { _id: req.query._id } } } } //should drop entire movement elem but not workout
     );
 
   res.status(200).end();
