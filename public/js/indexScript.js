@@ -1,10 +1,8 @@
 
 let color = 'black'
 let lineWidth = 50
-let eraseMode = false
 let undoList = []
 let redoList = []
-let undoCounter = 0
 let connection
 
 const changeColor = function(event){
@@ -15,14 +13,16 @@ const changeWidth = function(event){
    lineWidth = document.querySelector( '#lineWidth').value
 }
 
+function clearCanvas(){
+    clear()
+}
+
 function setup() {
-    //let myCanvas = createCanvas(windowWidth, windowHeight)
     let myCanvas = createCanvas(1000, 500)
 
     myCanvas.style('border', '1px solid #000')
 
     myCanvas.mouseReleased(saveForUndo)
-
     myCanvas.mousePressed(drawShapes)
 
     myCanvas.parent('canvas-container')
@@ -41,10 +41,10 @@ function setup() {
     const redoBtn = document.querySelector('#redoBtn')
     redoBtn.onclick = redo
 
+
     connection = new WebSocket('ws://localhost:3323')
 
     connection.onmessage = e => {
-        // console.log(e.data)
         let data
         let failed = false
         try {
@@ -54,13 +54,49 @@ function setup() {
             console.log(e.data, " is not JSON")
         }
         if (!failed){
-            console.log("Got canvas of size (", data.width, ", ", data.height, ") from the server!")
-            loadCanvasFromServer(data)
+            console.log(data.shape)
+            if (data.shape === "line"){
+                //TODO fix on refresh draws a circle at location of the last line drawn 
+                helpDrawLine(data.color, data.lineWidth, data.mX, data.mY, data.pmX, data.pmY)
+            }
+            else if (data.shape === "circle" || data.shape === "square" || data.shape == "triangle"){
+                helpDrawShape(data.shape, data.isFilled, data.color, data.mX, data.mY, data.shapeSize)
+            }
         }
     }
   }
 
-//Function for drawing and erasing so the lines are continuous
+
+function helpDrawLine(color, lineWidth, mouseX, mouseY, pmouseX, pmouseY){
+    stroke(color)
+    strokeWeight(lineWidth)
+    line(mouseX, mouseY, pmouseX, pmouseY)
+}
+
+//TODO Color changed delayed by one click 
+function helpDrawShape(shape, isFilled, color, mouseX, mouseY, shapeSize){
+    if (isFilled){
+        fill(color)
+        strokeWeight(0)
+    } 
+    else 
+    {
+        fill(0,0,0,0)
+        stroke(color)
+        strokeWeight(5)
+    }
+    if (shape === "circle"){
+        circle(mouseX, mouseY, shapeSize)
+    }
+    else if (shape === "square"){
+        square(mouseX - (shapeSize/2), mouseY - (shapeSize/2), shapeSize)
+    }
+    else if (shape == "triangle"){
+        triangle(mouseX, mouseY+(1*(shapeSize/2)), mouseX-(1*(shapeSize/2)), mouseY-(1*(shapeSize/2)), mouseX+(1*(shapeSize/2)), mouseY-(1*(shapeSize/2)))
+    }
+}
+
+
 function draw() {
     if (mouseIsPressed) {
         //Check which drawing mode it is in -> show up when draw or erase are checked
@@ -72,9 +108,18 @@ function draw() {
             line(mouseX, mouseY, pmouseX, pmouseY)
         } else if (checkDrawType === "Draw") {
             cursor('https://icons.iconarchive.com/icons/custom-icon-design/flatastic-6/32/Brush-tool-icon.png', 16, 16)
-            stroke(color)
-            strokeWeight(lineWidth)
-            line(mouseX, mouseY, pmouseX, pmouseY)
+            helpDrawLine(color, lineWidth, mouseX, mouseY, pmouseX, pmouseY)
+           
+            let data = {
+                shape: "line",
+                mX: mouseX,
+                mY: mouseY, 
+                pmX: pmouseX, 
+                pmY: pmouseY, 
+                color:color, 
+                lineWidth:lineWidth,
+            }
+            connection.send(JSON.stringify(data))
         }
     } 
     noErase()
@@ -91,80 +136,43 @@ function drawShapes() {
         const checkDrawType = document.querySelector('input[name="action"]:checked').value
         const checkFillShape = document.getElementById("fillShape").checked
         const shapeSize = document.getElementById("myRange").value
-        if (checkDrawType === "Circle") {
+        if(checkDrawType === "Circle" || checkDrawType === "Square" || checkDrawType === "Triangle"){
             cursor('grab')
-            if(checkFillShape === true) {
-                fill(color)
-                strokeWeight(0)
-            } else {
-                fill("white")
-                stroke(color)
-                strokeWeight(5)
+            let shape;
+            if (checkDrawType === "Circle"){
+                shape = "circle"
             }
-            circle(mouseX, mouseY, shapeSize)
-        } else if (checkDrawType === "Square") {
-            cursor('grab')
-            if(checkFillShape === true) {
-                fill(color)
-                strokeWeight(0)
-            } else {
-                fill("white")
-                stroke(color)
-                strokeWeight(5)
+            else if (checkDrawType === "Square"){
+                shape = "square"
             }
-            square(mouseX - (shapeSize/2), mouseY - (shapeSize/2), shapeSize)
-        } else if (checkDrawType === "Triangle") {
-            cursor('grab')
-            if(checkFillShape === true) {
-                fill(color)
-                strokeWeight(0)
-            } else {
-                fill("white")
-                stroke(color)
-                strokeWeight(5)
+            else if (checkDrawType === "Triangle"){
+                shape = "triangle"
             }
-            triangle(mouseX, mouseY+(1*(shapeSize/2)), mouseX-(1*(shapeSize/2)), mouseY-(1*(shapeSize/2)), mouseX+(1*(shapeSize/2)), mouseY-(1*(shapeSize/2)))
+            isFilled = false 
+            if(checkFillShape === true) {
+                isFilled = true
+            } 
+            helpDrawShape(shape, isFilled, color, mouseX, mouseY, shapeSize)
+            let data = {
+                shape: shape,
+                isFilled: isFilled,
+                color:color, 
+                mX:mouseX, 
+                mY:mouseY,
+                shapeSize:shapeSize,
+            }
+            connection.send(JSON.stringify(data))
         }
-    }
-    noErase()
+    }//end if mousepressed
 }
 
-function clearCanvas(){
-    clear()
-}
 
-function windowResized() {
-    // resizeCanvas(windowWidth, windowHeight);
-}
+
+
 
 function saveForUndo(){
     undoList.push(get())
-    sendCanvasToServer()
-}
-
-function sendCanvasToServer(){
-    let canvas = get()
-    canvas.loadPixels()
-    // console.log(canvas.width, canvas.height)
-    let data = {
-        width: canvas.width,
-        height: canvas.height,
-        pixels: canvas.pixels
-    }
-
-    connection.send(JSON.stringify(data))
-}
-
-function loadCanvasFromServer(canvas){
-    // console.log(canvas)
-    let myImage = get()
-    myImage.loadPixels()
-    // myImage.pixels = canvas.pixels
-    for (let i = 0; i < myImage.pixels.length; i++){
-        myImage.pixels[i] = canvas.pixels[i]
-    }
-    myImage.updatePixels()
-    image(myImage, 0, 0, canvas.width, canvas.height)
+    //sendCanvasToServer()
 }
 
 const redo = function(event){
