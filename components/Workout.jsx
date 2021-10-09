@@ -78,6 +78,7 @@ class AddNewSetComponent extends React.Component {
       });
     }
     mutate();
+    location.reload();
   };
 
   render() {
