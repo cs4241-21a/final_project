@@ -86,7 +86,7 @@ router.post('/getnames', async (req, res, next) => {
     return;
   }
 
-  res.json({ status: true, hello: 'hello', blueChamps: 'bob', redChamps: 'tet' });
+  res.json({ status: true, hello: 'hello', blueChamps: 'aatrox,ahri,akali,akshan,alistar', redChamps: 'anivia,annie,aphelios,ashe,azir' });
 
 });
 
