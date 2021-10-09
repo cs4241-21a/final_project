@@ -1,17 +1,18 @@
 import * as React from 'react';
 
-import EnablablePrefProps from '../props/prefs/EnablablePrefProps';
-import CharacterPrefProps from '../props/prefs/CharacterPrefProps';
-import CharacterProps from '../props/api/FarmingSpotProps';
-import WeaponProps from '../props/api/WeaponProps';
-import ArtifactProps from '../props/api/ArtifactProps';
-import MaterialProps from '../props/api/MaterialProps';
-import FarmableProps from '../props/api/FarmableProps';
-import FarmingSpotProps from '../props/api/FarmingSpotProps';
+import EnablablePrefs from '../types/prefs/EnablablePrefs';
+import CharacterPrefs from '../types/prefs/CharacterPrefs';
 
-import CharacterSelect from "../components/CharacterSelect";
-import WeaponSelect from "../components/WeaponSelect";
-import ArtifactSelect from "../components/ArtifactSelect";
+import CharacterProps from '../types/props/FarmingSpotProps';
+import WeaponProps from '../types/props/WeaponProps';
+import ArtifactProps from '../types/props/ArtifactProps';
+import MaterialProps from '../types/props/MaterialProps';
+import FarmableProps from '../types/props/FarmableProps';
+import FarmingSpotProps from '../types/props/FarmingSpotProps';
+
+import CharacterSelect from "../components/selects/CharacterSelect";
+import WeaponSelect from "../components/selects/WeaponSelect";
+import ArtifactSelect from "../components/selects/ArtifactSelect";
 import FarmingDisplay from "../components/FarmingDisplay";
 import LoginButton from '../components/LoginButton';
 import SaveButton from '../components/SaveButton';
@@ -29,9 +30,9 @@ const MainRoute = () : JSX.Element => {
 
   
     // These preference states record the data associated with an account
-  const [charPrefs, setCharPrefs] = React.useState<CharacterPrefProps[]>([]);
-  const [weaponPrefs, setWeaponsPrefs] = React.useState<EnablablePrefProps[]>([]);
-  const [artifactPrefs, setArtifactPrefs] = React.useState<EnablablePrefProps[]>([]);
+  const [charPrefs, setCharPrefs] = React.useState<CharacterPrefs[]>([]);
+  const [weaponPrefs, setWeaponsPrefs] = React.useState<EnablablePrefs[]>([]);
+  const [artifactPrefs, setArtifactPrefs] = React.useState<EnablablePrefs[]>([]);
 
   // !!! TODO (Andrew): Write fetch requests to DB to initialize preferences
   /**
@@ -88,9 +89,9 @@ const MainRoute = () : JSX.Element => {
     // "activeFarmables" should be the artifacts selected by artifactPrefs and materials associated with selected characters 
     // "activeLocations" should be the locations listed per each activeFarmable's farm_at string
     //debug prints for now: 
-    console.log(charPrefs);
-    console.log(weaponPrefs);
-    console.log(artifactPrefs);
+    // console.log(charPrefs);
+    // console.log(weaponPrefs);
+    // console.log(artifactPrefs);
   }, [charPrefs, weaponPrefs, artifactPrefs]);
 
   return (
