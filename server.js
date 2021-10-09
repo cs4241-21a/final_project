@@ -106,10 +106,11 @@ app.get('/song',
     });
 
 app.post('/addComment', (req, res) => {
+    const timestamp = new Date().toLocaleString()
     db.getContentById(req.body.songID)
         .then(song => song[0])
         .then(theSong => {
-            theSong.comments.push({ username: req.user.displayName, text: req.body.text })
+            theSong.comments.push({ username: req.user.displayName, text: req.body.text, timestamp: timestamp })
             db.addOrUpdateContent(theSong.user, theSong.title, theSong.artist, theSong.coverart, theSong.comments, theSong._id)
                 .then(response => {
                     res.send({ response: response })

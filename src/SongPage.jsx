@@ -66,7 +66,8 @@ class SongPage extends React.Component {
                                         song.comments.map(comment => {
                                             return (
                                                 <div className="row">
-                                                    <p><strong>{comment.username}</strong>: {comment.text}</p>
+                                                    <p><strong>{comment.username}</strong>: {comment.text} <br/> 
+                                                    Posted on: {comment.timestamp}</p>
                                                 </div>
                                             )
                                         })
