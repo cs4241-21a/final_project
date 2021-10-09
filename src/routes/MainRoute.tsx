@@ -16,7 +16,7 @@ import WeaponSelect from "../components/selects/WeaponSelect";
 import ArtifactSelect from "../components/selects/ArtifactSelect";
 import FarmingDisplay from "../components/FarmingDisplay";
 import LoginButton from '../components/LoginButton';
-import SaveButton from '../components/SaveButton';
+import ResetButton from '../components/ResetButton';
 
 
 const MainRoute = () : JSX.Element => { 
@@ -79,6 +79,12 @@ const MainRoute = () : JSX.Element => {
         console.log("update successfull");
       }
     })
+  }
+
+  const handleReset = () => {
+    setCharPrefs([]);
+    setWeaponsPrefs([]);
+    setArtifactPrefs([]);
   }
 
 
@@ -198,6 +204,7 @@ const MainRoute = () : JSX.Element => {
         locations={activeLocations}
       />
       <LoginButton initPrefs={initPrefs} />
+      <ResetButton handleReset={handleReset} />
     </>
   );
 }
