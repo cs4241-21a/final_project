@@ -14,7 +14,7 @@ In order to utilize this web application, users must have a preexisting account 
 
 ### 3. Technologies
 - Throughout the development process we utilized Visual Studio Code to build our implementation and used a GitHub repository to facilitate collaboration and version tracking.
-- We hosted our web application on the Glitch platform.
+- We hosted our web application on the Heroku platform.
 - For our web app we implemented the MERN stack
   - We used MongoDB in order to manage all of our collections of data
   - The profile collection keeps track of all of the application’s users, holding information related to an individual such as their bio, first and last name, grade, phone number, and a unique ID that is generated and linked with their profile.
