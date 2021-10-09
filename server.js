@@ -14,6 +14,9 @@ const GitHubStrategy = require('passport-github2').Strategy;
 const cookieParser = require('cookie-parser');
 const config = require('./config');
 const path = require('path');
+var nodemailer = require('nodemailer');
+
+
 
 const User = require('./models').User;
 
@@ -141,6 +144,32 @@ app.get('/logout', auth, function (req, res) {
       res.redirect('/login.html');
   });
 });
+
+app.post('/sendEmail', bodyparser.json(), function (req, res) {
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'bigsmartmovie@gmail.com',
+      pass: '1qa2ws#ED'
+    }
+  });
+
+  var mailOptions = {
+    from: 'bigsmartmovie@gmail.com',
+    to: req.body.emailAddress,
+    cc: 'bigsmartmovie@gmail.com',
+    subject: 'Sending Email using Node.js',
+    text: req.body.message
+  };
+
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+})
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 

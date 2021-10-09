@@ -5,19 +5,173 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-  <title>Document</title>
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+
+
+  <title>About Us</title>
 </head>
+
+
 <body>
 
   <div id="nav-placeholder"></div>
   
+  <div id="app">
+    <v-app>
+      <v-main>
+        <v-container>
+          <!-- Your HTML Here -->
+          <v-card>
+            <div class="container" justify="center" id="app1">
+              <div class="row">
+                <div class="col-md-7 col-lg-6">
+                  <div class="about-us-content">
+                    <div class="heading">
+                      <h1>About Us</h1>
+                    </div>
+                    <p>
+                      Team Members: <br>
+                      <ul id="allmembers">
+                        <li v-for="member in teamMembers">
+                          {{member}}
+                        </li>
+                      </ul>
+                    </p>
+                    <br>
 
+                    <v-dialog
+                      v-model="dialog"
+                      persistent
+                      max-width="600px"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                          color="primary"
+                          dark
+                          v-bind="attrs"
+                          v-on="on"
+                        >
+                          Contact Us
+                        </v-btn>
+                      </template>
+
+                      <v-card>
+                        <v-card-title>
+                          <span class="text-h5">Contact Us</span>
+                        </v-card-title>
+
+                        <v-card-text>
+                          <v-container>
+                            <v-row>
+                              <v-col cols="12">
+                                <v-text-field
+                                  outlined
+                                  label="Email"
+                                  v-model="targetEmailAdress"
+                                  required
+                                ></v-text-field>
+                              </v-col>
+                              <v-col cols="12">
+                                <v-textarea
+                                  outlined
+                                  label="Comment"
+                                  type="text"
+                                  v-model="userMessage"
+                                  required
+                                ></v-text-field>
+                              </v-col>
+                            </v-row>
+                          </v-container>
+                        </v-card-text>
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn
+                            text color="blue"
+                            @click="closeDialog()"
+                          >
+                            Close
+                          </v-btn>
+                          <v-btn
+                            color="primary blue darken-1"
+                            @click="sendEmail(); closeDialog() "
+                          >
+                            Submit
+                          </v-btn>
+                        </v-card-actions>
+                      </v-card>
+                    </v-dialog>
+                  </div>
+                </div>
+        
+                <div class="col-md-5 col-lg-6 about-img">
+                  <img src="/cuteDog.jpg" alt="A cute image here!">
+                </div>
+              </div>
+            </div>
+          </v-card>
+        </v-container>
+      </v-main>
+    </v-app>
+  </div>
 
   
 </body>
+
+<!-- import navigation here -->
 <script>
   $(function(){
     $("#nav-placeholder").load("nav.html");
   });
 </script>
+
+<!-- import vuetify & vue here -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
+<!-- Vue app -->
+<script>
+  const app = new Vue({
+    el: '#app',
+    vuetify: new Vuetify(),
+    data: () => ({
+      dialog: false,
+      userMessage: "",
+      targetEmailAdress: "",
+      count: 0,
+      teamMembers:[
+        'Yang Lyu  jimmylyuyang@outlook.com',
+        'Yonghua Wang',
+        'Jingyu Xie',
+        'Qingbei Shang',
+        'Maxine Shi'
+      ]
+    }),
+    methods: {
+      sendEmail() {
+        var json = {message: this.userMessage, emailAddress: this.targetEmailAdress};
+        console.log("Function is triggered with input: "+ json);
+        var body = JSON.stringify( json );
+        fetch( '/sendEmail', {
+          method:'POST',
+          body,
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => response.json())
+        .then( function( response) {
+          console.log("I get the response!");
+        })
+      },
+      closeDialog() {
+        this.dialog = false;
+      }
+    }
+  })
+</script>
+
 </html>
