@@ -1,11 +1,11 @@
-#Synchronous MS Paint
+# Synchronous MS Paint
 Submit a second PR on the final project repo to turn in your app and code. Again, only one pull request per team.
 
 Deploy your app, in the form of a webpage, to Glitch/Heroku/Digital Ocean or some other service; it is critical that the application functions correctly wherever you post it.
 
 The README for your second pull request doesn’t need to be a formal report, but it should contain:
 
-##1. A brief description of what you created, and a link to the project itself (two paragraphs of text)
+## 1. A brief description of what you created, and a link to the project itself (two paragraphs of text)
    
     
    Link to project: [mspaint.edit2014.com](mspaint.edit2014.com)
@@ -14,7 +14,7 @@ The README for your second pull request doesn’t need to be a formal report, bu
 
    The following sections of this readme will detail different segments of the project's development and how to use our application. This team worked hard to make a functional application that evokes the nostalgia of opening up MSPaint on your parents' computer and drawing with friends. We hope it provides whomever uses it with a similar sense of joy.
    
-##2. Any additional instructions that might be needed to fully use your project (login information etc.)
+## 2. Any additional instructions that might be needed to fully use your project (login information etc.)
    
 You can make your own login, or use the below test account:
    
@@ -22,6 +22,8 @@ You can make your own login, or use the below test account:
     Username: test
     Password: test
    ```
+
+When you're done, click the X button in the upper-right corner of the app window to log out
    
 Share the [link](mspaint.edit2014.com) with another person, or open the link in another browser tab to experience the simultaneous paint experience. 
 ## 3. An outline of the technologies you used and how you used them.

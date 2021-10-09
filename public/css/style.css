@@ -16,7 +16,13 @@
 
 #control-container{
   float: left;
-  width: 15%;
+  width: 25%;
+  overflow-y: scroll;
+  height: 500px;
+}
+
+#control-container li, b{
+  font-size: 14px;
 }
 
 .field-row{
