@@ -33,7 +33,7 @@ function setup() {
     const lineWidth = document.querySelector('#lineWidth')
     lineWidth.onclick = changeWidth
 
-    connection = new WebSocket('ws://canvas-final-project.herokuapp.com:3323')
+    connection = new WebSocket('ws://localhost:3323')
 
     connection.onmessage = e => {
         let data
@@ -141,17 +141,15 @@ function drawShapes() {
         const shapeSize = document.getElementById("myRange").value
         theColor = document.querySelector( '#colorSelector').value
         if(checkDrawType === "Circle" || checkDrawType === "Square" || checkDrawType === "Triangle"){
+            cursor('grab')
             let shape;
             if (checkDrawType === "Circle"){
-                cursor('https://icons.iconarchive.com/icons/custom-icon-design/flatastic-6/32/Circle-icon.png')
                 shape = "circle"
             }
             else if (checkDrawType === "Square"){
-                cursor('https://icons.iconarchive.com/icons/custom-icon-design/pretty-office-9/32/square-icon.png')
                 shape = "square"
             }
             else if (checkDrawType === "Triangle"){
-                cursor('https://icons.iconarchive.com/icons/custom-icon-design/flatastic-6/32/Triangle-icon.png')
                 shape = "triangle"
             }
             isFilled = false 
