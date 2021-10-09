@@ -129,6 +129,21 @@ wss.on('connection', (socket, req) => {
               const json = JSON.parse(message);
               console.log("[" + req.socket.remoteAddress + "] " + json);
               switch(json.packetType) {
+                  case "join_lobby":
+                    { 
+                      let pass = json.password;
+                      let lobby = findLobbyWithClient(clientId);
+                      if(lobby !== undefined) {
+                        if(lobby.password === pass) {
+                          lobby.addClient(lobby.clients.find(c => c.id == clientId));
+                        }
+                      }else{
+                        lobby = createLobby(pass);
+                        lobbies.push(lobby);
+                        lobby.addClient(lobby.clients.find(c => c.id == clientId));
+                      }
+                    }
+                    break;
                   case "update_pos":
                       {
                         const lobby = findLobbyWithClient(clientId);

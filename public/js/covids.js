@@ -8,7 +8,7 @@ const numOfStars = 75,
       medium = 40,
       large = 70,
       gompei_size = 50,
-      ship_thrust = .01
+      ship_thrust = .1
 
 let virus_img
 let sanitizer_img
@@ -58,7 +58,7 @@ function generateStar(){
   star.inPlay = false
 
   const set = randomChoice([{life:1, size:small}, {life:2, size:medium}, {life:3, size:large}])
-  star.diam = set.size
+  star.diam = set.size - 10
   star.lives = set.life
   stars.push(star) //Now add the star to the list
 }
@@ -110,10 +110,7 @@ function moveShip(){
      acc = createVector(0, ship.thrust) //Add acceleration pointin along ship's axis (up)
      acc.rotate(ship.rotation) //Rotate by ship's rotation
   }
-  if(keyIsDown(DOWN_ARROW)){
-     acc = createVector(0, -ship.thrust) //Add acceleration pointin along ship's axis (up)
-     acc.rotate(ship.rotation) //Rotate by ship's rotation
-  }
+  if acc.
   ship.vel.add(acc)
   ship.pos.add(ship.vel)
 }
@@ -138,12 +135,7 @@ function displayShip(){
   push();
   translate(ship.pos.x, ship.pos.y)
   rotate(ship.rotation)
-  image(gompei_img, ship.pos.x, ship.pos.y, ship.diam, ship.diam)
-  beginShape();
-  vertex(0, -25);
-  vertex(15, 15);
-  vertex(-15, 15);
-  endShape();
+  image(gompei_img, -25, -25, ship.diam, ship.diam)
   pop();
 }
 
@@ -152,7 +144,7 @@ function checkShipForCollisions(targets){
   //Note this will crash if the target object does not contain a 'pos' vector.
   for (let i = 0; i < targets.length; i++){
     let t = targets[i];
-    let distance = dist(ship.pos.x, ship.pos.y, t.pos.x, t.pos.y);
+    let distance = dist(ship.pos.x, ship.pos.y, t.x, t.y);
 
     let sumOfRadii = ship.diam/2 + t.diam/2;
 
@@ -179,4 +171,6 @@ function draw() {
   displayShip()
   turnShip()
   moveShip()
+  checkShipForCollisions(stars)
+  checkEdges(ship)
 }
