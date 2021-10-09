@@ -235,4 +235,19 @@ app.delete("/workout", async (req, res) => {
   res.status(200).end();
 });
 
+app.delete("/movement", async (req, res) => {
+  
+  console.log("Deleting movement " + req.query._id);
+
+  await mongoClient
+    .db("final")
+    .collection("users")
+    .updateOne(
+      { username: req.session.username },
+      { $pull: { workouts: {$elemMatch: { _id: req.query._id } }} }//should drop entire movement elem but not workout
+    );
+
+  res.status(200).end();
+});
+
 app.listen(3000);
