@@ -119,11 +119,15 @@ app.post('/reg', function (req, res) {
 });
 
 app.get('/',auth, function(request, response) {
-    response.sendFile( __dirname + '/public/watchlist.html' )
+    response.sendFile( __dirname + '/public/index.html' )
 })
 
 app.get('/aboutus', function(request, response) {
   response.sendFile( __dirname + '/public/aboutus.html' )
+})
+
+app.get('/watchlist',auth, function(request, response) {
+  response.sendFile( __dirname + '/public/watchlist.html' )
 })
 
 app.post('/addData', bodyparser.json(), function(request, response) {

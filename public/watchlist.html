@@ -9,6 +9,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
     <style>
         body {font-family: Arial;}
@@ -54,6 +55,8 @@
     </head>
 
   <body>
+    <div id="nav-placeholder"></div>
+
     <div class="boxHolder">
       <div class="box">
         <h1>Watch List</h1>
@@ -145,19 +148,25 @@
 
 
     <script>
-        function openWatchList(evt, watchItem) {
-          var i, tabcontent, tablinks;
-          tabcontent = document.getElementsByClassName("tabcontent");
-          for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-          }
-          tablinks = document.getElementsByClassName("tablinks");
-          for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-          }
-          document.getElementById(watchItem).style.display = "block";
-          evt.currentTarget.className += " active";
+      // nav bar import function
+      $(function(){
+        $("#nav-placeholder").load("nav.html");
+      });
+
+
+      function openWatchList(evt, watchItem) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
         }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(watchItem).style.display = "block";
+        evt.currentTarget.className += " active";
+      }
     </script>
     
 
