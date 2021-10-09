@@ -1,4 +1,3 @@
-
 let color = 'black'
 let lineWidth = 50
 let undoList = []
@@ -41,7 +40,6 @@ function setup() {
     const redoBtn = document.querySelector('#redoBtn')
     redoBtn.onclick = redo
 
-
     connection = new WebSocket('ws://localhost:3323')
 
     connection.onmessage = e => {
@@ -62,6 +60,9 @@ function setup() {
             else if (data.shape === "circle" || data.shape === "square" || data.shape == "triangle"){
                 helpDrawShape(data.shape, data.isFilled, data.color, data.mX, data.mY, data.shapeSize)
             }
+            else if (data.shape === "erase"){
+                helpErase(data.lineWidth, data.mX, data.mY, data.pmX, data.pmY)
+            }
         }
     }
   }
@@ -71,6 +72,13 @@ function helpDrawLine(color, lineWidth, mouseX, mouseY, pmouseX, pmouseY){
     stroke(color)
     strokeWeight(lineWidth)
     line(mouseX, mouseY, pmouseX, pmouseY)
+}
+
+function helpErase(lineWidth, mouseX, mouseY, pmouseX, pmouseY){
+    erase()
+    strokeWeight(lineWidth)
+    line(mouseX, mouseY, pmouseX, pmouseY)
+    noErase()
 }
 
 //TODO Color changed delayed by one click 
@@ -103,10 +111,19 @@ function draw() {
         const checkDrawType = document.querySelector('input[name="action"]:checked').value
         if(checkDrawType === "Erase"){
             cursor('https://icons.iconarchive.com/icons/pixture/stationary/32/Eraser-2-icon.png', 16, 16)
-            erase()
-            strokeWeight(lineWidth)
-            line(mouseX, mouseY, pmouseX, pmouseY)
-        } else if (checkDrawType === "Draw") {
+            
+            helpErase(lineWidth, mouseX, mouseY, pmouseX, pmouseY)
+            let data = {
+                shape: "erase", 
+                mX: mouseX, 
+                mY:mouseY, 
+                pmX:pmouseX, 
+                pmY:pmouseY, 
+                lineWidth:lineWidth,
+            }
+            connection.send(JSON.stringify(data))
+        } 
+        else if (checkDrawType === "Draw") {
             cursor('https://icons.iconarchive.com/icons/custom-icon-design/flatastic-6/32/Brush-tool-icon.png', 16, 16)
             helpDrawLine(color, lineWidth, mouseX, mouseY, pmouseX, pmouseY)
            
@@ -122,13 +139,12 @@ function draw() {
             connection.send(JSON.stringify(data))
         }
     } 
-    noErase()
 }
 
 //Function for drawing shapes so it stamps only once
 function drawShapes() {
     //keep track of undo
-    undoList.push(get())
+    //undoList.push(get())
 
     //drawing shapes
     if (mouseIsPressed) {
