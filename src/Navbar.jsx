@@ -43,7 +43,7 @@ class Navbar extends React.Component {
                     {user.displayName}
                 </button>
                 <div class={menuClass} aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/profile">My</a>
+                    <a class="dropdown-item" href="/profile">My Songs</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="/logout">Log out</a>
                 </div>

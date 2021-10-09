@@ -107,7 +107,7 @@ class App extends React.Component {
                   <tr id={track._id}>
                     <td id={`title_${track._id}`}>{track.title} </td>
                     <td id={`Artist_${track._id}`}>{track.artist} </td>
-                    <td><img src={track.coverart} style={{ wdith: "10vw", height: "10vw" }}></img></td>
+                    <td><img src={track.coverart} style={{ wdith: "10vh", height: "10vh" }}></img></td>
                     <td>
                       <button class="btn btn-lg btn-danger" onClick={(e) => this.removeSong(e)}>
                         <span class="fas fa-times-circle fa-lg" aria-hiddne="true"></span>
