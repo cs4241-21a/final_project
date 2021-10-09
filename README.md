@@ -1,53 +1,73 @@
-# Note: Run the project by running bin/www in node, not app.js
-
-# Final Project
-*Due before the start of class, October 11th (final day of the term)*
-
-For your final project, you'll implement a web application that exhibits understanding of the course materials. 
-This project should provide an opportunity to both be creative and to pursue individual research and learning goals.
-
-## General description
-Your project should consist of a complete Web application, exhibiting facets of the three main sections of the course material:
-
-- Static Web page content and design. You should have a project that is accessible, easily navigable, and features significant content.
-- Dynamic behavior implemented with JavaScript (TypeScript is also allowed if your group wants to explore it).
-- Server-side programming *using Node.js*. Typically this will take the form of some sort of persistent data (database), authentication, and possibly server-side computation. 
-- A video (less than five minutes) where each group member explains some aspect of the project. An easy way to produce this video is for you all the groups members to join a Zoom call that is recorded; each member can share their screen when they discuss the project or one member can "drive" the interface while other members narrate (this second option will probably work better.) The video should be posted on YouTube or some other accessible video hosting service. Make sure your video is less than five minutes, but long enough to successfully  explain your project and show it in action. There is no minimum video length.
-
-## Project ideation
-Excellent projects typically serve someone/some group; for this assignment you need to define your users and stakeholders. I encourage you to identify projects that will have impact, either artistically, politically, or in terms of productivity. 
-
-## Logistics
-### Team size
-Students are will work in teams of 3-5 students for the project; teams of two can be approved with the permission of the instructor. Working in teams should help enable you to build a good project in a limited amount of time.  Use the `#project-logistics` channel in Discord to pitch ideas for final projects and/or find fellow team members as needed.
-
-Teams must be in place by end of day on Saturday, September 25th. If you have not identified a team at this point, you will be assigned a team. You will be given some class time on Monday to work on your proposal, but please plan on reserving additional time as needed.
-
-### Deliverables
-
-__Proposal:__ 
-Provide an outline of your project direction and the names of associated team members. 
-The outline should have enough detail so that staff can determine if it meets the minimum expectations, or if it goes too far to be reasonable by the deadline. Please include a general description of a project, and list of key technologies/libraries you plan on using (e.g. React, Three.js, Svelte, TypeScript etc.). Name the file proposal.md and submit a pull request.
-Submit a PR to turn it in by Monday, September 27th at11:59 PM. Only one pull request is required per team.
-
-There are no other scheduled checkpoints for your project. 
-
-#### Turning in Your Outline / Project
+#Synchronous MS Paint
 Submit a second PR on the final project repo to turn in your app and code. Again, only one pull request per team.
 
 Deploy your app, in the form of a webpage, to Glitch/Heroku/Digital Ocean or some other service; it is critical that the application functions correctly wherever you post it.
 
 The README for your second pull request doesn’t need to be a formal report, but it should contain:
 
-1. A brief description of what you created, and a link to the project itself (two paragraphs of text)
-2. Any additional instructions that might be needed to fully use your project (login information etc.)
-3. An outline of the technologies you used and how you used them.
-4. What challenges you faced in completing the project.
-5. What each group member was responsible for designing / developing.
-6. A link to your project video.
+##1. A brief description of what you created, and a link to the project itself (two paragraphs of text)
+   
+    
+   Link to project: [mspaint.edit2014.com](mspaint.edit2014.com)
 
-Think of 1,3, and 4 in particular in a similar vein to the design / tech achievements for A1—A4… make a case for why what you did was challenging and why your implementation deserves a grade of 100%.
+   This project was designed to allow for real-time collaboration on an html canvas. Authenticated users can draw using brush strokes, add hollow or filled shapes, or clear the html canvas. Any changes to the state of the canvas will be mirrored on other authenticated users' pages, and any user that connects to the application will see the current state of the canvas.
 
-## FAQs
+   The following sections of this readme will detail different segments of the project's development and how to use our application. This team worked hard to make a functional application that evokes the nostalgia of opening up MSPaint on your parents' computer and drawing with friends. We hope it provides whomever uses it with a similar sense of joy.
+   
+##2. Any additional instructions that might be needed to fully use your project (login information etc.)
+   
+You can make your own login, or use the below test account:
+   
+   ```
+    Username: test
+    Password: test
+   ```
+   
+Share the [link](mspaint.edit2014.com) with another person, or open the link in another browser tab to experience the simultaneous paint experience. 
+## 3. An outline of the technologies you used and how you used them.
+   
+- Websockets
+  - Used to handle client <--> server communications, specifically:
+    - send drawn elements from client
+    - send drawn elements to all other clients
+- p5.js
+  - Used to handle all drawing aspects of the canvas area
+- MongoDB
+  - Used to store usernames and passwords
+- Express
+  - Used to serve all pages
+  - Stores the latest canvas file and recently drawn elements
+  - Morgan was used to log all connections
+  - cookie-session was used for authentication
+  - serve-favicon was used to serve the favicon
+  - serve-static was used to serve all static files
 
-- **Can I use XYZ framework?** You can use any web-based frameworks or tools available, but for your server programming you need to use Node.js. Your client-side scripting language should be either JavaScript or TypeScript.
+## 4. What challenges you faced in completing the project.
+- Websockets
+  - Converting canvas data and drawn elements into JSON-compatible formats for communicating to the server and clients
+  - Heroku doesn't support unsecure websockets, so the project is hosted on an Ubuntu server, which doesn't care 
+- 
+
+## 5. What each group member was responsible for designing / developing.
+Maddison Caten
+- Implemented authentication
+
+Lia Davis
+- Researched and Implemented Websocket functionality
+- Windows 98 Styling
+
+Victoria Grasso
+  - Implemented drawing shapes
+  - Set up MongoDB
+
+Maylee Gagnon
+  - Implemented base drawing functionality
+  - Developed methods for sending Real-Time data of drawn elements
+
+Morgan Lee
+  - Worked on the basic layout for drawing page
+  - Implemented saving image data for load on refresh/new connection
+  - Implemented favicon
+
+## 6. A link to your project video.
+[Who knows](example.com)
