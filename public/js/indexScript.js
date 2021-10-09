@@ -12,6 +12,7 @@ let connection
 
 const changeColor = function(event){
     color = document.querySelector( '#colorSelector').value
+    console.log("changed color", color)
 }
 
 const changeWidth = function(event){
@@ -105,6 +106,7 @@ function helpErase(lineWidth, mouseX, mouseY, pmouseX, pmouseY){
 
 //TODO Color changed delayed by one click 
 function helpDrawShape(shape, isFilled, color, mouseX, mouseY, shapeSize){
+    console.log(color)
     if (isFilled){
         fill(color)
         strokeWeight(0)
@@ -170,13 +172,14 @@ function draw() {
 function drawShapes() {
     //keep track of undo
     //undoList.push(get())
-
+    
     //drawing shapes
     if (mouseIsPressed) {
         //Check which drawing mode it is in -> shapes get stamped
         const checkDrawType = document.querySelector('input[name="action"]:checked').value
         const checkFillShape = document.getElementById("fillShape").checked
         const shapeSize = document.getElementById("myRange").value
+        theColor = document.querySelector( '#colorSelector').value
         if(checkDrawType === "Circle" || checkDrawType === "Square" || checkDrawType === "Triangle"){
             cursor('grab')
             let shape;
@@ -193,11 +196,11 @@ function drawShapes() {
             if(checkFillShape === true) {
                 isFilled = true
             } 
-            helpDrawShape(shape, isFilled, color, mouseX, mouseY, shapeSize)
+            helpDrawShape(shape, isFilled, theColor, mouseX, mouseY, shapeSize)
             let data = {
                 shape: shape,
                 isFilled: isFilled,
-                color:color, 
+                color:theColor, 
                 mX:mouseX, 
                 mY:mouseY,
                 shapeSize:shapeSize,
@@ -205,6 +208,7 @@ function drawShapes() {
             connection.send(JSON.stringify(data))
         }
     }//end if mousepressed
+    return false
 }
 
 
