@@ -4,6 +4,7 @@ const express = require("express"),
   app = express(),
   fs = require("fs"),
   mime = require("mime"),
+  cors = require("cors"),
   mongodb = require("mongodb"),
   bodyParser = require("body-parser");
 MongoClient = mongodb.MongoClient;
@@ -18,6 +19,8 @@ const DiscordStrategy = require("passport-discord").Strategy;
 const { profile } = require("console");
 const { LensTwoTone } = require("@mui/icons-material");
 scopes = ["identify"];
+
+app.use(cors());
 
 app.use(
   session({
@@ -45,30 +48,49 @@ passport.deserializeUser(function (id, cb) {
   cb(null, id);
 });
 
-const isAuth = (req, res, next) => {
-  if (req.user) {
-    next();
-  } else {
-    res.redirect("/build/login.html");
-  }
-};
-
-app.get("/login", (request, response) => {
+app.get(["/login.html", "/login"], (request, response) => {
   if (request.user) {
-    return response.redirect("/"); // redirect according to profile
+    return response.redirect("/dashboard.html"); // redirect according to profile
   }
   sendFile(response, __dirname + "/build/login.html");
 });
 
 // simple testing to route to login initially -> change for final version
-app.get("/", (request, response) =>
-  sendFile(response, __dirname + "/build/login.html")
+app.get(
+  "/",
+  (request, response) => response.redirect("/login.html") // redirect according to profile
 );
-app.get("/build/dashboard.html", (request, response) =>
-  sendFile(response, __dirname + "/build/dashboard.html")
+
+app.get(
+  ["/build/dashboard.html", "/dashboard.html", "/dashboard"],
+  async (request, response) => {
+    if (request.user) {
+      let user = null;
+      let dbPromise_user = collection_profile
+        .findOne({ profileID: Number(profileID) })
+        .then((read_data) => (user = read_data));
+
+      await dbPromise_user;
+
+      if (user) {
+        sendFile(response, __dirname + "/build/dashboard.html");
+      } else {
+        response.redirect("/profile.html");
+      }
+    } else {
+      return response.redirect("/login");
+    }
+  }
 );
-app.get("/build/profile.html", (request, response) =>
-  sendFile(response, __dirname + "/build/profile.html")
+app.get(
+  ["/build/profile.html", "/profile.html", "/profile"],
+  async (request, response) => {
+    if (request.user) {
+      sendFile(response, __dirname + "/build/profile.html");
+    } else {
+      return response.redirect("/login");
+    }
+  }
 );
 
 // Handles sending a file over to the front end
@@ -90,7 +112,7 @@ const sendFile = function (response, filename) {
 };
 
 app.get("/logout", (request, response) => {
-  console.log(request.user)
+  // console.log(request.user);
   request.logOut();
   response.redirect("/login");
 });
@@ -98,7 +120,7 @@ app.get("/logout", (request, response) => {
 async function handle_login(req, res) {
   let user = null;
   let dbPromise_user = collection_profile
-    .findOne({ profileID: profileID })
+    .findOne({ profileID: Number(profileID) })
     .then((read_data) => (user = read_data));
 
   await dbPromise_user;
@@ -121,9 +143,6 @@ passport.use(
     function (accessToken, refreshToken, profile, done) {
       profileID = profile.id;
 
-      // collection_profile.insertOne({
-      //   profileID: profile.id,
-      // });
       cb(null, profile);
     }
   )
@@ -155,10 +174,6 @@ passport.use(
     function (accessToken, refreshToken, profile, cb) {
       profileID = profile.id;
 
-      // collection_profile.insertOne({
-      //   profileID: profile.id,
-      // });
-
       cb(null, profile);
     }
   )
@@ -187,10 +202,6 @@ passport.use(
     },
     function (request, accessToken, refreshToken, profile, done) {
       profileID = profile.id;
-
-      // collection_profile.insertOne({
-      //   profileID: profile.id,
-      // });
 
       return done(null, profile);
     }
@@ -225,10 +236,6 @@ passport.use(
     },
     function (accessToken, refreshToken, profile, cb) {
       profileID = profile.id;
-
-      // collection_profile.insertOne({
-      //   profileID: profile.id,
-      // });
 
       return cb(null, profile);
     }
@@ -376,15 +383,15 @@ const getAllPosts = async function () {
   // Area to ensure that skills and languages is not undefined
   for (let k = 0; k < json.length; k++) {
     if (json[k].skills === undefined) {
-      json[k].skills = []
+      json[k].skills = [];
     }
     if (json[k].languages === undefined) {
-      json[k].languages = []
+      json[k].languages = [];
     }
-
   }
 
-  console.log(json)
+
+  // console.log(json);
 
   return json;
 };
@@ -408,7 +415,7 @@ app.post("/submit", async (request, response) => {
       bodyContent: request.body.description,
       header: request.body.title,
       date: request.body.date,
-      postedByProfile: profileID,
+      postedByProfile: Number(profileID),
       forClassNumber: courseNum,
       forClassDepartment: courseDep,
     })
@@ -433,10 +440,6 @@ app.post("/submit", async (request, response) => {
   let json = await getAllPosts();
   response.json(json);
 });
-
-
-
-
 
 app.post("/filter", async (request, response) => {
   let json = await getAllPosts();
@@ -494,110 +497,150 @@ app.post("/filter", async (request, response) => {
   response.json(newJson3);
 });
 
+app.get("/profile", (request, response) => {
+  response.sendFile(__dirname + "/build/profile.html");
+});
 
-app.get('/profile', (request, response) => {
-    response.sendFile(__dirname + "/build/profile.html")
-})
+
+app.post("/create_profile", bodyParser.json(), async (request, response) => {
+  await collection_profile.deleteMany({ profileID: Number(profileID) });
+
+  let allSkills = request.body.skills.concat(request.body.languages);
 
 
-let sample_db ={
-    firstName: "Ashley",
-    lastName: "Burke",
-    phoneNum: 7818798775,
-    grade: "Freshman",
-    courses: [],
-    skills: [],
-    languages: [],
-    bio: "My bio"
+  await insertStudentClassRelation(request.body.courses);
+  await insertStudentSkillRelation(allSkills);
+
+
+  jsonToInsert = {
+    profileID: Number(profileID),
+    linkToProfilePic: "",
+    bio: request.body.bio,
+    firstName: request.body.firstName,
+    lastName: request.body.lastName,
+    grade: request.body.grade,
+    phoneNum: request.body.phoneNum,
+  };
+
+  await collection_profile.insertOne(jsonToInsert).then((result) => {
+    //console.log(result)
+  });
+
+  response.json();
+});
+
+app.post("/get_profile", bodyParser.json(), async (request, response) => {
+  let profile = null;
+  await collection_profile
+    .find({ profileID: Number(profileID) })
+    .toArray()
+    .then(async (read_data) => {
+      if (read_data.length > 0) {
+        profile = read_data[0];
+        let allSkills = null;
+        let studentSkills = null;
+        let studentClasses = null;
+
+        await collection_studentSkillRelation
+          .find({ profileID: Number(profileID) })
+          .toArray()
+          .then((read_data) => (studentSkills = read_data));
+
+        await collection_studentClassRelation
+          .find({ profileID: Number(profileID) })
+          .toArray()
+          .then((read_data) => (studentClasses = read_data));
+
+        await collection_skill
+          .find({})
+          .toArray()
+          .then((read_data) => (allSkills = read_data));
+
+        let skills = [];
+        let languages = [];
+        let courses = [];
+
+        for (let i = 0; i < studentClasses.length; i++) {
+          if (studentClasses[i].classDepartment === "personal") {
+            courses.push("personal");
+          } else {
+            courses.push(studentClasses[i].classCourseNumber);
+          }
+        }
+
+        for (let j = 0; j < studentSkills.length; j++) {
+          let skillName = studentSkills[j].skill;
+          for (let k = 0; k < allSkills.length; k++) {
+            if (allSkills[k].skill === skillName) {
+              if (allSkills[k].category === "Programming Languages") {
+                languages.push(skillName);
+                break;
+              } else {
+                skills.push(skillName);
+                break;
+              }
+            }
+          }
+        }
+
+        profile.courses = courses;
+        profile.skills = skills;
+        profile.languages = languages;
+
+        response.json(profile);
+      } else {
+        response.json({});
+      }
+    });
+});
+
+
+async function insertStudentClassRelation(classNames) {
+  await collection_studentClassRelation.deleteMany({ profileID: Number(profileID) });
+
+  //console.log("removed courses already there. ")
+
+  for (let i = 0; i < classNames.length; i++) {
+    let json = null;
+    if (classNames[i] === "personal") {
+      json = {
+        profileID: Number(profileID),
+        classCourseNumber: "",
+        classDepartment: classNames[i],
+      };
+    } else {
+      json = {
+        profileID: Number(profileID),
+        classCourseNumber: classNames[i],
+        classDepartment: "CS",
+      };
+
+    }
+    //console.log("insert into studentClassRElation: ", json)
+
+    await collection_studentClassRelation.insertOne(json).then((result) => {
+      //console.log(result)
+    });
+  }
 }
 
-app.post('/create_profile', bodyParser.json(), (request, response) => {
-
-    collection_profile.deleteMany({profileID})
-    
-    // console.log("removed_courses already there")
-
-    // console.log("profileID: ", profileID)
-    // console.log("request: ", request.body)
-
-        
-    insertStudentClassRelation(request.body.courses)
-    insertStudentSkillRelation(request.body.skills)
-
-    jsonToInsert = {
-        profileID: profileID,
-        firstName: request.body.firstName,
-        lastName: request.body.lastName,
-        phoneNum: request.body.phoneNum,
-        grade: request.body.grade,
-        courses: request.body.courses,
-        skills: request.body.skills,
-        languages: request.body.languages,
-        bio: request.body.bio
-    }
+async function insertStudentSkillRelation(skills) {
+  await collection_studentSkillRelation.deleteMany({ profileID: Number(profileID) });
 
 
-        collection_profile.insertOne(jsonToInsert)
-        .then( result => {
-            console.log(result)
-        })
+  //console.log("removed courses already there. ")
 
-})
+  for (let i = 0; i < skills.length; i++) {
+    let json = {
+      profileID: Number(profileID),
+      skill: skills[i],
+    };
+    //console.log("insert into studentSkillRelation: ", json)
 
-app.post('/get_profile', bodyParser.json(), (request, response) => {
-    collection_profile.find({profileID}).toArray()
-    .then( dbJSON => { 
-        console.log(dbJSON)
-        if(dbJSON.length > 0){
-            response.json(dbJSON[0])
-        }
-        else{
-            response.json({})
-        }
-    })
-})
-
-function insertStudentClassRelation(classNames){
-    let i = 0;
-
-    collection_studentClassRelation.deleteMany({profileID})
-
-    // console.log("removed courses already there. ")
-
-    for(i = 0; i < classNames.length; i++){
-        json = {
-            profileID, 
-            classCourseNumber: classNames[i]
-        }
-        // console.log("insert into studentClassRElation: ", json)
-
-        collection_studentClassRelation.insertOne(json)
-        // .then( result => {
-        //     console.log(result)
-        // })
-    }
-}
-
-
-function insertStudentSkillRelation(classNames){
-    let i = 0;
-
-    collection_studentSkillRelation.deleteMany({profileID})
-
-    // console.log("removed courses already there. ")
-
-    for(i = 0; i < classNames.length; i++){
-        json = {
-            profileID, 
-            classCourseNumber: classNames[i]
-        }
-        // console.log("insert into studentSkillRelation: ", json)
-
-        collection_studentSkillRelation.insertOne(json)
-        // .then( result => {
-        //     console.log(result)
-        // })
-    }
+    await collection_studentSkillRelation.insertOne(json).then((result) => {
+      //console.log(result)
+    });
+  }
 }
 
 
@@ -622,6 +665,5 @@ app.post('/delete_post', bodyParser.json(), (request, response) => {
     //     console.log("different user")
     // }
 })
-
 
 app.listen(process.env.PORT || 3000);
