@@ -30,12 +30,12 @@ client.connect()
   .then( __collection => {
     // store reference to collection
     loginCollection = __collection
-    console.log(loginCollection)
+    //console.log(loginCollection)
     // blank query returns all documents
     loginCollection.createIndex({"username": 1}, {unique: true})
     return loginCollection.find({ }).toArray()
   })
-  .then( console.log )
+  //.then( console.log )
 
 let user = null;
 
