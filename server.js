@@ -67,7 +67,7 @@ app.get(
     if (request.user) {
       let user = null;
       let dbPromise_user = collection_profile
-        .findOne({ profileID: profileID })
+        .findOne({ profileID: Number(profileID) })
         .then((read_data) => (user = read_data));
 
       await dbPromise_user;
