@@ -38,6 +38,7 @@ h2 {
   /* flex-direction: row; */
   width: 100%;
   height: 100px;
+  z-index: 1;
 }
 
 /* Changing the button look on hover */
@@ -62,6 +63,12 @@ button:hover {
   margin-right: 0px;
 }
 
+
+.delete_post_icon{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
 .post_title {
   border-bottom: 3px solid var(--black);
   border-left: 5px solid var(--black);
@@ -69,6 +76,9 @@ button:hover {
   border-top: 5px solid var(--black);
   background-color: var(--red);
   color: var(--white);
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: auto 53px;
   /* padding: 3px; */
   margin: 0px;
 }
@@ -261,3 +271,47 @@ select {
     ". welcome ."
     ". oauth_buttons .";
 }
+
+/* Profile pictue icon */
+.avatar {
+  vertical-align: middle;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+  /* Logout button on right hand corner */
+  .logoutLblPos{
+    position:fixed;
+    right:10px;
+    top:5px;
+  }
+
+  /* Save and back buttons on bottom of screen */
+  button {
+    width: 80px;
+    padding: 5px;
+    margin: 0 3px;
+    background-color: hsl(30, 19%, 89%);
+    outline: none;
+  }
+  
+  button:hover {
+    box-shadow: 2px 2px 3px ;
+  }
+  
+  button:active {
+    box-shadow: 1px 1px 3px ;
+  }
+  
+  #container {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+  }
+
+  #edit {
+    padding: 5px;
+    outline: none;
+  }

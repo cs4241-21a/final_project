@@ -1,14 +1,46 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./css/styles.css";
+// import Kabob from "./kabob";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 // Make sure to run 'npm run build'
 
 class Post extends React.Component {
+    constructor(props){
+        super(props)
+
+        this.click = this.click.bind(this)
+    }
+
+    click(event){
+        // console.log("icon clicked")
+        console.log("creatorID: ", this.props.profileID)
+        let request = {
+            creatorID: this.props.profileID
+        }
+        
+        fetch('/delete_post', {
+            method:'POST',
+            body: JSON.stringify(request),
+            headers:{
+                "Content-Type": "application/json"
+            }
+        })
+        .then(response => response.json())
+        .then(json => console.log(json))
+
+        
+    }
+
   render() {
     return (
       <tr class="post_entry_container_outer">
         <td class="post_entry_container_inner">
-          <h3 class="post_title">{this.props.header}</h3>
+          <div class="post_title">
+            <h3>{this.props.header}</h3>
+            {/* <Kabob profileID={this.props.profileID}></Kabob> */}
+            <DeleteForeverIcon class="delete_post_icon" fontSize="small" onClick={this.click}/>
+          </div>
           <div class="post_data_container">
             <b>Post Author: </b>
             {`${this.props.firstName} ${this.props.lastName}`}
@@ -46,7 +78,10 @@ class Dashboard extends React.Component {
   load() {
     fetch("/posts", { method: "get", "no-cors": true })
       .then((response) => response.json())
-      .then((json) => this.setState({ posts: json }));
+      .then((json) => {
+          this.setState({ posts: json })
+          console.log("json: ", json)
+        });
   }
 
   submit(e) {
@@ -149,17 +184,6 @@ class Dashboard extends React.Component {
             <a href="/logout" type="button" class="logout_link">
               Log Out
             </a>
-            {/* <button>
-              <a href="/profile" type="button" class="forum_cell_button">
-                Profile
-              </a>
-            </button>
-            <button>
-              <a href="/logout" type="button" class="forum_cell_button">
-                Log Out
-              </a>
-            </button> */}
-            {/* </header> */}
           </div>
           <div class="input_fields_area">
             <h1 class="section_title">Dashboard</h1>
@@ -524,3 +548,18 @@ class Dashboard extends React.Component {
 
 var mountNode = document.getElementById("dashboard");
 ReactDOM.render(<Dashboard />, mountNode);
+
+
+var icons = document.querySelectorAll(".delete_post_icon");
+
+let i = 0
+for(i=0; i<icons.length; i++){
+    icons[i].addEventListener("mouseover", changeDef);
+}
+
+
+
+
+function changeDef(){
+    console.log("hovered icon")
+}

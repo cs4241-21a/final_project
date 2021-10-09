@@ -4,7 +4,8 @@ const express = require("express"),
   app = express(),
   fs = require("fs"),
   mime = require("mime"),
-  mongodb = require("mongodb");
+  mongodb = require("mongodb"),
+  bodyParser = require("body-parser");
 MongoClient = mongodb.MongoClient;
 
 // OAuth Code
@@ -14,6 +15,8 @@ const OutlookStrategy = require("passport-outlook").Strategy;
 const GitHubStrategy = require("passport-github").Strategy;
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const DiscordStrategy = require("passport-discord").Strategy;
+const { profile } = require("console");
+const { LensTwoTone } = require("@mui/icons-material");
 scopes = ["identify"];
 
 app.use(
@@ -87,9 +90,27 @@ const sendFile = function (response, filename) {
 };
 
 app.get("/logout", (request, response) => {
+  console.log(request.user)
   request.logOut();
   response.redirect("/login");
 });
+
+async function handle_login(req, res) {
+  let user = null;
+  let dbPromise_user = collection_profile
+    .findOne({ profileID: profileID })
+    .then((read_data) => (user = read_data));
+
+  await dbPromise_user;
+
+  // console.log(user);
+
+  if (user) {
+    res.redirect("/dashboard.html");
+  } else {
+    res.redirect("/profile.html");
+  }
+}
 
 passport.use(
   new OutlookStrategy(
@@ -100,9 +121,9 @@ passport.use(
     function (accessToken, refreshToken, profile, done) {
       profileID = profile.id;
 
-      collection_profile.insertOne({
-        profileID: profile.id,
-      });
+      // collection_profile.insertOne({
+      //   profileID: profile.id,
+      // });
       cb(null, profile);
     }
   )
@@ -120,20 +141,7 @@ app.get(
   passport.authenticate("windowslive", { failureRedirect: "/login" }),
   async function (req, res) {
     // Successful authentication
-    // check if they have an account, redirect accordingly
-
-    let user = null;
-    let dbPromise_user = collection_profile
-      .findOne({ profileID: profileID })
-      .then((read_data) => (user = read_data));
-
-    await dbPromise_user;
-
-    if (user) {
-      res.redirect("/dashboard.html");
-    } else {
-      res.redirect("/profile.html");
-    }
+    handle_login(req, res);
   }
 );
 
@@ -147,9 +155,9 @@ passport.use(
     function (accessToken, refreshToken, profile, cb) {
       profileID = profile.id;
 
-      collection_profile.insertOne({
-        profileID: profile.id,
-      });
+      // collection_profile.insertOne({
+      //   profileID: profile.id,
+      // });
 
       cb(null, profile);
     }
@@ -163,20 +171,7 @@ app.get(
   passport.authenticate("github", { failureRedirect: "/" }),
   async function (req, res) {
     // Successful authentication
-    // check if they have an account, redirect accordingly
-
-    let user = null;
-    let dbPromise_user = collection_profile
-      .findOne({ profileID: profileID })
-      .then((read_data) => (user = read_data));
-
-    await dbPromise_user;
-
-    // if (user) {
-    res.redirect("/dashboard.html");
-    // } else {
-    // res.redirect("/profile.html");
-    // }
+    handle_login(req, res);
   }
 );
 
@@ -193,9 +188,9 @@ passport.use(
     function (request, accessToken, refreshToken, profile, done) {
       profileID = profile.id;
 
-      collection_profile.insertOne({
-        profileID: profile.id,
-      });
+      // collection_profile.insertOne({
+      //   profileID: profile.id,
+      // });
 
       return done(null, profile);
     }
@@ -216,20 +211,7 @@ app.get(
 
   async function (req, res) {
     // Successful authentication
-    // check if they have an account, redirect accordingly
-
-    let user = null;
-    let dbPromise_user = collection_profile
-      .findOne({ profileID: profileID })
-      .then((read_data) => (user = read_data));
-
-    await dbPromise_user;
-
-    if (user) {
-      res.redirect("/dashboard.html");
-    } else {
-      res.redirect("/profile.html");
-    }
+    handle_login(req, res);
   }
 );
 
@@ -244,9 +226,9 @@ passport.use(
     function (accessToken, refreshToken, profile, cb) {
       profileID = profile.id;
 
-      collection_profile.insertOne({
-        profileID: profile.id,
-      });
+      // collection_profile.insertOne({
+      //   profileID: profile.id,
+      // });
 
       return cb(null, profile);
     }
@@ -262,20 +244,7 @@ app.get(
   }),
   async function (req, res) {
     // Successful authentication
-    // check if they have an account, redirect accordingly
-
-    let user = null;
-    let dbPromise_user = collection_profile
-      .findOne({ profileID: profileID })
-      .then((read_data) => (user = read_data));
-
-    await dbPromise_user;
-
-    if (user) {
-      res.redirect("/dashboard.html");
-    } else {
-      res.redirect("/profile.html");
-    }
+    handle_login(req, res);
   }
 );
 
@@ -452,6 +421,10 @@ app.post("/submit", async (request, response) => {
   response.json(json);
 });
 
+
+
+
+
 app.post("/filter", async (request, response) => {
   let json = await getAllPosts();
   let noCourse = false;
@@ -507,5 +480,122 @@ app.post("/filter", async (request, response) => {
   }
   response.json(newJson3);
 });
+
+
+app.get('/profile', (request, response) => {
+    response.sendFile(__dirname + "/build/profile.html")
+})
+
+
+let sample_db ={
+    firstName: "Ashley",
+    lastName: "Burke",
+    phoneNum: 7818798775,
+    grade: "Freshman",
+    courses: [],
+    skills: [],
+    languages: [],
+    bio: "My bio"
+}
+
+app.post('/create_profile', bodyParser.json(), (request, response) => {
+
+    collection_profile.deleteMany({profileID})
+    
+    console.log("removed_courses already there")
+
+    console.log("profileID: ", profileID)
+    console.log("request: ", request.body)
+
+        
+    // insertStudentClassRelation(request.body.courses)
+    // insertStudentSkillRelation(request.body.skills)
+
+    jsonToInsert = {
+        profileID: profileID,
+        firstName: request.body.firstName,
+        lastName: request.body.lastName,
+        phoneNum: request.body.phoneNum,
+        grade: request.body.grade,
+        courses: request.body.courses,
+        skills: request.body.skills,
+        languages: request.body.languages,
+        bio: request.body.bio
+    }
+
+
+        collection_profile.insertOne(jsonToInsert)
+        .then( result => {
+            console.log(result)
+        })
+
+})
+
+app.post('/get_profile', bodyParser.json(), (request, response) => {
+    collection_profile.find({profileID}).toArray()
+    .then( dbJSON => { 
+        console.log(dbJSON)
+        if(dbJSON.length > 0){
+            response.json(dbJSON[0])
+        }
+        else{
+            response.json({})
+        }
+    })
+})
+
+function insertStudentClassRelation(classNames){
+    let i = 0;
+
+    collection_studentClassRelation.deleteMany({profileID})
+
+    console.log("removed courses already there. ")
+
+    for(i = 0; i < classNames.length; i++){
+        json = {
+            profileID, 
+            classCourseNumber: classNames[i]
+        }
+        console.log("insert into studentClassRElation: ", json)
+
+        collection_studentClassRelation.insertOne(json)
+        .then( result => {
+            console.log(result)
+        })
+    }
+}
+
+
+function insertStudentSkillRelation(classNames){
+    let i = 0;
+
+    collection_studentSkillRelation.deleteMany({profileID})
+
+    console.log("removed courses already there. ")
+
+    for(i = 0; i < classNames.length; i++){
+        json = {
+            profileID, 
+            classCourseNumber: classNames[i]
+        }
+        console.log("insert into studentSkillRelation: ", json)
+
+        collection_studentSkillRelation.insertOne(json)
+        .then( result => {
+            console.log(result)
+        })
+    }
+}
+
+
+app.post('/delete_post', bodyParser.json(), (request, response) => {
+    if(request.body.creatorID === profileID){
+        console.log("same user")
+    }
+    else{
+        console.log("different user")
+    }
+})
+
 
 app.listen(process.env.PORT || 3000);
