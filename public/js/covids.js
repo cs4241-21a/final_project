@@ -23,6 +23,7 @@ let gompei_img
 let ship = {}
 let stars = []
 let masks = []
+let otherShips = {};
 
 function randomChoice(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
@@ -93,7 +94,7 @@ function drawStars(){
   }
 }
 
-function generateMask(ship){
+function generateMask(){
   let mask = {}
   mask.pos = createVector(ship.pos.x, ship.pos.y-50).rotate(ship.rotation)
   let div = Math.sqrt(Math.pow(ship.vel.x, 2) + Math.pow(ship.vel.y, 2))
@@ -109,12 +110,14 @@ function removeMask(mask){
 }
 
 function generateShip() {
-  ship.pos = createVector(width/2, height/2);
-  ship.vel = createVector(0, 0);
-  ship.diam = gompei_size
-  ship.thrust = ship_thrust
-  ship.rotation = 0
-  ship.lives = num_lives
+  let sh = {};
+  sh.pos = createVector(width/2, height/2);
+  sh.vel = createVector(0, 0);
+  sh.diam = gompei_size
+  sh.thrust = ship_thrust
+  sh.rotation = 0
+  sh.lives = num_lives
+  return sh;
 }
 
 function turnShip() {
@@ -128,8 +131,9 @@ function turnShip() {
 }
 
 function shoot(){
-  if (keyIsDown(SPACE)) {
-    generateMask
+  if (keyIsDown(32) ) {
+    print("SPACE")
+    generateMask()
   }
 }
 
@@ -162,11 +166,11 @@ function checkEdges(obj) {
   }
 }
 
-function displayShip(){
+function displayShip(obj=ship){
   push();
-  translate(ship.pos.x, ship.pos.y)
-  rotate(ship.rotation)
-  image(gompei_img, -25, -25, ship.diam, ship.diam)
+  translate(obj.pos.x, obj.pos.y)
+  rotate(obj.rotation)
+  image(gompei_img, -25, -25, obj.diam, obj.diam)
   pop();
 }
 
@@ -186,8 +190,14 @@ function blinkShip(counter){
     
   }
 }
+  
+function checkMasksForCollisions(){
+  for (mask in masks) {
+    checkForCollisions(mask, stars)
+  }
+}
 
-function checkShipForCollisions(targets){
+function checkForCollisions(curr, targets){
   
   //Note this will crash if the target object does not contain a 'pos' vector.
   for (let i = 0; i < targets.length; i++){
@@ -207,7 +217,7 @@ function checkShipForCollisions(targets){
 function setup() {
   createCanvas(750, 750) //make the size of the display whatever size the window is
   generateStars()
-  generateShip()
+  ship = generateShip()
   virus_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fcoronavirus.png?v=1633701999099')
   sanitizer_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fhand-sanitizer.png?v=1633702007208')
   mask_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fmedical-mask.png?v=1633702003055')
@@ -238,12 +248,17 @@ function draw() {
   background(255)
   drawStars()
   displayShip()
+  for (let [k, v] of Object.entries(otherShips)) {
+    displayShip(v);
+  }
   turnShip()
   moveShip()
-  checkShipForCollisions(stars)
-  checkMasksForCollisions(masks, stars)
+  shoot()
+  checkForCollisions(ship, stars)
+  checkMasksForCollisions()
   checkEdges(ship)
   checkLives()
+  displayMasks()
   if(GameOver){
     return
   }
@@ -264,6 +279,21 @@ function connectWS(){
         case "joined_lobby":
           {
             inLobby = true;
+          }
+          break;
+        case "joined":
+          {
+            let sh = generateShip();
+            otherShips[json.id] = sh;
+          }
+          break;
+        case "update_player":
+          {
+            otherShips[json.id].pos.x = json.x;
+            otherShips[json.id].pos.y = json.y;
+            otherShips[json.id].vel.x = json.vx;
+            otherShips[json.id].vel.y = json.vy;
+            otherShips[json.id].rotation = json.angle;
           }
           break;
       }
