@@ -54,7 +54,6 @@ function setup() {
         if (!failed){
             console.log(data.shape)
             if (data.shape === "line"){
-                //TODO fix on refresh draws a circle at location of the last line drawn 
                 helpDrawLine(data.color, data.lineWidth, data.mX, data.mY, data.pmX, data.pmY)
             }
             else if (data.shape === "circle" || data.shape === "square" || data.shape == "triangle"){
