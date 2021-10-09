@@ -90,7 +90,7 @@ const sendFile = function (response, filename) {
 };
 
 app.get("/logout", (request, response) => {
-  console.log(request.user)
+  //console.log(request.user)
   request.logOut();
   response.redirect("/login");
 });
@@ -376,15 +376,14 @@ const getAllPosts = async function () {
   // Area to ensure that skills and languages is not undefined
   for (let k = 0; k < json.length; k++) {
     if (json[k].skills === undefined) {
-      json[k].skills = []
+      json[k].skills = [];
     }
     if (json[k].languages === undefined) {
-      json[k].languages = []
+      json[k].languages = [];
     }
-
   }
 
-  console.log(json)
+  //console.log(json)
 
   return json;
 };
@@ -433,10 +432,6 @@ app.post("/submit", async (request, response) => {
   let json = await getAllPosts();
   response.json(json);
 });
-
-
-
-
 
 app.post("/filter", async (request, response) => {
   let json = await getAllPosts();
@@ -494,107 +489,104 @@ app.post("/filter", async (request, response) => {
   response.json(newJson3);
 });
 
+app.get("/profile", (request, response) => {
+  response.sendFile(__dirname + "/build/profile.html");
+});
 
-app.get('/profile', (request, response) => {
-    response.sendFile(__dirname + "/build/profile.html")
-})
+app.post("/create_profile", bodyParser.json(), (request, response) => {
+  collection_profile.deleteMany({ profileID });
 
-app.post('/create_profile', bodyParser.json(), (request, response) => {
+  //console.log("removed_courses already there")
 
-    collection_profile.deleteMany({profileID})
-    
-    console.log("removed_courses already there")
+  //console.log("profileID: ", profileID)
+  //console.log("request: ", request.body)
 
-    console.log("profileID: ", profileID)
-    console.log("request: ", request.body)
+  insertStudentClassRelation(request.body.courses);
+  insertStudentSkillRelation(request.body.skills);
 
-        
-    insertStudentClassRelation(request.body.courses)
-    insertStudentSkillRelation(request.body.skills)
+  jsonToInsert = {
+    profileID: Number(profileID),
+    linkToProfilePic: "",
+    bio: request.body.bio,
+    firstName: request.body.firstName,
+    lastName: request.body.lastName,
+    grade: request.body.grade,
+    phoneNum: request.body.phoneNum,
+  };
 
-    jsonToInsert = {
-        profileID: profileID,
-        linkToProfilePic: "",
-        bio: request.body.bio,
-        firstName: request.body.firstName,
-        lastName: request.body.lastName,
-        grade: request.body.grade,
-        phoneNum: request.body.phoneNum,
+  collection_profile.insertOne(jsonToInsert).then((result) => {
+    //console.log(result)
+  });
+});
+
+app.post("/get_profile", bodyParser.json(), (request, response) => {
+  collection_profile
+    .find({ profileID })
+    .toArray()
+    .then((dbJSON) => {
+      //console.log(dbJSON)
+      if (dbJSON.length > 0) {
+        response.json(dbJSON[0]);
+      } else {
+        response.json({});
+      }
+    });
+});
+
+function insertStudentClassRelation(classNames) {
+  collection_studentClassRelation.deleteMany({ profileID });
+
+  //console.log("removed courses already there. ")
+
+  for (let i = 0; i < classNames.length; i++) {
+    let json = null;
+    if (classNames[i] === "personal") {
+      json = {
+        profileID: Number(profileID),
+        classCourseNumber: "",
+        classDepartment: classNames[i],
+      };
+    } else {
+      json = {
+        profileID: Number(profileID),
+        classCourseNumber: classNames[i],
+        classDepartment: "CS"
+      };
     }
+    //console.log("insert into studentClassRElation: ", json)
 
-
-        collection_profile.insertOne(jsonToInsert)
-        .then( result => {
-            console.log(result)
-        })
-
-})
-
-app.post('/get_profile', bodyParser.json(), (request, response) => {
-    collection_profile.find({profileID}).toArray()
-    .then( dbJSON => { 
-        console.log(dbJSON)
-        if(dbJSON.length > 0){
-            response.json(dbJSON[0])
-        }
-        else{
-            response.json({})
-        }
-    })
-})
-
-function insertStudentClassRelation(classNames){
-    let i = 0;
-
-    collection_studentClassRelation.deleteMany({profileID})
-
-    console.log("removed courses already there. ")
-
-    for(i = 0; i < classNames.length; i++){
-        json = {
-            profileID, 
-            classCourseNumber: classNames[i]
-        }
-        console.log("insert into studentClassRElation: ", json)
-
-        collection_studentClassRelation.insertOne(json)
-        .then( result => {
-            console.log(result)
-        })
-    }
+    collection_studentClassRelation.insertOne(json).then((result) => {
+      //console.log(result)
+    });
+  }
 }
 
+function insertStudentSkillRelation(classNames) {
+  let i = 0;
 
-function insertStudentSkillRelation(classNames){
-    let i = 0;
+  collection_studentSkillRelation.deleteMany({ profileID });
 
-    collection_studentSkillRelation.deleteMany({profileID})
+  //console.log("removed courses already there. ")
 
-    console.log("removed courses already there. ")
+  for (i = 0; i < classNames.length; i++) {
+    json = {
+      profileID,
+      classCourseNumber: classNames[i],
+    };
+    //console.log("insert into studentSkillRelation: ", json)
 
-    for(i = 0; i < classNames.length; i++){
-        json = {
-            profileID, 
-            classCourseNumber: classNames[i]
-        }
-        console.log("insert into studentSkillRelation: ", json)
-
-        collection_studentSkillRelation.insertOne(json)
-        .then( result => {
-            console.log(result)
-        })
-    }
+    collection_studentSkillRelation.insertOne(json).then((result) => {
+      //console.log(result)
+    });
+  }
 }
 
-
-app.post('/delete_post', bodyParser.json(), (request, response) => {
-    if(request.body.creatorID === profileID){
-        console.log("same user")
-    }
-    else{
-        console.log("different user")
-    }
-})
-
+app.post("/delete_post", bodyParser.json(), (request, response) => {
+  if (request.body.creatorID === profileID) {
+    //console.log("same user")
+  } else {
+    //console.log("different user")
+  }
+});
 
 app.listen(process.env.PORT || 3000);
