@@ -163,7 +163,7 @@ class Profile extends React.Component{
                             <b>Grade:</b>
                         </label>
                         <select name="grade_select" id="grade_select" multiple="" onChange={(e) => this.grade = e.target.value}>
-                            <option value="" disabled selected hidden>Choose a class</option>
+                            <option value="" disabled selected hidden>Choose your year</option>
                             <option value="Freshman">Freshman</option>
                             <option value="Junior">Junior</option>
                             <option value="Sophomore">Sophomore</option>
@@ -178,7 +178,6 @@ class Profile extends React.Component{
                             <b>Courses Taken:</b>
                         </label>
                         <select name="classes" id="class_name" class="selectpicker" multiple data-live-search="true" onChange={this.update_selected_courses}>
-                            <option value="" disabled selected hidden>Choose a class</option>
                             <option value="personal">Personal Project</option>
                             <option value="1004">CS 1004: Introduction to programming for non-majors</option>
                             <option value="1101">CS 1101: Introduction to program design</option>
@@ -285,7 +284,7 @@ class Profile extends React.Component{
                         <textarea 
                             id="profile_bio" 
                             class="input_table_item" 
-                            placeholder="Enter relevant info about yourself, you want others to see"
+                            placeholder="Enter relevant info about yourself that you want others to see"
                             onKeyUp={(e) => this.bio = e.target.value}>
                         </textarea>
                     </li>
