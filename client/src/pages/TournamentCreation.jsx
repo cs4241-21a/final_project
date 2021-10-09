@@ -123,7 +123,7 @@ class TournamentCreationPage extends React.Component {
         <h1 className="text-center">Tournament Creation</h1>
 
         <div className="d-flex my-5">
-          <form className="row row-cols-lg-auto g-3 align-items-center">
+          <form className="row row-cols-lg-auto g-3 align-items-center" onSubmit={(e) => this.submit(e)}>
             <div className="col-12">
               <label htmlFor="teamName">Team Name</label>
               <input type="text" className="form-control" id="teamName" required />

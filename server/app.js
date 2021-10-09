@@ -5,7 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
 var env = process.env.NODE_ENV || 'development';
-const uri = ''
 
 var app = express();
 
@@ -53,7 +52,7 @@ app.use(function (err, req, res, next) {
 });
 
 // Connect to mongodb
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGODB, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('MongoDB Connected');
   })
