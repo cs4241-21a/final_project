@@ -95,19 +95,14 @@ function drawStars(){
 }
 
 function generateMask(){
-  let mask = {}
   mask.pos = createVector(ship.pos.x, ship.pos.y-50).rotate(ship.rotation)
   let div = Math.sqrt(Math.pow(ship.vel.x, 2) + Math.pow(ship.vel.y, 2))
   mask.vel = ship.vel.add(createVector(0,1).rotate(ship.rotation))
   mask.diam = mask_size
-  mask.thrust = ship_thrust
   mask.rotation = ship.rotation
   masks.push(mask)
 }
 
-function removeMask(mask){
-  //remove specific mask from list
-}
 
 function generateShip() {
   let sh = {};
@@ -130,8 +125,8 @@ function turnShip() {
 
 }
 
-function shoot(){
-  if (keyIsDown(32) ) {
+function keyPressed() {
+  if (keyCode === "SpaceBar"){
     print("SPACE")
     generateMask()
   }
@@ -192,9 +187,7 @@ function blinkShip(counter){
 }
   
 function checkMasksForCollisions(){
-  for (mask in masks) {
-    checkForCollisions(mask, stars)
-  }
+  masks.forEach(checkForCollisions, stars)
 }
 
 function checkForCollisions(curr, targets){
@@ -215,6 +208,7 @@ function checkForCollisions(curr, targets){
 }
 
 function setup() {
+  frameRate(60);
   createCanvas(750, 750) //make the size of the display whatever size the window is
   generateStars()
   ship = generateShip()
@@ -250,12 +244,12 @@ function draw() {
   displayShip()
   for (let [k, v] of Object.entries(otherShips)) {
     displayShip(v);
+    v.pos.add(v.vel);
   }
   turnShip()
   moveShip()
-  shoot()
+  //shoot()
   checkForCollisions(ship, stars)
-  checkMasksForCollisions()
   checkEdges(ship)
   checkLives()
   displayMasks()
@@ -272,7 +266,6 @@ let inLobby = false;
 function connectWS(){
   socket = new WebSocket("wss://corona-game.glitch.me");
   socket.onmessage = function (event) {
-    console.log("[SERVER] " + event.data);
     try {
       let json = JSON.parse(event.data);
       switch(json.packetType) {
@@ -297,7 +290,9 @@ function connectWS(){
           }
           break;
       }
-    }catch(e){}
+    }catch(e){
+      console.log("[SERVER] " + event.data);
+    }
   }
 }
 
@@ -309,7 +304,7 @@ function sendShipPos() {
   socket.send(JSON.stringify({packetType: "update_pos", x: ship.pos.x, y: ship.pos.y, vx: ship.vel.x, vy: ship.vel.y, angle: ship.rotation }));
 }
 
-setInterval(tickWS, 250);
+setInterval(tickWS, 150);
 function tickWS(){
   if(inLobby) {
     sendShipPos();

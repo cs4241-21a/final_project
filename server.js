@@ -126,11 +126,11 @@ wss.on('connection', (socket, req) => {
       socket.send("Hello World! session.username = " + (req.session && req.session.username));
       allClients.push(createClient(clientId, socket, req.socket.remoteAddress, username));
       socket.on('message', message => {
-          socket.send("I got: " + message);
+          //socket.send("I got: " + message);
 
           try{
               const json = JSON.parse(message);
-              console.log("[" + req.socket.remoteAddress + "] " + json);
+              //console.log("[" + req.socket.remoteAddress + "] " + json);
               switch(json.packetType) {
                   case "join_lobby":
                     { 
