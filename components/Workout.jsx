@@ -19,25 +19,27 @@ class AddNewSetComponent extends React.Component {
       `Old value of sets=${this.props.parent.state.oldNumSets}, new value=${this.props.parent.state.newNumSets}`
     );
 
-    this.props.parent.state.oldNumSets = this.props.parent.state.newNumSets;
-    this.props.parent.state.newNumSets = e.target.value;
-    if (this.props.parent.state.newNumSets < 1) {
-      this.props.parent.state.newNumSets = 1;
+    if (e.target.value < 1) {
       e.target.value = 1;
     }
+    
+    let oldNumSets = this.props.parent.state.newNumSets;
+    let newNumSets = e.target.value;
 
-    let children = [];
-
-    if (this.props.parent.state.oldNumSets < this.props.parent.state.newNumSets) {
-      for (let i = this.props.parent.state.oldNumSets; i < this.props.parent.state.newNumSets; ++i) {
-        children.push(<Set setNumber={i} ></Set>);
+    if (oldNumSets < newNumSets) {
+      for (let i = oldNumSets; i < newNumSets; ++i) {
+        this.props.parent.state.sets.push(<Set setNumber={i} ></Set>);
       }
-    } else {
-      for (let i = this.props.parent.state.newNumSets; i < this.props.parent.state.oldNumSets; ++i) {
-        children.pop();
-      }
+    } else if (oldNumSets > newNumSets) {
+      for (let i = newNumSets; i < oldNumSets; ++i) {
+        this.props.parent.state.sets.pop();
+      } 
     }
-    this.props.parent.setState({ newNumSets: e.target.value });
+
+    this.props.parent.setState({ 
+      oldNumSets: this.props.parent.state.newNumSets,
+      newNumSets: e.target.value 
+    });
   };
 
   addModifyButtonAction = async () => {
@@ -72,18 +74,10 @@ class AddNewSetComponent extends React.Component {
     }
   };
 
-
- 
-
   render() {
-    const children = [];
     console.log(
-      `Performing render where newNumSets = ${this.props.parent.state.newNumSets}`
+      `Performing render where Old value of sets=${this.props.parent.state.oldNumSets}, new value=${this.props.parent.state.newNumSets}`
     );
-
-    for (var i = 0; i < this.props.parent.state.newNumSets; i += 1) {
-      children.push(<Set setNumber={i} />);
-    }
 
     return (
       <div id="addNewMovementForm">
@@ -94,20 +88,21 @@ class AddNewSetComponent extends React.Component {
             placeholder="number of sets"
             id="numberOfSets"
             onChange={this.onSetsChange}
+            value = {this.props.parent.state.newNumSets}
           />
-          <div id="setsDiv">{children}</div>
+          <div id="setsDiv">{this.props.parent.state.sets}</div>
         </form>
-        <button id = 'addModifyButton' onClick={this.addModifyButtonAction} onChange = {this.copyMovementData}>Add New Movement</button>
+        <button id = 'addModifyButton' onClick={this.addModifyButtonAction}>Add New Movement</button>
       </div>
     );
   }
 }
 
-const Set = (props) => (
+export const Set = (props) => (
   <div id={"set" + props.setNumber}>
-    <input id={"weight" + props.setNumber} placeholder="weight">{props.weight}</input>
-    <input id={"reps" + props.setNumber} placeholder="reps">{props.reps}</input>
-    <input id={"RPE" + props.setNumber} placeholder="RPE">{props.RPE}</input>
+    <input id={"weight" + props.setNumber} placeholder="weight" value={props.weight}></input>
+    <input id={"reps" + props.setNumber} placeholder="reps" value={props.reps}></input>
+    <input id={"RPE" + props.setNumber} placeholder="RPE" value={props.RPE}></input>
   </div>
 );
 
@@ -119,8 +114,9 @@ class WrapperClass extends React.Component {
   }
 
   state = {
-    oldNumSets: 0,
-    newNumSets: 0,
+    oldNumSets: 1,
+    newNumSets: 1,
+    sets: [<Set setNumber={0} ></Set>]
   };
 
   render() {
