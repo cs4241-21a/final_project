@@ -9,7 +9,7 @@
     <script src="./js/eventsJS.js" defer></script>
     <%- include("./partials/nav.ejs")%>
     <div class="container-sm row mx-auto" style="width: 70%">
-        <button onclick="openEventMaker()" id="eventMakerBtn">Make Event</button>
+        <button type="button" onclick="openEventMaker()" id="eventMakerBtn">Make Event</button>
 
         <div class="col-md-4 m-5 p-3 hidden" id="eventMaker">
             <h2>Event Creator</h2>
@@ -127,6 +127,7 @@
                                 <%}%>
                             </select>
                         <br>
+                        <br>
                         <%for (let i = 0; i < event.availableDates.length; i++ ){ %>
                         <div class="hidden" id="hiddenTime<%=event.availableDates[i]%>">
                             <label for="finalTime<%=event._id%><%=event.availableDates[i]%>">Choose Event Time:</label>
@@ -152,10 +153,9 @@
                                 <%}%>
                             </select>
                         </div>
-                        <br>
                         <%}%>
-
-                            <button onclick="editEvent(parentNode.id)">Edit Event</button>
+                        <br>
+                            <button type="button" onclick="editEvent(parentNode.id)">Edit Event</button>
                         <%}%>
                         <hr>
                     </form>
@@ -194,7 +194,7 @@
                             <br>
                             </fieldset>
                             <%}%>
-                            <button id="<%=event.availableDates%>" onclick="addUserAvail(parentNode.id, id)">Accept Invite</button>
+                            <button type="button" id="<%=event.availableDates%>" onclick="addUserAvail(parentNode.id, id)">Accept Invite</button>
                         </form>
                         <hr>
                     </div>
