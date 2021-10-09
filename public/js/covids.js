@@ -93,13 +93,14 @@ function drawStars(){
   }
 }
 
-function generateMask(){
+function generateMask(ship){
   let mask = {}
-  mask.pos = createVector(width/2, height/2);
-  mask.vel = createVector(0, 0);
+  mask.pos = createVector(ship.pos.x, ship.pos.y-50).rotate(ship.rotation)
+  let div = Math.sqrt(Math.pow(ship.vel.x, 2) + Math.pow(ship.vel.y, 2))
+  mask.vel = ship.vel.add(createVector(0,1).rotate(ship.rotation))
   mask.diam = mask_size
   mask.thrust = ship_thrust
-  mask.rotation = 0
+  mask.rotation = ship.rotation
   masks.push(mask)
 }
 
@@ -175,7 +176,7 @@ function displayMasks(){
     translate(masks[i].pos.x, masks[i].pos.y)
     masks[i].rotation += 1
     rotate(masks[i].rotation)
-    image(mask_img, -25, -25, ship.diam, ship.diam)
+    image(mask_img, -25, -25, masks[i].diam, masks[i].diam)
     pop();
   }
 }
@@ -186,7 +187,7 @@ function blinkShip(counter){
   }
 }
 
-function checkShipForCollisions(curr, targets){
+function checkShipForCollisions(targets){
   
   //Note this will crash if the target object does not contain a 'pos' vector.
   for (let i = 0; i < targets.length; i++){
@@ -239,8 +240,8 @@ function draw() {
   displayShip()
   turnShip()
   moveShip()
-  checkShipForCollisions(ship, stars)
-  checkShipForCollisions(masks, stars)
+  checkShipForCollisions(stars)
+  checkMasksForCollisions(masks, stars)
   checkEdges(ship)
   checkLives()
   if(GameOver){

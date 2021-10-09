@@ -122,6 +122,7 @@ wss.on('connection', (socket, req) => {
     sessionParser(req, {}, function(){
       const clientId = generateClientName();
       const username = req.session && req.session.username;
+      if(username === undefined) return;
       socket.send("Hello World! session.username = " + (req.session && req.session.username));
       allClients.push(createClient(clientId, socket, req.socket.remoteAddress, username));
       socket.on('message', message => {
