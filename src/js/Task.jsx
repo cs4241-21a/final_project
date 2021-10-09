@@ -24,8 +24,8 @@ class Task extends Component {
 
     render() {
         let description = "No Description";
-        if(this.state.description !== undefined){
-            description = this.state.description;
+        if(this.state.task.description !== undefined){
+            description = this.state.task.description;
         }
         /*let month = monthNames[this.state.dueDate.getMonth()];
         let day = daysInWeek[this.state.dueDate.getDay()];
@@ -34,10 +34,10 @@ class Task extends Component {
         let minutes = this.state.dueDate.getMinutes();
         let dateString = month + " " + day + ", " + year + " at " + hour + ":" + minutes;*/
         return (
-          <Collapsible trigger={this.state.name}>
+          <Collapsible trigger={this.state.task.name}>
             <p>Description: {description}</p>
-            <p>Owner: {this.state.user}</p>
-            <p>Due Date: {this.state.dueDate}</p>
+            <p>Owner: {this.state.task.user}</p>
+            <p>Due Date: {this.state.task.dueDate}</p>
           </Collapsible>
         );
       }
