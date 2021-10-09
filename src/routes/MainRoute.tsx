@@ -26,24 +26,24 @@ import { weapon_data } from "../data/weapon";
 
 const MainRoute = (): JSX.Element => {
   // These static variables record all characters, weapons, and artifacts
-  const characters: CharacterProps[] = [];
-  const weapons: WeaponProps[] = [];
-  const artifacts: ArtifactProps[] = [];
-  const materials: MaterialProps[] = [];
-  const locations: FarmingSpotProps[] = [];
+  const characters: CharacterProps[] = character_data;
+  const weapons: WeaponProps[] = weapon_data;
+  const artifacts: ArtifactProps[] = artifact_data;
+  const materials: MaterialProps[] = material_data;
+  const locations: FarmingSpotProps[] = farming_spot;
 
   // !!! TODO (Michael): Write fetch requests to API (or load JSON) to initialize static data
-  function loadData() {
-    if (dataInit === false) {
-      characters.push(character_data);
-      weapons.push(weapon_data);
-      artifacts.push(artifact_data);
-      materials.push(material_data);
-      locations.push(farming_spot);
-      setData(true);
-    }
-    console.log(materials);
-  }
+  // function loadData() {
+  //   if (dataInit === false) {
+  //     characters.push(character_data);
+  //     weapons.push(weapon_data);
+  //     artifacts.push(artifact_data);
+  //     materials.push(material_data);
+  //     locations.push(farming_spot);
+  //     setData(true);
+  //   }
+  //   console.log(materials);
+  // }
 
   // These preference states record the data associated with an account
   const [charPrefs, setCharPrefs] = React.useState<CharacterPrefs[]>([]);
@@ -52,7 +52,6 @@ const MainRoute = (): JSX.Element => {
     []
   );
   const [loading, setLoading] = React.useState<Boolean>(true);
-  const [dataInit, setData] = React.useState<Boolean>(false);
 
   /**
    * initPrefs() fetches the user preferences from the database
@@ -199,7 +198,7 @@ const MainRoute = (): JSX.Element => {
     // !!! TODO (Micheal): Write useEffect function to refilter based off of the selected prefs changing
     // "activeFarmables" should be the artifacts selected by artifactPrefs and materials associated with selected characters
     // "activeLocations" should be the locations listed per each activeFarmable's farm_at string
-    loadData();
+    // loadData();
     filterFarmablesLocations();
     if (!loading) {
       updateDB();
