@@ -8,14 +8,13 @@ const NavigationBar = (props) => {
   const { user, loggedOut, mutate, loading } = useUser();
   return (
     <div class="topNav" id="headerDiv">
-      <Link to="/">Home</Link>
-
+      <Link class = "topnavlink" to="/">Home</Link>
       {loggedOut ? (
-        <Link to="/login">Login</Link>
+        <Link class = "topnavlink" to="/login">Login</Link>
       ) : loading ? (
         <div>Loading</div>
       ) : (
-        <button>Log Out</button>
+        <button class = "topnavbutton" to = "/login">Log Out</button>
       )}
     </div>
   );

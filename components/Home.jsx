@@ -35,10 +35,10 @@ const Home = () => {
     <div>
       <div>{user.username}</div>
 
-      <button onClick={newWorkout}>New Workout</button>
+      <button class = "addWorkout" onClick={newWorkout}>New Workout</button>
       <div style={{ display: "flex", flexDirection: "column" }}>
         {user.workouts.map((workout) => (
-          <div>
+          <div class = "workoutEntry">
             <Link to={`/workout?_id=${workout._id}`}>{workout.name}</Link>
             <button
               onClick={async () => {

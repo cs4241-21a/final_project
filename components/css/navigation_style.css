@@ -5,7 +5,7 @@
   }
   
   /* Style the links inside the navigation bar */
-  .topnav link {
+  .topnavlink {
     float: left;
     display: block;
     color: #f2f2f2;
@@ -16,13 +16,21 @@
   }
   
   /* Change the color of links on hover */
-  .topnav link:hover {
+  .topnavlink:hover {
     background-color: #ddd;
     color: black;
   }
   
   /* Add an active class to highlight the current page */
-  .topnav link.active {
+  .topnavlink.active {
     background-color: #42B72A;
     color: white;
+  }
+
+  .topnavbutton{
+    position: absolute;
+    top: 10%;
+    right: 0;
+    width: 120px;
+    transform: translateY(-100%);
   }

@@ -2,3 +2,18 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
 }
+
+.workoutEntry{
+    display: flex;
+    flex-direction: row;
+    row-gap: 10px;
+    justify-content: center;
+    align-items: center;
+    background-color: silver;
+    opacity: 0.5;
+}
+
+.addWorkout{
+    margin: 0 auto;
+    display: block;
+}
