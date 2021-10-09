@@ -77,32 +77,16 @@ router.post('/register', async (req, res, next) => {
 });
 
 // Post request to get champion names
-router.get('/getnames', async (req, res, next) => {
-  console.log(req.cookies)
-  const { username, password } = req.body;
-
-  if (!username || !password) {
-    res.json({ error: "All required feilds not filled out." });
-    return;
-  }
-
-  const existingUser = await User.findOne({ username });
-  if (!existingUser) {
-    res.json({ error: { username: `User with username ${username} does not exist.` } });
-    return;
-  }
-
-  const match = await bcrypt.compare(password, existingUser.passwordHash);
-  if (!match) {
-    res.json({
-      error: { password: 'Password Does Not Match' }
-    });
-    return;
-  }
-
-  // login success
-  res.json({ loggedIn: true, id: existingUser._id });
+router.post('/getnames', async (req, res, next) => {
   
+  const { blue, red } = req.body;
+
+  if (!blue || !red) {
+    res.json({ error: "Required fields not filled out." });
+    return;
+  }
+
+  res.json({ status: true, hello: 'hello', blueChamps: 'bob', redChamps: 'tet' });
 
 });
 
