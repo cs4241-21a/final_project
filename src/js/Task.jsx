@@ -15,7 +15,7 @@ const daysMap = {
     Saturday: 6
 };
 
-class Task extends CalendarSidebarItem {
+class Task extends Component {
     constructor(properties) {
         super(properties);
         this.state = properties;
@@ -35,3 +35,5 @@ class Task extends CalendarSidebarItem {
         );
       }
 }
+
+export default Task;
