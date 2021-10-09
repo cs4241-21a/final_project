@@ -18,6 +18,12 @@ class Sidebar extends Component {
     console.log(GLOBAL_VARIABLES.calendars);
   }
 
+  selectCalendar(event) {
+    console.log(event);
+    GLOBAL_VARIABLES.selectedCalendarId = calendarId;
+    console.log(calendarId);
+  }
+
   newCalendarSubmit(e) {
     e.preventDefault();
     let newCalendar = {
@@ -49,7 +55,7 @@ class Sidebar extends Component {
   render() {
     let calendarSidebarItems = [];
     this.state.calendars.forEach(calendar => {
-      calendarSidebarItems.push(<CalendarSidebarItem calendar={calendar}/>)
+      calendarSidebarItems.push(<CalendarSidebarItem calendar={calendar} onClick={this.selectCalendar}/>);
     });
 
     return (
@@ -90,11 +96,17 @@ class CalendarSidebarItem extends Component {
 
   render() {
     let children = [];
-    this.state.calendar.children.forEach(child => {
-      children.push(<CalendarSidebarItem name={child.name} children={child.children}/>)
-    });
+    if(!this.state.calendar.children.length === 0) {
+      console.log(this.state.calendar.children)
+      this.state.calendar.children.forEach(child => {
+        children.push(<CalendarSidebarItem name={child.name} 
+                                           children={child.children} 
+                                           style={{padding: '10px'}} 
+                                           onClick={this.state.onClick}/>)});
+    }
+
     return (
-      <Collapsible trigger={this.state.calendar.name}>
+      <Collapsible trigger={this.state.calendar.name} style={this.state.style} onClick={this.state.onClick}>
         {children}
       </Collapsible>
     );
