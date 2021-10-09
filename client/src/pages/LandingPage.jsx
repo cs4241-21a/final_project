@@ -11,7 +11,7 @@ const LandingPage = () => {
                 or generate single games from the link below.
             </p>
             <button className="btn btn-primary" onClick={ // TODO: set link to single generation page
-                () => history.push('/')}>
+                () => history.push('/single')}>
                 Generate Single Game
             </button>
         </div>
