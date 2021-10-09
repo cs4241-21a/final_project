@@ -94,7 +94,7 @@ class CalendarSidebarItem extends Component {
       children.push(<CalendarSidebarItem name={child.name} children={child.children}/>)
     });
     return (
-      <Collapsible trigger={this.state.calendar.name} onClick={}>
+      <Collapsible trigger={this.state.calendar.name}>
         {children}
       </Collapsible>
     );
