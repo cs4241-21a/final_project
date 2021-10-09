@@ -17,10 +17,6 @@ const App = (props) => {
         <Route exact path="/signup" component={Signup}></Route>
         <Route path="/workout" component={Workout}></Route>
       </Switch>
-
-      <div id="footerDiv">
-        <footer>Fortnite balls</footer>
-      </div>
     </div>
   );
 };
