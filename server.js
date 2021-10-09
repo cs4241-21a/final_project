@@ -123,7 +123,9 @@ app.post('/editEvent', bodyparser.json(), async(req, res) => {
 })
 
 app.post('/addUserAvail', bodyparser.json(), async (req, res) => {
-  EventEntry.findByIdAndUpdate(req.body.eventID, {availableTimes: req.body.availableTimes})
+  let userAvailObject = {name: req.session.username, filledOut:true, availability: req.body.attendeesAvailArray};
+
+  EventEntry.findByIdAndUpdate(req.body.eventID, {$push: {attendeesAvailability: userAvailObject}})
       .then(result => {
 
       })
@@ -148,12 +150,7 @@ app.post('/createEvent', bodyparser.json(), async (req,res) => {
     if(req.body.attendees[count] !== "")fullAttendees.push(req.body.attendees[count])
   }
 
-  let attendeesRespList = [];
   let attendeesAvailList = [];
-  for (let i = 0; i < fullAttendees.length; i++){
-    attendeesRespList.push({name: fullAttendees[i], response: false});
-    attendeesAvailList.push({name: fullAttendees[i], filledOut:false, availability: []});
-  }
 
   const entry = new EventEntry({
     owner: req.session.username,
@@ -161,7 +158,6 @@ app.post('/createEvent', bodyparser.json(), async (req,res) => {
     availableDates: dateRange,
     availableTimes: timeRangeArray,
     attendees: fullAttendees,
-    attendeesResponded: attendeesRespList,
     attendeesAvailability: attendeesAvailList,
     meetingDuration: req.body.duration,
     description: req.body.description,

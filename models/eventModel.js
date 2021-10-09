@@ -42,10 +42,6 @@ const eventSchema = new Schema({
         type: [],
         required: true
     },
-    attendeesResponded: {
-        type: [],
-        required: true
-    },
     attendeesAvailability: {
         type: [],
         required: true

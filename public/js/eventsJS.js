@@ -182,7 +182,7 @@ async function addUserAvail(eventID, dateList){
 
     const json = {
             eventID: eventID,
-            availableTimes: newAvailTimes
+            attendeesAvailArray: newAvailTimes
         },
         body = JSON.stringify(json);
 
