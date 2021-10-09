@@ -119,7 +119,7 @@ app.post('/reg', function (req, res) {
 });
 
 app.get('/',auth, function(request, response) {
-    response.sendFile( __dirname + '/public/index.html' )
+    response.sendFile( __dirname + '/public/watchlist.html' )
 })
 
 app.get('/aboutus', function(request, response) {
@@ -130,7 +130,14 @@ app.post('/addData', bodyparser.json(), function(request, response) {
   console.log(request.body);
   response.json({result: "success!"});
 })
+app.get('/logout', auth, function (req, res) {
+  req.logout();
+  req.session.destroy(function(err) {
+      res.clearCookie('sid');
+      res.redirect('/login.html');
+  });
+});
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 
-app.listen(3000)
+app.listen(3030)

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Watch List</title>
+    <meta charset="utf-8" />
+   
+    <link
+      href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+
+    <style>
+        body {font-family: Arial;}
+        
+        /* Style the tab */
+        .tab {
+          overflow: hidden;
+          border: 1px solid rgb(3, 0, 0);
+          background-color: #41528b;
+        }
+        
+        /* Style the buttons inside the tab */
+        .tab button {
+          background-color: inherit;
+          float: left;
+          border: none;
+          outline: none;
+          cursor: pointer;
+          padding: 14px 16px;
+          transition: 0.3s;
+          font-size: 17px;
+        }
+        
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+          background-color: rgb(0, 0, 0);
+        }
+        
+        /* Create an active/current tablink class */
+        .tab button.active {
+          background-color: rgb(56, 21, 21);
+        }
+        
+        /* Style the tab content */
+        .tabcontent {
+          display: none;
+          padding: 6px 12px;
+          border: 1px solid rgb(0, 0, 0);
+          border-top: none;
+        }
+        </style>
+      
+    </head>
+
+  <body>
+    <div class="boxHolder">
+      <div class="box">
+        <h1>Watch List</h1>
+        <a href="/logout">LOGOUT</a>
+        <div id="travels"></div>
+      </div>
+    </div>
+
+    <div class="boxHolder">
+      <div class="box">
+        <form id="newTrip">
+          <h2>Add a new watch</h2>
+
+          <label for="title">Watch Title: </label>
+          <input type="text" id="title" placeholder="Enter your watch" />
+            
+          <label for = "category">Choose a category</label>
+          <select name = "category">
+              <option value ="movie">Movie</option>
+              <option value ="Anime">Anime</option>
+              <option value ="Other">Other</option>
+          </select>
+          <label for="score">Score: </label>
+          <input
+            type="int"
+            id="score"
+            placeholder="Enter score (1-10)"
+          />
+
+          <label for="date">Date: </label>
+          <input type="date" id="date" name="date" required />
+
+          <label for="review">Review: </label>
+          <input type="text" id="review" placeholder="reveiw" />
+
+
+          <button id="submitAdd">Submit</button>
+        </form>
+      </div>
+    </div>
+    <div class="tab">
+        <button class="tablinks" onclick="openCity(event, 'movieResult')">Movie</button>
+        <button class="tablinks" onclick="openCity(event, 'animeResult')">Anime</button>
+        <button class="tablinks" onclick="openCity(event, 'otherResult')">Other</button>
+      </div>
+      
+
+        <div id="movieResult" class ="tabcontent">
+            <span onclick="this.parentElement.style.display='none'" class="topright">&times</span>
+            <thead>
+            <tr>
+              <th>Title</th>
+              <th>Score</th>
+              <th>Date</th>
+              <th>Review</th>
+              <th>Remove</th>
+            </tr>
+          </thead>
+          <tbody id="movieData"></tbody>
+        </div>
+
+        <div id="animeResult" class ="tabcontent">
+            <span onclick="this.parentElement.style.display='none'" class="topright">&times</span>
+            <thead>
+            <tr>
+              <th>Title</th>
+              <th>Score</th>
+              <th>Date</th>
+              <th>Review</th>
+              <th>Remove</th>
+            </tr>
+          </thead>
+          <tbody id="animeData"></tbody>
+        </div>
+
+        <div id="otherResult" class ="tabcontent">
+            <span onclick="this.parentElement.style.display='none'" class="topright">&times</span>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Score</th>
+              <th>Date</th>
+              <th>Review</th>
+              <th>Remove</th>
+            </tr>
+          </thead>
+          <tbody id="otherData"></tbody>
+        </div>
+
+
+    <script>
+        function openWatchList(evt, watchItem) {
+          var i, tabcontent, tablinks;
+          tabcontent = document.getElementsByClassName("tabcontent");
+          for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+          }
+          tablinks = document.getElementsByClassName("tablinks");
+          for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+          }
+          document.getElementById(watchItem).style.display = "block";
+          evt.currentTarget.className += " active";
+        }
+    </script>
+    
+
+  </body>
+</html>

@@ -9,6 +9,24 @@ const userSchema = mongoose.Schema({
     {versionKey: false});
 userSchema.plugin(findOrCreate);
 const userModel = mongoose.model('memoe', userSchema, 'memoe_accounts');
+
+
+
+const watchSchema = mongoose.Schema(
+    {
+        title:{type: String },
+        category: {type: String},
+        score: {type: String},
+        dateWatched: {type: String},
+        review: {type: String},
+        user: {type: String}
+    },
+    {versionKey: false}
+);
+
+const watchModel = mongoose.model('watchlist', userSchema, 'watchlists');
+
 module.exports = {
     User: userModel,
+    watchlist: watchModel
 };
