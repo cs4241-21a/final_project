@@ -373,6 +373,19 @@ const getAllPosts = async function () {
     }
   }
 
+  // Area to ensure that skills and languages is not undefined
+  for (let k = 0; k < json.length; k++) {
+    if (json[k].skills === undefined) {
+      json[k].skills = []
+    }
+    if (json[k].languages === undefined) {
+      json[k].languages = []
+    }
+
+  }
+
+  console.log(json)
+
   return json;
 };
 app.get("/posts", async (request, response) => {
