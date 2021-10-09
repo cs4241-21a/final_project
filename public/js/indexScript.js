@@ -1,18 +1,9 @@
 let color = 'black'
 let lineWidth = 50
-let undoList = []
-let redoList = []
-let history = [{shape: "draw", 
-                mX: 0, 
-                mY:0, 
-                pmX:100, 
-                pmY:100, 
-                lineWidth:50,}]
 let connection
 
 const changeColor = function(event){
     color = document.querySelector( '#colorSelector').value
-    console.log("changed color", color)
 }
 
 const changeWidth = function(event){
@@ -25,25 +16,12 @@ function clearCanvas(){
         shape: "clear"
     }
     connection.send(JSON.stringify(data))
-
 }
 
 function setup() {
     let myCanvas = createCanvas(1000, 500)
-
-   // data = history.pop()
-   // helpDrawLine(data.color, data.lineWidth, data.mX, data.mY, data.pmX, data.pmY)
-    //history.forEach(Element => {
-      //      helpDrawLine(data.color, data.lineWidth, data.mX, data.mY, data.pmX, data.pmY)
-    //});
-    //console.log(history.length)
-
-
     myCanvas.style('border', '1px solid #000')
-
-    myCanvas.mouseReleased(saveForUndo)
     myCanvas.mousePressed(drawShapes)
-
     myCanvas.parent('canvas-container')
 
     const colorSelector = document.querySelector( '#colorSelector')
@@ -54,11 +32,6 @@ function setup() {
 
     const lineWidth = document.querySelector('#lineWidth')
     lineWidth.onclick = changeWidth
-
-    const undoBtn = document.querySelector('#undoBtn')
-    undoBtn.onclick = undo
-    const redoBtn = document.querySelector('#redoBtn')
-    redoBtn.onclick = redo
 
     connection = new WebSocket('ws://localhost:3323')
 
@@ -90,7 +63,6 @@ function setup() {
     }
   }
 
-
 function helpDrawLine(color, lineWidth, mouseX, mouseY, pmouseX, pmouseY){
     stroke(color)
     strokeWeight(lineWidth)
@@ -104,9 +76,7 @@ function helpErase(lineWidth, mouseX, mouseY, pmouseX, pmouseY){
     noErase()
 }
 
-//TODO Color changed delayed by one click 
 function helpDrawShape(shape, isFilled, color, mouseX, mouseY, shapeSize){
-    console.log(color)
     if (isFilled){
         fill(color)
         strokeWeight(0)
@@ -128,14 +98,12 @@ function helpDrawShape(shape, isFilled, color, mouseX, mouseY, shapeSize){
     }
 }
 
-
 function draw() {
     if (mouseIsPressed) {
         //Check which drawing mode it is in -> show up when draw or erase are checked
         const checkDrawType = document.querySelector('input[name="action"]:checked').value
         if(checkDrawType === "Erase"){
-            cursor('https://icons.iconarchive.com/icons/pixture/stationary/32/Eraser-2-icon.png', 16, 16)
-            
+            cursor('https://icons.iconarchive.com/icons/pixture/stationary/32/Eraser-2-icon.png', 16, 16)  
             helpErase(lineWidth, mouseX, mouseY, pmouseX, pmouseY)
             let data = {
                 shape: "erase", 
@@ -145,13 +113,11 @@ function draw() {
                 pmY:pmouseY, 
                 lineWidth:lineWidth,
             }
-
             connection.send(JSON.stringify(data))
         } 
         else if (checkDrawType === "Draw") {
             cursor('https://icons.iconarchive.com/icons/custom-icon-design/flatastic-6/32/Brush-tool-icon.png', 16, 16)
             helpDrawLine(color, lineWidth, mouseX, mouseY, pmouseX, pmouseY)
-           
             let data = {
                 shape: "line",
                 mX: mouseX,
@@ -161,8 +127,6 @@ function draw() {
                 color:color, 
                 lineWidth:lineWidth,
             }
-            history.push(data)
-
             connection.send(JSON.stringify(data))
         }
     } 
@@ -170,10 +134,6 @@ function draw() {
 
 //Function for drawing shapes so it stamps only once
 function drawShapes() {
-    //keep track of undo
-    //undoList.push(get())
-    
-    //drawing shapes
     if (mouseIsPressed) {
         //Check which drawing mode it is in -> shapes get stamped
         const checkDrawType = document.querySelector('input[name="action"]:checked').value
@@ -207,36 +167,6 @@ function drawShapes() {
             }
             connection.send(JSON.stringify(data))
         }
-    }//end if mousepressed
+    }
     return false
-}
-
-
-
-
-
-function saveForUndo(){
-    undoList.push(get())
-    //sendCanvasToServer()
-}
-
-const redo = function(event){
-    if (redoList.length == 0) {
-        return
-    }
-    undoList.push(get())
-    //Reset background and redraw the previous image
-    background(255)
-    image(redoList.pop(), 0, 0);
- }
-
-const undo = function (event) {
-    if (undoList.length == 0) {
-        return
-    }
-    undoCounter ++
-    redoList.push(get())
-    //Reset background and redraw the previous image
-    background(255)
-    image(undoList.pop(), 0, 0)
 }
