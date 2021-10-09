@@ -7,7 +7,7 @@ const numOfStars = 75,
       medium = 40,
       large = 70,
       gompei_size = 50,
-      mask_size = 22,
+      mask_size = 25,
       ship_thrust = .05,
       max_ship_speed = 5,
       num_lives = 3
@@ -96,12 +96,12 @@ function drawStars(){
 
 function generateMask(){
   let mask = {}
-  let newVel = createVector(ship.vel.x, ship.vel.y).rotate(ship.rotation)
-  mask.pos = createVector(ship.pos.x, ship.pos.y-50)
+  let newVel = createVector(ship.vel.x, ship.vel.y)   
+  mask.pos = createVector(ship.pos.x, ship.pos.y-50).rotate(ship.rotation)
   newVel.add(createVector(0,1).rotate(ship.rotation))
-  mask.vel = newVel
+  mask.vel = createVector(newVel.x, newVel.y)
   mask.diam = mask_size
-  mask.rotation = ship.rotation
+  mask.rotation = 0
   masks.push(mask)
 }
 
@@ -175,10 +175,10 @@ function displayShip(obj=ship){
 function displayMasks(){
   for (let i = 0; i < masks.length; i++){
     push();
-    masks[i].rotation += 1
+    masks[i].rotation += .2
     translate(masks[i].pos.x, masks[i].pos.y)
     rotate(masks[i].rotation)
-    image(mask_img, -25, -25, masks[i].diam, masks[i].diam)
+    image(mask_img, -12, -12, masks[i].diam, masks[i].diam)
     pop();
   }
 }
@@ -266,6 +266,10 @@ function draw() {
 let socket = null;
 let inLobby = false;
 
+document.querySelector("#lobbyButton").onclick = e => {
+	joinLobby(document.querySelector("#lobbyname").value, document.querySelector("#lobbypass").value == "" ? undefined : document.querySelector("#lobbypass").value)
+}
+
 function connectWS(){
   socket = new WebSocket("wss://corona-game.glitch.me");
   socket.onmessage = function (event) {
@@ -275,6 +279,7 @@ function connectWS(){
         case "joined_lobby":
           {
             inLobby = true;
+            document.querySelector("#lobbyname").disabled = document.querySelector("#lobbypass").disabled = document.querySelector("#lobbyButton").disabled = inLobby;
           }
           break;
         case "joined":
