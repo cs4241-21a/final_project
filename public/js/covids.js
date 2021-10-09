@@ -8,7 +8,8 @@ const numOfStars = 75,
       medium = 40,
       large = 70,
       gompei_size = 50,
-      ship_thrust = .1
+      ship_thrust = .1,
+      max_ship_speed = 7
 
 let virus_img
 let sanitizer_img
@@ -110,8 +111,9 @@ function moveShip(){
      acc = createVector(0, ship.thrust) //Add acceleration pointin along ship's axis (up)
      acc.rotate(ship.rotation) //Rotate by ship's rotation
   }
-  if acc.
-  ship.vel.add(acc)
+  if (Math.sqrt(Math.pow(ship.vel.x,2)+Math.pow(ship.vel.y,2)) <= max_ship_speed) {
+    ship.vel.add(acc)
+  }
   ship.pos.add(ship.vel)
 }
 

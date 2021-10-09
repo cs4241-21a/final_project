@@ -87,6 +87,7 @@ function createLobby(password=undefined) {
     lobby.addClient = nc => {
         lobby.clients.forEach(c => {
             c.send({packetType: "joined", id: nc.id, username: nc.username});
+            nc.send({packetType: "joined", id: c.id, username: c.username});
         });
         lobby.clients.push(nc);
     }
@@ -132,14 +133,16 @@ wss.on('connection', (socket, req) => {
                   case "join_lobby":
                     { 
                       let pass = json.password;
-                      let lobby = findLobbyWithClient(clientId);
+                      let lobby = lobbies.find(l => l.name === json.name);
                       if(lobby !== undefined) {
                         if(lobby.password === pass) {
+                          socket.send(JSON.stringify({packetType: "joined_lobby", name: lobby.name}));
                           lobby.addClient(lobby.clients.find(c => c.id == clientId));
                         }
                       }else{
                         lobby = createLobby(pass);
                         lobbies.push(lobby);
+                        socket.send(JSON.stringify({packetType: "joined_lobby", name: lobby.name}));
                         lobby.addClient(lobby.clients.find(c => c.id == clientId));
                       }
                     }
