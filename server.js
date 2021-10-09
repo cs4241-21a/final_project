@@ -148,6 +148,9 @@ app.use(function (req, res, next) {
 // Serve static files with automatic extension fallbacks so things can look much nicer
 app.use(express.static("public", {extensions: ["html", "js", "css"]}));
 
+// Serve static files for the date picker, to enable importing of node packages in client
+app.use(express.static("node_modules/@themesberg/tailwind-datepicker"));
+
 // Serve index.html
 app.get("/", function (req, res) {
 	res.sendFile(__dirname + "/public/index.html");
@@ -170,9 +173,11 @@ app.post("/create", (req, res) => {
 });
 
 // Route to read transaction
-app.get("/read", (req, res) => {
+app.post("/read", (req, res) => {
+	console.log("/read")
+	console.log(req.body)
 	db.collection(req.session.email)
-		.find()
+		.find({date: {$gte: req.body.firstDay, $lte: req.body.lastDay}})
 		.toArray()
 		.then(result => res.json(result));
 });
