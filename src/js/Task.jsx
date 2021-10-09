@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import databaseUtils from './databaseUtils';
 import {GLOBAL_VARIABLES} from './globals';
 import CalendarSidebarItem from './Sidebar'
+import Collapsible from 'react-collapsible';
 
 const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const daysInWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];

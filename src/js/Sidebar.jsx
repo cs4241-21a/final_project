@@ -23,8 +23,8 @@ class Sidebar extends Component {
     console.log(GLOBAL_VARIABLES.tasks);
   }
 
-  selectCalendar(event) {
-    console.log(event);
+  selectCalendar(calId) {
+    console.log(calId);
     // GLOBAL_VARIABLES.selectedCalendarId = calendarId;
     // console.log(calendarId);
   }
@@ -72,7 +72,6 @@ class Sidebar extends Component {
     const target = e.target;
     const value = target.value;
     const name = target.name;
-    console.log(name, value, target);
 
     this.setState({
         [name]: value
@@ -85,9 +84,9 @@ class Sidebar extends Component {
       calendarSidebarItems.push(<CalendarSidebarItem calendar={calendar} 
                                 customOnClick={this.selectCalendar}/>);
     });
-    this.state.tasks.forEach(task => {
-      calendarSidebarItems.push(<Task task={task}/>);
-    });
+    // this.state.tasks.forEach(task => {
+    //   calendarSidebarItems.push(<Task task={task}/>);
+    // });
 
     return (
       <div className='sidebar'>
@@ -166,11 +165,15 @@ class CalendarSidebarItem extends Component {
         children.push(<CalendarSidebarItem name={child.name} 
                                            children={child.children} 
                                            style={{padding: '10px'}} 
-                                           customOnClick={this.state.customOnClick}/>)});
+                                           customOnClick={() => this.state.customOnClick(this.state.calendar._id)}/>)});
     }
 
     return (
-      <Collapsible trigger={this.state.calendar.name} style={this.state.style} onClick={this.state.customOnClick}>
+      <Collapsible 
+          trigger={this.state.calendar.name} 
+          style={this.state.style} 
+          onOpening={() => this.state.customOnClick(this.state.calendar._id)}
+          onClosing={() => this.state.customOnClick(this.state.calendar._id)}>
         {children}
       </Collapsible>
     );
