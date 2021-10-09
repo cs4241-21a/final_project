@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { addPrefFunction } from "../../functions/selectFunctions";
+import { addPref, removePref, updatePref } from "../../functions/selectFunctions";
 
 import CharacterProps from "../../types/props/CharacterProps";
 import CharacterPrefs from "../../types/prefs/CharacterPrefs";
@@ -18,23 +18,14 @@ const CharacterSelect = ({
 }: CharacterSelectProps) : JSX.Element => { 
   // !!! TODO (Nick): Create logic for setting character preferences using the setter
 
-  // Add Pref using: addCharacter(character, preferences, setter);
-  const addCharacter = addPrefFunction(CharacterPrefs);
+  // Add Pref using: addCharacter(character);
+  const addCharacter = addPref(CharacterPrefs, preferences, setter);
 
-  // Example of it being used on page load
-  React.useEffect(() => {
-    const character = {
-      name: "testCharacter"
-    }
-    addCharacter(character, preferences, setter);
-  }, [])
-  
+  // Remove Pref using: removeCharacter(characterPref)
+  const removeCharacter = removePref(preferences, setter);
 
-  // Remove Pref
-
-  // Enable Pref
-
-  // Disable Pref
+  // Update Pref using: updateCharacter(characterPref)
+  const updateCharacter = updatePref(preferences, setter);
 
 
   return (

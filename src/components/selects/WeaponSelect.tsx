@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { addPrefFunction } from "../../functions/selectFunctions";
+import { addPref, removePref, updatePref } from "../../functions/selectFunctions";
 
 import WeaponProps from "../../types/props/WeaponProps";
 import EnablablePrefs from "../../types/prefs/EnablablePrefs";
@@ -16,25 +16,14 @@ const WeaponSelect = ({
   preferences,
   setter
 }: WeaponSelectProps) : JSX.Element => { 
-  // !!! TODO (Nick): Create logic for setting weapon preferences using the setter
+  // Add Pref using: addWeapon(weapon);
+  const addWeapon = addPref(EnablablePrefs, preferences, setter);
 
-  // Add Pref using: addWeapon(weapon, preferences, setter);
-  const addWeapon = addPrefFunction(EnablablePrefs);
+  // Remove Pref using: removeWeapon(weaponPref)
+  const removeWeapon = removePref(preferences, setter);
 
-  // Example of it being used on page load
-  React.useEffect(() => {
-    const weapon = {
-      name: "testWeapon"
-    }
-    addWeapon(weapon, preferences, setter);
-  }, [])
-  
-  // Remove Pref
-
-  // Enable Pref
-
-  // Disable Pref
-
+  // Update Pref using: updateWeapon(weaponPref)
+  const updateWeapon = updatePref(preferences, setter);
 
   return (
     // !!! TODO (UI): Create and implement JSX components for WeaponSelect

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { addPrefFunction } from "../../functions/selectFunctions";
+import { addPref, removePref, updatePref } from "../../functions/selectFunctions";
 
 import ArtifactProps from "../../types/props/ArtifactProps";
 import EnablablePrefs from '../../types/prefs/EnablablePrefs';
@@ -18,18 +18,14 @@ const ArtifactSelect = ({
 }: ArtifactSelectProps) : JSX.Element => { 
   // !!! TODO (Nick): Create logic for setting artifact preferences using the setter
 
-  // Add Pref using: addArtifact(artifact, preferences, setter);
-  const addArtifact = addPrefFunction(EnablablePrefs);
-  
-  // Example of it being used on page load
-  React.useEffect(() => {
-    const artifact = {
-      name: "testArtifact"
-    }
-    addArtifact(artifact, preferences, setter);
-  }, [])
+  // Add Pref using: addArtifact(artifact);
+  const addArtifact = addPref(EnablablePrefs, preferences, setter);
 
-  // Remove Pref
+  // Remove Pref using: removeArtifact(artifactPref)
+  const removeArtifact = removePref(preferences, setter);
+
+  // Update Pref using: updateArtifact(artifactPref)
+  const updateArtifact = updatePref(preferences, setter);
 
   // Enable Pref
 

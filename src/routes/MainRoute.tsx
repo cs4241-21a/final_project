@@ -89,9 +89,9 @@ const MainRoute = () : JSX.Element => {
     // "activeFarmables" should be the artifacts selected by artifactPrefs and materials associated with selected characters 
     // "activeLocations" should be the locations listed per each activeFarmable's farm_at string
     //debug prints for now: 
-    console.log(charPrefs);
-    console.log(weaponPrefs);
-    console.log(artifactPrefs);
+    // console.log(charPrefs);
+    // console.log(weaponPrefs);
+    // console.log(artifactPrefs);
   }, [charPrefs, weaponPrefs, artifactPrefs]);
 
   return (
