@@ -176,7 +176,7 @@ function displayShip(obj=ship){
   pop();
 }
 
-function displayMasks(){
+function displayMasks(){//look into image p5 rotation
   for (let i = 0; i < masks.length; i++){
     push();
     translate(masks[i].pos.x, masks[i].pos.y)
