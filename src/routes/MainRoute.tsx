@@ -9,7 +9,7 @@ import MaterialProps from '../props/api/MaterialProps';
 import FarmableProps from '../props/api/FarmableProps';
 import FarmingSpotProps from '../props/api/FarmingSpotProps';
 
-import MenuContainer from "../components/MenuContainer"
+import MenuContainer from "../components/menu/MenuContainer"
 import CharacterSelect from "../components/CharacterSelect";
 import WeaponSelect from "../components/WeaponSelect";
 import ArtifactSelect from "../components/ArtifactSelect";
@@ -96,29 +96,42 @@ const MainRoute = () : JSX.Element => {
 
   return (
     <>
-    {/* !!! TODO (UI): Organize these components for displaying the page */}
+      <MenuContainer />
+      <CharacterSelect 
+        characters={characters} 
+        preferences={charPrefs} 
+        setter={setCharPrefs}
+      />
+      <WeaponSelect 
+        weapons={weapons} 
+        preferences={weaponPrefs} 
+        setter={setWeaponsPrefs}
+      />
+      <ArtifactSelect 
+        artifacts={artifacts} 
+        preferences={artifactPrefs} 
+        setter={setArtifactPrefs}
+      />
+      <br />
+      <div id="testContent">
+          <p>Consectetur adipiscing elit duis tristique. Urna id volutpat lacus laoreet non. Aliquam etiam erat velit scelerisque in dictum.</p>
+          <ul>
+              <li>Orci</li>
+              <li>dapibus</li>
+              <li>ultrices</li>
+              <li>in</li>
+              <li>iaculis</li>
+              <li>nunc</li>
+              <li>sed</li>
+          </ul>
+      </div>
+      <br />
+      <FarmingDisplay
+        farmables={activeFarmables}
+        locations={activeLocations}
+      />
       <LoginButton initPrefs={initPrefs} />
       <SaveButton updatePrefs={updatePrefs} />
-      <MenuContainer />
-          <CharacterSelect 
-            characters={characters} 
-            preferences={charPrefs} 
-            setter={setCharPrefs}
-          />
-          <WeaponSelect 
-            weapons={weapons} 
-            preferences={weaponPrefs} 
-            setter={setWeaponsPrefs}
-          />
-          <ArtifactSelect 
-            artifacts={artifacts} 
-            preferences={artifactPrefs} 
-            setter={setArtifactPrefs}
-          />
-          <FarmingDisplay
-            farmables={activeFarmables}
-            locations={activeLocations}
-          />
     </>
   );
 }
