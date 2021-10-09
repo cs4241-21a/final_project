@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./css/card_row.css";
+
 const Card_Row = (props) => {
     return <tr>
         <td id={props.exercise_name+'weight'+props.setNumber}> {props.set.weight}</td>

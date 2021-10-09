@@ -3,6 +3,8 @@ import { Redirect, Link } from "react-router-dom";
 import useUser from "../hooks/useUser";
 import Movement_Card_View from "./Movement_Card_View";
 
+import "./css/home.css";
+
 const Home = () => {
   const { user, loggedOut, loading, mutate } = useUser();
 
@@ -18,14 +20,15 @@ const Home = () => {
 
   // const user = useUser();
   /*
-  DUMMY DATA no longer needed
-  let json = {
+  let json = [{
+
     exercise_name: "Squat",
     sets: [
       { reps: 10, weight: 85, rpe: 5.5 },
       { reps: 10, weight: 105, rpe: 7.5 },
       { reps: 8, weight: 125, rpe: 8.5 },
     ],
+
   };
   */
   return (

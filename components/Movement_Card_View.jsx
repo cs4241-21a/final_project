@@ -1,6 +1,8 @@
 import React from "react";
 import Card_Row from "./Card_Row";
 
+import "./css/movement_card_view.css";
+
 const Movement_Card_View = (props) => {
   console.log(props.movement);
   console.log(props.parent);
