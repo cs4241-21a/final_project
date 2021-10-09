@@ -10,6 +10,7 @@ import MaterialProps from '../types/props/MaterialProps';
 import FarmableProps from '../types/props/FarmableProps';
 import FarmingSpotProps from '../types/props/FarmingSpotProps';
 
+import MenuContainer from "../components/menu/MenuContainer"
 import CharacterSelect from "../components/selects/CharacterSelect";
 import WeaponSelect from "../components/selects/WeaponSelect";
 import ArtifactSelect from "../components/selects/ArtifactSelect";
@@ -96,9 +97,7 @@ const MainRoute = () : JSX.Element => {
 
   return (
     <>
-    {/* !!! TODO (UI): Organize these components for displaying the page */}
-      <LoginButton initPrefs={initPrefs} />
-      <SaveButton updatePrefs={updatePrefs} />
+      <MenuContainer />
       <CharacterSelect 
         characters={characters} 
         preferences={charPrefs} 
@@ -114,10 +113,26 @@ const MainRoute = () : JSX.Element => {
         preferences={artifactPrefs} 
         setter={setArtifactPrefs}
       />
+      <br />
+      <div id="testContent">
+          <p>Consectetur adipiscing elit duis tristique. Urna id volutpat lacus laoreet non. Aliquam etiam erat velit scelerisque in dictum.</p>
+          <ul>
+              <li>Orci</li>
+              <li>dapibus</li>
+              <li>ultrices</li>
+              <li>in</li>
+              <li>iaculis</li>
+              <li>nunc</li>
+              <li>sed</li>
+          </ul>
+      </div>
+      <br />
       <FarmingDisplay
         farmables={activeFarmables}
         locations={activeLocations}
       />
+      <LoginButton initPrefs={initPrefs} />
+      <SaveButton updatePrefs={updatePrefs} />
     </>
   );
 }
