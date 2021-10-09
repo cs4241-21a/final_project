@@ -121,7 +121,7 @@
                         <br>
                         <% if(event.owner === sentUsername){%>
                             <label for="finalDate<%=event._id%>">Choose Date:</label>
-                            <select id="finalDate<%=event._id%>" name="<%=event.availableDates.length%>" onchange="showDiv(this)">
+                            <select id="finalDate<%=event._id%>" name="<%=event.availableDates.length%>" onchange="showDiv(this, parentNode.id)">
                                     <option value="null"> No Date</option>
                                 <%for (let i = 0; i < event.availableDates.length; i++ ){ %>
                                     <option value="<%=event.availableDates[i]%>"><%= event.availableDates[i]%></option>
@@ -130,16 +130,16 @@
                         <br>
                         <br>
                         <%for (let i = 0; i < event.availableDates.length; i++ ){ %>
-                        <div class="hidden" id="hiddenTime<%=event.availableDates[i]%>">
+                        <div class="hidden" id="hiddenTime<%=event._id%><%=event.availableDates[i]%>">
                             <label for="finalTime<%=event._id%><%=event.availableDates[i]%>">Choose Event Time:</label>
                             <select id="finalTime<%=event._id%><%=event.availableDates[i]%>" name="finalTime<%=event._id%><%=event.availableDates[i]%>">
                                 <%for (let j = 0; j < event.availableTimes[i].length; j++ ){ %>
                                     <% if (event.availableTimes[i][j] > 11.5){ %>
-                                        <% if (event.availableTimes[i][j] === 12.5 || event.availableTimes[i][j] === 12){%>
+                                        <% if (event.availableTimes[i][j] == 12.5 || event.availableTimes[i][j] == 12){%>
                                         <option value=<%=event.availableTimes[i][j]%>>
                                             <%= event.availableTimes[i][j]%>PM
                                         </option>
-                                        <%} else if(event.availableTimes[i][j] === 24 || event.availableTimes[i][j] === 24.5){%>
+                                        <%} else if(event.availableTimes[i][j] == 24 || event.availableTimes[i][j] == 24.5){%>
                                             <%= event.availableTimes[i][j] - 12%>AM
                                         <% } else {%>
                                         <option value=<%=event.availableTimes[i][j]%>>

@@ -64,18 +64,22 @@ async function editEvent(eventID){
             "Content-Type": "application/json"
         }
     });
-
     window.location.reload();
 }
+
+
 let oldElementVal = "";
-function showDiv(element, options) {
-    console.log(element.value)
+function showDiv(element, eventID) {
+    console.log(eventID);
     if (element.value !== oldElementVal && element.value !== "null") {
-        document.getElementById('hiddenTime' + element.value).style.display = 'block';
+        document.getElementById('hiddenTime' + eventID + element.value).style.display = 'block';
         if (oldElementVal !== "") {
             document.getElementById('hiddenTime' + oldElementVal).style.display = 'none';
+            // currently this sets any other selectors to none event if they are in a differnt event
+            // could change if we want just need a new variable and a few if statements maybe but
+            // just gonna leave it for right now
         }
-        oldElementVal = element.value;
+        oldElementVal = eventID + element.value;
     } else if (oldElementVal !== "" && element.value === "null"){
         document.getElementById('hiddenTime'+ oldElementVal).style.display = 'none';
     }
