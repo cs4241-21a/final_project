@@ -3,7 +3,7 @@ import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
-const LoginButton = (props: { initPrefs: () => void; }): JSX.Element => {
+const LoginButton = (props: { initPrefs: () => void }): JSX.Element => {
   const [loggedin, setLoggedIn] = React.useState<Boolean>(false);
   const [text, setText] = React.useState<String>("");
 
@@ -38,8 +38,8 @@ const LoginButton = (props: { initPrefs: () => void; }): JSX.Element => {
     fetch("/logout", {
       method: "GET",
     }).then(() => {
-        setLoggedIn(false);
-    })
+      setLoggedIn(false);
+    });
   };
 
   const userlogin = () => {

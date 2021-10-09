@@ -1,20 +1,22 @@
 import * as React from 'react';
 
-import EnablablePrefProps from '../props/prefs/EnablablePrefProps';
-import CharacterPrefProps from '../props/prefs/CharacterPrefProps';
-import CharacterProps from '../props/api/FarmingSpotProps';
-import WeaponProps from '../props/api/WeaponProps';
-import ArtifactProps from '../props/api/ArtifactProps';
-import MaterialProps from '../props/api/MaterialProps';
-import FarmableProps from '../props/api/FarmableProps';
-import FarmingSpotProps from '../props/api/FarmingSpotProps';
+import EnablablePrefs from '../types/prefs/EnablablePrefs';
+import CharacterPrefs from '../types/prefs/CharacterPrefs';
 
-import CharacterSelect from "../components/CharacterSelect";
-import WeaponSelect from "../components/WeaponSelect";
-import ArtifactSelect from "../components/ArtifactSelect";
+import CharacterProps from '../types/props/FarmingSpotProps';
+import WeaponProps from '../types/props/WeaponProps';
+import ArtifactProps from '../types/props/ArtifactProps';
+import MaterialProps from '../types/props/MaterialProps';
+import FarmableProps from '../types/props/FarmableProps';
+import FarmingSpotProps from '../types/props/FarmingSpotProps';
+
+import MenuContainer from "../components/menu/MenuContainer"
+import CharacterSelect from "../components/selects/CharacterSelect";
+import WeaponSelect from "../components/selects/WeaponSelect";
+import ArtifactSelect from "../components/selects/ArtifactSelect";
 import FarmingDisplay from "../components/FarmingDisplay";
 import LoginButton from '../components/LoginButton';
-import SaveButton from '../components/SaveButton';
+import ResetButton from '../components/ResetButton';
 
 import { artifact_data } from '../data/artifacts';
 import { character_data } from '../data/characters';
@@ -38,15 +40,16 @@ const MainRoute = () : JSX.Element => {
   locations.push(farming_spot);
   
     // These preference states record the data associated with an account
-  const [charPrefs, setCharPrefs] = React.useState<CharacterPrefProps[]>([]);
-  const [weaponPrefs, setWeaponsPrefs] = React.useState<EnablablePrefProps[]>([]);
-  const [artifactPrefs, setArtifactPrefs] = React.useState<EnablablePrefProps[]>([]);
+  const [charPrefs, setCharPrefs] = React.useState<CharacterPrefs[]>([]);
+  const [weaponPrefs, setWeaponsPrefs] = React.useState<EnablablePrefs[]>([]);
+  const [artifactPrefs, setArtifactPrefs] = React.useState<EnablablePrefs[]>([]);
+  const [loading, setLoading] = React.useState<Boolean>(true);
 
-  // !!! TODO (Andrew): Write fetch requests to DB to initialize preferences
   /**
    * initPrefs() fetches the user preferences from the database
    */
   function initPrefs() {
+    setLoading(true);
     fetch("/prefs",{
       method: "GET"
     }).then(function(res) {
@@ -57,13 +60,13 @@ const MainRoute = () : JSX.Element => {
         setWeaponsPrefs(data[0].weapons);
         setArtifactPrefs(data[0].artifacts);
       }
-    })
+    }).then(() => setLoading(false))
   }
 
   /**
-   * updatePrefs() updates the user preferences to the database
+   * updateDB() updates the user preferences to the database
    */
-  function updatePrefs() {
+  function updateDB() {
     const json = {
       characters: charPrefs,
       weapons: weaponPrefs,
@@ -87,26 +90,109 @@ const MainRoute = () : JSX.Element => {
     })
   }
 
+  const handleReset = () => {
+    setCharPrefs([]);
+    setWeaponsPrefs([]);
+    setArtifactPrefs([]);
+  }
+
 
     // This calculates the farmable items to be displayed and their related locations
   const [activeFarmables, setActiveFarmables] = React.useState<FarmableProps[]>([]);
   const [activeLocations, setActiveLocations] = React.useState<FarmingSpotProps[]>([]);
+
+  // const filterFarmablesLocations = () => {
+  //   setActiveFarmables([]);
+  //   setActiveLocations([]);
+  //   charPrefs.forEach(c => {
+  //     if(c.enabled) {
+  //       let character = characters.find(res => {
+  //         return res.name == c.name;
+  //       });
+  //       if(c.ascension == true && character !== undefined) {
+  //         character.ascension.forEach(a => {
+  //           let mat = materials.find(res => {
+  //             return res.name == a;
+  //           })
+  //           if(mat !== undefined) {
+  //             if(!activeFarmables.includes(mat)) {
+  //               activeFarmables.push(mat);
+  //             }
+  //           }
+  //         })
+  //       }
+  //       if(c.talent == true && character !== undefined) {
+  //         character.talent.forEach(a => {
+  //           let mat = materials.find(res => {
+  //             return res.name == a;
+  //           })
+  //           if(mat !== undefined) {
+  //             if(!activeFarmables.includes(mat)) {
+  //               activeFarmables.push(mat);
+  //             }
+  //           }
+  //         })
+  //       }
+  //     }
+  //   })
+  //   weaponPrefs.forEach(w => {
+  //     if(w.enabled) {
+  //       let weapon = weapons.find(res => {
+  //         return res.name == w.name;
+  //       })
+  //       //add all ascension to active farmables
+  //       if(weapon !== undefined) {
+  //         weapon.ascension.forEach(a => {
+  //           let mat = materials.find(res => {
+  //             return res.name == a;
+  //           })
+  //           if(mat !== undefined) {
+  //             if(!activeFarmables.includes(mat)) {
+  //               activeFarmables.push(mat);
+  //             }
+  //           }
+  //         })
+  //       }
+  //     }
+  //   })
+  //   artifactPrefs.forEach(a => {
+  //     if(a.enabled) {
+  //       let artifact = artifacts.find(res => {
+  //         return res.name == a.name;
+  //       })
+  //       if(artifact !== undefined) {
+  //         if(!activeFarmables.includes(artifact)) {
+  //           activeFarmables.push(artifact);
+  //         }
+  //       }
+  //     }
+  //   })
+
+  //   activeFarmables.forEach(f => {
+  //     let location = locations.find(res => {
+  //       return res.name == f.farm_at;
+  //     })
+  //     if(location !== undefined) {
+  //       if(!activeLocations.includes(location)) {
+  //         activeLocations.push(location);
+  //       }
+  //     }
+  //   })
+  // }
   
   React.useEffect(() => {
     // !!! TODO (Micheal): Write useEffect function to refilter based off of the selected prefs changing
     // "activeFarmables" should be the artifacts selected by artifactPrefs and materials associated with selected characters 
     // "activeLocations" should be the locations listed per each activeFarmable's farm_at string
     //debug prints for now: 
-    console.log(charPrefs);
-    console.log(weaponPrefs);
-    console.log(artifactPrefs);
+    if(!loading) {
+      updateDB();
+    }
   }, [charPrefs, weaponPrefs, artifactPrefs]);
 
   return (
     <>
-    {/* !!! TODO (UI): Organize these components for displaying the page */}
-      <LoginButton initPrefs={initPrefs} />
-      <SaveButton updatePrefs={updatePrefs} />
+      <MenuContainer />
       <CharacterSelect 
         characters={characters} 
         preferences={charPrefs} 
@@ -126,6 +212,8 @@ const MainRoute = () : JSX.Element => {
         farmables={activeFarmables}
         locations={activeLocations}
       />
+      <LoginButton initPrefs={initPrefs} />
+      <ResetButton handleReset={handleReset} />
     </>
   );
 }
