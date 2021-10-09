@@ -6,14 +6,14 @@ export default interface CharacterProps extends NamedProps {
   name: string
   fullname: {
     en: string,
-    es?: string,
-    pt?: string,
+    znCn?: string,
     ko?: string,
     ja?: string,
+    ru?: string,
     vi?: string,
     de?: string,
     fr?: string,
-    ru?: string
+    es?: string,
   },
   element: string,
   rarity: number,

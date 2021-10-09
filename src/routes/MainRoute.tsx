@@ -22,7 +22,7 @@ import { artifact_data } from '../data/artifacts';
 import { character_data } from '../data/characters';
 import { farm_material } from '../data/materials';
 import { farming_spot } from '../data/materials';
-import { weapon_data } from '../data/weapons';
+import { weapon_data } from '../data/weapon';
 
 const MainRoute = () : JSX.Element => { 
     // These static variables record all characters, weapons, and artifacts
