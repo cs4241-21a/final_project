@@ -2,38 +2,36 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./css/styles.css";
 // import Kabob from "./kabob";
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 // Make sure to run 'npm run build'
 
 class Post extends React.Component {
-    constructor(props){
-        super(props)
+  constructor(props) {
+    super(props);
 
-        // console.log("this.props.postID", this.props.postID)
+    // console.log("this.props.postID", this.props.postID)
 
-        this.click = this.click.bind(this)
-    }
+    this.click = this.click.bind(this);
+  }
 
-    click(event){
-        // console.log("icon clicked")
-        // console.log("creatorID: ", this.props.profileID)
-        let request = {
-            creatorID: this.props.profileID,
-            postID: this.props.postID
-        }
-        
-        fetch('/delete_post', {
-            method:'POST',
-            body: JSON.stringify(request),
-            headers:{
-                "Content-Type": "application/json"
-            }
-        })
-        .then(response => response.json())
-        // .then(json => console.log(json))
+  click(event) {
+    // console.log("icon clicked")
+    // console.log("creatorID: ", this.props.profileID)
+    let request = {
+      profileID: this.props.profileID,
+      postID: this.props.postID,
+    };
 
-        
-    }
+    fetch("/delete_post", {
+      method: "POST",
+      body: JSON.stringify(request),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => this.props.app.setState({ posts: json }));
+  }
 
   render() {
     return (
@@ -42,7 +40,11 @@ class Post extends React.Component {
           <div class="post_title">
             <h3>{this.props.header}</h3>
             {/* <Kabob profileID={this.props.profileID}></Kabob> */}
-            <DeleteForeverIcon class="delete_post_icon" fontSize="small" onClick={this.click}/>
+            <DeleteForeverIcon
+              class="delete_post_icon"
+              fontSize="small"
+              onClick={this.click}
+            />
           </div>
           <div class="post_data_container">
             <b>Post Author: </b>
@@ -82,9 +84,9 @@ class Dashboard extends React.Component {
     fetch("/posts", { method: "get", "no-cors": true })
       .then((response) => response.json())
       .then((json) => {
-          this.setState({ posts: json })
+        this.setState({ posts: json });
         //   console.log("json: ", json)
-        });
+      });
   }
 
   submit(e) {
@@ -527,6 +529,7 @@ class Dashboard extends React.Component {
               {this.state.posts.map((post, i) => (
                 <Post
                   key={i}
+                  app={this}
                   postID={post._id}
                   firstName={post.firstName}
                   lastName={post.lastName}
