@@ -8,7 +8,7 @@ const numOfStars = 75,
       medium = 40,
       large = 70,
       gompei_size = 50,
-      ship_thrust = .1
+      ship_thrust = .01
 
 let virus_img
 let sanitizer_img
@@ -110,6 +110,10 @@ function moveShip(){
      acc = createVector(0, ship.thrust) //Add acceleration pointin along ship's axis (up)
      acc.rotate(ship.rotation) //Rotate by ship's rotation
   }
+  if(keyIsDown(DOWN_ARROW)){
+     acc = createVector(0, -ship.thrust) //Add acceleration pointin along ship's axis (up)
+     acc.rotate(ship.rotation) //Rotate by ship's rotation
+  }
   ship.vel.add(acc)
   ship.pos.add(ship.vel)
 }
@@ -134,12 +138,12 @@ function displayShip(){
   push();
   translate(ship.pos.x, ship.pos.y)
   rotate(ship.rotation)
-  /*beginShape();
+  image(gompei_img, ship.pos.x, ship.pos.y, ship.diam, ship.diam)
+  beginShape();
   vertex(0, -25);
   vertex(15, 15);
   vertex(-15, 15);
-  endShape();*/
-  image(gompei_img, ship.pos.x, ship.pos.y, ship.diam, ship.diam)
+  endShape();
   pop();
 }
 

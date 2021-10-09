@@ -86,7 +86,7 @@ function createLobby(password=undefined) {
 
     lobby.addClient = nc => {
         lobby.clients.forEach(c => {
-            c.send({packetType: "joined", id: c.id});
+            c.send({packetType: "joined", id: nc.id, username: nc.username});
         });
         lobby.clients.push(nc);
     }
@@ -112,15 +112,16 @@ function generateClientName() {
     return name;
 }
 
-function createClient(id, socket, address){
-  return {id, socket, address, x: 0, y: 0, vx: 0, vy: 0, angle: 0};
+function createClient(id, socket, address, username){
+  return {id, socket, address, username, x: 0, y: 0, vx: 0, vy: 0, angle: 0};
 }
 
 wss.on('connection', (socket, req) => {
-    sessionParser(req.upgradeReq, {}, function(){
+    sessionParser(req, {}, function(){
       const clientId = generateClientName();
-      allClients.push(createClient(clientId, socket, req.socket.remoteAddress));
-      socket.send("Hello World! session.username = " + (req.upgradeReq.session && req.upgradeReq.session.username));
+      const username = req.session && req.session.username;
+      socket.send("Hello World! session.username = " + (req.session && req.session.username));
+      allClients.push(createClient(clientId, socket, req.socket.remoteAddress, username));
       socket.on('message', message => {
           socket.send("I got: " + message);
 
