@@ -133,15 +133,15 @@ wss.on('connection', (socket, req) => {
               switch(json.packetType) {
                   case "join_lobby":
                     { 
-                      let pass = json.password;
                       let lobby = lobbies.find(l => l.name === json.name);
+                      console.log(JSON.stringify(lobby));
                       if(lobby !== undefined) {
-                        if(lobby.password === pass) {
+                        if(lobby.password === json.password) {
                           socket.send(JSON.stringify({packetType: "joined_lobby", name: lobby.name}));
                           lobby.addClient(allClients.find(c => c.id == clientId));
                         }
                       }else{
-                        lobby = createLobby(json.name, pass);
+                        lobby = createLobby(json.name, json.password);
                         lobbies.push(lobby);
                         socket.send(JSON.stringify({packetType: "joined_lobby", name: lobby.name}));
                         lobby.addClient(allClients.find(c => c.id == clientId));

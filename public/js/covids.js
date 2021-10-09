@@ -7,8 +7,10 @@ const numOfStars = 75,
       medium = 40,
       large = 70,
       gompei_size = 50,
+      mask_size = 22,
       ship_thrust = .05,
-      max_ship_speed = 5
+      max_ship_speed = 5,
+      num_lives = 3
 
 let GameOver = false
 let isThrusting = false
@@ -20,6 +22,7 @@ let gompei_img
 
 let ship = {}
 let stars = []
+let masks = []
 
 function randomChoice(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
@@ -90,12 +93,23 @@ function drawStars(){
   }
 }
 
+function generateMask(){
+  let mask = {}
+  ship.pos = createVector(width/2, height/2);
+  ship.vel = createVector(0, 0);
+  ship.diam = mask_size
+  ship.thrust = ship_thrust
+  ship.rotation = 0
+  
+}
+
 function generateShip() {
   ship.pos = createVector(width/2, height/2);
   ship.vel = createVector(0, 0);
   ship.diam = gompei_size
   ship.thrust = ship_thrust
   ship.rotation = 0
+  ship.lives = num_lives
 }
 
 function turnShip() {
@@ -145,22 +159,25 @@ function displayShip(){
   pop();
 }
 
+function blinkShip(counter){
+  if (counter % 30 === 0) {
+    
+  }
+}
 
-
-function checkShipForCollisions(targets){
+function checkShipForCollisions(curr, targets){
   
   //Note this will crash if the target object does not contain a 'pos' vector.
   for (let i = 0; i < targets.length; i++){
     let t = targets[i];
-    let distance = dist(ship.pos.x, ship.pos.y, t.x, t.y);
+    let distance = dist(curr.pos.x, curr.pos.y, t.x, t.y);
 
-    let sumOfRadii = ship.diam/2 + t.diam/2;
+    let sumOfRadii = curr.diam/2 + t.diam/2;
 
     if(sumOfRadii > distance){
       //We have a collision!
       print("HIT")
       //play audio
-      //make ship
     }
   }
 }
@@ -181,30 +198,68 @@ function thrustingFeedback(){
   
 }
 
+function lossOfLife(){
+  
+}
 
+function checkLives(){
+  if (ship.lives === 0){
+    GameOver = true
+  }
+}
+
+let counter = 0
 function draw() {
+  if (counter >= 60) {
+    counter = 0
+  }
   background(255)
   drawStars()
   displayShip()
   turnShip()
   moveShip()
-  checkShipForCollisions(stars)
+  checkShipForCollisions(ship, stars)
+  checkShipForCollisions(masks, stars)
   checkEdges(ship)
+  checkLives()
   if(GameOver){
     return
   }
+  counter++
 }
 
 
 let socket = null;
+let inLobby = false;
 
 function connectWS(){
   socket = new WebSocket("wss://corona-game.glitch.me");
   socket.onmessage = function (event) {
     console.log("[SERVER] " + event.data);
+    try {
+      let json = JSON.parse(event.data);
+      switch(json.packetType) {
+        case "joined_lobby":
+          {
+            inLobby = true;
+          }
+          break;
+      }
+    }catch(e){}
   }
 }
 
 function joinLobby(name, password=undefined){
   socket.send(JSON.stringify({packetType: "join_lobby", name, password}));
+}
+
+function sendShipPos() {
+  socket.send(JSON.stringify({packetType: "update_pos", x: ship.pos.x, y: ship.pos.y, vx: ship.vel.x, vy: ship.vel.y, angle: ship.rotation }));
+}
+
+setInterval(tickWS, 250);
+function tickWS(){
+  if(inLobby) {
+    sendShipPos();
+  }
 }
