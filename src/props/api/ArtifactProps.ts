@@ -1,7 +1,7 @@
 export default interface ArtifactProps {
   // !!! TODO (Michael) :  Define ArtifactProps based off data given by API
   // FarmingSpotProps and MaterialProps have been done for reference
-  name: string
+  name: string,
   fullname: {
     en: string,
     es?: string,
@@ -13,5 +13,11 @@ export default interface ArtifactProps {
     fr?: string,
     ru?: string
   },
-  item_list: Object[]
+  item_list: {
+    fullname: {
+      en: string,
+      th: string,
+    },
+    farm_at: string,
+  }[],
 }

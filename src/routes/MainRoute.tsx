@@ -16,17 +16,26 @@ import FarmingDisplay from "../components/FarmingDisplay";
 import LoginButton from '../components/LoginButton';
 import SaveButton from '../components/SaveButton';
 
+import { artifact_data } from '../data/artifacts';
+import { character_data } from '../data/characters';
+import { farm_material } from '../data/materials';
+import { farming_spot } from '../data/materials';
+import { weapon_data } from '../data/weapons';
 
 const MainRoute = () : JSX.Element => { 
     // These static variables record all characters, weapons, and artifacts
   const characters : CharacterProps[] = [];
-  const weapons : WeaponProps[]  = [];
+  const weapons : WeaponProps[] = [];
   const artifacts : ArtifactProps[] = [];
   const materials : MaterialProps[] = [];
   const locations : FarmingSpotProps[] = [];
 
   // !!! TODO (Michael): Write fetch requests to API (or load JSON) to initialize static data
-
+  characters.push(character_data);
+  weapons.push(weapon_data);
+  artifacts.push(artifact_data);
+  materials.push(farm_material);
+  locations.push(farming_spot);
   
     // These preference states record the data associated with an account
   const [charPrefs, setCharPrefs] = React.useState<CharacterPrefProps[]>([]);
