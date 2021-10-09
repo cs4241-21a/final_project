@@ -5,6 +5,7 @@ const db = require('./dbManager.mongodb');
 const passport = require("passport");
 const Strategy = require('passport-local').Strategy;
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
+const { response } = require('express');
 
 app.set('views', __dirname + '/build');
 app.set('view engine', 'ejs');
@@ -93,6 +94,25 @@ app.get('/profile',
         res.sendFile(__dirname + "/build/profile.html")
     });
 
+app.get('/song',
+    ensureLoggedIn(),
+    function (req, res) {
+        res.sendFile(__dirname + "/build/song.html")
+    });
+
+app.post('/addComment', (req, res) => {
+    db.getContentById(req.body.songID)
+        .then(song => song[0])
+        .then(theSong => {
+            theSong.comments.push({ username: req.user.displayName, text: req.body.text })
+            db.addOrUpdateContent(theSong.user, theSong.title, theSong.artist, theSong.coverart, theSong.comments, theSong._id)
+                .then(response => {
+                    res.send({ response: response })
+                    res.end()
+                })
+        })
+})
+
 app.post('/removeSong', (req, res) => {
     console.log(req.body)
     db.deleteContent(req.user, req.body._id).then(result => {
@@ -115,25 +135,25 @@ app.post('/addSong', (req, res) => {
     };
 
     request(options, function (error, response, body) {
-        if (error) throw new Error(error);
-        console.log(response)
+        if (error) throw new Error(error)
         if (JSON.parse(response.body).tracks) {
             const matches = JSON.parse(response.body).tracks.hits.filter(song => { return song.track.title.toLowerCase() === req.body.songName.toLowerCase() && song.track.subtitle.toLowerCase() === req.body.artistName.toLowerCase() })
-            if (matches) {
+            if (matches.length) {
                 db.addOrUpdateContent(req.user, matches[0].track.title, matches[0].track.subtitle, matches[0].track.images.coverarthq).then(result => {
-                    console.log(result)
-                    res.sendFile(__dirname + "/build/profile.html")
+                    res.send({
+                        message: "Song added"
+                    })
                     res.end()
                 })
             } else {
                 res.send({
-                    message: "No results found"
+                    message: "No song with that artist found"
                 })
                 res.end()
             }
         } else {
             res.send({
-                message: "No results found"
+                message: "No song with that name found"
             })
             res.end()
         }
@@ -181,6 +201,13 @@ app.get('/getSongByName', (req, res) => {
         res.end()
     });
 
+})
+
+app.get('/getSongById', (req, res) => {
+    db.getContentById(req.query.songID).then(songArray => {
+        res.send(songArray[0])
+        res.end()
+    })
 })
 
 app.listen(3000);

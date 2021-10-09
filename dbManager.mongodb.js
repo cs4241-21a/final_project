@@ -1,5 +1,6 @@
 const crypto = require('./crypto');
 const MongoDB = require('mongodb');
+const ObjectId = require('mongodb').ObjectId
 const MongoClient = MongoDB.MongoClient;
 const url = 'mongodb+srv://kezhao:Zhaoke328@cluster0.2zapp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 
@@ -53,7 +54,15 @@ exports.getContentForUser = function (user) {
     })
 };
 
-exports.addOrUpdateContent = function (user, title, artist, coverart, id) {
+exports.getContentById = function (_id) {
+    return new Promise(resolve => {
+        ContentCollection().then(collection => {
+            collection.find({ _id: ObjectId(_id) }).toArray().then(data => resolve(data));
+        });
+    })
+};
+
+exports.addOrUpdateContent = function (user, title, artist, coverart, comments, id) {
     return new Promise(resolve => {
         if (id === undefined || id === '') {
             console.log("Adding ", title, " by ", artist, " for ", user.username);
@@ -61,15 +70,17 @@ exports.addOrUpdateContent = function (user, title, artist, coverart, id) {
                 username: user.username,
                 title: title,
                 artist: artist,
-                coverart: coverart
+                coverart: coverart,
+                comments: []
             })).then(result => resolve(result));
         } else {
             console.log('Updating content ', id);
-            ContentCollection().then(collection => collection.updateOne({ _id: MongoDB.ObjectID(id) }, {
+            ContentCollection().then(collection => collection.updateOne({ _id: ObjectId(id) }, {
                 $set: {
                     title: title,
                     artist: artist,
-                    coverart: coverart
+                    coverart: coverart,
+                    comments: comments
                 }
             })).then(result => resolve(result));
         }
@@ -78,7 +89,7 @@ exports.addOrUpdateContent = function (user, title, artist, coverart, id) {
 
 exports.deleteContent = function (user, contentID) {
     return new Promise(resolve =>
-        ContentCollection().then(collection => collection.deleteOne({ _id: MongoDB.ObjectID(contentID) })
+        ContentCollection().then(collection => collection.deleteOne({ _id: ObjectId(contentID) })
             .then(result => resolve(result))))
 };
 

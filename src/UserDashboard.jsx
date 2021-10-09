@@ -21,24 +21,25 @@ class App extends React.Component {
     console.log(event)
     event.preventDefault()
     const json = {
-      songName: document.querySelector("#songName"),
-      artistName: document.querySelector("#artistName")
+      songName: document.querySelector("#songName").value,
+      artistName: document.querySelector("#artistName").value
     }
+
     fetch("/addSong", {
       method: "POST",
       body: JSON.stringify(json),
       headers: {
         "Content-Type": "application/json",
       }
-    }).then(function (response) {
-      console.log(response);
-      if (!response.body.message) {
-        window.location.replace('/profile')
-      } else {
-        this.setState({ addMessage: response.body.message })
-      }
-      // Do something with the response
-    });
+    }).then(res => res.json())
+      .then(json => {
+        console.log(json)
+        if (json.message === "Song added") {
+          window.location.replace('/profile')
+        } else {
+          this.setState({ addMessage: json.message })
+        }
+      })
   }
 
   removeSong(event) {
@@ -72,21 +73,19 @@ class App extends React.Component {
   }
 
   render() {
-    const { form } = this.state;
-    const trackList = this.state.songsJson;
-    const message = this.state.message;
+    const { form, songsJson, addMessage } = this.state;
     const formClass = `card ${form ? 'opened' : 'closed'}`
     return (
       <>
         <Navbar />
         <div id="addSongForm" className={formClass}>
-          <form class=" form form-signin card-body" action="/addSong" method="POST">
-            {message ? <div class="alert alert-danger">{message}</div> : <></>}
+          <form class=" form form-signin card-body">
+            {addMessage ? <div class="alert alert-danger">{addMessage}</div> : <></>}
             <label class='sr-only' for="songName">Title of the song</label><br />
             <input class="form-control" id="songName" name="songName" type="text" placeholder="Song Title" required></input>
             <label class='sr-only' for="artistName">Name of the Artist</label><br />
             <input class="form-control" id="artistName" name="artistName" type="text" placeholder="Artist Name" required></input>
-            <button class="btn btn-lg btn-success btn-block" type="submit" onCkick={(e) => this.addSong(e)}>Add Song</button>
+            <button class="btn btn-lg btn-success btn-block" type="submit" onClick={(e) => this.addSong(e)}>Add Song</button>
           </form>
         </div>
         <div class="card" style={{ width: "95%", left: "2.5%", fontSize: "20px" }}>
@@ -102,8 +101,8 @@ class App extends React.Component {
                   </button>
                 </th>
               </tr>
-              {trackList ?
-                trackList.map(track => (
+              {songsJson ?
+                songsJson.map(track => (
                   <tr id={track._id}>
                     <td id={`title_${track._id}`}>{track.title} </td>
                     <td id={`Artist_${track._id}`}>{track.artist} </td>

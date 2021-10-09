@@ -33,6 +33,7 @@ class Dashboard extends React.Component {
                                 <th>Title</th>
                                 <th>Artist</th>
                                 <th>Coverart</th>
+                                <th>Comments</th>
                             </tr>
                             {
                                 trackList.map(track => (
@@ -40,6 +41,7 @@ class Dashboard extends React.Component {
                                         <td id={`title_${track._id}`}>{track.title} </td>
                                         <td id={`Artist_${track._id}`}>{track.artist} </td>
                                         <td><img src={track.coverart} style={{ wdith: "10vh", height: "10vh" }}></img></td>
+                                        <td><a href={`/song?songID=${track._id}`}><i class="far fa-comment"></i></a> {track.comments.length}</td>
                                     </tr>
                                 ))
                             }
