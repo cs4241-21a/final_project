@@ -16,8 +16,8 @@
       <div class="nav-bar">
         <div class="top">
            <ul>
-           <li><a @click="shopping=true; CounterPage=false" style="cursor:pointer">Shopping Area</a></li>
-           <li><a @click="shopping=false; CounterPage=true" style="cursor:pointer">Counter</a></li>
+           <li><a href="#" style="cursor:pointer">Shopping Area</a></li>
+           <li><a href="#" style="cursor:pointer">Counter</a></li>
            <li><a href="#">一级菜单</a></li>
            <li><a href="#"><b>一级菜单</b></a></li>
            <li><a href="#">一级菜单</a></li>
@@ -32,39 +32,16 @@
         </div>
       </div>
 
+
+      
       <!--Shopping Area Page start here!-->
-      <div v-if="shopping">
-        <div class="cart" >Cart({{ cart.length }})</div>
-        <product-display :premium="premium" @add-to-cart="updateCart"></product-display>
-      </div>
-      
-
-      <!--Counter Page start here!-->
-      <div v-if="CounterPage">
-        <h2>Counter: {{counter}} <button v-on:click="add">+</button></h2>
-        <button @click="sendRequest">send request to server</button>
-      </div>
       
 
 
-    </div>
-
-    <div id="app2">
     </div>
 
     <!-- Import App -->
-    <script src="./main.js"></script>
 
-    <!-- Import Components -->
-    <script src="./components/ProductDisplay.js"></script>
-    <script src="./components/ReviewForm.js"></script>
-    <script src="./components/ReviewList.js"></script>
-
-    <!-- Mount App -->
-    <script>
-      const mountedApp1 = app1.mount('#app')
-      const mountedApp2 = app2.mount('#app2')
-    </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
   </body>
