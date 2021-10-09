@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Collapsible from 'react-collapsible';
 import databaseUtils from './databaseUtils';
 import {GLOBAL_VARIABLES} from './globals';
 import CalendarSidebarItem from './Sidebar'
@@ -26,11 +27,17 @@ class Task extends Component {
         if(this.state.description !== undefined){
             description = this.state.description;
         }
+        /*let month = monthNames[this.state.dueDate.getMonth()];
+        let day = daysInWeek[this.state.dueDate.getDay()];
+        let year = this.state.dueDate.getFullYear();
+        let hour = this.state.dueDate.getHours();
+        let minutes = this.state.dueDate.getMinutes();
+        let dateString = month + " " + day + ", " + year + " at " + hour + ":" + minutes;*/
         return (
           <Collapsible trigger={this.state.name}>
             <p>Description: {description}</p>
             <p>Owner: {this.state.user}</p>
-            <p>Due Date: {this.state.dueDate.prototype.toString()}</p>
+            <p>Due Date: {this.state.dueDate}</p>
           </Collapsible>
         );
       }

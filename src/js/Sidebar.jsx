@@ -13,6 +13,7 @@ class Sidebar extends Component {
       calendars: GLOBAL_VARIABLES.calendars,
       tasks: GLOBAL_VARIABLES.tasks,
       calendarSidebarItems: [],
+      taskSidebarItems: [],
       color: '#000000'
     };
     this.newCalendarSubmit = this.newCalendarSubmit.bind(this);
@@ -64,7 +65,9 @@ class Sidebar extends Component {
     databaseUtils.addTask(newTask)
     .then(newTaskId => {
       newTask._id = newTaskId;
-      GLOBAL_VARIABLES.tasks.push(newTask);
+      this.setState({
+        tasks: [...this.state.tasks, newTask]
+      });
     })
   }
   
@@ -85,9 +88,11 @@ class Sidebar extends Component {
       calendarSidebarItems.push(<CalendarSidebarItem calendar={calendar} 
                                 customOnClick={this.selectCalendar}/>);
     });
+    let taskSidebarItems = [];
     this.state.tasks.forEach(task => {
-      calendarSidebarItems.push(<Task task={task}/>);
+      taskSidebarItems.push(<Task task={task}/>);
     });
+    console.log(taskSidebarItems)
 
     return (
       <div className='sidebar'>
@@ -145,9 +150,12 @@ class Sidebar extends Component {
                 </div>  
               )}
           </Popup>
+          <div className="taskSidebarItems">
+              {taskSidebarItems}
           </div>
         </div>
       </div>
+    </div>
     );
   }
 }
