@@ -1,5 +1,6 @@
 import React from "react";
 import Card_Row from "./Card_Row";
+import {Set} from "./Workout"
 
 import "./css/movement_card_view.css";
 
@@ -10,35 +11,35 @@ const Movement_Card_View = (props) => {
   console.log("React Log page");
 
   const editEntry = () => {
-    document.getElementById("addModifyButton").innerText = "Edit";
-    document.getElementById("movementName").value = props.movement.movementName;
-    document.getElementById("numberOfSets").value = props.movement.sets.length;
-
-    props.parent.state.newNumSets = props.movement.sets.length;
-    let setsDiv = document.getElementById("setsDiv");
-
     const movementName = props.movement.movementName;
+    const numSets = props.movement.sets.length;
 
-    let children = "";
+    document.getElementById("addModifyButton").innerText = "Edit";
+    document.getElementById("movementName").value = movementName;
+    document.getElementById("numberOfSets").value = numSets;
 
-    for (let i = 0; i < props.movement.sets.length; ++i) {
-      let newWeight = document.getElementById(
-        `${movementName}weight${i}`
-      ).innerHTML;
-      let newReps = document.getElementById(
-        `${movementName}reps${i}`
-      ).innerHTML;
-      let newRPE = document.getElementById(`${movementName}RPE${i}`).innerHTML;
+    console.log('Performing editEntry')
+    
+    props.parent.state.sets = [];
 
-      children += `<div id='set${i}'> 
-                        <input id='weight${i}' placeholder="weight" value="${newWeight}"></input> 
-                        <input id='reps${i}' placeholder="reps" value="${newReps}"></input> 
-                        <input id='RPE${i}' placeholder="RPE" value="${newRPE}"></input> 
-                    </div>`;
+    for (let i = 0; i < numSets; ++i) {
+      props.parent.state.sets.push(<Set setNumber={i}></Set>)
     }
-    setsDiv.innerHTML = children;
 
-    console.log("Children is: " + children);
+    props.parent.setState({ 
+      oldNumSets: numSets,
+      newNumSets: numSets
+    });
+
+    for (let i = 0; i < numSets; ++i) {
+      let newWeight = document.getElementById(`${movementName}weight${i}`).innerHTML
+      let newReps = document.getElementById(`${movementName}reps${i}`).innerHTML
+      let newRPE = document.getElementById(`${movementName}RPE${i}`).innerHTML
+
+      document.getElementById(`weight${i}`).value = newWeight
+      document.getElementById(`reps${i}`).value = newReps
+      document.getElementById(`RPE${i}`).value = newRPE
+    }
   };
 
   let cardRows = [];
@@ -52,11 +53,8 @@ const Movement_Card_View = (props) => {
     );
   }
   return (
-    <div>
+    <div  id='movement_card'>
       <p id={props.movement.movementName}>{props.movement.movementName}</p>
-      <p id={props.movement.movementName + "numSets"}>
-        {props.movement.sets.length}
-      </p>
       <table>
         <tr>
           <th>Weight</th>

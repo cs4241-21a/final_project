@@ -119,6 +119,12 @@ app.get("/me", async (req, res) => {
   res.json(userRes);
 });
 
+app.delete("/me", (req, res) => {
+  console.log(`Logging out ${req.session.username}`);
+  req.session.destroy();
+  res.status(200).end();
+});
+
 // WORKOUT MODIFICATIONS
 
 app.post("/workout", async (req, res) => {
@@ -146,13 +152,15 @@ app.post("/workout", async (req, res) => {
 });
 
 app.patch("/movement", async (req, res) => {
-  console.log("Received PATCH to /movement")
+  console.log("Received PATCH to /movement");
   if (!req.session.username) {
     console.log("Not even logged in wtf");
     res.status(401).end();
   }
   console.log(`Modifying movement for user ${req.session.username}`);
   console.log(`Modifying movement for workout ${req.query.workout_id}`);
+
+  console.log(req.body);
 
   const updateRes = await mongoClient
     .db("final")
@@ -161,18 +169,21 @@ app.patch("/movement", async (req, res) => {
       {
         username: req.session.username,
         "workouts._id": req.query.workout_id,
-        "workouts.movements.name": req.body.name
       },
 
-      { $set:
-        {
-         "workouts.$.movements.$": req.body 
-        } 
-      } 
+      {
+        $set: {
+          "workouts.$.movements.$[element]": req.body,
+        },
+      },
+      {
+        arrayFilters: [{ "element.movementName": req.body.movementName }],
+      }
     );
+  console.log(updateRes);
 
   res.status(200).end();
-})
+});
 
 app.post("/movement", async (req, res) => {
   console.log("Received POST to /movement");
@@ -236,7 +247,6 @@ app.delete("/workout", async (req, res) => {
 });
 
 app.delete("/movement", async (req, res) => {
-  
   console.log("Deleting movement " + req.query._id);
 
   await mongoClient
@@ -244,7 +254,7 @@ app.delete("/movement", async (req, res) => {
     .collection("users")
     .updateOne(
       { username: req.session.username },
-      { $pull: { workouts: {$elemMatch: { _id: req.query._id } }} }//should drop entire movement elem but not workout
+      { $pull: { workouts: { $elemMatch: { _id: req.query._id } } } } //should drop entire movement elem but not workout
     );
 
   res.status(200).end();

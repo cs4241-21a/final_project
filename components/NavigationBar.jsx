@@ -6,6 +6,14 @@ import "./css/navigation_style.css";
 
 const NavigationBar = (props) => {
   const { user, loggedOut, mutate, loading } = useUser();
+
+  const logOut = async () => {
+    console.log("Logout");
+    await fetch("/me", { method: "DELETE" });
+    mutate();
+    window.location.href = "/";
+  };
+
   return (
     <div class="topNav" id="headerDiv">
       <Link class = "topnavlink" to="/">Home</Link>
@@ -14,7 +22,7 @@ const NavigationBar = (props) => {
       ) : loading ? (
         <div>Loading</div>
       ) : (
-        <button class = "topnavbutton" to = "/login">Log Out</button>
+        <button class = "topnavbutton" onClick={logOut}>Log Out</button>
       )}
     </div>
   );
