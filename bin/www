@@ -6,7 +6,7 @@
 
 console.log("Starting things")
 var app = require('../app');
-var debug = require('debug')('final-template:server');
+var debug = require('debug')('final-project-canvas:server');
 var http = require('http');
 
 /**
