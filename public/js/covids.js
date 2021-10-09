@@ -96,11 +96,10 @@ function drawStars(){
 
 function generateMask(){
   let mask = {}
-  let newVel = ship
-  mask.pos = createVector(newVel.pos.x, newVel.pos.y-50)
-  let div = Math.sqrt(Math.pow(ship.vel.x, 2) + Math.pow(ship.vel.y, 2))
-  newVel.vel.add(createVector(0,1).rotate(ship.rotation))
-  mask.vel = newVel.vel
+  let newVel = createVector(ship.vel.x, ship.vel.y).rotate(ship.rotation)
+  mask.pos = createVector(ship.pos.x, ship.pos.y-50)
+  newVel.add(createVector(0,1).rotate(ship.rotation))
+  mask.vel = newVel
   mask.diam = mask_size
   mask.rotation = ship.rotation
   masks.push(mask)
@@ -189,7 +188,7 @@ function blinkShip(counter){
     
   }
 }
-  
+
 function checkMasksForCollisions(){
   masks.forEach(checkForCollisions, stars)
 }
@@ -263,7 +262,6 @@ function draw() {
   }
   counter++
 }
-
 
 let socket = null;
 let inLobby = false;
