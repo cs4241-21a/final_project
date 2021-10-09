@@ -494,12 +494,7 @@ app.get("/profile", (request, response) => {
 });
 
 app.post("/create_profile", bodyParser.json(), (request, response) => {
-  collection_profile.deleteMany({ profileID:Number(profileID) });
-
-  //console.log("removed_courses already there")
-
-  //console.log("profileID: ", profileID)
-  //console.log("request: ", request.body)
+  collection_profile.deleteMany({ profileID: Number(profileID) });
 
   let allSkills = request.body.skills.concat(request.body.languages);
 
@@ -520,26 +515,71 @@ app.post("/create_profile", bodyParser.json(), (request, response) => {
     //console.log(result)
   });
 
-  response.json()
-
+  response.json();
 });
 
-app.post("/get_profile", bodyParser.json(), (request, response) => {
-  collection_profile
-    .find({ profileID:Number(profileID) })
+app.post("/get_profile", bodyParser.json(), async (request, response) => {
+  let profile = null;
+  let allSkills = null;
+  let studentSkills = null;
+  let studentClasses = null;
+
+  await collection_profile
+    .find({ profileID: Number(profileID) })
     .toArray()
-    .then((dbJSON) => {
-      //console.log(dbJSON)
-      if (dbJSON.length > 0) {
-        response.json(dbJSON[0]);
-      } else {
-        response.json({});
+    .then((read_data) => (profile = read_data[0]));
+
+  await collection_studentSkillRelation
+    .find({ profileID: Number(profileID) })
+    .toArray()
+    .then((read_data) => (studentSkills = read_data));
+
+  await collection_studentClassRelation
+    .find({ profileID: Number(profileID) })
+    .toArray()
+    .then((read_data) => (studentClasses = read_data));
+
+  await collection_skill
+    .find({})
+    .toArray()
+    .then((read_data) => (allSkills = read_data));
+
+  let skills = [];
+  let languages = [];
+  let courses = [];
+  
+  for (let i = 0; i < studentClasses.length; i++) {
+    if (studentClasses[i].classDepartment === "personal") {
+      courses.push("personal");
+    } else {
+      courses.push(studentClasses[i].classCourseNumber);
+    }
+  }
+
+  for (let j = 0; j < studentSkills.length; j++) {
+    let skillName = studentSkills[j].skill;
+    for (let k = 0; k < allSkills.length; k++) {
+      if (allSkills[k].skill === skillName) {
+        if (allSkills[k].category === "Programming Languages") {
+          languages.push(skillName);
+          break;
+        } else {
+          skills.push(skillName);
+          break;
+        }
       }
-    });
+    }
+  }
+
+  profile.courses = courses;
+  profile.skills = skills;
+  profile.languages = languages;
+
+  response.json(profile);
 });
 
 function insertStudentClassRelation(classNames) {
-  collection_studentClassRelation.deleteMany({ profileID:Number(profileID) });
+  collection_studentClassRelation.deleteMany({ profileID: Number(profileID) });
 
   //console.log("removed courses already there. ")
 
@@ -555,7 +595,7 @@ function insertStudentClassRelation(classNames) {
       json = {
         profileID: Number(profileID),
         classCourseNumber: classNames[i],
-        classDepartment: "CS"
+        classDepartment: "CS",
       };
     }
     //console.log("insert into studentClassRElation: ", json)
@@ -567,7 +607,7 @@ function insertStudentClassRelation(classNames) {
 }
 
 function insertStudentSkillRelation(skills) {
-  collection_studentSkillRelation.deleteMany({ profileID:Number(profileID) });
+  collection_studentSkillRelation.deleteMany({ profileID: Number(profileID) });
 
   //console.log("removed courses already there. ")
 
