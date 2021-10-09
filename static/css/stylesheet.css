@@ -12,6 +12,10 @@ body {
     overflow: auto;
 }
 
+h3 {
+    padding-left: 27vw;
+}
+
 #farm {
     background-color: rgba(255,255,255,0.1);
     border-radius: 25px;
@@ -62,7 +66,6 @@ button:hover {
 #roundButton:active {
     border-color: #003557;
     background-color: #FFF;
-    transform: translate(30vw);
 }
 
 #flyoutMenu {
@@ -78,7 +81,8 @@ button:hover {
 }
 
 #flyoutMenu.hide {
-    transform: translate3d(-100vw, 0, 0);
+    transform: translate3d(-30vw, 0, 0);
+    overflow: hidden;
 }
 
 #flyoutMenu.show {
