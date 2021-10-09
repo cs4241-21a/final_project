@@ -132,9 +132,10 @@ class Profile extends React.Component {
       },
     })
       .then((response) => response.json())
-      .then((json) => this.setState({}));
-
-    console.log("submitting json: ", json);
+      .then((json) => {
+        console.log("submitting json: ", json);
+        this.setState({});
+      });
   }
 
   update_selected_courses(e) {

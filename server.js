@@ -4,6 +4,7 @@ const express = require("express"),
   app = express(),
   fs = require("fs"),
   mime = require("mime"),
+  cors = require("cors"),
   mongodb = require("mongodb"),
   bodyParser = require("body-parser");
 MongoClient = mongodb.MongoClient;
@@ -18,6 +19,8 @@ const DiscordStrategy = require("passport-discord").Strategy;
 const { profile } = require("console");
 const { LensTwoTone } = require("@mui/icons-material");
 scopes = ["identify"];
+
+app.use(cors());
 
 app.use(
   session({
@@ -493,13 +496,13 @@ app.get("/profile", (request, response) => {
   response.sendFile(__dirname + "/build/profile.html");
 });
 
-app.post("/create_profile", bodyParser.json(), (request, response) => {
-  collection_profile.deleteMany({ profileID: Number(profileID) });
+app.post("/create_profile", bodyParser.json(), async (request, response) => {
+  await collection_profile.deleteMany({ profileID: Number(profileID) });
 
   let allSkills = request.body.skills.concat(request.body.languages);
 
-  insertStudentClassRelation(request.body.courses);
-  insertStudentSkillRelation(allSkills);
+  await insertStudentClassRelation(request.body.courses);
+  await insertStudentSkillRelation(allSkills);
 
   jsonToInsert = {
     profileID: Number(profileID),
@@ -511,7 +514,7 @@ app.post("/create_profile", bodyParser.json(), (request, response) => {
     phoneNum: request.body.phoneNum,
   };
 
-  collection_profile.insertOne(jsonToInsert).then((result) => {
+  await collection_profile.insertOne(jsonToInsert).then((result) => {
     //console.log(result)
   });
 
@@ -583,8 +586,8 @@ app.post("/get_profile", bodyParser.json(), async (request, response) => {
     });
 });
 
-function insertStudentClassRelation(classNames) {
-  collection_studentClassRelation.deleteMany({ profileID: Number(profileID) });
+async function insertStudentClassRelation(classNames) {
+  await collection_studentClassRelation.deleteMany({ profileID: Number(profileID) });
 
   //console.log("removed courses already there. ")
 
@@ -605,14 +608,14 @@ function insertStudentClassRelation(classNames) {
     }
     //console.log("insert into studentClassRElation: ", json)
 
-    collection_studentClassRelation.insertOne(json).then((result) => {
+    await collection_studentClassRelation.insertOne(json).then((result) => {
       //console.log(result)
     });
   }
 }
 
-function insertStudentSkillRelation(skills) {
-  collection_studentSkillRelation.deleteMany({ profileID: Number(profileID) });
+async function insertStudentSkillRelation(skills) {
+  await collection_studentSkillRelation.deleteMany({ profileID: Number(profileID) });
 
   //console.log("removed courses already there. ")
 
@@ -623,7 +626,7 @@ function insertStudentSkillRelation(skills) {
     };
     //console.log("insert into studentSkillRelation: ", json)
 
-    collection_studentSkillRelation.insertOne(json).then((result) => {
+    await collection_studentSkillRelation.insertOne(json).then((result) => {
       //console.log(result)
     });
   }
