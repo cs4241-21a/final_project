@@ -154,6 +154,8 @@ app.patch("/movement", async (req, res) => {
   console.log(`Modifying movement for user ${req.session.username}`);
   console.log(`Modifying movement for workout ${req.query.workout_id}`);
 
+  console.log(req.body);
+
   const updateRes = await mongoClient
     .db("final")
     .collection("users")
@@ -161,15 +163,18 @@ app.patch("/movement", async (req, res) => {
       {
         username: req.session.username,
         "workouts._id": req.query.workout_id,
-        "workouts.movements.name": req.body.name,
       },
 
       {
         $set: {
-          "workouts.$.movements[$]": req.body,
+          "workouts.$.movements.$[element]": req.body,
         },
+      },
+      {
+        arrayFilters: [{ "element.movementName": req.body.movementName }],
       }
     );
+  console.log(updateRes);
 
   res.status(200).end();
 });

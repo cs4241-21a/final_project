@@ -22,23 +22,23 @@ class AddNewSetComponent extends React.Component {
     if (e.target.value < 1) {
       e.target.value = 1;
     }
-    
+
     let oldNumSets = this.props.parent.state.newNumSets;
     let newNumSets = e.target.value;
 
     if (oldNumSets < newNumSets) {
       for (let i = oldNumSets; i < newNumSets; ++i) {
-        this.props.parent.state.sets.push(<Set setNumber={i} ></Set>);
+        this.props.parent.state.sets.push(<Set setNumber={i}></Set>);
       }
     } else if (oldNumSets > newNumSets) {
       for (let i = newNumSets; i < oldNumSets; ++i) {
         this.props.parent.state.sets.pop();
-      } 
+      }
     }
 
-    this.props.parent.setState({ 
+    this.props.parent.setState({
       oldNumSets: this.props.parent.state.newNumSets,
-      newNumSets: e.target.value 
+      newNumSets: e.target.value,
     });
   };
 
@@ -59,19 +59,25 @@ class AddNewSetComponent extends React.Component {
       sets.push(set);
     }
 
-    if(document.getElementById('addModifyButton').innerHTML === 'Add New Movement') {
+    if (
+      document.getElementById("addModifyButton").innerHTML ===
+      "Add New Movement"
+    ) {
       const res = await fetch(`/movement?workout_id=${this.props.workout_id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ movementName, numSets, sets }),
       });
-    }else if (document.getElementById('addModifyButton').innerHTML === 'Edit') {
+    } else if (
+      document.getElementById("addModifyButton").innerHTML === "Edit"
+    ) {
       const res = await fetch(`/movement?workout_id=${this.props.workout_id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ movementName, numSets, sets }),
       });
     }
+    mutate();
   };
 
   render() {
@@ -88,11 +94,13 @@ class AddNewSetComponent extends React.Component {
             placeholder="number of sets"
             id="numberOfSets"
             onChange={this.onSetsChange}
-            value = {this.props.parent.state.newNumSets}
+            value={this.props.parent.state.newNumSets}
           />
           <div id="setsDiv">{this.props.parent.state.sets}</div>
         </form>
-        <button id = 'addModifyButton' onClick={this.addModifyButtonAction}>Add New Movement</button>
+        <button id="addModifyButton" onClick={this.addModifyButtonAction}>
+          Add New Movement
+        </button>
       </div>
     );
   }
@@ -100,9 +108,21 @@ class AddNewSetComponent extends React.Component {
 
 export const Set = (props) => (
   <div id={"set" + props.setNumber}>
-    <input id={"weight" + props.setNumber} placeholder="weight" value={props.weight}></input>
-    <input id={"reps" + props.setNumber} placeholder="reps" value={props.reps}></input>
-    <input id={"RPE" + props.setNumber} placeholder="RPE" value={props.RPE}></input>
+    <input
+      id={"weight" + props.setNumber}
+      placeholder="weight"
+      value={props.weight}
+    ></input>
+    <input
+      id={"reps" + props.setNumber}
+      placeholder="reps"
+      value={props.reps}
+    ></input>
+    <input
+      id={"RPE" + props.setNumber}
+      placeholder="RPE"
+      value={props.RPE}
+    ></input>
   </div>
 );
 
@@ -110,20 +130,20 @@ class WrapperClass extends React.Component {
   constructor(props) {
     super(props);
     this.user = props.user;
-    this.parsed= props.parsed;
+    this.parsed = props.parsed;
   }
 
   state = {
     oldNumSets: 1,
     newNumSets: 1,
-    sets: [<Set setNumber={0} ></Set>]
+    sets: [<Set setNumber={0}></Set>],
   };
 
   render() {
-    
     const workoutRes = this.user.workouts.find(
       (workout) => workout._id === this.parsed._id
     );
+    console.log(workoutRes);
 
     if (!workoutRes) {
       console.log("All workouts: ");
@@ -131,9 +151,8 @@ class WrapperClass extends React.Component {
       console.log("Couldn't find this workout, redirecting to /");
       return <Redirect to="/" />;
     } else {
-
-      return (      
-      <div id="workoutPage">
+      return (
+        <div id="workoutPage">
           <h1>{workoutRes.name}</h1>
           {workoutRes.movements.length === 0 ? (
             <div>You have no movements yet :(</div>
@@ -142,7 +161,7 @@ class WrapperClass extends React.Component {
               <Movement_Card_View movement={movement} parent={this} />
             ))
           )}
-          <AddNewSetComponent workout_id={this.parsed._id} parent={this}/>
+          <AddNewSetComponent workout_id={this.parsed._id} parent={this} />
         </div>
       );
     }
@@ -150,17 +169,15 @@ class WrapperClass extends React.Component {
 }
 
 const Workout = (props) => {
-    const parsed = queryString.parse(props.location.search);
-    const { user, loading, loggedOut } = useUser();
+  const parsed = queryString.parse(props.location.search);
+  const { user, loading, loggedOut } = useUser();
 
-    //console.log(parsed);
+  //console.log(parsed);
 
-    if (loading || !user.username) return <div>Loading</div>;
-    if (loggedOut) return <Redirect to="/login" />;
-    if (!parsed._id) return <Redirect to="/" />;
-    return (
-      <WrapperClass user={user} parsed={parsed}/>
-    );
+  if (loading || !user.username) return <div>Loading</div>;
+  if (loggedOut) return <Redirect to="/login" />;
+  if (!parsed._id) return <Redirect to="/" />;
+  return <WrapperClass user={user} parsed={parsed} />;
 };
 
 export default Workout;
