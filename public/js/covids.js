@@ -1,4 +1,3 @@
-let stars = []	//create empty list of stars
 const numOfStars = 75,
       width = 750,
       height = 750,
@@ -11,12 +10,16 @@ const numOfStars = 75,
       ship_thrust = .05,
       max_ship_speed = 5
 
+let GameOver = false
+let isThrusting = false
+
 let virus_img
 let sanitizer_img
 let mask_img
 let gompei_img
 
 let ship = {}
+let stars = []
 
 function randomChoice(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
@@ -59,7 +62,7 @@ function generateStar(){
   star.inPlay = false
 
   const set = randomChoice([{life:1, size:small}, {life:2, size:medium}, {life:3, size:large}])
-  star.diam = set.size - 10
+  star.diam = set.size
   star.lives = set.life
   stars.push(star) //Now add the star to the list
 }
@@ -108,12 +111,12 @@ function turnShip() {
 function moveShip(){
   let acc = createVector(0,0)
   if(keyIsDown(UP_ARROW)){
-     acc = createVector(0, ship.thrust) //Add acceleration pointin along ship's axis (up)
-     acc.rotate(ship.rotation) //Rotate by ship's rotation
+    isThrusting = true
+    acc = createVector(0, ship.thrust) //Add acceleration pointin along ship's axis (up)
+    acc.rotate(ship.rotation) //Rotate by ship's rotation
+  } else {
+    isThrusting = false
   }
-  let vec = ship.vel
-  vec.add(acc)
-  if (Math.sqrt(Math.pow(vec.x,2)+Math.pow(vec.y,2)) <= max_ship_speed) {
   ship.vel.add(acc)
   ship.pos.add(ship.vel)
 }
@@ -142,6 +145,10 @@ function displayShip(){
   pop();
 }
 
+function blinkShip(){
+  
+}
+
 function checkShipForCollisions(targets){
   
   //Note this will crash if the target object does not contain a 'pos' vector.
@@ -153,7 +160,9 @@ function checkShipForCollisions(targets){
 
     if(sumOfRadii > distance){
       //We have a collision!
-      print("HIT");
+      print("HIT")
+      //play audio
+      //make ship
     }
   }
 }
@@ -168,6 +177,7 @@ function setup() {
   gompei_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fgoat%20(1).png?v=1633701995373')
 }
 
+
 function draw() {
   background(255)
   drawStars()
@@ -176,4 +186,7 @@ function draw() {
   moveShip()
   checkShipForCollisions(stars)
   checkEdges(ship)
+  if(GameOver){
+    return
+  }
 }

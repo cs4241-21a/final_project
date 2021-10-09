@@ -87,8 +87,8 @@ function createLobby(name, password=undefined) {
     lobby.addClient = nc => {
         console.log("Adding " + nc.id + " to lobby " + lobby.name);
         lobby.clients.forEach(c => {
-            c.send({packetType: "joined", id: nc.id, username: nc.username});
-            nc.send({packetType: "joined", id: c.id, username: c.username});
+            c.socket.send(JSON.stringify({packetType: "joined", id: nc.id, username: nc.username}));
+            nc.socket.send(JSON.stringify({packetType: "joined", id: c.id, username: c.username}));
         });
         lobby.clients.push(nc);
     }
@@ -181,6 +181,7 @@ wss.on('connection', (socket, req) => {
               }
           }catch(e){
               console.log("Recieved malformed packet from " + req.socket.remoteAddress + ": " + message);
+              console.error(e);
           }
       });
     });
@@ -200,7 +201,7 @@ setInterval(() => {
     });
     allClients = allClients.filter(c => c.socket.readyState == 1); // only keep open connections
     allClients.forEach(c => {
-        console.log(c.address + ": " + c.socket.readyState);
+        //console.log(c.address + ": " + c.socket.readyState);
         c.socket.send("keepalive");
     });
 
