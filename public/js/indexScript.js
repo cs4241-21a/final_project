@@ -1,6 +1,8 @@
 let color = 'black'
 let lineWidth = 50
 let connection
+let myCanvas
+let initImg;
 
 const changeColor = function(event){
     color = document.querySelector( '#colorSelector').value
@@ -18,8 +20,12 @@ function clearCanvas(){
     connection.send(JSON.stringify(data))
 }
 
+function preload() {
+    initImg = loadImage('canvasState.png');
+}
+
 function setup() {
-    let myCanvas = createCanvas(1000, 500)
+    myCanvas = createCanvas(1000, 500)
     myCanvas.style('border', '1px solid #000')
     myCanvas.mousePressed(drawShapes)
     myCanvas.parent('canvas-container')
@@ -33,6 +39,7 @@ function setup() {
     const lineWidth = document.querySelector('#lineWidth')
     lineWidth.onclick = changeWidth
 
+    image(initImg, 0, 0);
     connection = new WebSocket('ws://localhost:3323')
 
     connection.onmessage = e => {
@@ -132,6 +139,10 @@ function draw() {
     } 
 }
 
+function mouseReleased() {
+    sendImage()
+}
+
 //Function for drawing shapes so it stamps only once
 function drawShapes() {
     if (mouseIsPressed) {
@@ -169,4 +180,18 @@ function drawShapes() {
         }
     }
     return false
+}
+
+function sendImage() {
+    const base64img = myCanvas.elt.toDataURL();
+    const obj = {
+        img: base64img
+    }
+    const body = JSON.stringify(obj)
+    console.log(base64img)
+    fetch('/api/sendImage', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body
+    })
 }
