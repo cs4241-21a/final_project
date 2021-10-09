@@ -22,5 +22,9 @@ h1 {
 }
 
 #songName {
+  margin-bottom: 10px;
+}
+
+#artistName{
   margin-bottom: 20px;
 }

@@ -40,7 +40,7 @@ const UsersCollection = function () {
 exports.getAllContent = function () {
     return new Promise(resolve => {
         ContentCollection().then(collection => {
-            collection.find().sort({ type: 1 }).toArray().then(data => resolve(data));
+            collection.find().sort({ artist: 1 }).toArray().then(data => resolve(data));
         });
     })
 };
@@ -48,26 +48,28 @@ exports.getAllContent = function () {
 exports.getContentForUser = function (user) {
     return new Promise(resolve => {
         ContentCollection().then(collection => {
-            collection.find({ username: user.username }).sort({ type: 1 }).toArray().then(data => resolve(data));
+            collection.find({ username: user.username }).sort({ artist: 1 }).toArray().then(data => resolve(data));
         });
     })
 };
 
-exports.addOrUpdateContent = function (user, type, text, id) {
+exports.addOrUpdateContent = function (user, title, artist, coverart, id) {
     return new Promise(resolve => {
         if (id === undefined || id === '') {
-            console.log("Adding ", type, " for ", user.username, ": ", text);
+            console.log("Adding ", title, " by ", artist, " for ", user.username);
             ContentCollection().then(collection => collection.insertOne({
                 username: user.username,
-                type: type,
-                text: text
+                title: title,
+                artist: artist,
+                coverart: coverart
             })).then(result => resolve(result));
         } else {
             console.log('Updating content ', id);
             ContentCollection().then(collection => collection.updateOne({ _id: MongoDB.ObjectID(id) }, {
                 $set: {
-                    type: type,
-                    text: text
+                    title: title,
+                    artist: artist,
+                    coverart: coverart
                 }
             })).then(result => resolve(result));
         }

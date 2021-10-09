@@ -90,20 +90,23 @@ app.get('/logout',
 app.get('/profile',
     ensureLoggedIn(),
     function (req, res) {
-        db.getContentForUser(req.user)
-            .then(content => {
-                res.sendFile(__dirname + "/build/profile.html")
-            })
-            .catch(error => {
-                return cb(error)
-            });
+        res.sendFile(__dirname + "/build/profile.html")
     });
 
+app.post('/removeSong', (req, res) => {
+    console.log(req.body)
+    db.deleteContent(req.user, req.body._id).then(result => {
+        res.send(result)
+        res.end()
+    })
+})
+
 app.post('/addSong', (req, res) => {
+    console.log(req.body)
     const options = {
         method: 'GET',
         url: 'https://shazam.p.rapidapi.com/search',
-        qs: { term: req.body.songName, locale: 'en-US', offset: '0', limit: '5' },
+        qs: { term: req.body.songName, locale: 'en-US', offset: '0' },
         headers: {
             'x-rapidapi-host': 'shazam.p.rapidapi.com',
             'x-rapidapi-key': 'd78b659621msh22ffdaa369a9cd9p123b29jsn8434a2c82d11',
@@ -113,8 +116,35 @@ app.post('/addSong', (req, res) => {
 
     request(options, function (error, response, body) {
         if (error) throw new Error(error);
-
+        console.log(response)
+        if (JSON.parse(response.body).tracks) {
+            const matches = JSON.parse(response.body).tracks.hits.filter(song => { return song.track.title.toLowerCase() === req.body.songName.toLowerCase() && song.track.subtitle.toLowerCase() === req.body.artistName.toLowerCase() })
+            if (matches) {
+                db.addOrUpdateContent(req.user, matches[0].track.title, matches[0].track.subtitle, matches[0].track.images.coverarthq).then(result => {
+                    console.log(result)
+                    res.sendFile(__dirname + "/build/profile.html")
+                    res.end()
+                })
+            } else {
+                res.send({
+                    message: "No results found"
+                })
+                res.end()
+            }
+        } else {
+            res.send({
+                message: "No results found"
+            })
+            res.end()
+        }
     });
+})
+
+app.get('/getUserSongs', (req, res) => {
+    db.getContentForUser(req.user).then(result => {
+        res.send(result)
+        res.end()
+    })
 })
 
 app.get('/getUser', (req, res) => {
