@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const calendarSchema = new Schema({
-    owner:{
+    username:{
         type:String,
         required: true
     },
