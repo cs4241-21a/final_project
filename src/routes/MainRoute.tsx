@@ -18,7 +18,6 @@ import FarmingDisplay from "../components/FarmingDisplay";
 import LoginButton from '../components/LoginButton';
 import ResetButton from '../components/ResetButton';
 
-
 const MainRoute = () : JSX.Element => { 
     // These static variables record all characters, weapons, and artifacts
   const characters : CharacterProps[] = [];
