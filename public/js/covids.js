@@ -96,10 +96,14 @@ function drawStars(){
 
 function generateMask(){
   let mask = {}
+  let boost = createVector(0,1)
+  boost.rotate(ship.rotation)
   let newVel = createVector(ship.vel.x, ship.vel.y)   
-  mask.pos = createVector(ship.pos.x, ship.pos.y-50).rotate(ship.rotation)
-  newVel.add(createVector(0,1).rotate(ship.rotation))
+  let newPos = createVector(ship.pos.x, ship.pos.y+50)
+  newPos.rotate(ship.rotation)
+  newVel.add(boost)
   mask.vel = createVector(newVel.x, newVel.y)
+  mask.pos = createVector(newPos.x, newPos.y)
   mask.diam = mask_size
   mask.rotation = 0
   masks.push(mask)
@@ -175,11 +179,15 @@ function displayShip(obj=ship){
 function displayMasks(){
   for (let i = 0; i < masks.length; i++){
     push();
-    masks[i].rotation += .2
     translate(masks[i].pos.x, masks[i].pos.y)
-    rotate(masks[i].rotation)
     image(mask_img, -12, -12, masks[i].diam, masks[i].diam)
     pop();
+  }
+}
+
+function moveMasks(){
+  for (let i = 0; i < masks.length; i++){
+    
   }
 }
 

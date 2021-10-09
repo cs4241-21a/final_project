@@ -82,6 +82,7 @@ function createLobby(name, password=undefined) {
         name,
         password,
         clients: [],
+        viruses: [],
     };
 
     lobby.addClient = nc => {
@@ -170,13 +171,14 @@ wss.on('connection', (socket, req) => {
                         }
                       }
                       break;
-                  case "destroy_entity":
+                  case "destroy_virus":
                       {
                         const lobby = findLobbyWithClient(clientId);
                         if(lobby !== undefined) {
+                          // TODO: remove from lobby.viruses
                           lobby.clients.forEach(c => {
                               if(c.id !== clientId) {
-                                c.send({packetType: "destroy_entity", eid: json.eid});
+                                c.send({packetType: "destroy_virus", eid: json.eid});
                               }
                           });
                         }else{
@@ -226,13 +228,16 @@ setInterval(() => {
 
 // fast loop
 setInterval(() => {
-    // lobbies.forEach(l => {
-    //     l.clients.forEach(c => {
-    //         l.clients.forEach(c2 => {
-    //             if(c2.id !== c.id) {
-    //                 c.socket.send(JSON.stringify({packetType: "update_player", id: c2.id, x: c2.x, y: c2.y, vx: c2.vx, vy: c2.vy, angle: c2.angle}));
-    //             }
-    //         });
-    //     });
-    // });
+    lobbies.forEach(l => {
+        l.clients.forEach(c => {
+            // TODO: send l.viruses
+            // c.socket.send(JSON.stringify({packetType: "update_viruses", viruses: l.viruses}));
+          
+            // l.clients.forEach(c2 => {
+            //     if(c2.id !== c.id) {
+            //         c.socket.send(JSON.stringify({packetType: "update_player", id: c2.id, x: c2.x, y: c2.y, vx: c2.vx, vy: c2.vy, angle: c2.angle}));
+            //     }
+            // });
+        });
+    });
 }, 100);
