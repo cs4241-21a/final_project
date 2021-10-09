@@ -1,10 +1,4 @@
 # Synchronous MS Paint
-Submit a second PR on the final project repo to turn in your app and code. Again, only one pull request per team.
-
-Deploy your app, in the form of a webpage, to Glitch/Heroku/Digital Ocean or some other service; it is critical that the application functions correctly wherever you post it.
-
-The README for your second pull request doesn’t need to be a formal report, but it should contain:
-
 ## 1. A brief description of what you created, and a link to the project itself (two paragraphs of text)
    
     
@@ -72,4 +66,4 @@ Morgan Lee
   - Implemented favicon
 
 ## 6. A link to your project video.
-[Who knows](example.com)
+[https://youtu.be/-fdLgF9Gk18](https://youtu.be/-fdLgF9Gk18)
