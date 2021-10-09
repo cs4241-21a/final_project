@@ -212,6 +212,7 @@ setInterval(() => {
                 c.socket.send(JSON.stringify({packetType: "disconnected", id: closed.id}));
             });
         });
+      l.clients = l.clients.filter(c => c.socket.readyState == 1);
     });
 
 }, 1000);

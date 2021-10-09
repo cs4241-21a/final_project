@@ -95,12 +95,16 @@ function drawStars(){
 
 function generateMask(){
   let mask = {}
-  ship.pos = createVector(width/2, height/2);
-  ship.vel = createVector(0, 0);
-  ship.diam = mask_size
-  ship.thrust = ship_thrust
-  ship.rotation = 0
-  
+  mask.pos = createVector(width/2, height/2);
+  mask.vel = createVector(0, 0);
+  mask.diam = mask_size
+  mask.thrust = ship_thrust
+  mask.rotation = 0
+  masks.push(mask)
+}
+
+function removeMask(mask){
+  //remove specific mask from list
 }
 
 function generateShip() {
@@ -120,6 +124,12 @@ function turnShip() {
     ship.rotation += .1;
   }
 
+}
+
+function shoot(){
+  if (keyIsDown(SPACE)) {
+    generateMask
+  }
 }
 
 function moveShip(){
@@ -157,6 +167,17 @@ function displayShip(){
   rotate(ship.rotation)
   image(gompei_img, -25, -25, ship.diam, ship.diam)
   pop();
+}
+
+function displayMasks(){
+  for (let i = 0; i < masks.length; i++){
+    push();
+    translate(masks[i].pos.x, masks[i].pos.y)
+    masks[i].rotation += 1
+    rotate(masks[i].rotation)
+    image(mask_img, -25, -25, ship.diam, ship.diam)
+    pop();
+  }
 }
 
 function blinkShip(counter){
