@@ -47,11 +47,8 @@ const Movement_Card_View = (props) => {
     );
   }
   return (
-    <div>
+    <div  id='movement_card'>
       <p id={props.movement.movementName}>{props.movement.movementName}</p>
-      <p id={props.movement.movementName + "numSets"}>
-        {props.movement.sets.length}
-      </p>
       <table>
         <tr>
           <th>Weight</th>
