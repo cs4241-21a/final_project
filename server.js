@@ -588,4 +588,14 @@ function insertStudentSkillRelation(classNames){
 }
 
 
+app.post('/delete_post', bodyParser.json(), (request, response) => {
+    if(request.body.creatorID === profileID){
+        console.log("same user")
+    }
+    else{
+        console.log("different user")
+    }
+})
+
+
 app.listen(process.env.PORT || 3000);
