@@ -1,159 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include("./partials/header.ejs")%>
+<head>
+    <link rel="stylesheet" href="./css/sakura.css" type="text/css">
+</head>
+
 <body>
-<script src="./js/eventsJS.js" defer></script>
-<%- include("./partials/nav.ejs")%>
-<p>events page</p>
-<div>
-    <form id="createEventForm">
-        <label for="title">Event Title:</label>
-        <input id="title" name="title">
-        <br><br>
+    <script src="./js/eventsJS.js" defer></script>
+    <%- include("./partials/nav.ejs")%>
+    <div class="container-sm row mx-auto" style="width: 70%">
+        <button type="button" onclick="openEventMaker()" id="eventMakerBtn">Make Event</button>
 
-        <!--
-        <label for="startHour">Start Time:</label>
-        <input type="text" id="startHour" name="startHour">
-        <input type="text" id="startMinute" name="startMinute">
-        <br><br>
-
-        <label for="endHour">End Time:</label>
-        <input type="text" id="endHour" name="endHour">
-        <input type="text" id="endMinute" name="endMinute">
-        <br><br>-->
-
-        <label for="attendees">Attendees:</label>
-        <textarea id="attendees" form="createEventForm" name="attendees" placeholder="List all attendees username seperated by a comma"></textarea>
-        <br>
-
-        <label for="startDate">Date Range Start:</label>
-        <input type="date" id="startDate" name="startDate" value="2021-10-10">
-        <br><br>
-
-        <label for="endDate">Date Range End:</label>
-        <input type="date" id="endDate" name="endDate" value="2021-10-15">
-        <br><br>
-
-        <label for="timeStart">Available Time Start:</label>
-        <select id="timeStart" name="timeStart">
-            <option value="1.0">1</option>
-            <option value="2.0">2</option>
-            <option value="3.0">3</option>
-            <option value="4.0">4</option>
-            <option value="5.0">5</option>
-            <option value="6.0">6</option>
-            <option value="7.0">7</option>
-            <option value="8.0">8</option>
-            <option value="9.0">9</option>
-            <option value="10.0">10</option>
-            <option value="11.0">11</option>
-            <option value="12.0">12</option>
-        </select>
-        <select id="timeStartMin" name="timeStartMin">
-            <option value="0">:00</option>
-            <!--<option value="15">:15</option>-->
-            <option value="30">:30</option>
-            <!--<option value="45">:45</option>-->
-        </select>
-        <select id="amPM1" name="amPM1">
-            <option value="AM">AM</option>
-            <option value="PM">PM</option>
-        </select>
-        <br><br>
-
-        <label for="timeEnd">Available Time End:</label>
-        <select id="timeEnd" name="timeEnd">
-            <option value="1.0">1</option>
-            <option value="2.0">2</option>
-            <option value="3.0">3</option>
-            <option value="4.0">4</option>
-            <option value="5.0">5</option>
-            <option value="6.0">6</option>
-            <option value="7.0">7</option>
-            <option value="8.0">8</option>
-            <option value="9.0">9</option>
-            <option value="10.0">10</option>
-            <option value="11.0">11</option>
-            <option value="12.0">12</option>
-        </select>
-        <select id="timeEndMin" name="timeEndMin">
-            <option value="0">:00</option>
-            <!--<option value="15">:15</option>-->
-            <option value="30">:30</option>
-            <!--<option value="45">:45</option>-->
-        </select>
-        <select id="amPM2" name="amPM2">
-            <option value="AM">AM</option>
-            <option value="PM">PM</option>
-        </select>
-        <br><br>
-
-        <select id="duration" name="duration">
-            <option value="1">1hr</option>
-            <option value=".5">30mins</option>
-        </select>
-        <br><br>
-
-        <label for="description">Event Description:</label>
-        <textarea id="description" form="createEventForm" name="description"></textarea>
-        <br>
-
-        <label for="location">Event Location:</label>
-        <input type="text" id="location" name="location">
-        <br><br>
-
-        <button onclick="submitHandler()" id="submitButton">Submit</button>
-
-    </form>
-</div>
-<div>
-    <h2>My Events</h2>
-    <hr>
-        <% if (eventsList.length > 0) { %>
-            <% eventsList.forEach(event => { %>
-            <form id=<%= event._id%>>
-                <h3><%= event.eventName%></h3>
+        <div class="col-md-4 m-5 p-3 hidden" id="eventMaker">
+            <h2>Event Creator</h2>
+            <hr>
+            <div>
+                <h4>Event Date Ranges:</h4>
+                <div id="eventCalendar"></div>
+            </div>
+            <form id="createEventForm">
+                <label for="title">Title:</label>
+                <input id="title" name="title">
+                <br><br>
+                    
+                <label for="attendees">Attendees:</label>
+                <textarea id="attendees" form="createEventForm" name="attendees" placeholder="List all attendees username seperated by a comma"></textarea>
                 <br>
-                <label for="description<%=event._id%>">Description:</label>
-                <textarea id="description<%=event._id%>" form=<%= event._id%> name="description<%=event._id%>"><%=event.description%></textarea>
+                
+                <label for="timeStart">Available Time Start:</label>
+                <select id="timeStart" name="timeStart">
+                    <option value="1.0">1</option>
+                    <option value="2.0">2</option>
+                    <option value="3.0">3</option>
+                    <option value="4.0">4</option>
+                    <option value="5.0">5</option>
+                    <option value="6.0">6</option>
+                    <option value="7.0">7</option>
+                    <option value="8.0">8</option>
+                    <option value="9.0">9</option>
+                    <option value="10.0">10</option>
+                    <option value="11.0">11</option>
+                    <option value="12.0">12</option>
+                </select>
+                <select id="timeStartMin" name="timeStartMin">
+                    <option value="0">:00</option>
+                    <option value="30">:30</option>
+                </select>
+                <select id="amPM1" name="amPM1">
+                    <option value="AM">AM</option>
+                    <option value="PM">PM</option>
+                </select>
+                <br><br>
+                
+                <label for="timeEnd">Available Time End:</label>
+                <select id="timeEnd" name="timeEnd">
+                    <option value="1.0">1</option>
+                    <option value="2.0">2</option>
+                    <option value="3.0">3</option>
+                    <option value="4.0">4</option>
+                    <option value="5.0">5</option>
+                    <option value="6.0">6</option>
+                    <option value="7.0">7</option>
+                    <option value="8.0">8</option>
+                    <option value="9.0">9</option>
+                    <option value="10.0">10</option>
+                    <option value="11.0">11</option>
+                    <option value="12.0">12</option>
+                </select>
+                <select id="timeEndMin" name="timeEndMin">
+                    <option value="0">:00</option>
+                    <option value="30">:30</option>
+                </select>
+                <select id="amPM2" name="amPM2">
+                    <option value="AM">AM</option>
+                    <option value="PM">PM</option>
+                </select>
+                <br><br>
+                
+                <label for="duration">Duration:</label>
+                <select id="duration" name="duration">
+                    <option value="1">1hr</option>
+                    <option value=".5">30mins</option>
+                </select>
+                <br><br>
+                
+                <label for="description">Description:</label>
+                <textarea id="description" form="createEventForm" name="description"></textarea>
                 <br>
-                <label for="location<%=event._id%>">Location:</label>
-                <input id="location<%=event._id%>" form=<%= event._id%> name="location" value=<%=event.location%>>
-                <br>
-                <label for="attendees<%=event._id%>">Attendees:</label>
-                <textarea id="attendees<%=event._id%>" form=<%=event._id%> name="attendees<%=event._id%>"><%=event.attendees%></textarea>
-                <br>
-                <% if(event.owner === sentUsername){%>
-                    <label for="finalDate<%=event._id%>">Choose Date:</label>
-                    <select id="finalDate<%=event._id%>" name="finalDate<%=event._id%>">
-                        <%for (let i = 0; i < event.availableDates.length; i++ ){ %>
-                            <option value=<%event.availableDates[i]%>><%= event.availableDates[i]%></option>
-                        <%   }%>
-                    </select>
-                    <br>
-                    <label for="finalTime<%=event._id%>">Choose Event Time:</label>
-                    <select id="finalTime<%=event._id%>" name="finalTime<%=event._id%>">
-                        <%for (let i = 0; i < event.availableTimes.length; i++ ){ %>
-                        <% if (event.availableTimes[i] > 12){ %>
-                        <option value=<%event.availableTimes[i]%>>
-                            <%= event.availableTimes[i] - 12%>PM
-                        </option>
-                            <%} else {%>
-                            <option value=<%event.availableTimes[i]%>>
-                                <%= event.availableTimes[i]%>AM
-                            </option>
-                            <%}%>
-                        <%   }%>
-                    </select>
+                
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location">
+                <br><br>
+                
+                <button type="button" onclick="submitHandler()" id="submitButton">Submit</button>
+                
+                <div id="alertContainer"></div>
 
-                    <button onclick="editEvent(parentNode.id)">Edit Event</button>
-                <% }%>
-                <hr>
             </form>
-            <% }) %>
-        <% } %>
-</div>
+        </div>
+        
+        <!-- Force next columns to break to new line -->
+        <div class="w-100"></div>
+        
+        <div class="col-sm-5 m-4 p-3">
+            <h2>My Events</h2>
+            <hr>
+            <% if (eventsList.length > 0) { %>
+                <% eventsList.forEach(event => { %>
+                    <form id=<%= event._id%>>
+                        <h3><%= event.eventName%></h3>
+                        <br>
+                        <label for="description<%=event._id%>">Description:</label>
+                        <textarea id="description<%=event._id%>" form=<%= event._id%> name="description<%=event._id%>"><%=event.description%></textarea>
+                        <br>
+                        <label for="location<%=event._id%>">Location:</label>
+                        <input id="location<%=event._id%>" form=<%= event._id%> name="location" value=<%=event.location%>>
+                        <br>
+                        <label for="attendees<%=event._id%>">Attendees:</label>
+                        <textarea id="attendees<%=event._id%>" form=<%=event._id%> name="attendees<%=event._id%>"><%=event.attendees%></textarea>
+                        <br>
+                        <% if(event.owner === sentUsername){%>
+                            <label for="finalDate<%=event._id%>">Choose Date:</label>
+                            <select id="finalDate<%=event._id%>" name="<%=event.availableDates.length%>" onchange="showDiv(this, parentNode.id)">
+                                    <option value="null"> No Date</option>
+                                <%for (let i = 0; i < event.availableDates.length; i++ ){ %>
+                                    <option value="<%=event.availableDates[i]%>"><%= event.availableDates[i]%></option>
+                                <%}%>
+                            </select>
+                        <br>
+                        <br>
+                        <%for (let i = 0; i < event.availableDates.length; i++ ){ %>
+                        <div class="hidden" id="hiddenTime<%=event._id%><%=event.availableDates[i]%>">
+                            <label for="finalTime<%=event._id%><%=event.availableDates[i]%>">Choose Event Time:</label>
+                            <select id="finalTime<%=event._id%><%=event.availableDates[i]%>" name="finalTime<%=event._id%><%=event.availableDates[i]%>">
+                                <%for (let j = 0; j < event.availableTimes[i].length; j++ ){ %>
+                                    <% if (event.availableTimes[i][j] > 11.5){ %>
+                                        <% if (event.availableTimes[i][j] == 12.5 || event.availableTimes[i][j] == 12){%>
+                                        <option value=<%=event.availableTimes[i][j]%>>
+                                            <%= event.availableTimes[i][j]%>PM
+                                        </option>
+                                        <%} else if(event.availableTimes[i][j] == 24 || event.availableTimes[i][j] == 24.5){%>
+                                            <%= event.availableTimes[i][j] - 12%>AM
+                                        <% } else {%>
+                                        <option value=<%=event.availableTimes[i][j]%>>
+                                            <%= event.availableTimes[i][j] - 12%>PM
+                                        </option>
+                                        <%}%>
+                                    <%} else {%>
+                                    <option value=<%=event.availableTimes[i][j]%>>
+                                        <%= event.availableTimes[i][j]%>AM
+                                    </option>
+                                    <%}%>
+                                <%}%>
+                            </select>
+                        </div>
+                        <%}%>
+                        <br>
+                            <button type="button" onclick="editEvent(parentNode.id)">Edit Event</button>
+                        <%}%>
+                        <hr>
+                    </form>
+                <%})%>
+            <%}%>
+        </div>
 
+        <!-- Force next columns to break to new line -->
+        <div class="w-100"></div>
+
+        <div class="col-sm-5 m-4 p-3">
+            <h2>Pending Event Invites:</h2>
+            <hr>
+            <% if (pendingList.length > 0) { %>
+                <% pendingList.forEach(event => { %>
+                    <div>
+                        <h3><%= event.eventName%></h3>
+                        <br>
+                        <p>Description: <%=event.description%></p>
+                        <br>
+                        <p>Location: <%=event.location%></p>
+                        <br>
+                        <p>Attendees: <%= event.attendees%></p>
+                        <br>
+                        <form id=<%= event._id%>>
+                            <p>Open Days and Time Slots: Click and submit to update availability</p>
+                            <%for (let i = 0; i < event.availableDates.length; i++ ){ %>
+                            <fieldset>
+                            <div id="dayTimes<%=event._id%>">
+                                    <p><%=event.availableDates[i]%></p>
+                                        <%for (let j = 0; j < event.availableTimes[i].length; j++){%>
+                                        <label for="limitingTimes<%=event._id%><%=i%><%=j%>"><%=event.availableTimes[i][j]%></label>
+                                        <input id="limitingTimes<%=event._id%><%=i%><%=j%>" type="checkbox" value=<%=event.availableTimes[i][j]%>>
+                                        <%}%>
+                                </div>
+                            <br>
+                            </fieldset>
+                            <%}%>
+                            <button type="button" id="<%=event.availableDates%>" onclick="addUserAvail(parentNode.id, id)">Accept Invite</button>
+                        </form>
+                        <hr>
+                    </div>
+                <%})%>
+            <%}%>
+
+        </div>
+    </div>
 <%- include("./partials/footer.ejs")%>
 </body>
 </html>

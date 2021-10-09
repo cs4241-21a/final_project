@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include("./partials/header.ejs")%>
-<body>
-    <script src="./js/scripts.js" defer></script>
-    <%- include("./partials/nav.ejs")%>
-    <div id="calendar"></div>
-    <table style="table-layout: auto;" id="eventsTable">
-    <tr><th>Your Events</th></tr>
-    <tr></tr>
-    </table>
-    <%- include("./partials/footer.ejs")%>
-</body>
+    <%- include("./partials/header.ejs")%>
+    <head>
+        <link rel="stylesheet" href="./css/sakura.css" type="text/css">
+    </head>
+    <body>
+        <script src="./js/scripts.js" defer></script>
+        <%- include("./partials/nav.ejs")%>
+        <div class="container-sm row mx-auto" style="width: 70%">
+            <div id="my-calendar" class="col-sm-5 m-5 p-2 bg-light border align-self-center"></div>
+            <div class="col-md-4 m-5 p-3">
+                <table style="table-layout: auto;" id="eventsTable">
+                    <tr><th>Your Events</th></tr>
+                    <tr></tr>
+                </table>
+            </div>
+        </div>
+        <%- include("./partials/footer.ejs")%>
+    </body>
 </html>

@@ -91,7 +91,7 @@ app.post('/login', async (req, res) => {
 })
 
 app.post('/loadEvents', async (req, res) =>{
-    EventEntry.find({attendees: req.session.username})
+    EventEntry.find({attendees: {$in: req.session.username}})
     .then(dbresponse =>{
       //console.log("aaaa",dbresponse)
       res.json(dbresponse)
@@ -116,9 +116,16 @@ function getDates(startDate, stopDate) {
 }
 
 app.post('/editEvent', bodyparser.json(), async(req, res) => {
-  EventEntry.findByIdAndUpdate(req.body.eventID, {chosenEventDate: req.body.chosenEventDate, choseStartTime: req.body.choseStartTime, location: req.body.location, description: req.body.description, attendees: req.body.attendees})
+  EventEntry.findByIdAndUpdate(req.body.eventID, {chosenEventDate: req.body.chosenEventDate, chosenStartTime: req.body.chosenStartTime, location: req.body.location, description: req.body.description, attendees: req.body.attendees})
       .then(result =>{
         //console.log(result)
+      })
+})
+
+app.post('/addUserAvail', bodyparser.json(), async (req, res) => {
+  EventEntry.findByIdAndUpdate(req.body.eventID, {availableTimes: req.body.availableTimes})
+      .then(result => {
+
       })
 })
 
@@ -128,27 +135,27 @@ app.post('/createEvent', bodyparser.json(), async (req,res) => {
 
   let startDate = new Date(req.body.startDate);
   let endDate = new Date(req.body.endDate);
+  let dateRange = getDates(startDate,endDate);
+
+  let timeRangeArray = [];
+  for (let i = 0; i < dateRange.length; i++){
+    timeRangeArray.push(req.body.timeRange);
+  }
 
 
   const entry = new EventEntry({
     owner: req.session.username,
     eventName: req.body.title,
-    availableDates: getDates(startDate,endDate),
-    availableTimes: req.body.timeRange,
-    //availableTimes: [],
+    availableDates: dateRange,
+    availableTimes: timeRangeArray,
     attendees: req.body.attendees,
     meetingDuration: req.body.duration,
     description: req.body.description,
     location: req.body.location
   })
   await entry.save()
-      .then(async result => {
-        //res.send(result);
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  res.render('events');
+  let result = await EventEntry.find({})
+  res.render('events', {eventsList: result, sentUsername: req.session.username, title:"Events"})
 })
 
 
@@ -176,10 +183,6 @@ app.use( function( req,res,next) {
   }
 })
 
-// Use body parser to parse JSON when necessary
-/*app.use(bodyparser.urlencoded({ extended: true }))
-app.use(bodyparser.json())*/
-
 // Serve static files when necessary
 app.use(express.static(staticDir));
 app.use((req,res,next) => {
@@ -198,8 +201,12 @@ app.get('/index', (req, res) =>{
 
 app.get('/events', (req,  res) => {
   EventEntry.find({owner: req.session.username})
-      .then(result => {
-        res.render('events', {eventsList: result, sentUsername: req.session.username, title:"Events"})
+      .then(result1 => {
+        EventEntry.find({$and: [{attendees: req.session.username}, {owner: {$ne: req.session.username}},
+                                {chosenEventDate: null}]})
+            .then(result2 =>{
+              res.render('events', {eventsList: result1, pendingList:result2, sentUsername: req.session.username, title:"Events"});
+            })
       })
 })
 
