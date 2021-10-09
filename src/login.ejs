@@ -11,8 +11,9 @@
                 <div class="card-body">
                     <h5 class="card-title text-center">Sign In</h5>
                     <div id="alert"
-                    <% if(message) { %> class="alert alert-success"
-                         <% } %>role="alert">
+                    <% if(message === "Incorrect username or password") { %> class="alert alert-danger"<% } %>
+                    <% if (message) { %> class="alert alert-success"<% } %>
+                         role="alert">
                         <%= message %>
                     </div>
                     <form class="form-signin" action="/login" method="post">
