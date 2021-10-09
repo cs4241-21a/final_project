@@ -145,9 +145,7 @@ function displayShip(){
   pop();
 }
 
-function blinkShip(){
-  
-}
+
 
 function checkShipForCollisions(targets){
   
@@ -175,6 +173,12 @@ function setup() {
   sanitizer_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fhand-sanitizer.png?v=1633702007208')
   mask_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fmedical-mask.png?v=1633702003055')
   gompei_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fgoat%20(1).png?v=1633701995373')
+  
+  connectWS();
+}
+
+function thrustingFeedback(){
+  
 }
 
 
@@ -189,4 +193,18 @@ function draw() {
   if(GameOver){
     return
   }
+}
+
+
+let socket = null;
+
+function connectWS(){
+  socket = new WebSocket("wss://corona-game.glitch.me");
+  socket.onmessage = function (event) {
+    console.log("[SERVER] " + event.data);
+  }
+}
+
+function joinLobby(name, password=undefined){
+  socket.send(JSON.stringify({packetType: "join_lobby", name, password}));
 }
