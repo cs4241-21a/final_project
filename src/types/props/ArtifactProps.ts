@@ -15,11 +15,5 @@ export default interface ArtifactProps extends NamedProps {
     fr?: string,
     ru?: string
   },
-  item_list: {
-    fullname: {
-      en: string,
-      th: string,
-    },
-    farm_at: string,
-  }[],
+  farm_at: string,
 }

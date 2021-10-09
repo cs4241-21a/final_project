@@ -1039,12 +1039,12 @@ export const farm_material = [
     },
 ];
 
-export const materials = [...artifact_material, ...farm_material];
-export const material_map = materials.reduce(
+export const material_data = [...artifact_material, ...farm_material];
+export const material_map = material_data.reduce(
     (acc, cur) => ({ ...acc, [cur.name]: cur }),
     {}
 );
-export const material_index_map = materials.reduce(
+export const material_index_map = material_data.reduce(
     (acc, cur, i) => ({ ...acc, [cur.name]: i }),
     {}
 );

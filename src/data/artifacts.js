@@ -1,5 +1,3 @@
-// import { getFullnameInLanguage } from "../language.js";
-
 export const artifact_data = [
     {
         name: "adventurer",
@@ -831,24 +829,16 @@ export const artifact_map = artifact_data.reduce(
     {}
 );
 
-// export const artifact_material = artifact_data.reduce(
-//     (acc, cur) => [
-//         ...acc,
-//         ...cur.item_list.map((titem, i) => ({
-//             name: `artifact_${cur.name}_${i}`,
-//             fullname: Object.fromEntries(
-//                 Object.keys(cur.fullname).map(lang => [
-//                     lang,
-//                     `${getFullnameInLanguage(
-//                         cur,
-//                         lang
-//                     )} ${getFullnameInLanguage(titem, lang)}`,
-//                 ])
-//             ),
-//             farm_at: titem.farm_at,
-//             is_artifact: true,
-//             artifact: cur,
-//         })),
-//     ],
-//     []
-// );
+export const artifact_material = artifact_data.reduce(
+    (acc, cur) => [
+        ...acc,
+        ...cur.item_list.map((titem, i) => ({
+            name: `${cur.name}`,
+            fullname: cur.fullname,
+            farm_at: titem.farm_at,
+            is_artifact: true,
+            artifact: cur,
+        })),
+    ],
+    []
+);
