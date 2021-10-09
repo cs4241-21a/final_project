@@ -1,5 +1,6 @@
-export default interface FarmingSpotProps {
-    name: string,
+import NamedProps from "./NamedProps";
+
+export default interface FarmingSpotProps extends NamedProps {
     fullname: {
       en: string,
       es?: string,
