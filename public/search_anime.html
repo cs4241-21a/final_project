@@ -14,7 +14,11 @@
 
 
     <style>
-        body {font-family: Arial;}
+        body {
+          font-family: Arial;
+          background-image: url('https://cdn.hipwallpaper.com/m/78/76/OvAMJh.jpg');
+          background-repeat: no-repeat;
+        }
         
         /* Style the tab */
         .tab {
@@ -63,6 +67,7 @@
       <div class="box">
         <h1>Not sure which anime? Start searching!</h1>
         <a href="/logout">LOGOUT</a>
+        <img src="https://cdn.hipwallpaper.com/m/81/89/1vnrg8.jpg" />
       </div>
     </div>
 
@@ -109,9 +114,11 @@
           +'<p class="card-text">to: '+result.to+'</p>'
           + '</div></div></div>'
       }
-      // nav bar import function
+     // nav bar import function
       $(function(){
+        
         $("#nav-placeholder").load("nav.html");
+
       });
 
 
@@ -157,6 +164,8 @@
     $('#submit_url').click(e=>{
         e.preventDefault()
       })
+
+
 })
 
 
