@@ -2,6 +2,14 @@ const express = require('express'),
     expressLayouts = require('express-ejs-layouts')
 const app = express()
 const port = 3000
+const mongoose = require('mongoose')
+const dotenv = require('dotenv')
+
+dotenv.config();
+
+mongoose.connect(process.env.DB_CONNECT,
+{ useNewUrlParser: true}, 
+() => console.log("Connected to DB"))
 
 //ejs
 app.use(expressLayouts);
