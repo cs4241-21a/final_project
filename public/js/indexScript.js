@@ -33,7 +33,7 @@ function setup() {
     const lineWidth = document.querySelector('#lineWidth')
     lineWidth.onclick = changeWidth
 
-    connection = new WebSocket('ws://localhost:3323')
+    connection = new WebSocket('ws://canvas-final-project.herokuapp.com:3323')
 
     connection.onmessage = e => {
         let data
