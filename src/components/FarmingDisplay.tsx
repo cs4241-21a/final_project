@@ -43,7 +43,8 @@ const FarmingDisplay = ({
   return (
     // !!! TODO (UI): Create and implement JSX components for FarmingDisplay
     <>
-      <div style={{ display: "flex", width: "100%", textAlign: "center" }}>
+      <link rel="stylesheet" type="text/css" href="css/farmingdisplay.css" />
+      <div id="farm" style={{ display: "flex", width: "100%", textAlign: "center" }}>
         <DayDisplay days={"Mon/Thu"} farmables={monFarm} locations={monLocs} />
         <DayDisplay days={"Tue/Fri"} farmables={tueFarm} locations={tueLocs} />
         <DayDisplay days={"Wed/Sat"} farmables={wedFarm} locations={wedLocs} />

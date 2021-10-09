@@ -84,7 +84,7 @@ const MainRoute = () : JSX.Element => {
   const [activeFarmables, setActiveFarmables] = React.useState<FarmableProps[]>([]);
   const [activeLocations, setActiveLocations] = React.useState<FarmingSpotProps[]>([]);
 
-  // const loadFarmablesLocations = () => {
+  // const filterFarmablesLocations = () => {
   //   setActiveFarmables([]);
   //   setActiveLocations([]);
   //   charPrefs.forEach(c => {
