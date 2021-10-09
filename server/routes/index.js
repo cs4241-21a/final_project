@@ -77,16 +77,9 @@ router.post('/register', async (req, res, next) => {
 });
 
 // Post request to get champion names
-router.post('/getnames', async (req, res, next) => {
-  
-  const { blue, red } = req.body;
-
-  if (!blue || !red) {
-    res.json({ error: "Required fields not filled out." });
-    return;
-  }
-
-  res.json({ status: true, hello: 'hello', blueChamps: 'aatrox,ahri,akali,akshan,alistar', redChamps: 'anivia,annie,aphelios,ashe,azir' });
+router.get('/getnames?', async (req, res, next) => {
+  const {blue, red} = req.query
+  res.json({ status: true, blueChamps: 'aatrox,ahri,akali,akshan,alistar', redChamps: 'anivia,annie,aphelios,ashe,azir' });
 
 });
 
