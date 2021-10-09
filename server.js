@@ -358,7 +358,7 @@ function PrintBoard(g) {
     }
 }
 
-console.log(DoesPathExistForPawn(sampleGame, sampleGame.pawnA));
-console.log(DoesPathExistForPawn(sampleGame, sampleGame.pawnB));
+console.log('Pawn A has path: ' + DoesPathExistForPawn(sampleGame, sampleGame.pawnA));
+console.log('Pawn B has path: ' + DoesPathExistForPawn(sampleGame, sampleGame.pawnB));
 
 PrintBoard(sampleGame);
