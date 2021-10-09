@@ -41,8 +41,16 @@ const express = require("express"),
   bodyparser = require( 'body-parser' ),
   port = 3000;
 
+  var users = [
+    { 'username': 'lauren', 'password': 'pw' },
+  ]
+
   var lists = [
-    { 'listName': 'Example List', 'description': 'Example Description', 'username': 'Example Username' },
+    { 'listName': 'Example List Name', 'description': 'Example Description', 'username': 'Example Username' },
+  ]
+
+  var items = [
+    { 'itemName': 'Example Item Name', 'link': 'Example Link', 'price': 100.99, 'store': 'Example Store', 'picture': 'Example picture', 'listName': 'Example List Name' },
   ]
 
 // make all the files in 'public' available
@@ -99,15 +107,46 @@ app.post( '/create-list', bodyparser.json(), function( request, response ) {
         if (err) throw err;
         console.log("1 record inserted");
       });
-      // connection.query("SELECT * FROM Lists;", function (err, result, fields) {
-      //   if (err) throw err;
-      //   console.log(result);
-      //   selectResult = result;
-      // });
     });
 
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
     response.end(JSON.stringify(lists))
+  })
+})
+
+app.post( '/create-item', bodyparser.json(), function( request, response ) {
+  const connection = mysql.createConnection({
+    host: 'mysql.wpi.edu',
+    user: 'lauren',
+    password: 'n8njyP',
+    database: 'wishlist'
+  });
+
+  console.log(`create-item post request: ${request}`);
+  let dataString = ''
+
+  request.on( 'data', function( data ) {
+      dataString += data 
+  })
+
+  request.on( 'end', function() {
+    const json = JSON.parse( dataString )
+    items.push(json);
+    console.log("items from /create-item:");
+    console.log(items);
+    
+    connection.connect(function(err) {
+      if (err) throw err;
+      console.log("Connected!");
+      var sql = `INSERT INTO items (itemName, link, price, store, picture, listName) VALUES ('${json.itemName}', '${json.link}', '${json.price}', '${json.store}', '${json.picture}', '${json.listName}');`;
+      connection.query(sql, function (err, result) {
+        if (err) throw err;
+        console.log("1 record inserted");
+      });
+    });
+
+    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+    response.end(JSON.stringify(items))
   })
 })
 

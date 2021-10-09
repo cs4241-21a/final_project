@@ -7,7 +7,7 @@
     <meta name="Add an Item" content="Add an item to your list">
     <title>Add an Item</title>
     <link rel="stylesheet" href="/style.css">
-    <script src="/script.js" defer></script>
+    <script src="/itemScript.js" defer></script>
   </head>
   <body>
     <header>
@@ -15,7 +15,9 @@
     </header>
 
     <main>
-      <h2>Add an Item:</h2>
+      <h2>Add an Item</h2>
+      <p>to List:</p>
+      <p id='listNameForItem'>Clothes</p>
 
       <form class="newItemForm" action='/create-item' method='POST'>
         <label for="fname">Name:</label>
