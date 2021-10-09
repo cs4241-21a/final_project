@@ -9,6 +9,7 @@ import MaterialProps from '../props/api/MaterialProps';
 import FarmableProps from '../props/api/FarmableProps';
 import FarmingSpotProps from '../props/api/FarmingSpotProps';
 
+import MenuContainer from "../components/MenuContainer"
 import CharacterSelect from "../components/CharacterSelect";
 import WeaponSelect from "../components/WeaponSelect";
 import ArtifactSelect from "../components/ArtifactSelect";
@@ -98,25 +99,26 @@ const MainRoute = () : JSX.Element => {
     {/* !!! TODO (UI): Organize these components for displaying the page */}
       <LoginButton initPrefs={initPrefs} />
       <SaveButton updatePrefs={updatePrefs} />
-      <CharacterSelect 
-        characters={characters} 
-        preferences={charPrefs} 
-        setter={setCharPrefs}
-      />
-      <WeaponSelect 
-        weapons={weapons} 
-        preferences={weaponPrefs} 
-        setter={setWeaponsPrefs}
-      />
-      <ArtifactSelect 
-        artifacts={artifacts} 
-        preferences={artifactPrefs} 
-        setter={setArtifactPrefs}
-      />
-      <FarmingDisplay
-        farmables={activeFarmables}
-        locations={activeLocations}
-      />
+      <MenuContainer />
+          <CharacterSelect 
+            characters={characters} 
+            preferences={charPrefs} 
+            setter={setCharPrefs}
+          />
+          <WeaponSelect 
+            weapons={weapons} 
+            preferences={weaponPrefs} 
+            setter={setWeaponsPrefs}
+          />
+          <ArtifactSelect 
+            artifacts={artifacts} 
+            preferences={artifactPrefs} 
+            setter={setArtifactPrefs}
+          />
+          <FarmingDisplay
+            farmables={activeFarmables}
+            locations={activeLocations}
+          />
     </>
   );
 }
