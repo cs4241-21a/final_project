@@ -521,8 +521,8 @@ app.post('/create_profile', bodyParser.json(), (request, response) => {
     console.log("request: ", request.body)
 
         
-    // insertStudentClassRelation(request.body.courses)
-    // insertStudentSkillRelation(request.body.skills)
+    insertStudentClassRelation(request.body.courses)
+    insertStudentSkillRelation(request.body.skills)
 
     jsonToInsert = {
         profileID: profileID,
