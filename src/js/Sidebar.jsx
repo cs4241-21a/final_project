@@ -16,6 +16,7 @@ class Sidebar extends Component {
       color: '#000000'
     };
     this.newCalendarSubmit = this.newCalendarSubmit.bind(this);
+    this.newTaskSubmit = this.newTaskSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     console.log(GLOBAL_VARIABLES.calendars);
     console.log(GLOBAL_VARIABLES.tasks);
@@ -47,7 +48,7 @@ class Sidebar extends Component {
 
   newTaskSubmit(e) {
     e.preventDefault();
-
+    console.log(this.state);
     let tempDesc = "";
     if (this.state.description !== undefined){
       tempDesc = this.state.description;
@@ -58,6 +59,7 @@ class Sidebar extends Component {
       dueDate: this.state.dueDate,
       description: tempDesc
     };
+    console.log(newTask);
     databaseUtils.addTask(newTask)
     .then(newTaskId => {
       newTask._id = newTaskId;
@@ -69,6 +71,7 @@ class Sidebar extends Component {
     const target = e.target;
     const value = target.value;
     const name = target.name;
+    console.log(name, value, target);
 
     this.setState({
         [name]: value
@@ -131,9 +134,9 @@ class Sidebar extends Component {
                            onChange={this.handleChange}></input>
                            
                     <label htmlFor="dueDate">Due Date</label>
-                    <input type="time"
+                    <input type="datetime-local"
                            name="dueDate"
-                           onChange={this.handleTaskChange}
+                           onChange={this.handleChange}
                            required></input>
                     <button onClick={this.newTaskSubmit}>Create Task</button>
                   </form>
