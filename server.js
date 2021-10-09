@@ -98,7 +98,7 @@ app.get("/logout", (request, response) => {
 async function handle_login(req, res) {
   let user = null;
   let dbPromise_user = collection_profile
-    .findOne({ profileID: profileID })
+    .findOne({ profileID: Number(profileID) })
     .then((read_data) => (user = read_data));
 
   await dbPromise_user;
@@ -407,7 +407,7 @@ app.post("/submit", async (request, response) => {
       bodyContent: request.body.description,
       header: request.body.title,
       date: request.body.date,
-      postedByProfile: profileID,
+      postedByProfile: Number(profileID),
       forClassNumber: courseNum,
       forClassDepartment: courseDep,
     })
@@ -494,7 +494,7 @@ app.get("/profile", (request, response) => {
 });
 
 app.post("/create_profile", bodyParser.json(), (request, response) => {
-  collection_profile.deleteMany({ profileID });
+  collection_profile.deleteMany({ profileID:Number(profileID) });
 
   //console.log("removed_courses already there")
 
@@ -519,11 +519,14 @@ app.post("/create_profile", bodyParser.json(), (request, response) => {
   collection_profile.insertOne(jsonToInsert).then((result) => {
     //console.log(result)
   });
+
+  response.json()
+
 });
 
 app.post("/get_profile", bodyParser.json(), (request, response) => {
   collection_profile
-    .find({ profileID })
+    .find({ profileID:Number(profileID) })
     .toArray()
     .then((dbJSON) => {
       //console.log(dbJSON)
@@ -536,7 +539,7 @@ app.post("/get_profile", bodyParser.json(), (request, response) => {
 });
 
 function insertStudentClassRelation(classNames) {
-  collection_studentClassRelation.deleteMany({ profileID });
+  collection_studentClassRelation.deleteMany({ profileID:Number(profileID) });
 
   //console.log("removed courses already there. ")
 
@@ -564,7 +567,7 @@ function insertStudentClassRelation(classNames) {
 }
 
 function insertStudentSkillRelation(skills) {
-  collection_studentSkillRelation.deleteMany({ profileID });
+  collection_studentSkillRelation.deleteMany({ profileID:Number(profileID) });
 
   //console.log("removed courses already there. ")
 

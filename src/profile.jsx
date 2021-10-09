@@ -51,7 +51,11 @@ class Profile extends React.Component {
             this.phone_number;
         }
 
-        if (this.courses_taken !== undefined && this.skills !== undefined && this.programming_languages !== undefined) {
+        if (
+          this.courses_taken !== undefined &&
+          this.skills !== undefined &&
+          this.programming_languages !== undefined
+        ) {
           if (this.courses_taken.length > 0) {
             let coursesTakenElement = document.getElementById("class_name");
             for (let i = 0; i < coursesTakenElement.options.length; i++) {
@@ -93,13 +97,16 @@ class Profile extends React.Component {
               }
             }
           }
+        } else {
+          this.courses_taken = [];
+          this.skills = [];
+          this.programming_languages = [];
         }
-        
       });
 
-    console.log("this.first_name", this.first_name);
+    // console.log("this.first_name", this.first_name);
 
-    this.submit = this.submit.bind(this);
+    // this.submit = this.submit.bind(this);
     this.update_selected_courses = this.update_selected_courses.bind(this);
     this.update_selected_skills = this.update_selected_skills.bind(this);
     this.update_selected_programming_languages =
@@ -126,7 +133,7 @@ class Profile extends React.Component {
       },
     })
       .then((response) => response.json())
-      .then((json) => console.log);
+      .then((json) => this.setState({}));
 
     console.log("submitting json: ", json);
   }
