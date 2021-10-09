@@ -40,6 +40,7 @@ const MainRoute = () : JSX.Element => {
    * initPrefs() fetches the user preferences from the database
    */
   function initPrefs() {
+    setLoading(true);
     fetch("/prefs",{
       method: "GET"
     }).then(function(res) {
