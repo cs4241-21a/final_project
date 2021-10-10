@@ -69,32 +69,29 @@
                         <v-card-text>
                           <v-container>
                             <v-row>
-                              <v-col cols="12">
+                              <v-col cols="6">
                                 <v-text-field
-                                  outlined
                                   label="Your Email Address here"
                                   v-model="targetEmailAdress"
                                   required
                                 ></v-text-field>
                               </v-col>
+                              
                               <v-col cols="12">
                                 <v-textarea
-                                  outlined
                                   label="Your Comment here"
                                   type="text"
                                   v-model="userMessage"
                                   required
                                 ></v-textarea>
                               </v-col>
-                              
-
                             </v-row>
                           </v-container>
                         </v-card-text>
                         <v-card-actions>
                           <v-spacer></v-spacer>
                           <v-btn
-                            text color="blue"
+                            color="white"
                             @click="closeDialog()"
                           >
                             Close

@@ -161,8 +161,8 @@ app.post('/sendEmail', bodyparser.json(), function (req, res) {
 
   var mailOptions = {
     from: 'bigsmartmovie@gmail.com',
-    to: req.body.emailAddress,
-    cc: 'bigsmartmovie@gmail.com',
+    to: 'bigsmartmovie@gmail.com',
+    cc: req.body.emailAddress,
     subject: 'Sending Email using Node.js',
     text: req.body.message
   };
