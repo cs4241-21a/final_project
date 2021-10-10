@@ -1,11 +1,23 @@
 var express = require('express');
 var router = express.Router();
+const LeagueJS = require('leaguejs');
 
 const Team = require('../schemas/Team')
 const Match = require('../schemas/Match')
-
 const Tournament = require('../schemas/Tournament');
 
+const api = new LeagueJS(process.env.LEAGUE_API_KEY);
+api.updateRateLimiter({ allowBursts: true })
+const Util = require('leaguejs/lib/util')
+const DataDragonHelper = require('leaguejs/lib/DataDragon/DataDragonHelper');
+DataDragonHelper.storageRoot = ['storage'];
+
+let { data } = require('../champion.json');
+
+let map = new Map();
+for (let i in data) {
+    map.set(data[i].id, data[i].name);
+}
 
 /* GET users listing. */
 router.get('/loadTeams', async function (req, res, next) {
@@ -15,6 +27,7 @@ router.get('/loadTeams', async function (req, res, next) {
 });
 
 router.post('/insertTeam', async (req, res, next) => {
+    // TODO: Check for invalid sum names 
     const { userId, teamName, summoners } = req.body
     console.log("insert ", req.body.userId)
 
@@ -71,12 +84,12 @@ router.post('/generateTournament', async (req, res, next) => {
     }
 
     for (let i = 0; i < teams.length; i += 2) {
+        const [team1, team2] = await generateChamps(teams[i].summoners, teams[(i + 1) % teams.length].summoners)
         let newMatch = await Match({
             team1: teams[i].teamName,
-            champions1: ["Leblanc", "Zoe", "Ahri", "Orianna"],
-            // TODO: What do we do when there are an odd number of teams
+            champions1: team1,
             team2: teams[(i + 1) % teams.length].teamName,
-            champions2: ["Leblanc", "Zoe", "Ahri", "Orianna"]
+            champions2: team2
         });
 
         newMatch = await newMatch.save();
@@ -111,5 +124,74 @@ router.post('/loadMatches', async function (req, res, next) {
 
     res.json(allMatches);
 });
+
+async function getList(arr1, arr2, idList1, idList2) {
+
+    for (const element of arr1) {
+        await api.Summoner.gettingByName(element)
+            .then(data => {
+                idList1.push(data.id)
+            })
+    }
+
+    for (const element of arr2) {
+        await api.Summoner.gettingByName(element)
+            .then(data => {
+                idList2.push(data.id)
+            })
+    }
+}
+
+async function generateTeams(arr, champlist) {
+    for (const element of arr) {
+        await api.ChampionMastery.gettingBySummoner(element, 'na1').then(data => {
+            'use strict';
+            let x = data[Math.floor(Math.random() * (data.length - 1))].championId
+            while (champlist.includes(x)) {
+                x = data[Math.floor(Math.random() * (data.length - 1))].championId
+            }
+            champlist.push(x);
+        })
+            .catch(err => {
+                'use strict';
+                console.log(err);
+            });
+    }
+}
+
+/**
+ * 
+ * @param {String Array} arr1 team 1 summoner names
+ * @param {String Array} arr2 team 2 summoner names
+ * @returns Array containing 2 things:
+ * 
+ */
+async function generateChamps(arr1, arr2) {
+    idList1 = [];
+    idList2 = [];
+    champlist = [];
+    team1 = [];
+    team2 = [];
+
+    await getList(arr1, arr2, idList1, idList2)
+
+    await generateTeams(idList1, champlist)
+    await generateTeams(idList1, champlist)
+    await generateTeams(idList2, champlist)
+    await generateTeams(idList2, champlist)
+
+    let half_length = Math.ceil(champlist.length / 2);
+    let leftSide = champlist.splice(0, half_length);
+
+    for (let i in leftSide) {
+        team1.push(map.get(leftSide[i]))
+    }
+
+    for (let i in champlist) {
+        team2.push(map.get(champlist[i]))
+    }
+
+    return [team1, team2]
+}
 
 module.exports = router;
