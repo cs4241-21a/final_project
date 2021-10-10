@@ -32,12 +32,13 @@ const loadEvents = function(){
             let item2 = document.createTextNode("No date chosen");
             let item3 = document.createTextNode("No time chosen");
             let item4 = document.createTextNode(json[count].location);
+            let allowButton = false
             if (json[count].chosenEventDate !== null){
                 item2 = document.createTextNode(json[count].chosenEventDate.slice(0,10));
                 item3 = document.createTextNode(json[count].chosenStartTime);
+                allowButton = true
             }
             let item5 = null
-            let allowButton = true
             if(json[count].chosenEventDate === null){allowButton = false}
 
 
@@ -80,21 +81,26 @@ const createFile = function(event) {
 
     let eventDate = null;
 
-    if ((event.chosenStartTime + event.duration) % 1 == .5) {
+    if ((event.chosenStartTime + event.meetingDuration) % 1 == .5) {
         eventDate = {
             start: convertDate(event.chosenEventDate),
-            end: convertDate(event.chosenEventDate)
-            //end: convertDate(event.chosenEventDate).setHours((event.chosenStartTime + event.duration - .5), 30)
+            //end: convertDate(event.chosenEventDate)
+            end: convertDate(event.chosenEventDate).setHours((event.chosenStartTime + event.meetingDuration - .5), 30)
             //end: new Date(dateHolder.setHours((event.chosenStartTime + event.duration - .5), 30))
             //end: event.chosenEventDate.setHours((event.chosenStartTime + event.duration - .5), 30)
         }
     } else {
+        let endDate = new Date(event.chosenEventDate)
+        endDate.setHours((event.chosenStartTime + event.meetingDuration)).toString()
+        //endDate = endDate.toString()
+
+        //endDate.setHours(event.chosenStartTime + event.meetingDuration)
         eventDate = {
             start: convertDate(event.chosenEventDate),
-            //end: convertDate(event.chosenEventDate).setHours((event.chosenStartTime + event.duration))
+            end: convertDate(endDate)
             //end: new Date(dateHolder.setHours((event.chosenStartTime + event.duration)))
 
-            end: convertDate(event.chosenEventDate)
+            //end: convertDate(event.chosenEventDate)
             //end: event.chosenEventDate.setHours((event.chosenStartTime + event.duration))
         }
     }
@@ -105,7 +111,7 @@ const createFile = function(event) {
   }
   function convertDate(date) {
     console.log(date)
-    var event = new Date(date).toISOString();
+    let event = new Date(date).toISOString();
     event = event.split("T")[0];
     event = event.split("-");
     event = event.join("");
