@@ -60,11 +60,11 @@ function OnMessage(client, data) {
     }
 
     if (dataObject.type === "place wall"){
-        placeWall(client, data.x, data.y, data.orientation)
+        placeWall(client, dataObject.x, dataObject.y, dataObject.orientation)
     }
 
     if (dataObject.type === "move pawn"){
-        movePawn(client, data.x, data.y)
+        movePawn(client, dataObject.x, dataObject.y)
     }
 };
 
