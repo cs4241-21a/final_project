@@ -60,6 +60,14 @@ app.post("/register", bodyParser.json(), function(req, res) {
 
 app.post("/addScore", bodyParser.json(), function(req, res) {
   req.body.username = player;
+  req.body.withScore = 1;
+  collection
+    .insertOne(req.body)
+    .then(insertResponse => playerInfo.findOne(insertResponse.insertedId))
+    .then(findResponse => res.json(findResponse));
+});
+
+app.post("/getScores", bodyParser.json(), function(req, res) {
   collection
     .insertOne(req.body)
     .then(insertResponse => playerInfo.findOne(insertResponse.insertedId))

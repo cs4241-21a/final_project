@@ -29,6 +29,8 @@ let otherShips = {};
 let isControllerClient = true;
 let controllerClientTimeout = null;
 
+let score = 0;
+
 function randomChoice(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
 }
@@ -164,7 +166,7 @@ function keyPressed() {
 
 function moveShip(){
   let acc = createVector(0,0)
-  if(keyIsDown(UP_ARROW)){
+  if(keyIsDown(UP_ARROW) && !GameOver){
     isThrusting = true
     acc = createVector(0, ship.thrust) //Add acceleration pointin along ship's axis (up)
     acc.rotate(ship.rotation) //Rotate by ship's rotation
@@ -199,7 +201,7 @@ function displayShip(obj=ship){
     text(obj.username, 0, -30);
   }
   rotate(obj.rotation)
-  if(obj.iframes % 2 == 1) tint(255, 0, 0, 127);
+  if(obj.iframes % 8 >= 4 || ship.lives <= 0) tint(255, 0, 0, 64);
   // tint(255, 0, 0, 255); // could use this if the gompei img was white instead of black, might do that later
   image(gompei_img, -25, -25, obj.diam, obj.diam)
   noTint();
@@ -308,23 +310,28 @@ function draw() {
     v.pos.add(v.vel);
     v.rotation += (v.desRot - v.rotation) * 0.5;
   }
-  turnShip()
   moveShip()
-  //shoot()
-  let hit = checkForCollisions(ship, stars);
-  if(hit !== null && ship.iframes <= 0){
-    console.log("HIT SHIP");
-    ship.lives--;
-    
-    if(!isControllerClient) socket.send(JSON.stringify({packetType: "clear_virus", id: hit.id}));
-    let v = hit;
-    v.x = v.init_x;
-    v.y = v.init_y;
-    const set = randomChoice([{life:1, size:small}, {life:2, size:medium}, {life:3, size:large}])
-    v.diam = set.size
-    v.lives = set.life
-    
-    ship.iframes = 120;
+  if(!GameOver){
+    turnShip()
+    //shoot()
+    let hit = checkForCollisions(ship, stars);
+    if(hit !== null && ship.iframes <= 0){
+      console.log("HIT SHIP");
+      ship.lives--;
+
+      if(inLobby && !isControllerClient) socket.send(JSON.stringify({packetType: "clear_virus", id: hit.id}));
+      let v = hit;
+      v.x = v.init_x;
+      v.y = v.init_y;
+      const set = randomChoice([{life:1, size:small}, {life:2, size:medium}, {life:3, size:large}])
+      v.diam = set.size
+      v.lives = set.life
+
+      ship.iframes = 120;
+    }
+    if(ship.iframes > 0){
+      ship.iframes--;
+    }
   }
   checkEdges(ship)
   checkLives()
@@ -335,8 +342,11 @@ function draw() {
     moveMasks(v.masks)
     displayMasks(v.masks)
   }
+  text(:)
   if(GameOver){
     print("Game Over")
+    textAlign(CENTER);
+    text("GAME OVER", 750/2, 750/2);
     return
   }
   counter++
