@@ -18,11 +18,6 @@ export default (new class SpotifyService {
     accessToken;
 
     constructor() {
-        // this.createPlaylist('Bopify Playlist', '').then(async id => {
-        //     await this.addSongsToPlaylist(id, ['spotify:track:6TUf1Vw59k1f7r9X8GzYdI', 'spotify:track:4HTY26kzdGCKJF1EqcRd2J']);
-        //     await this.deleteSongsFromPlaylist(id, ['spotify:track:6TUf1Vw59k1f7r9X8GzYdI']);
-        //     this.getSongsFromPlaylist(id).then(console.log)
-        // });
     }
 
     // retrieves Spotify access token from cache or accounts.spotify.com
@@ -111,6 +106,14 @@ export default (new class SpotifyService {
            delete t.album;
         });
         return response;
+    }
+
+    generatePlaylist = async (genre) => {
+        console.log(`Generating playlist for ${genre}...`);
+
+        const id = await this.createPlaylist('Bopify Playlist', '');
+        await this.addSongsToPlaylist(id, ['spotify:track:6TUf1Vw59k1f7r9X8GzYdI', 'spotify:track:4HTY26kzdGCKJF1EqcRd2J']);
+        return await this.getSongsFromPlaylist(id);
     }
 
     // get available genre seeds (not sure if we will need this)

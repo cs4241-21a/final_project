@@ -38,6 +38,11 @@ server.put('/api/player/:id/play', async (req, res) => {
     res.send();
 });
 
+// generate new playlist based on genre
+server.get('/api/playlist/generate', async (req, res) => {
+    res.json(await SpotifyService.generatePlaylist(req.query.genre));
+});
+
 // delete song from playlist
 server.delete('/api/playlist/:id', async (req, res) => {
     await SpotifyService.deleteSongsFromPlaylist(req.params.id, [req.query.uri]);
