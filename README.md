@@ -81,6 +81,8 @@ For authentication, we wanted to challenge ourselves more than we did in A3, whe
   - page routing
   - proposal writeup contributed to readme
   - oauth functionality
+  - heroku server
+  - profile page data propagation
 - Stefano
   - dashboard page (submit functionality and filtering) and server side communication
   - implemented server POST routes for dashboard page
