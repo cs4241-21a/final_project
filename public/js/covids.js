@@ -158,7 +158,7 @@ function keyPressed() {
     let mask = generateMask();
     masks.push(mask);
   
-    socket.send(JSON.stringify({packetType: "add_mask", x: mask.pos.x, y: mask.pos.y, vx: mask.vel.x, vy: mask.vel.y}));
+    if(inLobby) socket.send(JSON.stringify({packetType: "add_mask", x: mask.pos.x, y: mask.pos.y, vx: mask.vel.x, vy: mask.vel.y}));
   }
 }
 
@@ -199,8 +199,10 @@ function displayShip(obj=ship){
     text(obj.username, 0, -30);
   }
   rotate(obj.rotation)
+  if(obj.iframes % 2 == 1) tint(255, 0, 0, 127);
   // tint(255, 0, 0, 255); // could use this if the gompei img was white instead of black, might do that later
   image(gompei_img, -25, -25, obj.diam, obj.diam)
+  noTint();
   pop();
 }
 
@@ -225,8 +227,8 @@ function checkMasksForCollisions(){
   masks = masks.filter((m, i) => {
     let hit = checkForCollisions(m, stars, "");
     if(hit !== null){
-      socket.send(JSON.stringify({packetType: "remove_mask", index: i}));
-      if(!isControllerClient) socket.send(JSON.stringify({packetType: "hit_virus", id: hit.id}));
+      if(inLobby) socket.send(JSON.stringify({packetType: "remove_mask", index: i}));
+      if(inLobby && !isControllerClient) socket.send(JSON.stringify({packetType: "hit_virus", id: hit.id}));
       damageVirus(hit);
       return false;
     }

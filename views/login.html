@@ -3,77 +3,91 @@
   <head>
     <title>Login Page</title>
     <meta charset="utf-8" />
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@500&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@500&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="wrapper">
-    <canvas style="background-image=coviBackground.png;" id="canvas1" style="border: 1px solid black;"></canvas>
+      <canvas
+        style="background-image=coviBackground.png;"
+        id="canvas1"
+        style="border: 1px solid black;"
+      ></canvas>
     </div>
     <script src="js/loginscript.js"></script>
     <div class="login-page">
       <h1>LOGIN</h1>
       <div class="form" id="form">
-        <div class = "container1">
-        <input type="text" id="uname" placeholder="username" />
-        <input type="password" id="pword" placeholder="password" /> <br>
+        <div class="container1">
+          <input type="text" id="uname" placeholder="username" />
+          <input type="password" id="pword" placeholder="password" /> <br />
         </div>
         <div>
-        <button id="loginButton" class="inline">Login</button>
-        <button id="registerButton" class="inline">Create Account</button><br>
+          <button id="loginButton" class="inline">Login</button>
+          <button id="registerButton" class="inline">Create Account</button
+          ><br />
         </div>
-          <a href = "/views/highscore.html">
-          <button id="highScorePage">High Scores</button> <br>
+        <a href="/views/highscore.html">
+          <button id="highScorePage">High Scores</button> <br />
         </a>
-         <h2> HOW TO PLAY:  </h2>
-         <p> right arrow : spin clockwise </p> 
-        <p> left arrow : spin counter - clockwise </p> 
-        <p> up arrow : move forwards </p> 
-        <p> down arrow : move backwards </p> 
-        <p> space : shoot masks before the COVID hits! </p> 
+        <h2>HOW TO PLAY:</h2>
+        <p>right arrow : spin clockwise</p>
+        <p>left arrow : spin counter-clockwise</p>
+        <p>up arrow : move forwards</p>
+        <p>down arrow : move backwards</p>
+        <p>space : shoot masks before the COVID hits!</p>
       </div>
     </div>
   </body>
-  
-    
+
   <style>
-    
-  .wrapper{
-    position: relative;
-    margin: auto;
-  }
-    
-  .login-page {
-    position: absolute;
-    top:0;
-    left: 50%;
-    transform: translateX(-50%);
-  }
- 
-  body { 
-    text-align: center;
-    font-family: 'Libre Franklin', sans-serif;
-    background-color: black; 
-    text-shadow: 4px 4px 4px #aaa;
-    margin: 0;
-    overflow: hidden;
-  }
-  
-  #container1 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-  }
-    
-  #container2{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-  }
-    
-  #highScorePage{
-    display: inline-block;
-  }
+    .wrapper {
+      position: relative;
+      margin: auto;
+    }
+
+    .login-page {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    body {
+      text-align: center;
+      font-family: "Libre Franklin", sans-serif;
+      background-color: black;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    h1,
+    h2 {
+      text-shadow: 4px 4px 4px #aaa;
+    }
+
+    p {
+      background-color: white;
+    }
+
+    #container1 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    #container2 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    #highScorePage {
+      display: inline-block;
+    }
   </style>
 </html>
