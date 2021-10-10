@@ -118,12 +118,14 @@ const SinglePage = () => {
                             <div className='float-start'>
                                 <div className='blue-container'>
                                     <h2 className='blue-label' htmlFor="blueSums">Blue Side</h2>
-                                    <div className='d-flex justify-content-center'><textarea className='mb-1' value={state.formData.blueSums} name="blueSums" onChange={
-                                        (e) => {
-                                            onInputChange('blueSums', e.target.value);
-                                        }
-                                    } required /></div>
-                                    <div className='d-flex justify-content-center'><label className='h5'>Blue Side Usernames</label></div>
+                                    <div className="form-floating mb-3">
+                                        <textarea className='form-control' id='blueInput' value={state.formData.blueSums} name="blueSums" onChange={
+                                            (e) => {
+                                                onInputChange('blueSums', e.target.value);
+                                            }
+                                        } required />
+                                        <label for='blueInput'>Blue Side Usernames</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -131,12 +133,14 @@ const SinglePage = () => {
                             <div className='float-end'>
                                 <div className='red-container'>
                                     <h2 className='red-label' htmlFor="redSums">Red Side</h2>
-                                    <div className='d-flex justify-content-center'><textarea className='mb-1' value={state.formData.redSums} name="redSums" onChange={
+                                    <div className="form-floating mb-3">
+                                    <textarea className='form-control' id='blueInput' value={state.formData.redSums} name="redSums" onChange={
                                         (e) => {
                                             onInputChange('redSums', e.target.value);
                                         }
-                                    } required /></div>
-                                    <div className='d-flex justify-content-center'><label className='h5'>Red Side Usernames</label></div>
+                                    } required />
+                                    <label for='redInput'>Red Side Usernames</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
