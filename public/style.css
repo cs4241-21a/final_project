@@ -9,6 +9,10 @@
     border-radius: .3rem;
 }
 
+h4{
+    font-weight: bold;
+}
+
 nav{
     background-color: #8182DB;
     color: white;
