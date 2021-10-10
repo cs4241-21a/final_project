@@ -292,4 +292,9 @@ app.post("/theme", (req, res) => {
 	res.redirect('/')
 })
 
+// 404 Page for logged in users
+app.use(function (req, res) {
+	res.redirect("/404");
+});
+
 app.listen(3000);
