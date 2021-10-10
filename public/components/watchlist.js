@@ -143,9 +143,9 @@ function loadModify(id) {
 }
 
 function submitModify(e) {
-
+    
     e.preventDefault();
-
+    
     const desc = document.querySelector("#title"),
     score = document.querySelector("#score"),
     date = document.querySelector("#date"),
@@ -210,6 +210,5 @@ const submit = function (e) {
 window.onload = function () {
     fetchData();
 
-    const button = document.querySelector("button");
-    button.onclick = submit;
+    document.getElementById("submitButton").onclick = submit;
 };
