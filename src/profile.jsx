@@ -249,7 +249,7 @@ class Profile extends React.Component {
 
               <li class="input_field_item">
                 <label for="class_name">
-                  <b>Courses Taken:</b>
+                  <b>Courses Taken (CTRL/CMD + Click to select multiple options):</b>
                 </label>
                 <select
                   name="classes"
@@ -363,7 +363,7 @@ class Profile extends React.Component {
 
               <li class="input_field_item">
                 <label for="list_skills">
-                  <b>Skills:</b>
+                  <b>Skills (CTRL/CMD + Click to select multiple options):</b>
                 </label>
                 <select
                   name="skills"
@@ -398,7 +398,7 @@ class Profile extends React.Component {
 
               <li class="input_field_item">
                 <label for="list_languages">
-                  <b>Programming Languages:</b>
+                  <b>Programming Languages (CTRL/CMD + Click to select multiple options):</b>
                 </label>
                 <select
                   name="skills"
