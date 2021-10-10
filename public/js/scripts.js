@@ -72,12 +72,24 @@ const loadEvents = function(){
 }
 
 const createFile = function(event) {
-    let eventDate = {
+    /*let eventDate = {
         start: event.availableDates[0],
         end: event.availableDates[event.availableDates.length - 1]
-      },
-      summary = event.eventName,
-      description = event.description
+      }*/
+    let eventDate = '';
+    if ((event.chosenStartTime + event.duration) % 1 == .5) {
+        eventDate = {
+            start: event.chosenEventDate,
+            end: event.chosenEventDate.setHours((event.chosenStartTime + event.duration - .5), 30)
+        }
+    } else {
+        eventDate = {
+            start: event.chosenEventDate,
+            end: event.chosenEventDate.setHours((event.chosenStartTime + event.duration))
+        }
+    }
+      let summary = event.eventName;
+      let description = event.description;
      return makeIcsFile(eventDate, summary, description);
     //downloadButton.classList.remove("hide");
   }
