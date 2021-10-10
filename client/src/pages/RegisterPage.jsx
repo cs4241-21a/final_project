@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { useHistory } from "react-router";
 
 const RegisterPage = () => {
@@ -14,13 +14,6 @@ const RegisterPage = () => {
             password: null
         }
     });
-
-    // Redirect to todolist page if user already logged in
-    // useEffect(() => {
-    //     if (token) {
-    //         history.push(`/user/${jwt_decode(token).id}`);
-    //     }
-    // });
 
     // Change state when user types in a text box
     const onInputChange = useCallback((name, value) => {

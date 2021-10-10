@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory, useParams } from "react-router";
 import Team from "../components/Team";
 import Spinner from "../components/Spinner";
 

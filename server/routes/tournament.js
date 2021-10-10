@@ -5,7 +5,6 @@ const LeagueJS = require('leaguejs');
 const Team = require('../schemas/Team')
 const Match = require('../schemas/Match')
 const Tournament = require('../schemas/Tournament');
-
 const api = new LeagueJS(process.env.LEAGUE_API_KEY);
 api.updateRateLimiter({ allowBursts: true })
 const Util = require('leaguejs/lib/util')
@@ -30,19 +29,23 @@ router.post('/insertTeam', async (req, res, next) => {
     // TODO: Check for invalid sum names 
     const { userId, teamName, summoners } = req.body
     console.log("insert ", req.body.userId)
-
     // Check if a team already has this name under this user.
     const existingTeam = await Team.findOne({ userId, teamName });
     if (existingTeam) {
         res.json({ error: 'Team with this name already exists.' });
         return;
     }
+    const idList = await getList(summoners);
+    if(!(idList)){
+        res.json({error:'Invalid summoner name.'});
+        return;
+    }
 
     let newTeam = await Team({
         userId,
         teamName,
-        summoners
-
+        summoners,
+        idList
     });
     newTeam = await newTeam.save();
     const teams = await Team.find({ userId: userId });
@@ -84,7 +87,7 @@ router.post('/generateTournament', async (req, res, next) => {
     }
 
     for (let i = 0; i < teams.length; i += 2) {
-        const [team1, team2] = await generateChamps(teams[i].summoners, teams[(i + 1) % teams.length].summoners)
+        const [team1, team2] = await generateChamps(teams[i].idList, teams[(i + 1) % teams.length].idList)
         let newMatch = await Match({
             team1: teams[i].teamName,
             champions1: team1,
@@ -133,7 +136,19 @@ router.get('/single?', async (req, res, next) => {
     red = red.split(',');
     console.log("generating single game")
 
-    const [team1Champs, team2Champs] = await generateChamps(blue, red);
+    const idListb = await getList(blue);
+    if(!(idListb)){
+        res.json({error:'Invalid blue side summoner name.'});
+        return;
+    }
+
+    const idListr = await getList(red);
+    if(!(idListr)){
+        res.json({error:'Invalid red side summoner name.'});
+        return;
+    }
+
+    const [team1Champs, team2Champs] = await generateChamps(idListb, idListr);
 
     res.json({
         team1Champs,
@@ -141,22 +156,20 @@ router.get('/single?', async (req, res, next) => {
     });
 });
 
-
-async function getList(arr1, arr2, idList1, idList2) {
-
+async function getList(arr1) {
+    const idList = [];
     for (const element of arr1) {
-        await api.Summoner.gettingByName(element)
-            .then(data => {
-                idList1.push(data.id)
-            })
+        try {
+            await api.Summoner.gettingByName(element)
+                .then(data => {
+                    idList.push(data.id)
+                })
+        }
+        catch(err){
+            return false;
+        }
     }
-
-    for (const element of arr2) {
-        await api.Summoner.gettingByName(element)
-            .then(data => {
-                idList2.push(data.id)
-            })
-    }
+    return idList;
 }
 
 async function generateTeams(arr, champlist) {
@@ -184,15 +197,10 @@ async function generateTeams(arr, champlist) {
  * array of champion names for team 1
  * array of champion names for team 2
  */
-async function generateChamps(arr1, arr2) {
-    idList1 = [];
-    idList2 = [];
+ async function generateChamps(idList1, idList2) {
     champlist = [];
     team1 = [];
     team2 = [];
-
-    await getList(arr1, arr2, idList1, idList2)
-
     await generateTeams(idList1, champlist)
     await generateTeams(idList1, champlist)
     await generateTeams(idList2, champlist)

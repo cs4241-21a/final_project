@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 function importAll(r) {
     let images = {};
-    r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+    r.keys().map((item, index) => images[item.replace('./', '')] = r(item));
     return images;
 }
 
@@ -11,8 +11,7 @@ const red_images = importAll(require.context('../img/red_champs', false, /\.(png
 
 const SinglePage = () => {
     const [state, setState] = useState({
-        formData: { blueSums: '', redSums: '', blueChamps: '', redChamps: '', blueDraft: '', redDraft: '' },
-        error: { blue: null, red: null }
+        formData: { blueSums: '', redSums: '', blueChamps: '', redChamps: '', blueDraft: '', redDraft: '' }
     });
 
     const [btnDisable, setBtnDisable] = useState(false);
@@ -30,7 +29,7 @@ const SinglePage = () => {
     const checkFive = (input) => {
 
         let split = input.split(",");
-        if (split.length != 5) {
+        if (split.length !== 5) {
             return false;
         }
 
@@ -82,13 +81,7 @@ const SinglePage = () => {
                 // Set any errors with user input
                 if (data.error) {
                     console.log("error")
-                    setState({
-                        ...state,
-                        error: {
-                            ...state.error,
-                            ...data.error
-                        }
-                    });
+                    alert(data.error);
                     return;
                 }
 
