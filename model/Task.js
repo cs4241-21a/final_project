@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const taskSchema = new mongoose.Schema({
+id: { 
+    type: String,
+    required: true,
+    default: ObjectId().str
+  },
     username: {
         type: String,
         required: true,
@@ -25,7 +30,13 @@ const taskSchema = new mongoose.Schema({
     date:{
         type: Date,
         default: Date.now
+    },
+    parent: {
+        type: String,
+        required: true,
+        default: ""
     }
 });
 
 module.exports = mongoose.model('Task', taskSchema);
+
