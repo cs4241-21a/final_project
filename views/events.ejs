@@ -8,10 +8,10 @@
 <body>
     <script src="./js/eventsJS.js" defer></script>
     <%- include("./partials/nav.ejs")%>
-    <div class="container-sm row mx-auto" style="width: 70%">
+    <div style="width: 70%">
         <button type="button" onclick="openEventMaker()" id="eventMakerBtn">Make Event</button>
 
-        <div class="col-md-4 m-5 p-3 hidden" id="eventMaker">
+        <div class="hidden" id="eventMaker">
             <h2>Event Creator</h2>
             <hr>
             <div>
@@ -100,9 +100,9 @@
         </div>
         
         <!-- Force next columns to break to new line -->
-        <div class="w-100"></div>
+       <!-- <div class="w-100"></div>-->
         
-        <div class="col-sm-5 m-4 p-3">
+        <div>
             <h2>My Events</h2>
             <hr>
             <% if (eventsList.length > 0) { %>
@@ -208,9 +208,9 @@
         </div>
 
         <!-- Force next columns to break to new line -->
-        <div class="w-100"></div>
+        <!--<div class="w-100"></div> -->
 
-        <div class="col-sm-5 m-4 p-3">
+        <div>
             <h2>Pending Event Invites:</h2>
             <hr>
             <% if (pendingList.length > 0) { %>
