@@ -63,7 +63,7 @@ button:hover {
 
 .tab-list {
     background-color: #2a7a9c;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #2A7A9C;
     padding-left: 0;
 }
 
@@ -72,6 +72,7 @@ button:hover {
     list-style: none;
     margin-bottom: -1px;
     padding: 1rem 1.5rem;
+    border-radius: 10px;
 }
 
 .tab-list-item:hover {
@@ -81,8 +82,6 @@ button:hover {
 
 .tab-list-active {
     background-color: #246885;
-    border: solid #0065A6;
-    border-width: 1px 1px 0 1px;
 }
 
 ::-webkit-scrollbar {
