@@ -1,13 +1,25 @@
 /* Add a black background color to the top navigation */
 .topnav {
-    background-color: #333;
-    overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  padding-bottom: 50px;
+
   }
   
   /* Style the links inside the navigation bar */
   .topnavlink {
     float: left;
-    display: block;
+    display: flex;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+
+  .topnavUser{
+    display: flex;
     color: #f2f2f2;
     text-align: center;
     padding: 14px 16px;
@@ -29,7 +41,8 @@
 
   .topnavbutton{
     position: absolute;
-    top: 10%;
+    display: flex;
+    top: 15%;
     right: 0;
     width: 120px;
     transform: translateY(-100%);

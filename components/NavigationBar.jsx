@@ -15,19 +15,19 @@ const NavigationBar = (props) => {
   };
 
   return (
-    <div class="topNav" id="headerDiv">
+    <nav class="topNav" id="headerDiv">
       <Link class = "topnavlink" to="/">Home</Link>
       {loggedOut ? (
-        <Link class = "topnavlink" to="/login">Login</Link>
+        <Link class = "topnavlink" to="/login">Log In</Link>
       ) : loading ? (
         <div>Loading</div>
       ) : (
         <div>
-        <text>hello {user.username} </text>
-        <button class = "topnavbutton" onClick={logOut}>Log Out</button>
+        <text >Hello, {user.username} </text>
+        <button onClick={logOut}>Log Out</button>
         </div>
       )}
-    </div>
+    </nav>
   );
 };
 

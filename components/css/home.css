@@ -16,13 +16,13 @@
 .workoutEntry {
     margin-left: auto;
     margin-right: auto;
-    display: block;
+    /* display: block;
     transition: height 1s ease-in 0s;
     height: 70px;
-    overflow: hidden;
+    overflow: hidden; */
 }
 tbody:nth-child(odd){
-    background: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.8);
 }
 
 tbody tr:hover {
