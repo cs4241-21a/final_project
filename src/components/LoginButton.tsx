@@ -29,6 +29,7 @@ const LoginButton = (props: { initPrefs: () => void }): JSX.Element => {
   const handleUser = () => {
     if (loggedin) {
       logout();
+      window.location.href = "/";
     } else {
       userlogin();
     }
