@@ -5,15 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Main page for the Covids multiplayer arcade game.">
     <base href="https://corona-game.glitch.me/" target="_blank">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@500&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js"></script>
     <link rel="stylesheet" href="css/style.css">
   </head>
+  <h1>
+     Shoot the flying COVID with a mask!
+  </h1>
+  <p>
+    It's even more fun with friends. Start a lobby.
+  </p>
   <body>
     <input type="text" id="lobbyname" name="lobbyname" placeholder="lobby">
     <input type="text" id="lobbypass" name="lobbypass" placeholder="password">
     <button id="lobbyButton">
       Join/Create Lobby
-    </button>
+    </button> <br>
+       
     <text id="status">Disconnected</text>
     <button id="disconnectButton" onClick="window.location.reload()">
       Disconnect
@@ -25,6 +33,16 @@
       visibility:"hidden"
     }
     
+    body{
+      font-family: "Libre Franklin", sans-serif;
+    }
+    
+    h1 {
+      text-align: center;
+      margin: 0;
+      overflow: hidden;
+      text-shadow: 4px 4px 4px #aaa;
+    }
      
   </style>
 </html>

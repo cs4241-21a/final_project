@@ -1,6 +1,6 @@
 html {
   overflow: hidden;
-  background-color: #eee;
+  background-color: rgb(100, 203, 248);
 }
 
 body {
@@ -10,7 +10,7 @@ body {
 }
 
 main {
-  margin-top: 5px;  
+  margin-top: 5px;
 }
 
 main canvas {

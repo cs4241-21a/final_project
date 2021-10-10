@@ -1,4 +1,4 @@
-const numOfStars = 50,
+const numOfStars = 25,
       width = 750,
       height = 750,
       min_speed = .5,
@@ -174,6 +174,14 @@ function moveShip(){
     isThrusting = false
   }
   ship.vel.add(acc)
+  
+  acc = createVector(0,0)
+  if(keyIsDown(DOWN_ARROW) && !GameOver){
+    acc = createVector(0, -ship.thrust / 2) //Add acceleration pointin along ship's axis (up)
+    acc.rotate(ship.rotation) //Rotate by ship's rotation
+  }
+  ship.vel.add(acc)
+  
   ship.pos.add(ship.vel)
 }
 
@@ -294,6 +302,21 @@ function lossOfLife(){
 function checkLives(){
   if (ship.lives <= 0){
     GameOver = true
+    image(gompei_img, 0, -100, 35, 35)
+    image(gompei_img, 40, -100, 35, 35)
+    image(gompei_img, 80, -100, 35, 35)
+  } else if (ship.lives === 2){
+    image(gompei_img, 0, 30, 35, 35)
+    image(gompei_img, 40, 30, 35, 35)
+    image(gompei_img, 80, -100, 35, 35)
+  } else if (ship.lives === 1){
+    image(gompei_img, 0, 30, 35, 35)
+    image(gompei_img, 40, -100, 35, 35)
+    image(gompei_img, 80, -100, 35, 35)
+  } else {
+    image(gompei_img, 0, 30, 35, 35)
+    image(gompei_img, 40, 30, 35, 35)
+    image(gompei_img, 80, 30, 35, 35)
   }
 }
 
