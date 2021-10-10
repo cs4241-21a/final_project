@@ -46,17 +46,17 @@ const SinglePage = () => {
 
         input.forEach(e => {
             let name = e + '.png';
-            name = name.replace(/ /g,"_");
-            name = name.replace('\'',"");
+            name = name.replace(/ /g, "_");
+            name = name.replace('\'', "");
             console.log(name.toLocaleLowerCase(), images[name.toLocaleLowerCase()]);
-            try{
-                element += '<li style=\'list-style-type: none;\'><img src=' + images[name.toLocaleLowerCase()].default + 
-                ' class="champ-icon"/><a href="https://www.leagueoflegends.com/en-us/champions/' + e + '">' + e + '</a></li>';
-            } catch(err) {
+            try {
+                element += '<li style=\'list-style-type: none;\'><img src=' + images[name.toLocaleLowerCase()].default +
+                    ' class="champ-icon"/><a href="https://www.leagueoflegends.com/en-us/champions/' + e + '">' + e + '</a></li>';
+            } catch (err) {
                 element += '<li style=\'list-style-type: none;\'><a href="https://www.leagueoflegends.com/en-us/champions/' + e + '">' + e + '</a></li>';
-                
+
             }
-            
+
         });
 
         return element
@@ -122,28 +122,40 @@ const SinglePage = () => {
                 <div className="custom-container">
                     <div className="row mb-3">
                         <div className="col-sm">
-                            <h2 htmlFor="blueSums">Blue Side</h2>
-                            <div><textarea className='mb-1' value={state.formData.blueSums} name="blueSums" onChange={
-                                (e) => {
-                                    onInputChange('blueSums', e.target.value);
-                                }
-                            } required /></div>
-                            <div><label className='h5'>Blue Side Usernames</label></div>
+                            <div className='float-start'>
+                                <div className='blue-container'>
+                                    <h2 className='blue-label' htmlFor="blueSums">Blue Side</h2>
+                                    <div className='d-flex justify-content-center'><textarea className='mb-1' value={state.formData.blueSums} name="blueSums" onChange={
+                                        (e) => {
+                                            onInputChange('blueSums', e.target.value);
+                                        }
+                                    } required /></div>
+                                    <div className='d-flex justify-content-center'><label className='h5'>Blue Side Usernames</label></div>
+                                </div>
+                            </div>
                         </div>
                         <div className="col-sm">
-                            <h2 htmlFor="redSums">Red Side</h2>
-                            <div><textarea className='mb-1' value={state.formData.redSums} name="redSums" onChange={
-                                (e) => {
-                                    onInputChange('redSums', e.target.value);
-                                }
-                            } required /></div>
-                            <div><label className='h5'>Red Side Usernames</label></div>
+                            <div className='float-end'>
+                                <div className='red-container'>
+                                    <h2 className='red-label' htmlFor="redSums">Red Side</h2>
+                                    <div className='d-flex justify-content-center'><textarea className='mb-1' value={state.formData.redSums} name="redSums" onChange={
+                                        (e) => {
+                                            onInputChange('redSums', e.target.value);
+                                        }
+                                    } required /></div>
+                                    <div className='d-flex justify-content-center'><label className='h5'>Red Side Usernames</label></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <button className="btn btn-primary mb-4" type="submit" onSubmit={(e) => {
-                        e.preventDefault();
-                        setBtnDisable(true, onSubmit(e));
-                    }} disabled={state.btnDisable}>Generate</button>
+                    <div className='d-flex justify-content-center'>
+                        <div className='league-button-border'>
+                            <button className="main" type="submit" onSubmit={(e) => {
+                                e.preventDefault();
+                                setBtnDisable(true, onSubmit(e));
+                            }} disabled={state.btnDisable}>Generate</button>
+                        </div>
+                    </div>
                 </div>
             </form>
 
