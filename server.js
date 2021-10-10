@@ -6,6 +6,7 @@ const express = require("express"),
       mongoose = require('mongoose'),
       UserEntry = require('./models/loginModel.js'),
       EventEntry = require('./models/eventModel.js'),
+      CalendarEntry = require('./models/calendarModel.js'),
       cookie = require('cookie-session'),
       app = express(),
       staticDir  = "public",
@@ -170,6 +171,20 @@ app.post('/createEvent', bodyparser.json(), async (req,res) => {
   await entry.save()
   let result = await EventEntry.find({})
   res.render('events', {eventsList: result, sentUsername: req.session.username, title:"Events"})
+})
+
+app.post('/addpersonal', async(req, res) => {
+  let dbEntry = new CalendarEntry({
+    username: req.session.username,
+    eventName: req.body.eventName,
+    recurring: false,
+    startDateTime: req.body.startDateTime,
+    endDateTime: req.body.endDateTime,
+    location: req.body.location,
+    description: req.body.description
+  })
+  await dbEntry.save()
+  res.render('index')
 })
 
 

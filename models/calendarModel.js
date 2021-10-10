@@ -53,5 +53,5 @@ const calendarSchema = new Schema({
 
 }, {timestamps: true });
 
-const EventEntry = mongoose.model('calendar', eventSchema);
-module.exports = EventEntry;
+const CalendarEntry = mongoose.model('calendar', calendarSchema);
+module.exports = CalendarEntry;
