@@ -50,7 +50,7 @@ const MainRoute = (): JSX.Element => {
   const [artifactPrefs, setArtifactPrefs] = React.useState<EnablablePrefs[]>(
     []
   );
-  const [loading, setLoading] = React.useState<Boolean>(true);
+  const [loading, setLoading] = React.useState<boolean>(true);
 
   /**
    * initPrefs() fetches the user preferences from the database
@@ -202,8 +202,6 @@ const MainRoute = (): JSX.Element => {
     // "activeLocations" should be the locations listed per each activeFarmable's farm_at string
     // loadData();
     filterFarmablesLocations();
-    console.log(activeFarmables);
-    console.log(activeLocations);
     if (!loading) {
       updateDB();
     }
@@ -216,16 +214,19 @@ const MainRoute = (): JSX.Element => {
         characters={characters}
         preferences={charPrefs}
         setter={setCharPrefs}
+        loading={loading}
       />
       <WeaponSelect
         weapons={weapons}
         preferences={weaponPrefs}
         setter={setWeaponsPrefs}
+        loading={loading}
       />
       <ArtifactSelect
         artifacts={artifacts}
         preferences={artifactPrefs}
         setter={setArtifactPrefs}
+        loading={loading}
       />
       <FarmingDisplay farmables={activeFarmables} locations={activeLocations} />
       <LoginButton initPrefs={initPrefs} />

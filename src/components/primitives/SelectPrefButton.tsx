@@ -10,7 +10,8 @@ interface SelectPrefButtonProps<PrefsType extends EnablablePrefs> {
   removePref: (pref: PrefsType) => void,
   preferences: PrefsType[],
   prop: NamedProps,
-  children: React.ReactNode
+  children: React.ReactNode,
+  loading: boolean
 }
 
 const SelectPrefButton = <PrefsType extends EnablablePrefs>({
@@ -18,11 +19,10 @@ const SelectPrefButton = <PrefsType extends EnablablePrefs>({
   removePref,
   preferences,
   prop,
-  children
+  children,
+  loading
 }: SelectPrefButtonProps<PrefsType>) : JSX.Element => {
-  const [pref, setPref] = React.useState<PrefsType | undefined>(() => {
-    return preferences.find((_pref) => (_pref.name==prop.name));
-  }); 
+  const [pref, setPref] = React.useState<PrefsType | undefined>(undefined);
 
   const onClickOn = () => {
     setPref(addPref(prop));
@@ -31,6 +31,14 @@ const SelectPrefButton = <PrefsType extends EnablablePrefs>({
     removePref(pref as PrefsType);
     setPref(undefined);
   }
+
+  React.useEffect(() => {
+    setPref(preferences.find((_pref) => (_pref.name==prop.name)));
+  }, [loading])
+
+  React.useEffect(() => {
+    console.log(`${prop.name} has: ${pref}`);
+  }, [pref]);
 
   return (
     <ToggableButton 

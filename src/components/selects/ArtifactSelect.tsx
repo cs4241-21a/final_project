@@ -11,15 +11,17 @@ import EnablablePrefs from "../../types/prefs/EnablablePrefs";
 import SelectPrefButton from "../primitives/SelectPrefButton";
 
 interface ArtifactSelectProps {
-  artifacts: ArtifactProps[];
-  preferences: EnablablePrefs[];
-  setter: React.Dispatch<React.SetStateAction<EnablablePrefs[]>>;
+  artifacts: ArtifactProps[],
+  preferences: EnablablePrefs[],
+  setter: React.Dispatch<React.SetStateAction<EnablablePrefs[]>>,
+  loading: boolean
 }
 
 const ArtifactSelect = ({
   artifacts,
   preferences,
   setter,
+  loading
 }: ArtifactSelectProps): JSX.Element => {
   // Add Pref using: artifactPref = addArtifact(artifact);
   // artifact is an ArtifactProp from artifacts
@@ -45,6 +47,7 @@ const ArtifactSelect = ({
             removePref={removeArtifact}
             preferences={preferences}
             prop={art}
+            loading={loading}
           >
             <img src={imgSrc} alt={`${art.name}-image`} width="100px" />
             <p>{art.name}</p>

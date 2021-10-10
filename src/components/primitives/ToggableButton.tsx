@@ -10,7 +10,7 @@ interface ToggableButtonProps {
 const BTN_CLASS_OFF: string = "tgl-but-off";
 const BTN_CLASS_ON: string = "tgl-but-on";
 
-const DebugButton = ({
+const ToggableButton = ({
   onClickOn,
   onClickOff,
   children,
@@ -30,6 +30,10 @@ const DebugButton = ({
     }
   }
 
+  React.useEffect(() => {
+    active ? setBtnClass(BTN_CLASS_ON) : setBtnClass(BTN_CLASS_OFF);
+  }, [active]);
+
   return (
     <button 
       className={btnClass} 
@@ -40,4 +44,4 @@ const DebugButton = ({
   );
 }
 
-export default DebugButton;
+export default ToggableButton;
