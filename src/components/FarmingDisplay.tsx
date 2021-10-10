@@ -15,6 +15,9 @@ const FarmingDisplay = ({
 }: FarmingDisplayProps): JSX.Element => {
   // !!! TODO (Nick): Create logic for displaying artifact preferences using the setter
 
+  console.log(farmables);
+  console.log(locations);
+
   const [monLocs, setMonLoc] = React.useState<FarmingSpotProps[]>(
     locations.filter(
       (e) => e.day_of_week.find((d) => d === "mon") !== undefined
