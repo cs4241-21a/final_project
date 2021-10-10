@@ -141,6 +141,101 @@ app.post("/join", (req, res) => {
 					}
 					// Create an search index on the "note" field in the user's collection
 					db.collection(req.body.email).createIndex({note: "text"})
+
+					// Add sample data
+					if (req.body.sample === "on" || req.body.email.includes("sample@test") || req.body.email.includes("rv89uj4fui678fwgt3")) {
+						let transactions = [{
+							date: "2021-10-04",
+							isIn: false,
+							amount: 9630,
+							note: "Badminton & Billiards 🏸&🎱"
+						}, {
+							date: "2021-10-04",
+							isIn: false,
+							amount: 9840,
+							note: "Dinner@AML"
+						}, {
+							date: "2021-10-03",
+							isIn: true,
+							amount: 20000,
+							note: "Thank You Gift"
+						}, {
+							date: "2021-10-01",
+							isIn: false,
+							amount: 10833,
+							note: "Crabs"
+						}, {
+							date: "2021-10-02",
+							isIn: false,
+							amount: 8200,
+							note: "Tickets"
+						}, {
+							date: "2021-10-01",
+							isIn: false,
+							amount: 5926,
+							note: "Grocery"
+						}, {
+							date: "2021-09-27",
+							isIn: false,
+							amount: 1794,
+							note: "Uber"
+						}, {
+							date: "2021-09-27",
+							isIn: true,
+							amount: 9750,
+							note: "Stock Market - TSLA: -3.9 x 25"
+						}, {
+							date: "2021-09-26",
+							isIn: false,
+							amount: 3270,
+							note: "Dinner @ Mr. Huang's"
+						}, {
+							date: "2021-09-25",
+							isIn: false,
+							amount: 4382,
+							note: "Lunch @ Jungle Frog"
+						}, {
+							date: "2021-09-25",
+							isIn: false,
+							amount: 4123,
+							note: "Go Carting"
+						}, {
+							date: "2021-09-25",
+							isIn: true,
+							amount: 60000,
+							note: "This weeks pay"
+						}, {
+							date: "2021-09-15",
+							isIn: false,
+							amount: 72000,
+							note: "Rent"
+						}, {
+							date: "2021-09-15",
+							isIn: false,
+							amount: 8320,
+							note: "Starbucks"
+						}, {
+							date: "2021-09-08",
+							isIn: false,
+							amount: 42738,
+							note: "Stock Sold"
+						}, {
+							date: "2021-09-07",
+							isIn: true,
+							amount: 42738,
+							note: "Stock Sold"
+						}, {
+							date: "2021-09-07",
+							isIn: false,
+							amount: 1233,
+							note: "Uber"
+						}, {
+							date: "2021-09-07",
+							isIn: false,
+							amount: 3499,
+							note: "Brunch"
+						}];
+						db.collection(req.body.email).insertMany(transactions)
 					}
 
 					// Add random nouns
