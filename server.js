@@ -209,6 +209,26 @@ app.post('/del', auth, function (req, res) {
       res.json({code: 200, msg: 'success'});
   });
 });
+app.post('/queryWatch', auth, function (req, res) {
+  watchlist.findOne({'_id': req.body.id, 'user': req.session.userId}, function (err, result) {
+      if (result != null) {
+          res.json({code: 200, msg: 'success', result});
+      } else {
+          res.json({code: 400, msg: 'The specific entry does not exist or not belong to the user.'});
+      }
+  });
+});
+
+app.post('/editWatch', auth, function (req, res) {
+  watchlist.findOneAndUpdate({'_id': req.body.id, 'user': req.session.userId}, req.body, function (err, result) {
+      if (result != null) {
+          res.json({code: 200, msg: 'success', result});
+      } else {
+          res.json({code: 400, msg: 'The specific entry does not exist or not belong to the user.'});
+      }
+  });
+});
+
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 
