@@ -210,9 +210,9 @@ const MainRoute = (): JSX.Element => {
   return (
     <>
       <MenuContainer />
-      <CharacterSelect
-        characters={characters}
-        preferences={charPrefs}
+      <CharacterSelect 
+        characters={characters} 
+        preferences={charPrefs} 
         setter={setCharPrefs}
       />
       <WeaponSelect
@@ -225,7 +225,10 @@ const MainRoute = (): JSX.Element => {
         preferences={artifactPrefs}
         setter={setArtifactPrefs}
       />
-      <FarmingDisplay farmables={activeFarmables} locations={activeLocations} />
+      <FarmingDisplay
+        farmables={activeFarmables}
+        locations={activeLocations}
+      />
       <LoginButton initPrefs={initPrefs} />
       <ResetButton handleReset={handleReset} />
     </>

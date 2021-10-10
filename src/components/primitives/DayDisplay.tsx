@@ -14,6 +14,10 @@ const DayDisplay = (props: {
         <div className="day-title">{props.days}</div>
         {props.locations.map(e => {
             let mats = props.farmables.filter(m => m.farm_at === e.name);
+<<<<<<< HEAD
+=======
+            /*let imgSrc = "/img/farmables/" + mats.name + ".png";*/
+>>>>>>> main
             return (
                 <div className="loc">
                     <h2>{e.fullname.en}</h2>
@@ -21,7 +25,11 @@ const DayDisplay = (props: {
                         return (
                             <div>
                                 {/* TODO: Have this get the image of that material */}
+<<<<<<< HEAD
                                 <img className="icon" src="/img/artifacts/Adventurer.png" /> 
+=======
+                                <img className="icon" src="/img/farmables/Adventurer.png" alt={mat.fullname.en}/>
+>>>>>>> main
                                 <p>{mat.fullname.en}</p>
                             </div>
                         )

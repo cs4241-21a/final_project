@@ -4,15 +4,22 @@ html {
 }
 
 body {
+<<<<<<< HEAD
     background-color: #49859e;
     font-size: 20px;
     color: white;
+=======
+    background-color: #246885;
+    font-size: 20px;
+    color: #fff1d1;
+>>>>>>> main
     padding: 25px;
     margin: 0;
     overflow: auto;
 }
 
 #farm {
+<<<<<<< HEAD
     background-color: rgba(255,255,255,0.1);
     border-radius: 25px;
     padding: 10px;
@@ -22,18 +29,31 @@ body {
 
 #farm li {
     margin-bottom: 10px;
+=======
+    border-radius: 10px;
+    padding: 10px;
+    margin: 25px 0px;
+>>>>>>> main
 }
 
 button {
     background-color: transparent;
     background-image: none;
     cursor: pointer;
+<<<<<<< HEAD
     border: 2px solid #FFF;
+=======
+    border: 2px solid #fff1d1;
+>>>>>>> main
     border-radius: 10px;
     padding: 5px 10px;
     font-family: inherit;
     font-size: 15px;
+<<<<<<< HEAD
     color: white;
+=======
+    color: #fff1d1;
+>>>>>>> main
 }
 
 button:hover {
@@ -61,7 +81,11 @@ button:hover {
 
 #roundButton:active {
     border-color: #003557;
+<<<<<<< HEAD
     background-color: #FFF;
+=======
+    background-color: #fff1d1;
+>>>>>>> main
     transform: translate(30vw);
 }
 
