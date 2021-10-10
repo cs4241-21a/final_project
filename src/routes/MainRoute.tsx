@@ -91,6 +91,7 @@ const MainRoute = (): JSX.Element => {
     setCharPrefs([]);
     setWeaponsPrefs([]);
     setArtifactPrefs([]);
+    window.location.href = "/";
   };
 
   // This calculates the farmable items to be displayed and their related locations
