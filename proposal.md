@@ -18,7 +18,7 @@ This is an interactive expense tracker application. A user can log in to record 
 	- [x] Total in/out of that week/month/year
 - [x] **Search:** G3P Expense Tracker contains a search function at the top-of-the-app bar.
 - [x] **Mobile First:** G3P Expense Tracker is optimized for mobile users. The user interface and user experience are adjusted for mobile users. G3P Expense Tracker accommodates different devices/screens and adjusts immediately when the window size changes.
-- [ ] **Color Themes:** Users can select from a wide range of themes, including night themes, for G3P Expense Tracker to use. The website will remember the selection for as long as the user is logged in. Users can also choose to use different themes on different sessions/devices simultaneously.
+- [x] **Color Themes:** Users can select from a wide range of themes, including night themes, for G3P Expense Tracker to use. The website will remember the selection for as long as the user is logged in. Users can also choose to use different themes on different sessions/devices simultaneously.
 - [ ] **Account System:** Improved security and privacy for the user. They can get email verifications for creating and resetting the password.
 - [ ] **Folder System:** Users will be able to add data to different folders and view them separately.
 - [x] **View System:** Users will be able to view data on pages based on customizable timeframes.

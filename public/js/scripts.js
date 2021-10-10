@@ -264,6 +264,16 @@ function pageLoad(firstDay, lastDay, searchKey) {
 		});
 }
 
+async function changeTheme(theme) {
+	fetch("/theme", {
+		method: "Post",
+		body: JSON.stringify({theme: theme}),
+		headers: {
+			"Content-Type": "application/json"
+		}
+	}).then((window.location.href = "/"));
+}
+
 function updateContent() {
 	const firstDay = document.getElementById('firstDayInput').value;
 	const lastDay = document.getElementById('lastDayInput').value;
@@ -543,7 +553,7 @@ function createCard(json) {
 	});
 
 	div.innerHTML =
-		"<div class='max-w-4xl mx-auto'> " +
+		"<div class='max-w-4xl mx-auto hover:shadow-lg hover:border-transparent'> " +
 		"<div class='bg-white shadow overflow-hidden sm:rounded-lg'> " +
 		"<div class='px-4 py-5 sm:px-6'> " +
 		"<h3 class='text-lg leading-6 font-medium text-gray-900'> " +

@@ -49,15 +49,23 @@ app.get("/join", function (req, res) {
 
 // css
 app.get("/styles.css", function (req, res) {
-	switch (req.session.theme) {
-		case "pink":
-			res.sendFile(__dirname + "/public/css/stylesPink.css");
-			break;
-		default:
-			// Defaults and backup to the default style so nothing breaks
-			res.sendFile(__dirname + "/public/css/styles.css");
-			break;
-	}
+	let dir = ""
+	// Restrictions on serverside so no client data is directly used to access files
+	if (req.session.theme === "amber") dir = "Amber";
+	else if (req.session.theme === "blue") dir = "Blue";
+	else if (req.session.theme === "emerald") dir = "Emerald";
+	else if (req.session.theme === "green") dir = "Green";
+	else if (req.session.theme === "indigo") dir = "Indigo";
+	else if (req.session.theme === "pink") dir = "Pink";
+	else if (req.session.theme === "purple") dir = "Purple";
+	else if (req.session.theme === "red") dir = "Red";
+	else if (req.session.theme === "rose") dir = "Rose";
+	else if (req.session.theme === "sky") dir = "Sky";
+	else if (req.session.theme === "violet") dir = "Violet";
+	else if (req.session.theme === "warmGray") dir = "WarmGray";
+	else if (req.session.theme === "yellow") dir = "Yellow";
+	// Defaults and backup to the default style so nothing breaks
+	res.sendFile(__dirname + "/public/css/styles" + dir + ".css");
 });
 
 // icon

@@ -20,12 +20,13 @@ This is an iterated version of my A3 project which is an online expense tracker 
 3. **Tags:** Users can enter words that start with a `#` to enter a tag for that transaction. Tags will be underlined and clickable. Clicking on a tag will show the user other transactions with the same tag.
 4. **View by Selection:** View transactions according to date range selection
 5. **View all times:** View transaction of all times
-6. **Statistics of selection:** Top of page shows statistics of current filter
-7. **Main Page Content Update:** No need to reload the page to get new data anymore
-8. **Sample/Random Data/Noun+Tag Generator:** Register an account with specific strings to generate sample/random data/noun+tag in account. See below for details.
-9. **Performance Benchmarking Tool:** every load time recorded in the console, along with count and calculated average. Updates once every "enter" hit.
-10. **Faster:** Optimized overall response times in various ways, including a complete overhaul to data structure and building indexes for querying and searching.
-11. **UI/UX Improvements:** See details below
+6. **Colorful Themes:** The user can set a theme for each of their devices/browsers and have it remembered as long as they are logged in.
+7. **Statistics of selection:** Top of page shows statistics of current filter
+8. **Main Page Content Update:** No need to reload the page to get new data anymore
+9. **Sample/Random Data/Noun+Tag Generator:** Register an account with specific strings to generate sample/random data/noun+tag in account. See below for details.
+10. **Performance Benchmarking Tool:** every load time recorded in the console, along with count and calculated average. Updates once every "enter" hit.
+11. **Faster:** Optimized overall response times in various ways, including a complete overhaul to data structure and building indexes for querying and searching.
+12. **UI/UX Improvements:** See details below
 
 ## Sample Accounts:
 
@@ -197,6 +198,12 @@ Transactions get their date recorded, not the precise time because it's much les
 
 ![Sort](readme/Sort.png)
 
+### How to save color themes
+
+I made one css file for each theme, just because it is hard to actually switch based on changing css classes of html templates on a website like this. The client's chosen theme is stored in the cookie (different per device), and the server will read that cookie to serve it different css file based on what was recorded.
+
+![Theme](readme/Theme.png)
+
 ### Dev Options
 
 I got tired of creating emails that contain weird strings (also wanted to show other people, if possible) so I made this:
@@ -214,3 +221,9 @@ After:
 It's simple.
 
 ![404](readme/404.png)
+
+### Hover Cards
+
+Tailwind CSS is nice for allowing things like this dynamic hover effect easily with `hover:shadow-lg`
+
+![Hover](readme/Hover.png)
