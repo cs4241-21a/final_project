@@ -33,13 +33,13 @@ const FarmingDisplay = ({
       (e) => e.day_of_week.find((d) => d === "wed") !== undefined
     )
   );
-  const [monFarm, setMonFarm] = React.useState<FarmableProps[]>(
+  const [monFarm, setMonFarm] = React.useState<MaterialProps[]>(
     farmables.filter((e) => monLocs.some((l) => l.name === e.farm_at))
   );
-  const [tueFarm, setTueFarm] = React.useState<FarmableProps[]>(
+  const [tueFarm, setTueFarm] = React.useState<MaterialProps[]>(
     farmables.filter((e) => tueLocs.some((l) => l.name === e.farm_at))
   );
-  const [wedFarm, setWedFarm] = React.useState<FarmableProps[]>(
+  const [wedFarm, setWedFarm] = React.useState<MaterialProps[]>(
     farmables.filter((e) => wedLocs.some((l) => l.name === e.farm_at))
   );
 
