@@ -4,30 +4,36 @@ html {
 }
 
 body {
-    background-color: #246885;
+    background-color: #49859e;
     font-size: 20px;
-    color: #fff1d1;
+    color: white;
     padding: 25px;
     margin: 0;
     overflow: auto;
 }
 
 #farm {
-    border-radius: 10px;
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 25px;
     padding: 10px;
-    margin: 25px 0px;
+    margin-bottom: 25px;
+    margin-top: 25px;
+}
+
+#farm li {
+    margin-bottom: 10px;
 }
 
 button {
     background-color: transparent;
     background-image: none;
     cursor: pointer;
-    border: 2px solid #fff1d1;
+    border: 2px solid #FFF;
     border-radius: 10px;
     padding: 5px 10px;
     font-family: inherit;
     font-size: 15px;
-    color: #fff1d1;
+    color: white;
 }
 
 button:hover {
@@ -55,7 +61,7 @@ button:hover {
 
 #roundButton:active {
     border-color: #003557;
-    background-color: #fff1d1;
+    background-color: #FFF;
     transform: translate(30vw);
 }
 

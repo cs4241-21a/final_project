@@ -30,23 +30,9 @@ const CharacterSelect = ({
   // characterPref is the CharacterPrefs returned by addCharacter
   const updateCharacter = updatePref(preferences, setter);
 
-  // Demo Data !!!
-  const charTest: CharacterProps[] = [
-    {
-      name: "Character_Aether_Thumb"
-    },
-    {
-      name: "Character_Albedo_Thumb"
-    },
-    {
-      name: "Character_Ayaka_Thumb"
-    }
-  ];
-
   return (
     <>
-      {/* Demo Functionality !!! */}
-      {charTest.map((char) => {
+      {characters.map((char) => {
         const imgSrc = `img/chara/${char.name}.png`;
 
         return (

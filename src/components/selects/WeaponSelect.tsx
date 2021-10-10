@@ -6,18 +6,14 @@ import WeaponProps from "../../types/props/WeaponProps";
 import EnablablePrefs from "../../types/prefs/EnablablePrefs";
 
 import DebugButton from "../debug/DebugButton"; // Demo import !!!
+import SelectPrefButton from '../primitives/SelectPrefButton';
+import CharacterPrefs from '../../types/prefs/CharacterPrefs';
 
 interface WeaponSelectProps {
   weapons: WeaponProps[],
   preferences: EnablablePrefs[],
   setter: React.Dispatch<React.SetStateAction<EnablablePrefs[]>>
 }
-
-// Demo data !!!
-let weaponPref: EnablablePrefs;
-let weapon: WeaponProps = {
-  name: "testWeapon"
-};
 
 const WeaponSelect = ({
   weapons,
@@ -37,34 +33,23 @@ const WeaponSelect = ({
   const updateWeapon = updatePref(preferences, setter);
 
 
-  // Demo Functionality !!!
-  const addClick = () => {
-    console.log("Add click.");
-    weaponPref = addWeapon(weapon);
-  }
-  const removeClick = () => {
-    console.log("Remove click.");
-    removeWeapon(weaponPref);
-  }
-  const updateClick = () => {
-    console.log("Update click.");
-    let temp = {...weaponPref};
-    temp.enabled = !weaponPref.enabled;
-    weaponPref = temp;
-    updateWeapon(temp);
-  }
-  React.useEffect(() => {
-    console.log(weaponPref);
-    console.log(preferences);
-  }, [preferences]);
-
-
   return (
-    // !!! TODO (UI): Create and implement JSX components for WeaponSelect
     <>
-      <DebugButton onClick={addClick} message="Add Weapon" />
-      <DebugButton onClick={updateClick} message="Update Weapon" />
-      <DebugButton onClick={removeClick} message="Remove Weapon" />
+      {weapons.map((wep) => {
+        const imgSrc = `img/weapon/${wep.name}.png`;
+
+        return (
+          <SelectPrefButton<EnablablePrefs> 
+            addPref={addWeapon}
+            removePref={removeWeapon}
+            preferences={preferences}  
+            prop={wep}
+          >
+            <img src={imgSrc} alt={`${wep.name}-image`} width="100px" />
+            <p>{wep.name}</p>
+          </SelectPrefButton>
+        )
+      })}
     </>
   );
 }

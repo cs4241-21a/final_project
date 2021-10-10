@@ -1,11 +1,11 @@
 import * as React from "react";
 
-import FarmableProps from "../types/props/FarmableProps";
 import FarmingSpotProps from "../types/props/FarmingSpotProps";
+import MaterialProps from "../types/props/MaterialProps";
 import DayDisplay from "./primitives/DayDisplay";
 
 interface FarmingDisplayProps {
-  farmables: FarmableProps[];
+  farmables: MaterialProps[];
   locations: FarmingSpotProps[];
 }
 
@@ -14,6 +14,9 @@ const FarmingDisplay = ({
   locations,
 }: FarmingDisplayProps): JSX.Element => {
   // !!! TODO (Nick): Create logic for displaying artifact preferences using the setter
+
+  console.log(farmables);
+  console.log(locations);
 
   const [monLocs, setMonLoc] = React.useState<FarmingSpotProps[]>(
     locations.filter(
@@ -30,104 +33,15 @@ const FarmingDisplay = ({
       (e) => e.day_of_week.find((d) => d === "wed") !== undefined
     )
   );
-  const [monFarm, setMonFarm] = React.useState<FarmableProps[]>(
+  const [monFarm, setMonFarm] = React.useState<MaterialProps[]>(
     farmables.filter((e) => monLocs.some((l) => l.name === e.farm_at))
   );
-  const [tueFarm, setTueFarm] = React.useState<FarmableProps[]>(
+  const [tueFarm, setTueFarm] = React.useState<MaterialProps[]>(
     farmables.filter((e) => tueLocs.some((l) => l.name === e.farm_at))
   );
-  const [wedFarm, setWedFarm] = React.useState<FarmableProps[]>(
+  const [wedFarm, setWedFarm] = React.useState<MaterialProps[]>(
     farmables.filter((e) => wedLocs.some((l) => l.name === e.farm_at))
   );
-
-    /**THIS CHUNK IS DUMMY DATA FOR TESTING PURPOSES -- REMOVE WHEN API IS CONNECTED**/
-/*    const [wedLocs, setWedLoc] = React.useState<FarmingSpotProps[]>(
-        [
-            {
-                fullname: { en: "Domain" },
-                day_of_week: ["wed, sat"],
-                resin: 5,
-                name: "test",
-                type: "idk"
-            },
-            {
-                fullname: { en: "Domain 2" },
-                day_of_week: ["wed, sat"],
-                resin: 3,
-                name: "test2",
-                type: "idk"
-            }
-        ]
-    );
-
-    const [tueLocs, setTueLoc] = React.useState<FarmingSpotProps[]>(
-        [
-            {
-                fullname: { en: "Domain" },
-                day_of_week: ["tue, fri"],
-                resin: 5,
-                name: "test",
-                type: "idk"
-            },
-            {
-                fullname: { en: "Domain 2" },
-                day_of_week: ["tue, fri"],
-                resin: 3,
-                name: "test2",
-                type: "idk"
-            }
-        ]
-    );
-
-    const [wedFarm, setWedFarm] = React.useState<FarmableProps[]>(
-        [
-            {
-                name: "farmable1",
-                fullname: { en: "Emblem of Severed Fate" },
-                farm_at: "test",
-            },
-            {
-                name: "farmable3",
-                fullname: { en: "Farmable Three" },
-                farm_at: "test",
-            },
-            {
-                name: "farmable4",
-                fullname: { en: "Farmable Four" },
-                farm_at: "test2",
-            },
-        ]
-    );
-
-    const [tueFarm, setTueFarm] = React.useState<FarmableProps[]>(
-        [
-            {
-                name: "farmable1",
-                fullname: { en: "Emblem of Severed Fate" },
-                farm_at: "test",
-            },
-            {
-                name: "farmable2",
-                fullname: { en: "Farmable Two" },
-                farm_at: "test",
-            },
-            {
-                name: "farmable3",
-                fullname: { en: "Farmable Three" },
-                farm_at: "test",
-            },
-            {
-                name: "farmable4",
-                fullname: { en: "Farmable Four" },
-                farm_at: "test2",
-            },
-            {
-                name: "farmable5",
-                fullname: { en: "Farmable Five" },
-                farm_at: "test2",
-            },
-        ]
-    );*/
 
   return (
     // !!! TODO (UI): Create and implement JSX components for FarmingDisplay
