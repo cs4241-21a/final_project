@@ -8,14 +8,14 @@
 
     <link rel='stylesheet' type='text/css' href='../css/styles.css'>
     <script src='js/scripts.js'></script>
-    <script src='../js/p5.js'></script>
+    <script src='js/p5.js'></script>
 </head>
 
 <body>
     <div id="content"></div>
     
     <h3>Room Code: <code id="room-code"></code></h3>
-    
+    <h4 id="friend-join" hidden>Tell a friend to join at: <a id="url"></a></h4>
     <form id = "moveform">
         <p>Please select a move type:</p>
         <div>
@@ -34,7 +34,7 @@
         
       </form>
 
-      <script src='../js/board.js'></script>
+      <script src='js/board.js'></script>
 
       <script>
         window.onload = wsSetup;
