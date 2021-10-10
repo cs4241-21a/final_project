@@ -10,13 +10,10 @@ function BuildingList(props) {
     setExpanded(newExpanded ? panel : false);
   };
 
-  console.log(favoriteContext.contacts);
-
   if (!props.showFavorites) {
     return (
       <div>
         {props.data.map((item, index) => {
-          console.log(favoriteContext.contacts);
           return (
             <AccordianItem
               expanded={expanded}

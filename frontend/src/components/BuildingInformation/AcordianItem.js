@@ -89,8 +89,9 @@ function AccordianItem(props) {
   console.log("favorite: " + props.favorite);
   const [isFav, setFav] = React.useState(props.favorite);
 
-  const handleAddFavorite = async (event) => {
-    event.preventDefault();
+  const handleAddFavorite = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
 
     const favoriteItem = {
       fav: props.item.humanname,
@@ -104,9 +105,9 @@ function AccordianItem(props) {
     }
   };
 
-  const handleRemoveFavorite = async (event) => {
-    event.preventDefault();
-
+  const handleRemoveFavorite = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     const favoriteItem = {
       fav: props.item.humanname,
     };
