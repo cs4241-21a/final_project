@@ -14,12 +14,14 @@ export default (new class SpotifyService {
         'playlist-modify-public',
         'playlist-modify-private'
     ]
+    credentials = base64.encode(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`);
     accessToken;
 
     constructor() {
+        this.getAccessToken().then();
     }
 
-    // retrieve Spotify access token for for public API authentication
+    // retrieves Spotify access token from cache or accounts.spotify.com
     getAccessToken = async() => {
         // if no token is cached or existing token has expired
         if (!this.accessToken || DateTime.utc().toMillis() > this.accessToken.expiry) {
@@ -28,13 +30,13 @@ export default (new class SpotifyService {
         return this.accessToken.token;
     }
 
+    // retrieves access token via process.env.REFRESH_TOKEN for private Spotify API authorization
     _getAccessToken = async () => {
         console.log('Retrieving Spotify access token...');
 
-        const credentials = base64.encode(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`);
         const { access_token, expires_in } = await this.request('POST', `${ this.authPath }/api/token`,
-            { 'grant_type': 'client_credentials' },
-          { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': `Basic ${credentials}` }).catch(console.error);
+            { 'grant_type': 'refresh_token', 'refresh_token': process.env.REFRESH_TOKEN },
+          { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': `Basic ${this.credentials}` }).catch(console.error);
 
         console.log(`Spotify access token retrieved (${ access_token }).`);
         return {
@@ -43,16 +45,19 @@ export default (new class SpotifyService {
         }
     }
 
+    // retrieves refresh token that can be used to continually retrieve access tokens for private Spotify API authorization
+    // this function is called by the /callback endpoint after manually accessing the /api/token endpoint
     getRefreshToken = async (code) => {
-        const credentials = base64.encode(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`);
         const { refresh_token } = await this.request('POST', `${ this.authPath }/api/token`,
           { 'grant_type': 'authorization_code',
               'code': code,
               'redirect_uri': 'http://localhost:5000/callback'},
-          { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': `Basic ${credentials}` }).catch(console.error);
+          { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': `Basic ${this.credentials}` }).catch(console.error);
         return refresh_token;
     }
 
+    // composes redirect URL for retrieving a refresh token
+    // this function is called after manually accessing the /api/token endpoint
     getRefreshTokenURL = () => {
         return `${this.authPath}/authorize?${this.encodeURL({
             'client_id': process.env.CLIENT_ID,
@@ -69,7 +74,7 @@ export default (new class SpotifyService {
         return genres
     }
 
-    // helper fetch request function
+    // returns promised fetch request with automatic header authorization
     request = async (method, path, data = null, headers = 'reserved_default') => {
         if (headers === 'reserved_default') {
             headers = { ...this.defaultHeaders, 'Authorization': `Bearer ${await this.getAccessToken()}` }
@@ -84,7 +89,6 @@ export default (new class SpotifyService {
 
         return new Promise(async (resolve, reject) => {
             fetch(`${path}`, { method: method, body, headers }).then(async response => {
-                console.log(response);
                 if (response.ok) {
                     resolve(await response.json());
                 } else {
@@ -94,6 +98,7 @@ export default (new class SpotifyService {
         });
     }
 
+    // encodes JSON data as URL
     encodeURL = (data) => {
         return Object.keys(data).map(k => `${k}=${ encodeURIComponent(data[k]) }`).join('&');
     }
