@@ -1,4 +1,4 @@
-import fetch, { Headers } from "node-fetch";
+import fetch from "node-fetch";
 import base64 from 'base-64';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -8,8 +8,12 @@ export default (new class SpotifyService {
     authPath = 'https://accounts.spotify.com';
     APIPath = 'https://api.spotify.com/v1';
     defaultHeaders = {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/json'
     }
+    defaultScopes = [
+        'playlist-modify-public',
+        'playlist-modify-private'
+    ]
     accessToken;
 
     constructor() {
@@ -29,8 +33,8 @@ export default (new class SpotifyService {
 
         const credentials = base64.encode(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`);
         const { access_token, expires_in } = await this.request('POST', `${ this.authPath }/api/token`,
-            { 'Authorization': `Basic ${credentials}` },
-            { 'grant_type': 'client_credentials' }).catch(console.error);
+            { 'grant_type': 'client_credentials' },
+          { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': `Basic ${credentials}` }).catch(console.error);
 
         console.log(`Spotify access token retrieved (${ access_token }).`);
         return {
@@ -39,26 +43,58 @@ export default (new class SpotifyService {
         }
     }
 
+    getRefreshToken = async (code) => {
+        const credentials = base64.encode(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`);
+        const { refresh_token } = await this.request('POST', `${ this.authPath }/api/token`,
+          { 'grant_type': 'authorization_code',
+              'code': code,
+              'redirect_uri': 'http://localhost:5000/callback'},
+          { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': `Basic ${credentials}` }).catch(console.error);
+        return refresh_token;
+    }
+
+    getRefreshTokenURL = () => {
+        return `${this.authPath}/authorize?${this.encodeURL({
+            'client_id': process.env.CLIENT_ID,
+            'response_type': 'code',
+            'redirect_uri': 'http://localhost:5000/callback',
+            'scope': this.defaultScopes.join(' '),
+            'show_dialog': false
+        })}`
+    }
+
     // get available genre seeds (not sure if we will need this)
     getGenres = async () => {
         const { genres } = await this.request('GET', `${ this.APIPath }/recommendations/available-genre-seeds`).catch(console.error);
         return genres
     }
 
-    request = (method, path, headers=null, data=null) => {
-        const body = data ? Object.keys(data).map(k => `${k}=${ data[k] }`).join('&') : null; // url encoding of data
+    // helper fetch request function
+    request = async (method, path, data = null, headers = 'reserved_default') => {
+        if (headers === 'reserved_default') {
+            headers = { ...this.defaultHeaders, 'Authorization': `Bearer ${await this.getAccessToken()}` }
+        }
+
+        let body;
+        if (data && headers) {
+            body = this.encodeURL(data); // encode data as url
+        } else if (data && !headers) {
+            body = JSON.stringify(data); // stringify data
+        }
+
         return new Promise(async (resolve, reject) => {
-            fetch(`${path}`, {
-                method: method,
-                body,
-                headers: new Headers({...headers || {'Authorization': `Bearer ${await this.getAccessToken()}`}, ...this.defaultHeaders}),
-            }).then(response => {
+            fetch(`${path}`, { method: method, body, headers }).then(async response => {
+                console.log(response);
                 if (response.ok) {
-                    resolve(response.json());
+                    resolve(await response.json());
                 } else {
-                    reject(response.json());
+                    reject(await response.json());
                 }
             }).catch(error => reject(error));
         });
+    }
+
+    encodeURL = (data) => {
+        return Object.keys(data).map(k => `${k}=${ encodeURIComponent(data[k]) }`).join('&');
     }
 });
