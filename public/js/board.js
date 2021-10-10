@@ -12,6 +12,7 @@ const WALL_SIZE = 95
 const WALL_THICKNESS = 5
 const FORM = document.getElementById("moveform")
 let MOVE_TYPE
+let renderInvalidMove = false
 
 var gameState = {
     wallSpaces: [],
@@ -31,12 +32,13 @@ var gameState = {
 var gameSetup = false
 
 function setup() {
-    createCanvas(505, 505);
+    createCanvas(505, 600);
 }
 
 function draw() {
-
-    background(209,173,107)
+    background(255)
+    fill(209,173,107)
+    rect(0, 0, 505, 505)
     let rows = 9
     let cols = 9
 
@@ -86,12 +88,21 @@ function draw() {
 
     if (gameSetup) {
         renderGameState()
+    } else {
+        fill(0)
+        text('Waiting for opponent', 30, 520);
+    }
+
+    if (renderInvalidMove) {
+        fill(255, 0, 0)
+        text('Invalid Move!', 150, 520);
     }
 
 }
  
 
 function mouseClicked() {
+    renderInvalidMove = false
     console.log(mouseX, mouseY)
     console.log(JSON.stringify(gameState))
 
@@ -147,6 +158,24 @@ function renderGameState() {
             }
         }
     }
+    fill(0)
+    if (gameState.currentPlayer === gameState.player) {
+        text('Your Turn!', 30, 520);
+    } else {
+        text('Opponents Turn!', 30, 520);
+    }
+    if (gameState.player) {
+        text('You are the black pawn!', 30, 550);
+    } else {
+        text('You are the white pawn!', 30, 550);
+    }
+
+    if (gameState.player) {
+        text(`You have ${gameState.pawnA.walls} walls remaining`, 300, 520);
+    } else {
+        text(`You have ${gameState.pawnB.walls} walls remaining`, 300, 520);
+    }
+
 }
 
 function highlightHoveredCell() {
@@ -276,12 +305,15 @@ function wsSetup() {
 
     // Receiving from server
     socket.onmessage = function (message) {
-        content.innerHTML += message.data +'<br />';
+        // content.innerHTML += message.data +'<br />';
+        console.log(message.data)
         let json = JSON.parse(message.data)
         if (json.type === "game state") {
             console.log("Got game state")
             gameState = json.gameState
             gameSetup = true
+        } else if (json.type === "invalid move") {
+            renderInvalidMove = true
         }
     };
 
