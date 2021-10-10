@@ -35,10 +35,6 @@ const FarmingDisplay = ({
     setAllLoc(locations.filter(
       (e) => e.day_of_week.length == 0
     ))
-    console.log("activeLocations inside of Farming Display: ");
-    console.log(locations);
-    console.log("activeFarmables inside of Farming Display: ");
-    console.log(farmables);
   },[locations, farmables])
 
   React.useEffect(() => {

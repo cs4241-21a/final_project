@@ -27,7 +27,9 @@ const removePref = <PrefsType extends EnablablePrefs>(
 ) => {
   return (pref: PrefsType): void => {
     const tempPrefs = [...preferences];
-    const index = tempPrefs.indexOf(pref);
+    const index = tempPrefs.findIndex((_pref) => {
+      return (pref.name == _pref.name)
+    });
     if (index === -1) {
       console.warn(`${pref.name} is not in current preferences, nothing to remove.`);
     } else {

@@ -36,10 +36,6 @@ const SelectPrefButton = <PrefsType extends EnablablePrefs>({
     setPref(preferences.find((_pref) => (_pref.name==prop.name)));
   }, [loading])
 
-  React.useEffect(() => {
-    console.log(`${prop.name} has: ${pref}`);
-  }, [pref]);
-
   return (
     <ToggableButton 
       onClickOff={onClickOff}
