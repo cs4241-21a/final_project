@@ -25,10 +25,12 @@
   },
   "scripts": {
     "clean": "rm dist/bundle.js",
-    "start": "snowpack dev",
+    "start": "snowpack dev --polyfill-node",
     "build": "snowpack build"
   },
   "devDependencies": {
+    "rollup-plugin-node-polyfills": "^0.2.1",
+    "rollup-plugin-polyfill-node": "^0.7.0",
     "snowpack": "^3.8.8"
   }
 }

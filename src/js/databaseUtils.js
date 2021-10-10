@@ -55,6 +55,7 @@ const databaseUtils = {
     
     addEvent: async function(event) {
         // return the object ID of the event, error message on failure
+        console.log("adding event...")
         let eventId;
         await fetch('/addEvent',{ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(event) })
         .then(response => response.text())
