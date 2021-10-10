@@ -36,7 +36,6 @@ router.post('/insertTeam', async (req, res, next) => {
         return;
     }
     const idList = await getList(summoners);
-    console.log(idList);
     if(!(idList)){
         res.json({error:'Invalid summoner name.'});
         return;
@@ -47,7 +46,6 @@ router.post('/insertTeam', async (req, res, next) => {
         teamName,
         summoners,
         idList
-
     });
     newTeam = await newTeam.save();
     const teams = await Team.find({ userId: userId });
@@ -138,7 +136,19 @@ router.get('/single?', async (req, res, next) => {
     red = red.split(',');
     console.log("generating single game")
 
-    const [team1Champs, team2Champs] = await generateChamps(blue, red);
+    const idListb = await getList(blue);
+    if(!(idListb)){
+        res.json({error:'Invalid blue side summoner name.'});
+        return;
+    }
+
+    const idListr = await getList(red);
+    if(!(idListr)){
+        res.json({error:'Invalid red side summoner name.'});
+        return;
+    }
+
+    const [team1Champs, team2Champs] = await generateChamps(idListb, idListr);
 
     res.json({
         team1Champs,
@@ -160,7 +170,6 @@ async function getList(arr1) {
         }
     }
     return idList;
-
 }
 
 async function generateTeams(arr, champlist) {
