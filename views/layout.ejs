@@ -144,6 +144,23 @@ console.log("hello world :o");
   
   }
 
+  function addChild(noParent, noChildren) {
+      var new_task=document.getElementById("new_task").value;
+      var new_date=document.getElementById("new_due").value;
+
+      var table=document.getElementById("data_table");
+      var table_len= noParent + (noChildren+1)/10;
+      var row = table.insertRow(table_len).outerHTML="<tr id='row"+table_len%1+"'><td colspan=2 id='task_row"+table_len+"'>"+new_task+"</td><td colspan=2 id='date_row"+table_len+"'>"+new_date+"</td><td colspan=2><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit' onclick='edit_row("+table_len+")'> <input type='button' id='save_button"+table_len+"' value='Save' class='save' onclick='save_row("+table_len+")'><input type='button' value='Delete' class='delete' onclick='delete_row("+table_len+")'></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+table_len+"' class='check' onclick='check_box('"+table_len+"')'> </td></tr>";
+
+      document.getElementById("new_task").value="";
+      document.getElementById("new_due").value="";
+
+  }
+
+  function create_sub(noParent, noChild){
+
+  }
+
   window.onload = function() {
     //   fetch("/api/user/getData")
     //   .then(response => response.json()) // parse the JSON from the server

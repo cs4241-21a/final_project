@@ -1,32 +1,31 @@
 const mongoose = require('mongoose');
 
-
 const taskSchema = new mongoose.Schema({
   id: { 
     type: String,
-    required: True,
+    required: true,
     default: ObjectId().str
   },
   task_text: {
       type: String,
-      required: True,
+      required: true,
       min: 1,
       max: 200
   },
   due_text: {
       type: String,
-      requred: True,
+      required: true,
       min: 1,
       max: 200
   },
   edit_checkbox: {
-      tyep: Boolean,
-      requried: True,
-      default: False
+      type: Boolean,
+      required: true,
+      default: false
   },
   parent: {
       type: String,
-      required: True,
+      required: true,
       default: ""
   }
 });
