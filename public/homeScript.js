@@ -1,25 +1,26 @@
-/* const getCurrentUser = function( e ) {
+const getCurrentUser = function( e ) {
     // e.preventDefault()
-  
-    const json = { username: 'filler' },
+
+    const currentUserHome = document.querySelector( '#currentUserHome' )
+
+    const json = { username: currentUserHome.innerHTML },
         body = JSON.stringify( json )
-  
+
     fetch( '/login-user', {
-      method:'POST',
-      body 
+        method:'POST',
+        body 
     })
     .then( function( response ) {
-      return response.json()
+        return response.json()
     })
     .then( function( json ) {
-      console.log('json from /current-user in homeScript:')
-      console.log(json.body)
+        console.log('json from /current-user in homeScript:')
+        console.log(json.body)
     })
-  
+
     return false
-  }
-  
-  window.onload = function() {
-    const currentUserHome = document.querySelector( '#currentUserHome' )
-    currentUserHome.innerHTML = getCurrentUser()
-  } */
+}
+
+window.onload = function() {
+    getCurrentUser()
+}
