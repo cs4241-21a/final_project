@@ -43,11 +43,12 @@ async function editEvent(eventID){
         evntDate = null;
         startTime = null;
     } else {
+        /*
         if(getStartTime % 1 == .5 ) {
-            evntTime.setHours((getStartTime - .5), 30)
+            evntDate.setHours((getStartTime - .5), 30)
         } else {
-            evntTime.setHours(getStartTime)
-        }
+            evntDate.setHours(getStartTime)
+        }*/
         startTime = getStartTime;
     }
     const json = {
