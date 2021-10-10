@@ -78,6 +78,7 @@ app.get('/auth/github/callback',
     passport.authenticate('github', { failureRedirect: '/login.html' }),
     function(req, res) {
         req.session.userId = req.user;
+        req.session.username = req.body.username;
         res.redirect('/');
     }
 );
@@ -179,6 +180,41 @@ app.post('/sendEmail', bodyparser.json(), function (req, res) {
 app.post('/getprofile', function (req, res){
   res.json({username:req.session.username, userId:req.session.userId})
 })
+
+// Watchlist related
+app.post('/add', auth, function (req, res) {
+  req.body.user = req.session.userId;
+  const newWatch = new watchlist(req.body);
+  newWatch.save().then(r => {
+      res.json({code: 200, msg: 'success'});
+  });
+});
+app.get('/getAdventure', auth, function (req, res) {
+  watchlist.find({user: req.session.userId}, function (err, docs) {
+      res.json(docs.filter((item) => new watchlist(item.category).valueOf() = "adventure"));
+  });
+});
+app.get('/getLove', auth, function (req, res) {
+  watchlist.find({user: req.session.userId}, function (err, docs) {
+      res.json(docs.filter((item) => new watchlist(item.category).valueOf() = "love"));
+  });
+});
+app.get('/getSuspense', auth, function (req, res) {
+  watchlist.find({user: req.session.userId}, function (err, docs) {
+      res.json(docs.filter((item) => new watchlist(item.category).valueOf() = "suspense"));
+  });
+});
+
+app.get('/getSol', auth, function (req, res) {
+  watchlist.find({user: req.session.userId}, function (err, docs) {
+      res.json(docs.filter((item) => new watchlist(item.category).valueOf() = "sol"));
+  });
+});
+app.get('/getFantansy', auth, function (req, res) {
+  watchlist.find({user: req.session.userId}, function (err, docs) {
+      res.json(docs.filter((item) => new watchlist(item.date).valueOf() = "fantasy"));
+  });
+});
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 
