@@ -125,11 +125,10 @@ function OnClose(client) {
     }
     if (otherClient !== null){
         otherClient.wsclient.send(JSON.stringify({type: "opponent disconnected"}))
+        otherClient.wsclient.close()
     }
-    if (room.client1 === null && room.client2 === null){
-        let roomIndex = rooms.find((e) => e.code == room.code)
-        rooms.splice(roomIndex, 1)
-    }
+    let roomIndex = rooms.find((e) => e.code == room.code)
+    rooms.splice(roomIndex, 1)
     console.log('connection closed');
     console.log('disconnected');
 };
