@@ -59,7 +59,7 @@ function joinRoom(client, roomCode){
 
 function OnMessage(client, data) {
     let dataObject = JSON.parse(data)
-    console.log(`Received: ${dataObject}`);
+    console.log(`Received: ${data}`);
     
     if (dataObject.type === "connect"){
         joinRoom(client, dataObject.room)
