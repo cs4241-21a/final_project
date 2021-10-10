@@ -23,7 +23,7 @@ h3 {
 }
 
 button {
-    background-color: transparent;
+    background-color: #246885;
     background-image: none;
     cursor: pointer;
     border: 2px solid #fff1d1;
@@ -37,29 +37,6 @@ button {
 button:hover {
     background-color: rgba(255,255,255,0.1);
     border: 2px solid #8bd1e8;
-}
-
-#roundButton {
-    background-color: #96D9FF;
-    margin-bottom: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 10px solid #0065A6;
-    outline: none;
-    transition: all .2s cubic-bezier(0, 1.26, .8, 1.28);
-}
-
-#roundButton:hover {
-    background-color: #96D9FF;
-    cursor: pointer;
-    border-color: #003557;
-    transform: scale(1.2, 1.2);
-}
-
-#roundButton:active {
-    border-color: #003557;
-    background-color: #fff1d1;
 }
 
 #flyoutMenu {
@@ -84,12 +61,6 @@ button:hover {
     /* overflow: hidden; */
 }
 
-#flyoutMenu h2 a {
-    color: #333;
-    margin-left: 15px;
-    text-decoration: none;
-}
-
 .tab-list {
     background-color: #2a7a9c;
     border-bottom: 1px solid #ccc;
@@ -103,11 +74,13 @@ button:hover {
     padding: 1rem 1.5rem;
 }
 
+.tab-list-item:hover {
+    cursor: pointer;
+    background-color: #4495b8;
+}
+
 .tab-list-active {
     background-color: #246885;
     border: solid #0065A6;
     border-width: 1px 1px 0 1px;
 }
-
-
-/*add: media, button:hover & button:focus, textarea/input, headers, a, table*/
