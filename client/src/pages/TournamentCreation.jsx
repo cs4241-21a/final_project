@@ -1,11 +1,13 @@
 import React from "react";
 import { useHistory, useParams } from "react-router";
 import Team from "../components/Team";
+import Spinner from "../components/Spinner";
 
 class TournamentCreationPage extends React.Component {
 
   constructor(props) {
     super(props);
+
 
     this.state = { teams: [], userId: this.props.match.params.userId };
   }
@@ -106,6 +108,9 @@ class TournamentCreationPage extends React.Component {
   generateTournament(e) {
 // TODO: disable button after click
 // also add a spinny loading icon
+    const generateButton = document.querySelector("#generateButton")
+    generateButton.disabled = true
+    this.setState({spinner:<Spinner/>})
     fetch("http://localhost:3001/tournament/generateTournament", {
       method: "POST",
       headers: {
@@ -190,7 +195,9 @@ class TournamentCreationPage extends React.Component {
             </tbody>
           </table>
         </div>
-        <button className='btn btn-primary' onClick={(e) => this.generateTournament(e)}>Generate Tournament</button>
+        <button className='btn btn-primary' id='generateButton' onClick={(e) => this.generateTournament(e)}>
+        {this.state.spinner}
+         Generate Tournament</button>
       </div>
 
     );

@@ -110,6 +110,7 @@ router.post('/generateTournament', async (req, res, next) => {
     res.json(tournament);
 });
 
+// Load matches for a tournament
 router.post('/loadMatches', async function (req, res, next) {
     const { tournamentId } = req.body
 
@@ -128,6 +129,21 @@ router.post('/loadMatches', async function (req, res, next) {
     }
 
     res.json(allMatches);
+});
+
+// Post request to generate a single aram game
+router.get('/single?', async (req, res, next) => {
+    let { blue, red } = req.query;
+    blue = blue.split(',');
+    red = red.split(',');
+    console.log("generating single game")
+
+    const [team1Champs, team2Champs] = await generateChamps(blue, red);
+
+    res.json({
+        team1Champs,
+        team2Champs
+    });
 });
 
 async function getList(arr1) {
@@ -169,7 +185,8 @@ async function generateTeams(arr, champlist) {
  * @param {String Array} arr1 team 1 summoner names
  * @param {String Array} arr2 team 2 summoner names
  * @returns Array containing 2 things:
- * 
+ * array of champion names for team 1
+ * array of champion names for team 2
  */
  async function generateChamps(idList1, idList2) {
     champlist = [];

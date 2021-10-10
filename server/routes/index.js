@@ -73,7 +73,6 @@ router.post('/register', async (req, res, next) => {
 
   res.cookie(loginCookieName, { userId: newUser._id }, { maxAge: 21600000 });
   res.json({ loggedIn: true, id: newUser._id });
-  // res.redirect(`/user/${newUser._id}`);
 });
 
 module.exports = router;

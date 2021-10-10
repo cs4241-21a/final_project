@@ -15,9 +15,9 @@ const Navbar = ({ user }) => {
 
                 <div className="collapse navbar-collapse" id="navbars">
                     {/* Left navbar  */}
-                    <ul class="navbar-nav me-auto mb-2 mb-sm-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    <ul className="navbar-nav me-auto mb-2 mb-sm-0">
+                        <li className="nav-item">
+                            <a className="nav-link active" aria-current="page" href="/">Home</a>
                         </li>
                     </ul>
                 </div>
