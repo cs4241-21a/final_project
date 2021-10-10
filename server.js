@@ -321,10 +321,12 @@ function IsValidWallPlacement(g, walls, x, y, orientation) {
     }
 
     g.wallSpaces[x][y] = orientation
-    if (!DoesPathExistForPawn(g, g.pawnA) || !DoesPathExistForPawn(g, g.pawnB)) {
+    let bothPawnsHavePath = DoesPathExistForPawn(g, g.pawnA) && DoesPathExistForPawn(g, g.pawnB)
+    g.wallSpaces[x][y] = 0 // Assume space was empty
+    
+    if (!bothPawnsHavePath) {
         return false
     }
-    g.wallSpaces[x][y] = 0 // Assume space was empty
 
     return true
 }
