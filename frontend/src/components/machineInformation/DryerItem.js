@@ -42,7 +42,7 @@ function DryerItem(props) {
           }}
         >
           <Typography gutterBottom variant="h6">
-            Dryer - #{props.index}
+            Dryer - #{props.item.machinenumber}
           </Typography>
           <DryCleaningTwoToneIcon
             style={{ minWidth: "120px" }}

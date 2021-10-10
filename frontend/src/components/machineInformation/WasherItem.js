@@ -36,7 +36,7 @@ function WasherItem(props) {
           }}
         >
           <Typography gutterBottom variant="h6">
-            Washer - #{props.index}
+            Washer - #{props.item.machinenumber}
           </Typography>
           <LocalLaundryServiceIcon
             style={{ minWidth: "100px" }}
