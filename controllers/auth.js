@@ -9,6 +9,37 @@ const db = mysql.createConnection({
     database: process.env.DATABASE
 });
 
+
+//LOGIN PAGE
+exports.login = async (request, response) => {
+    try{
+
+        const{ username, password } = request.body;
+
+        if(!username || !password ){
+            return response.status(400).render('login', {
+                message: 'Username and Password fields must be completed'
+            })
+        }
+
+        db.query( 'SELECT * FROM users WHERE username = ?', [username], async (error, results) => {
+            console.log(results);
+            if(!results || !(await bcrypt.compare(password, results[0].password))){
+                response.status(401).render('login', {
+                    message: 'Username or Password is incorrect'
+                })
+            }else{
+                response.status(200).redirect('/home')
+            }
+        })
+
+    } catch (error){
+        console.log(error);
+    }
+}
+
+
+//REGISTER PAGE
 exports.register = (request, response) => {
     console.log(request.body);
     

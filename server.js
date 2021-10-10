@@ -71,22 +71,26 @@ app.get("/register", (request, response) => {
   response.render("register");
 });
 
+app.get("/login", (request, response) => {
+  response.render("login");
+});
+
 app.use('/auth', require('./routes/auth'));
 
 app.get("/addList", (request, response) => {
-  response.sendFile(__dirname + "/views/addList.html");
+  response.render("addList");
 });
 
 app.get("/addItem", (request, response) => {
-  response.sendFile(__dirname + "/views/addItem.html");
+  response.render("addItem");
 });
 
 app.get("/home", (request, response) => {
-  response.sendFile(__dirname + "/views/home.html");
+  response.render("home");
 });
 
 app.get("/listView", (request, response) => {
-  response.sendFile(__dirname + "/views/listView.html");
+  response.render("listView");
 });
 
 // listen for requests :)
