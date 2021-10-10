@@ -1,7 +1,5 @@
 const createEventForm = document.getElementById("createEventForm")
 const eventName = document.getElementById('title');
-const startDate = document.getElementById('startDate');
-const endDate = document.getElementById('endDate');
 const description = document.getElementById('description');
 const eventLocation = document.getElementById('location');
 const attendees = document.getElementById('attendees');
@@ -117,7 +115,8 @@ function getTimeRange(){
 }
 
 async function submitHandler() {
-    let attendeesList = attendees.value.split(", ");
+    let attendeesList = []
+    if(attendees !== ""){attendeesList = attendees.value.split(", ")}
     let timeRange = getTimeRange();
     
     let startDate = eventCalendar.getStartDate();
@@ -181,7 +180,7 @@ async function addUserAvail(eventID, dateList){
 
     const json = {
             eventID: eventID,
-            availableTimes: newAvailTimes
+            attendeesAvailArray: newAvailTimes
         },
         body = JSON.stringify(json);
 

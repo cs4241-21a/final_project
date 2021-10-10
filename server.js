@@ -123,7 +123,9 @@ app.post('/editEvent', bodyparser.json(), async(req, res) => {
 })
 
 app.post('/addUserAvail', bodyparser.json(), async (req, res) => {
-  EventEntry.findByIdAndUpdate(req.body.eventID, {availableTimes: req.body.availableTimes})
+  let userAvailObject = {name: req.session.username, filledOut:true, availability: req.body.attendeesAvailArray};
+
+  EventEntry.findByIdAndUpdate(req.body.eventID, {$push: {attendeesAvailability: userAvailObject}})
       .then(result => {
 
       })
@@ -142,15 +144,27 @@ app.post('/createEvent', bodyparser.json(), async (req,res) => {
     timeRangeArray.push(req.body.timeRange);
   }
 
+  let fullAttendees = []
+  fullAttendees.push(req.session.username)
+  for(let count = 0; count<req.body.attendees.length; count++){
+    if(req.body.attendees[count] !== "")fullAttendees.push(req.body.attendees[count])
+  }
+
+  let attendeesAvailList = [];
+  /*for (let i = 0; i < fullAttendees.length; i++){
+    attendeesAvailList.push({name: fullAttendees[i], filledOut:false, availability: []});
+  }*/
 
   const entry = new EventEntry({
     owner: req.session.username,
     eventName: req.body.title,
     availableDates: dateRange,
     availableTimes: timeRangeArray,
-    attendees: req.body.attendees,
+    attendees: fullAttendees,
+    attendeesAvailability: attendeesAvailList,
     meetingDuration: req.body.duration,
     description: req.body.description,
+    chosenEventDate: null,
     location: req.body.location
   })
   await entry.save()
@@ -200,13 +214,14 @@ app.get('/index', (req, res) =>{
 })
 
 app.get('/events', (req,  res) => {
-  EventEntry.find({owner: req.session.username})
+  //EventEntry.find({owner: req.session.username})
+    EventEntry.find({attendees: req.session.username})
       .then(result1 => {
-        EventEntry.find({$and: [{attendees: req.session.username}, {owner: {$ne: req.session.username}},
-                                {chosenEventDate: null}]})
+        res.render('events', {eventsList: result1, pendingList:result1, sentUsername: req.session.username, title:"Events"});
+        /*EventEntry.find({$and: [{attendees: req.session.username}]}) // {owner: {$ne: req.session.username}}, {chosenEventDate: null}
             .then(result2 =>{
               res.render('events', {eventsList: result1, pendingList:result2, sentUsername: req.session.username, title:"Events"});
-            })
+            })*/
       })
 })
 

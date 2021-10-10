@@ -22,18 +22,33 @@ const loadEvents = function(){
         }
 
         for(let count = 0; count < json.length; count++){
-            let tr = document.createElement("tr")
-            let td = document.createElement("td")
-            let item = document.createTextNode(json[count].eventName)
-            td.appendChild(item)
-            tr.appendChild(td)
+            let tr = document.createElement("tr");
+            let td1 = document.createElement("td");
+            let td2 = document.createElement("td");
+            let td3 = document.createElement("td");
+            let td4 = document.createElement("td");
+            let item = document.createTextNode(json[count].eventName);
+            let item2 = document.createTextNode("No date chosen");
+            let item3 = document.createTextNode("No time chosen");
+            let item4 = document.createTextNode(json[count].location);
+            if (json[count].chosenEventDate !== null){
+                item2 = document.createTextNode(json[count].chosenEventDate);
+                item3 = document.createTextNode(json[count].chosenStartTime);
+            }
 
-            table.append(tr)
+            td1.appendChild(item);
+            td2.appendChild(item2);
+            td3.appendChild(item3);
+            td4.appendChild(item4);
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tr.appendChild(td4);
+            table.append(tr);
         }
       })
 }
 
 window.onload = function(){
     loadEvents()
-    
 }
