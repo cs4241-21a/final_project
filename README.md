@@ -2,7 +2,7 @@
 ## 1. A brief description of what you created, and a link to the project itself (two paragraphs of text)
    
     
-   Link to project: [mspaint.edit2014.com](mspaint.edit2014.com)
+   Link to project: [mspaint.edit2014.com](http://mspaint.edit2014.com)
 
    This project was designed to allow for real-time collaboration on an html canvas. Authenticated users can draw using brush strokes, add hollow or filled shapes, or clear the html canvas. Any changes to the state of the canvas will be mirrored on other authenticated users' pages, and any user that connects to the application will see the current state of the canvas.
 
@@ -19,7 +19,7 @@ You can make your own login, or use the below test account:
 
 When you're done, click the X button in the upper-right corner of the app window to log out
    
-Share the [link](mspaint.edit2014.com) with another person, or open the link in another browser tab to experience the simultaneous paint experience. 
+Share the [link](http://mspaint.edit2014.com) with another person, or open the link in another browser tab to experience the simultaneous paint experience. 
 ## 3. An outline of the technologies you used and how you used them.
    
 - Websockets
