@@ -291,6 +291,7 @@ function draw() {
 
 let socket = null;
 let inLobby = false;
+let gotLoggedOutWarning = false;
 
 document.querySelector("#lobbyButton").onclick = e => {
 	joinLobby(document.querySelector("#lobbyname").value, document.querySelector("#lobbypass").value == "" ? undefined : document.querySelector("#lobbypass").value)
@@ -306,6 +307,7 @@ function connectWS(){
           {
             document.querySelector("#status").innerText = "Disconnected (not logged in)";
             document.querySelector("#lobbyname").disabled = document.querySelector("#lobbypass").disabled = document.querySelector("#lobbyButton").disabled = true;
+            gotLoggedOutWarning = true;
             if(confirm("You are not logged in, so multiplayer will be unavailable.\nClick OK to go back to the login page, or Cancel to continue playing offline.")){
               window.location = window.location.origin;
             }
@@ -370,8 +372,10 @@ function connectWS(){
     }
   }
   socket.onclose = e => {
-    document.querySelector("#status").innerText = "Disconnected";
-    setTimeout(connectWS(), 2000);
+    if(!gotLoggedOutWarning) {
+      document.querySelector("#status").innerText = "Disconnected";
+      setTimeout(connectWS(), 2000);
+    }
   }
 }
 
