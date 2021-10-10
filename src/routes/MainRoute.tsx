@@ -115,8 +115,8 @@ const MainRoute = (): JSX.Element => {
   >([]);
 
   const filterFarmablesLocations = () => {
-    setActiveFarmables([]);
-    setActiveLocations([]);
+    let tempFarming: MaterialProps[] = [];
+    let tempLocations: FarmingSpotProps[] = [];
     charPrefs.forEach((c) => {
       if (c.enabled) {
         let character = characters.find((res) => {
@@ -129,7 +129,7 @@ const MainRoute = (): JSX.Element => {
             });
             if (mat !== undefined) {
               if (!activeFarmables.includes(mat)) {
-                activeFarmables.push(mat);
+                tempFarming.push(mat);
               }
             }
           });
@@ -141,7 +141,7 @@ const MainRoute = (): JSX.Element => {
             });
             if (mat !== undefined) {
               if (!activeFarmables.includes(mat)) {
-                activeFarmables.push(mat);
+                tempFarming.push(mat);
               }
             }
           });
@@ -161,7 +161,7 @@ const MainRoute = (): JSX.Element => {
             });
             if (mat !== undefined) {
               if (!activeFarmables.includes(mat)) {
-                activeFarmables.push(mat);
+                tempFarming.push(mat);
               }
             }
           });
@@ -175,7 +175,7 @@ const MainRoute = (): JSX.Element => {
         });
         if (artifact !== undefined) {
           if (!activeFarmables.includes(artifact)) {
-            activeFarmables.push(artifact);
+            tempFarming.push(artifact);
           }
         }
       }
@@ -187,10 +187,13 @@ const MainRoute = (): JSX.Element => {
       });
       if (location !== undefined) {
         if (!activeLocations.includes(location)) {
-          activeLocations.push(location);
+          tempLocations.push(location);
         }
       }
     });
+
+    setActiveFarmables(tempFarming);
+    setActiveLocations(tempLocations);
   };
 
   React.useEffect(() => {
