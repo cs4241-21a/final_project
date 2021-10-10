@@ -145,7 +145,7 @@ function loadModify(id) {
 function submitModify(e) {
     
     e.preventDefault();
-    
+    const id = document.querySelector("#idToModify").value;
     const desc = document.querySelector("#title"),
     score = document.querySelector("#score"),
     date = document.querySelector("#date"),
