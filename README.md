@@ -2,7 +2,7 @@
 
 ## Group 1 | Renee Sawka, Christopher Vieira, Stefano Jordhani, Ashley Burke, Elaine Chen
 
-Link to project:
+Link to project: https://webware-group-1.herokuapp.com/
 All testing was done through Chrome
 
 ### 1. Description of Project
