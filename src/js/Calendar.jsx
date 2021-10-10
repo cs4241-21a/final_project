@@ -122,7 +122,7 @@ class Calendar extends React.Component {
         // update temporary tasks array
         this.state.events.forEach(event => {
           if(event._id === eventId) return;
-          else toUpdateEvents.push(task);
+          else toUpdateEvents.push(event);
         });
     
         let setStateAsync = (state) => {
