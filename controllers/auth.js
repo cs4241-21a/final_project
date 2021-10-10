@@ -30,6 +30,7 @@ exports.login = async (request, response) => {
                 })
             }else{
                 response.status(200).redirect('/home')
+            
             }
         })
 
