@@ -231,13 +231,13 @@ const MainRoute = (): JSX.Element => {
 
   return (
     <>
+      <LoginButton initPrefs={initPrefs} />
+      <ResetButton handleReset={handleReset} />
       <MenuContainer
         characterSelect={characterSelect}
         weaponSelect={weaponSelect}
         artifactSelect={artifactSelect}
       />
-      <LoginButton initPrefs={initPrefs} />
-      <ResetButton handleReset={handleReset} />
       {/* <CharacterSelect 
         characters={characters} 
         preferences={charPrefs} 
