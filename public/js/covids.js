@@ -339,7 +339,7 @@ function draw() {
   }
   if(GameOver){
     print("Game Over")
-    return 0
+    return
   }
   counter++
 }
