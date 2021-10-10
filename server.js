@@ -68,10 +68,12 @@ app.post("/addScore", bodyParser.json(), function(req, res) {
 });
 
 app.post("/getScores", bodyParser.json(), function(req, res) {
-  collection
-    .insertOne(req.body)
-    .then(insertResponse => playerInfo.findOne(insertResponse.insertedId))
-    .then(findResponse => res.json(findResponse));
+  if (collection !== null) {
+    collection
+      .find({ withScore: 1 })
+      .toArray()
+      .then(result => res.json(result));
+  }
 });
 
 app.get("/", (request, response) => {
@@ -147,7 +149,7 @@ function generateClientName() {
 }
 
 function createClient(id, socket, address, username) {
-  return { id, socket, address, username, x: 0, y: 0, vx: 0, vy: 0, angle: 0 };
+  return { id, socket, address, username, x: 0, y: 0, vx: 0, vy: 0, angle: 0, lives: 3, iframes: 0 };
 }
 
 wss.on("connection", (socket, req) => {
@@ -209,6 +211,8 @@ wss.on("connection", (socket, req) => {
                 lobby.clients[clIndex].vx = json.vx;
                 lobby.clients[clIndex].vy = json.vy;
                 lobby.clients[clIndex].angle = json.angle;
+                lobby.clients[clIndex].lives = json.lives;
+                lobby.clients[clIndex].iframes = json.iframes;
 
                 lobby.clients.forEach(c => {
                   if (lobby.clients[clIndex].id !== c.id) {
@@ -220,7 +224,9 @@ wss.on("connection", (socket, req) => {
                         y: lobby.clients[clIndex].y,
                         vx: lobby.clients[clIndex].vx,
                         vy: lobby.clients[clIndex].vy,
-                        angle: lobby.clients[clIndex].angle
+                        angle: lobby.clients[clIndex].angle,
+                        lives: lobby.clients[clIndex].lives,
+                        iframes: lobby.clients[clIndex].iframes
                       })
                     );
                   }
@@ -371,7 +377,7 @@ setInterval(() => {
   allClients = allClients.filter(c => c.socket.readyState == 1); // only keep open connections
   allClients.forEach(c => {
     //console.log(c.address + ": " + c.socket.readyState);
-    c.socket.send("keepalive");
+    if(Math.random() > 0.8) c.socket.send("keepalive");
   });
 
   lobbies = lobbies.filter(l => {

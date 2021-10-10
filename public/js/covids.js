@@ -201,7 +201,7 @@ function displayShip(obj=ship){
     text(obj.username, 0, -30);
   }
   rotate(obj.rotation)
-  if(obj.iframes % 8 >= 4 || ship.lives <= 0) tint(255, 0, 0, 64);
+  if(obj.iframes % 8 >= 4 || obj.lives <= 0) tint(255, 0, 0, 64);
   // tint(255, 0, 0, 255); // could use this if the gompei img was white instead of black, might do that later
   image(gompei_img, -25, -25, obj.diam, obj.diam)
   noTint();
@@ -308,7 +308,8 @@ function draw() {
   for (let [k, v] of Object.entries(otherShips)) {
     displayShip(v);
     v.pos.add(v.vel);
-    v.rotation += (v.desRot - v.rotation) * 0.5;
+    v.rotation += (v.desRot - v.rotation) * 0.3;
+    if(v.iframes > 0) v.iframes--;
   }
   moveShip()
   if(!GameOver){
@@ -342,7 +343,8 @@ function draw() {
     moveMasks(v.masks)
     displayMasks(v.masks)
   }
-  text(:)
+  textAlign(LEFT);
+  text("SCORE: " + score, 5, 14);
   if(GameOver){
     print("Game Over")
     textAlign(CENTER);
@@ -429,6 +431,8 @@ function connectWS(){
             otherShips[json.id].vel.x = json.vx;
             otherShips[json.id].vel.y = json.vy;
             otherShips[json.id].desRot = json.angle;
+            otherShips[json.id].lives = json.lives;
+            otherShips[json.id].iframes = json.iframes;
           }
           break;
         case "add_mask":
@@ -484,10 +488,10 @@ function joinLobby(name, password=undefined){
 }
 
 function sendShipPos() {
-  socket.send(JSON.stringify({packetType: "update_pos", x: ship.pos.x, y: ship.pos.y, vx: ship.vel.x, vy: ship.vel.y, angle: ship.rotation }));
+  socket.send(JSON.stringify({packetType: "update_pos", x: ship.pos.x, y: ship.pos.y, vx: ship.vel.x, vy: ship.vel.y, angle: ship.rotation, lives: ship.lives, iframes: ship.iframes }));
 }
 
-setInterval(tickWS, 100);
+setInterval(tickWS, 120);
 function tickWS(){
   if(inLobby) {
     sendShipPos();
