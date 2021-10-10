@@ -84,3 +84,21 @@ button:hover {
     border: solid #0065A6;
     border-width: 1px 1px 0 1px;
 }
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #fff1d1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #246885;
+    border: 1px solid #fff1d1;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #8BD1E8;
+}
