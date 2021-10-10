@@ -1,10 +1,10 @@
 import * as React from "react";
-import FarmableProps from "../../types/props/FarmableProps";
 import FarmingSpotProps from "../../types/props/FarmingSpotProps";
+import MaterialProps from "../../types/props/MaterialProps";
 
 const DayDisplay = (props: {
   days: String;
-  farmables: FarmableProps[];
+  farmables: MaterialProps[];
   locations: FarmingSpotProps[];
 }): JSX.Element => {
 

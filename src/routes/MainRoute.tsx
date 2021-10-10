@@ -7,7 +7,6 @@ import CharacterProps from "../types/props/CharacterProps";
 import WeaponProps from "../types/props/WeaponProps";
 import ArtifactProps from "../types/props/ArtifactProps";
 import MaterialProps from "../types/props/MaterialProps";
-import FarmableProps from "../types/props/FarmableProps";
 import FarmingSpotProps from "../types/props/FarmingSpotProps";
 
 import MenuContainer from "../components/menu/MenuContainer";
@@ -108,7 +107,7 @@ const MainRoute = (): JSX.Element => {
   };
 
   // This calculates the farmable items to be displayed and their related locations
-  const [activeFarmables, setActiveFarmables] = React.useState<FarmableProps[]>(
+  const [activeFarmables, setActiveFarmables] = React.useState<MaterialProps[]>(
     []
   );
   const [activeLocations, setActiveLocations] = React.useState<

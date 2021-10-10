@@ -1,11 +1,11 @@
 import * as React from "react";
 
-import FarmableProps from "../types/props/FarmableProps";
 import FarmingSpotProps from "../types/props/FarmingSpotProps";
+import MaterialProps from "../types/props/MaterialProps";
 import DayDisplay from "./primitives/DayDisplay";
 
 interface FarmingDisplayProps {
-  farmables: FarmableProps[];
+  farmables: MaterialProps[];
   locations: FarmingSpotProps[];
 }
 
