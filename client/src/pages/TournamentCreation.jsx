@@ -154,8 +154,7 @@ class TournamentCreationPage extends React.Component {
                 id="submit-button"
                 type="submit"
                 className="btn btn-primary mt-4"
-                onSubmit={(e) => this.submit(e)}
-              >
+                onSubmit={(e) => this.submit(e)}>
                 Submit
               </button>
             </div>

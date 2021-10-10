@@ -159,6 +159,13 @@ async function generateTeams(arr, champlist) {
     }
 }
 
+/**
+ * 
+ * @param {String Array} arr1 team 1 summoner names
+ * @param {String Array} arr2 team 2 summoner names
+ * @returns Array containing 2 things:
+ * 
+ */
 async function generateChamps(arr1, arr2) {
     idList1 = [];
     idList2 = [];
