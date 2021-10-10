@@ -1,5 +1,7 @@
 const ws = require('ws'),
-      http = require('http');
+      http = require('http'),
+      express = require('express'),
+      app = express()
 
 const server = http.createServer(),
       wsServer = new ws.Server({server}),
@@ -7,6 +9,10 @@ const server = http.createServer(),
 
 wsServer.on('connection', OnConnect);
 server.listen(3000);
+
+app.use(express.static("public/views"))
+app.use(express.static("public"))
+app.listen(3001);
 
 const roomCodeChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 function NewRoomCode() {
