@@ -33,13 +33,14 @@ const loadEvents = function(){
             let item3 = document.createTextNode("No time chosen");
             let item4 = document.createTextNode(json[count].location);
             if (json[count].chosenEventDate !== null){
-                item2 = document.createTextNode(json[count].chosenEventDate);
+                item2 = document.createTextNode(json[count].chosenEventDate.slice(0,10));
                 item3 = document.createTextNode(json[count].chosenStartTime);
             }
             let item5 = null
             let allowButton = true
             if(json[count].chosenEventDate === null){allowButton = false}
-            
+
+
            if(allowButton === true){
             td5 = document.createElement("td");
             item5 = document.createElement("a")
@@ -76,16 +77,25 @@ const createFile = function(event) {
         start: event.availableDates[0],
         end: event.availableDates[event.availableDates.length - 1]
       }*/
-    let eventDate = '';
+
+    let eventDate = null;
+
     if ((event.chosenStartTime + event.duration) % 1 == .5) {
         eventDate = {
-            start: event.chosenEventDate,
-            end: event.chosenEventDate.setHours((event.chosenStartTime + event.duration - .5), 30)
+            start: convertDate(event.chosenEventDate),
+            end: convertDate(event.chosenEventDate)
+            //end: convertDate(event.chosenEventDate).setHours((event.chosenStartTime + event.duration - .5), 30)
+            //end: new Date(dateHolder.setHours((event.chosenStartTime + event.duration - .5), 30))
+            //end: event.chosenEventDate.setHours((event.chosenStartTime + event.duration - .5), 30)
         }
     } else {
         eventDate = {
-            start: event.chosenEventDate,
-            end: event.chosenEventDate.setHours((event.chosenStartTime + event.duration))
+            start: convertDate(event.chosenEventDate),
+            //end: convertDate(event.chosenEventDate).setHours((event.chosenStartTime + event.duration))
+            //end: new Date(dateHolder.setHours((event.chosenStartTime + event.duration)))
+
+            end: convertDate(event.chosenEventDate)
+            //end: event.chosenEventDate.setHours((event.chosenStartTime + event.duration))
         }
     }
       let summary = event.eventName;
@@ -94,6 +104,7 @@ const createFile = function(event) {
     //downloadButton.classList.remove("hide");
   }
   function convertDate(date) {
+    console.log(date)
     var event = new Date(date).toISOString();
     event = event.split("T")[0];
     event = event.split("-");
@@ -111,10 +122,12 @@ const createFile = function(event) {
       "BEGIN:VEVENT\n" +
       "UID:test-1\n" +
       "DTSTART;VALUE=DATE:" +
-      convertDate(date.start) +
+      //convertDate(date.start) +
+        date.start +
       "\n" +
       "DTEND;VALUE=DATE:" +
-      convertDate(date.end) +
+      //convertDate(date.end) +
+        date.end +
       "\n" +
       "SUMMARY:" +
       summary +
