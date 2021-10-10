@@ -118,7 +118,7 @@ const submit = function (e) {
     const json = {  title: desc.value, 
                     score: score.value, 
                     date: date.value,
-                    review = review.value
+                    review: review.value
                 };
 
     fetch("/add", {

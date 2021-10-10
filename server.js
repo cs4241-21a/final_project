@@ -182,6 +182,12 @@ app.post('/getprofile', function (req, res){
   res.json({username:req.session.username, userId:req.session.userId})
 })
 
+app.post('/changePassword', function(req, res){
+  var newPassword = bcrypt.hashSync(req.body.newPassword, 10);
+
+  User.findOneAndUpdate({_id:db.ObjectId(req.body.userId)}, {password:newPassword}, {new:true}, function(err, result){});
+})
+
 // Watchlist related
 app.post('/add', auth, function (req, res) {
   req.body.user = req.session.userId;
