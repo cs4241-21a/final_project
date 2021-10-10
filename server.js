@@ -151,6 +151,10 @@ app.get("/listView", (request, response) => {
   response.render("listView");
 });
 
+app.get("/test", (request, response) => {
+  console.log(request.body);
+});
+
 app.post( '/create-list', bodyparser.json(), function( request, response ) {
   const connection = mysql.createConnection({
     host: 'mysql.wpi.edu',

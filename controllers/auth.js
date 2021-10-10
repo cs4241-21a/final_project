@@ -1,6 +1,11 @@
 const   mysql = require("mysql");
 const     jwt = require('jsonwebtoken');
 const  bcrypt = require('bcryptjs');
+const express = require('express');
+const     app = express();
+
+
+app.use(express.json());
 
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
@@ -29,7 +34,8 @@ exports.login = async (request, response) => {
                     message: 'Username or Password is incorrect'
                 })
             }else{
-                response.status(200).redirect('/home')
+
+                response.status(200).redirect('home'                )
             
             }
         })
