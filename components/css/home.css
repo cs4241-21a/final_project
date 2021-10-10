@@ -12,6 +12,9 @@
     opacity: 0.9;
     border: none;
 }
+tbody {
+    padding: 10px;
+}
 
 .workoutEntry {
     margin-left: auto;

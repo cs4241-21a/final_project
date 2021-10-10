@@ -73,7 +73,6 @@ form {
 #primaryButton {
     grid-area: primaryButtonArea;
     justify-self: center;
-    color: black;
     height: 40px;
     display: flex;
     align-items: center;

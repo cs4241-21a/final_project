@@ -4,7 +4,47 @@
     flex-direction: column;
 }
 
+#workoutPage {
+    grid-area: mainDivArea;
+    display: grid;
+    grid-template-columns: [col0] 100%;
+    grid-template-rows: [row0] 12% [row2] auto [row3] auto;
+
+
+    grid-template-areas:  
+        "titleArea"
+        "cardsArea"
+        "formArea"
+        ;
+}
+
+h1 {
+    grid-area: titleArea;
+    background-color: gray;
+    text-align: center;
+}
+
+
+
 #cards {
+    grid-area: cardsArea;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+}
+
+#addNewMovementForm{
+    grid-area: formArea;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#addModifyButton{
+    width: 400px;
+}
+
+#cancelModifyButton {
+    width: 400px;
+    color: white;
 }

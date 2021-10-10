@@ -117,8 +117,10 @@ class AddNewSetComponent extends React.Component {
 
     return (
       <div id="addNewMovementForm">
-        <form onsubmit="return false" id="addNewMovementForm">
-          <input type="text" placeholder="name" id="movementName" />
+        <form onsubmit="return false" id="addNewMovementForm" style = {{width: "50%"}}>
+          <b>Exercise Name</b>
+          <input type="text" placeholder="name" id="movementName" style = {{width: "50%"}}/>
+          <b>Number of Sets</b>
           <input
             type="number"
             placeholder="number of sets"
@@ -181,22 +183,24 @@ class SetComponent extends React.Component {
         id={"set" + this.props.setNumber}
         style={{ display: "flex", flexDirection: "row" }}
       >
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", flexDirection: "column"}}>
           <b>Weight</b>
           <input
             id={"weight" + this.props.setNumber}
-            placeholder="weight"
+            placeholder="weight" 
             value={this.props.parent.state.sets[this.props.setNumber].weight}
             onChange={this.onWeightChange}
+            style= {{width: "80%"}}
           />
         </div>
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", flexDirection: "column"}}>
           <b>Reps</b>
           <input
             id={"reps" + this.props.setNumber}
             placeholder="reps"
             value={this.props.parent.state.sets[this.props.setNumber].reps}
             onChange={this.onRepsChange}
+            style= {{width: "80%"}}
           />
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
@@ -206,6 +210,7 @@ class SetComponent extends React.Component {
             placeholder="RPE"
             value={this.props.parent.state.sets[this.props.setNumber].RPE}
             onChange={this.onRPEChange}
+            style= {{width: "80%"}}
           />
         </div>
       </div>
@@ -240,9 +245,9 @@ class WrapperClass extends React.Component {
     } else {
       return (
         <div id="workoutPage">
-          <h1 style={{ backgroundColor: "#FFFFFF" }}>{workoutRes.name}</h1>
+          <h1>{workoutRes.name}</h1>
           {workoutRes.movements.length === 0 ? (
-            <div>You have no movements yet :(</div>
+            <h2>You have no movements yet!</h2>
           ) : (
             <div id="cards">
               {" "}
