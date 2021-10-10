@@ -1,6 +1,6 @@
 # Music Library
 
-For our final project we created a music library. This web app allows users to add songs to the music library as well as comment on songs already added to their. Users are able to see the music library dashboard without an account, but they need an account to access any other functionallity of the web app. To create an account they just need to click the login button and then click sign up. Here they will set their username, display name, and password.
+For our final project we created a music library. This web app allows users to add songs to the music library as well as comment on already existing songs. Users are able to see the music library dashboard without an account, but they need an account to access any other functionallity of the web app. To create an account they just need to click the login button and then click sign up. Here they will set their username, display name, and password.
 
 Once their account is created, they will be prompted to log in with those credentials and then they will be able to access the full functionallity of the web app. When a user is signed in they can access their user dashboard (My Songs). Here they can add songs not already included in the music library. The user can also remove any song they add to the library. Last but not least, the user can make comments on any song in the music library from the main dashboard (the home screen). Every user can see the comments of other users and when they where posted.
 
@@ -21,4 +21,4 @@ Ke worked on setting up the login/sign up pages, authenticating the user, adding
 
 Evan worked on ensuring that there were no duplicate songs in the database as well as adding a timestamp to the comments posted by users. He also helped Ke a bit with polishing the login/sign up pages and wrote this README file.
 
-Link to video: Currently in project repo
+Link to video: https://drive.google.com/file/d/1fDQ8l2DS2iVOv_tTbP-nDjnIxvqylaS_/view?usp=sharing
