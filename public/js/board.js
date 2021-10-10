@@ -298,7 +298,7 @@ function wsSetup() {
             type: "connect"
         }
         if (roomCode !== null) {
-            data[roomCode] = roomCode
+            data[room] = roomCode
         }
         socket.send(JSON.stringify(data))
     };
