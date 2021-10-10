@@ -12,6 +12,7 @@ mongoose.connect(process.env.DB_CONNECT,
 () => console.log("Connected to DB"))
 
 //ejs
+app.use(express.static("views"));
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 

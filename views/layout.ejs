@@ -49,6 +49,9 @@ console.log("hello world :o");
   
   function save_row(no)
   {
+    console.log(document.getElementById("task_text"+no))
+    console.log(taskEditing)
+
    var task_val=document.getElementById("task_text"+no).value;
    var due_val=document.getElementById("due_text"+no).value;
    var checked_bool=document.getElementById("edit_checkbox"+no).checked;
