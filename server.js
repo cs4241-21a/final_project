@@ -39,7 +39,7 @@ function joinRoom(client, roomCode){
             room.sendGameStateToClients()
         }
         else{
-            client.send(JSON.stringify({type: "room full"}))
+            client.wsclient.send(JSON.stringify({type: "room full"}))
         }
     }
     else{
