@@ -213,6 +213,10 @@ function IsValidPawnMove(g, pawn, x, y) {
     if (!IsValidPawnSpace(x, y)){
         return false;
     }
+
+    if (pawn.x == x && pawn.y == y){
+        return false;
+    }
     
     let otherPawn = g.pawnA
     if (pawn == g.pawnA) {
