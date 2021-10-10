@@ -15,7 +15,7 @@ function delWatch(id) {
 }
 
 function fetchData() {
-    fetch('/getAdventure')
+    fetch('/getCategory/Adventure')
         .then(response => response.json())
         .then(data => {
             if (data.code === 403)
@@ -33,7 +33,7 @@ function fetchData() {
             document.getElementById("advData").innerHTML = tableData;
         });
 
-        fetch('/getLove')
+        fetch('/getCategory/Love')
         .then(response => response.json())
         .then(data => {
             if (data.code === 403)
@@ -51,7 +51,7 @@ function fetchData() {
             document.getElementById("loveData").innerHTML = tableData;
         });
 
-        fetch('/getSuspense')
+        fetch('/getCategory/Suspense')
         .then(response => response.json())
         .then(data => {
             if (data.code === 403)
@@ -69,7 +69,7 @@ function fetchData() {
             document.getElementById("susData").innerHTML = tableData;
         });
 
-        fetch('/getSol')
+        fetch('/getCategory/Sol')
         .then(response => response.json())
         .then(data => {
             if (data.code === 403)
@@ -87,7 +87,7 @@ function fetchData() {
             document.getElementById("solData").innerHTML = tableData;
         });
 
-        fetch('/getFantasy')
+        fetch('/getCategory/Fantasy')
         .then(response => response.json())
         .then(data => {
             if (data.code === 403)
@@ -100,6 +100,7 @@ function fetchData() {
                 tableData += `<td>${data[i].score}</td>`;
                 tableData += `<td>${data[i].date}</td>`;
                 tableData += `<td>${data[i].review}</td>`;
+                tableData += `<td><a href="javascript:void(0);" onclick="delFlight('${data[i]._id}');">Remove</a></td>`;
                 tableData += "</tr>";
             }
             document.getElementById("fanData").innerHTML = tableData;

@@ -196,30 +196,11 @@ app.post('/add', auth, function (req, res) {
       res.json({code: 200, msg: 'success'});
   });
 });
-app.get('/getAdventure', auth, function (req, res) {
-  watchlist.find({user: req.session.userId}, function (err, docs) {
-      res.json(docs.filter((item) => new watchlist(item.category).valueOf() = "adventure"));
-  });
-});
-app.get('/getLove', auth, function (req, res) {
-  watchlist.find({user: req.session.userId}, function (err, docs) {
-      res.json(docs.filter((item) => new watchlist(item.category).valueOf() = "love"));
-  });
-});
-app.get('/getSuspense', auth, function (req, res) {
-  watchlist.find({user: req.session.userId}, function (err, docs) {
-      res.json(docs.filter((item) => new watchlist(item.category).valueOf() = "suspense"));
-  });
-});
 
-app.get('/getSol', auth, function (req, res) {
-  watchlist.find({user: req.session.userId}, function (err, docs) {
-      res.json(docs.filter((item) => new watchlist(item.category).valueOf() = "sol"));
-  });
-});
-app.get('/getFantansy', auth, function (req, res) {
-  watchlist.find({user: req.session.userId}, function (err, docs) {
-      res.json(docs.filter((item) => new watchlist(item.date).valueOf() = "fantasy"));
+app.get('/getCategory/:cat', auth, function (req, res) {
+  const category = req.params.cat;
+  watchlist.find({user: req.session.userId, category}, function (err, docs) {
+      res.json(docs);
   });
 });
 
