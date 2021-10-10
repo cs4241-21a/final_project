@@ -15,7 +15,7 @@ server.listen(port);
 server.use(express.static(dir)); // server static client build files
 
 // dev routes
-server.get('/api/token', async (req, res) => {
+server.get('/dev/token', async (req, res) => {
     res.redirect(SpotifyService.getRefreshTokenURL());
 });
 
@@ -25,7 +25,16 @@ server.get('/callback', async (req, res) => {
 });
 
 // api routes
-server.delete('/playlist/:id', async (req, res) => {
+server.get('/api/token', async (req, res) => {
+   res.json(await SpotifyService.getAccessToken());
+});
+
+server.put('/api/player/:id/play', async (req, res) => {
+    await SpotifyService.playSong(req.params.id, req.query.uri);
+    res.send();
+});
+
+server.delete('/api/playlist/:id', async (req, res) => {
     await SpotifyService.deleteSongsFromPlaylist(req.params.id, [req.query.uri]);
     res.json(await SpotifyService.getSongsFromPlaylist(req.params.id));
 });

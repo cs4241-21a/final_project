@@ -8,7 +8,11 @@ export default (new class SpotifyService {
     authPath = 'https://accounts.spotify.com';
     APIPath = 'https://api.spotify.com/v1';
     defaultScopes = [
-        'playlist-modify-public'
+        'playlist-modify-public',
+        'streaming',
+        'user-read-email',
+        'user-read-private',
+        'web-playback'
     ]
     credentials = base64.encode(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`);
     accessToken;
@@ -115,6 +119,13 @@ export default (new class SpotifyService {
         return genres
     }
 
+    // plays given song uri on a specified device
+    playSong = async (id, uri) => {
+        await this.request('PUT', `${this.APIPath}/me/player/play?device_id=${id}`, {
+            'uris': [uri]
+        });
+    }
+
     // returns promised fetch request with automatic header authorization
     request = async (method, path, data = null, headers = 'reserved_default') => {
         if (headers === 'reserved_default') {
@@ -130,10 +141,16 @@ export default (new class SpotifyService {
 
         return new Promise(async (resolve, reject) => {
             fetch(`${path}`, { method: method, body, headers }).then(async response => {
+                let res;
+                try {
+                    res = await response.json();
+                } catch {
+                    res = null;
+                }
                 if (response.ok) {
-                    resolve(await response.json());
+                    resolve(res);
                 } else {
-                    reject(await response.json());
+                    reject(res);
                 }
             }).catch(error => reject(error));
         });
