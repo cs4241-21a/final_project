@@ -91,6 +91,14 @@ function drawStars(){
     if(isControllerClient){
       stars[i].x += randomChoice([stars[i].dx, rando_speedx, -rando_speedx])
       stars[i].y += randomChoice([stars[i].dy, rando_speedy, -rando_speedy])
+    }else{
+      // average it a couple times so its a bit smoother
+      // (since this client isn't the controller, the randoms are desynced from the actual controller client)
+      const num_iter = 2;
+      for(let it = 0; it < num_iter; it++){
+        stars[i].x += randomChoice([stars[i].dx, rando_speedx, -rando_speedx])/num_iter;
+        stars[i].y += randomChoice([stars[i].dy, rando_speedy, -rando_speedy])/num_iter;
+      }
     }
     if ((stars[i].x <= width) && (stars[i].y <= height) && (stars[i].x >= 0) && (stars[i].y >= 0)) {
       stars[i].inPlay = true
@@ -294,11 +302,18 @@ function connectWS(){
     try {
       let json = JSON.parse(event.data);
       switch(json.packetType) {
+        case "not_logged_in":
+          {
+            document.querySelector("#status").innerText = "Disconnected (not logged in)";
+            document.querySelector("#lobbyname").disabled = document.querySelector("#lobbypass").disabled = document.querySelector("#lobbyButton").disabled = true;
+          }
+          break;
         case "joined_lobby":
           {
             inLobby = true;
             document.querySelector("#lobbyname").disabled = document.querySelector("#lobbypass").disabled = document.querySelector("#lobbyButton").disabled = inLobby;
             isControllerClient = false;
+            document.querySelector("#status").innerText = "Connected to Lobby";
           }
           break;
         case "send_field":
@@ -306,7 +321,11 @@ function connectWS(){
             socket.send(JSON.stringify({packetType: "send_field", stars}));
             isControllerClient = true;
             clearTimeout(controllerClientTimeout);
-            controllerClientTimeout = setTimeout(() => isControllerClient = false, 1000);
+            controllerClientTimeout = setTimeout(() => {
+              isControllerClient = false;
+              document.querySelector("#status").innerText = "Connected to Lobby";
+            }, 1000);
+            document.querySelector("#status").innerText = "Connected to Lobby (Host)";
           }
           break;
         case "update_viruses":

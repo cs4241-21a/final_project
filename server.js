@@ -127,7 +127,10 @@ wss.on('connection', (socket, req) => {
     sessionParser(req, {}, function(){
       const clientId = generateClientName();
       const username = req.session && req.session.username;
-      if(username === undefined) return;
+      if(username === undefined) {
+        socket.send(JSON.stringify({packetType: "not_logged_in"}));
+        return;
+      }
       socket.send("Hello World! session.username = " + (req.session && req.session.username));
       allClients.push(createClient(clientId, socket, req.socket.remoteAddress, username));
       socket.on('message', message => {
@@ -140,7 +143,7 @@ wss.on('connection', (socket, req) => {
                   case "join_lobby":
                     { 
                       let lobby = lobbies.find(l => l.name === json.name);
-                      console.log(JSON.stringify(lobby));
+                      //console.log(JSON.stringify(lobby));
                       if(lobby !== undefined) {
                         if(lobby.password === json.password) {
                           socket.send(JSON.stringify({packetType: "joined_lobby", name: lobby.name}));
@@ -259,4 +262,4 @@ setInterval(() => {
             // });
         });
     });
-}, 100);
+}, 50);
