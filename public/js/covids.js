@@ -221,6 +221,7 @@ function checkForCollisions(curr, targets){
 function setup() {
   frameRate(60);
   createCanvas(750, 750) //make the size of the display whatever size the window is
+                         // (might want to keep it a fixed size because of multiplayer)
   generateStars()
   ship = generateShip()
   virus_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fcoronavirus.png?v=1633701999099')
