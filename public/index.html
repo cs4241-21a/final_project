@@ -29,11 +29,48 @@
       </h1>
     </div>
 
+    <div class="boxHolder">
+      <div id='personal'>
+          <h2>Personal Information</h2>
+
+      </div>
+      <button id="editUsername">Edit Username</button>
+      <button id="editPassword">Edit Password</button>
+
+      <div id="editformUsername">
+          <form>
+              <h3>Edit Username</h3>
+              <label>
+                New Username:
+              </label>
+              <input type="text" id="newUsername"/>
+              <button id="submitUsername">Submit Change</button>
+          </form>
+      </div>
+
+      <div id="editformPassword">
+        <form>
+            <h3>Edit Password</h3>
+            <label>
+              New Password:
+            </label>
+            <input type="text" id="newPassword"/>
+            <button id="submitPassword">Submit Change</button>
+        </form>
+    </div>
+
+      <div id="attribute">
+
+      </div>
+    </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
   </body>
 
   <script>
+    var personal = document.getElementById("personal");
+
+
     $(function(){
       $("#nav-placeholder").load("nav.html");
     });
@@ -46,6 +83,58 @@
         when: new Date().getHours()
       }
     })
+
+    function getProfile(){
+      fetch("/getprofile", {
+        method:'POST',
+        headers:{'Content-Type':'application/json' }
+      })
+      .then(response => response.json())
+      .then(userinfo =>{
+        var username = document.createElement('h4');
+        username.innerHTML= "Username: " + userinfo.username;
+
+        personal.appendChild(username);
+      })
+    }
+
+    var editUsername = document.getElementById("editformUsername");
+    editUsername.style.display = "none";
+    var editPassword = document.getElementById("editformPassword");
+    editPassword.style.display = "none";
+
+    const openEditUsername = function(e){
+      e.preventDefault()
+      if(editUsername.style.display==="none"){
+          editUsername.style.display = "block";
+          editPassword.style.display = "none";
+      }
+      else {
+          editUsername.style.display = "none";
+      }
+    }
+
+    const openEditPassword = function(e){
+      e.preventDefault()
+      if(editPassword.style.display==="none"){
+          editPassword.style.display = "block";
+          editUsername.style.display = "none";
+      }
+      else {
+          editPassword.style.display = "none";
+      }
+    }
+
+    window.onload = function(){
+        const button_open_edit_username = document.getElementById("editUsername")
+        button_open_edit_username.onclick = openEditUsername
+
+        const button_open_edit_password = document.getElementById("editPassword")
+        button_open_edit_password.onclick = openEditPassword
+
+        getProfile();
+    }  
+
   </script>
 
   <style>

@@ -176,6 +176,10 @@ app.post('/sendEmail', bodyparser.json(), function (req, res) {
   });
 })
 
+app.post('/getprofile', function (req, res){
+  res.json({username:req.session.username, userId:req.session.userId})
+})
+
 app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.listen(3030)
