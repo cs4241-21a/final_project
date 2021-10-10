@@ -1,4 +1,4 @@
-let numOfStars = 25,
+const numOfStars = 25,
   width = 750,
   height = 750,
   min_speed = 0.5,
@@ -409,7 +409,8 @@ function draw() {
       console.log("HIT SHIP");
       ship.lives--;
 
-      if (ship.lives === 0 && inLobby) {
+      console.log("SCORE CHECK " + (ship.lives === 0) + " " + (socket !== null));
+      if (ship.lives === 0) {
         const json = { score: score },
           body = JSON.stringify(json);
         
