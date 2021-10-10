@@ -182,10 +182,10 @@ class Room {
         this.gameState.player = false
         this.client2.wsclient.send(JSON.stringify({type: "game state", gameState: this.gameState}))
     }
+}
 
-    gameOver(){
-        return (pawnA.y === 0 || pawnB.y === 8)
-    }
+function gameOver(g){
+    return (g.pawnA.y === 0 || g.pawnB.y === 8)
 }
 
 function IsValidPawnSpace(x, y) { return x >= 0 && y >= 0 && x < BOARDSIZE && y < BOARDSIZE; }
@@ -227,7 +227,7 @@ function IsValidPawnMove(g, pawn, x, y) {
         return false;
     }
 
-    if (g.gameOver()){
+    if (gameOver(g)){
         return false;
     }
     
@@ -299,7 +299,7 @@ function IsValidWallPlacement(g, walls, x, y, orientation) {
         return false
     }
 
-    if (g.gameOver()){
+    if (gameOver(g)){
         return false;
     }
 
