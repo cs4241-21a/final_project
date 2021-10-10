@@ -10,9 +10,16 @@ class AvailabilitySchedule extends React.Component {
         let numDays = event.availableDates.length
         let hourlyChunks = 1 / event.meetingDuration
         let minTime = event.availableTimes[0][0]
-        let maxTime = event.availableTimes[0][event.availableTimes.length - 1]
+        let maxTime = event.availableTimes[0][event.availableTimes[0].length - 1]
 
+        // Find current schedule if it exists
         let currSchedule = []
+        for(const availability of event.attendeesAvailability) {
+            if(availability.name === this.props.username) {
+                currSchedule = availability.availability
+                break
+            }
+        }
 
         this.state = {
             schedule: currSchedule,
@@ -26,8 +33,22 @@ class AvailabilitySchedule extends React.Component {
         this.handleChange = this.handleChange.bind(this)
     }
 
+    convertSelectionToAvailability(selection, event) {
+        let selectionObj = {}
+        for(let selected of selection) {
+            
+        }
+
+        for(let i = 0; i < this.state.numDays; i++) {
+            
+        }
+
+        return selectionObj
+    }
+
     handleChange(newSchedule) {
-        console.log(newSchedule)
+        // newSchedule = this.convertSelectionToAvailability(newSchedule)
+
         this.props.updateEvent(this.props.event._id, newSchedule)
         this.setState({
             schedule: newSchedule

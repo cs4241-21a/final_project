@@ -29,47 +29,48 @@ class PendingEventList extends React.Component {
         this.updateEvent = this.updateEvent.bind(this)
     }
 
-    convertSelectionToAvailability(selection) {
-        console.log(selection)
-    }
-
     updateEvent(eventID, selection) {
         let newEvents = this.state.events;
-        for(let event of newEvents) {
+        let event = null
+
+        for(let currEvent of newEvents) {
             // Add correct availability to the given event
-            if(event._id === eventID) {
-                event.availability = selection
-                this.setState({
-                    events: newEvents,
-                    username: this.state.username,
-                })
-                return
+            if(currEvent._id === eventID) {
+                event = currEvent
+                break
             }
         }
 
-        throw new Error(eventID + " not found in events state")
+        if(event == null) {
+            throw new Error(eventID + " not found in events state")
+        }
+        else {
+            event.availability = selection
+            this.setState({
+                events: newEvents,
+                username: this.state.username,
+            })
+        }
     }
 
     addUserAvail(event) {
-        async function buttonClickEvent() {
-            const json = {
-                eventID: event._id,
-                attendeesAvailArray: event.availability
-            },
-            body = JSON.stringify(json);
-        
-            // submit new value
-            await fetch('/addUserAvail', {
-                method: 'POST',
-                body,
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
-        
+        const json = {
+            eventID: event._id,
+            attendeesAvailArray: event.availability
+        },
+        body = JSON.stringify(json);
+    
+        // submit new value
+        fetch('/addUserAvail', {
+            method: 'POST',
+            body,
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(response => {
             window.location.reload();
-        }
-        return buttonClickEvent;
+        })
     }
 
     render() {
@@ -108,7 +109,7 @@ class PendingEventList extends React.Component {
                         <AvailabilitySchedule event={event} username={this.state.username} updateEvent={this.updateEvent}/>
                         <br/>
                         <br/>
-                        <button type="button" onclick={this.addUserAvail(event)}>Accept Invite</button>
+                        <button type="button" onClick={clickEvent => this.addUserAvail(event)}>Accept Invite</button>
                     </div>
                     <br/>
                     <br/>

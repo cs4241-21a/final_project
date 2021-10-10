@@ -138,10 +138,10 @@ async function submitHandler() {
     }
 
     let startArr = eventCalendar.getStartDate().split("-");
-    let startDate = new Date(startArr[0], startArr[1], startArr[2])
+    let startDate = new Date(startArr[0], startArr[1]-1, startArr[2])
 
     let endArr = eventCalendar.getEndDate().split("-");
-    let endDate = new Date(endArr[0], endArr[1], endArr[2])
+    let endDate = new Date(endArr[0], endArr[1]-1, endArr[2])
 
     // Given an error if dates were not selected
     clearAlert();

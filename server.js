@@ -134,12 +134,28 @@ app.post('/editEvent', bodyparser.json(), async(req, res) => {
 })
 
 app.post('/addUserAvail', bodyparser.json(), async (req, res) => {
-  let userAvailObject = {name: req.session.username, filledOut:true, availability: req.body.attendeesAvailArray};
+  let userAvailObject = {name: req.session.username, filledOut:false, availability: req.body.attendeesAvailArray};
+  let eventData = await EventEntry.findById(req.body.eventID)
+  let availability = eventData.attendeesAvailability
 
-  EventEntry.findByIdAndUpdate(req.body.eventID, {$push: {attendeesAvailability: userAvailObject}})
-      .then(result => {
+  let notInAvail = true
+  for(let i = 0; i < availability.length; i++) {
+    let currName = availability[i].name 
+    if(currName === req.session.username) {
+      notInAvail = false
+      availability[i] = userAvailObject
+      break
+    }
+  }
 
-      })
+  if(notInAvail) {
+    availability.push(userAvailObject)
+  }
+
+  EventEntry.findByIdAndUpdate(req.body.eventID, {attendeesAvailability: availability})
+    .then(result => {
+      res.sendStatus(200)
+    })
 })
 
 
