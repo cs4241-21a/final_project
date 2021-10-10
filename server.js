@@ -145,11 +145,21 @@ app.post('/addSong', (req, res) => {
         if (JSON.parse(response.body).tracks) {
             const matches = JSON.parse(response.body).tracks.hits.filter(song => { return song.track.title.toLowerCase() === req.body.songName.toLowerCase() && song.track.subtitle.toLowerCase() === req.body.artistName.toLowerCase() })
             if (matches.length) {
-                db.addOrUpdateContent(req.user, matches[0].track.title, matches[0].track.subtitle, matches[0].track.images.coverarthq).then(result => {
-                    res.send({
-                        message: "Song added"
-                    })
-                    res.end()
+                db.getContectByInfo(matches[0].track.title, matches[0].track.subtitle).then(result => {
+                    if(result.length) {
+                        console.log(result)
+                        res.send({
+                            message: "Song is already in library"
+                        })
+                        res.end()
+                    } else {
+                        db.addOrUpdateContent(req.user, matches[0].track.title, matches[0].track.subtitle, matches[0].track.images.coverarthq).then(result => {
+                            res.send({
+                                message: "Song added"
+                            })
+                            res.end()
+                        })
+                    }
                 })
             } else {
                 res.send({

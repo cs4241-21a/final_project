@@ -62,6 +62,14 @@ exports.getContentById = function (_id) {
     })
 };
 
+exports.getContectByInfo = function (title, artist) {
+    return new Promise(resolve => {
+        ContentCollection().then(collection => {
+            collection.find({title: title, artist: artist}).toArray().then(data => resolve(data))
+        });
+    })
+};
+
 exports.addOrUpdateContent = function (user, title, artist, coverart, comments, id) {
     return new Promise(resolve => {
         if (id === undefined || id === '') {
