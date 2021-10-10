@@ -59,6 +59,13 @@ button:hover {
   margin-right: 0px;
 }
 
+.noHover{
+    pointer-events: none;
+}
+
+.noHover:hover{
+    cursor: not-allowed;
+}
 
 .delete_post_icon{
     margin-top: auto;
