@@ -19,6 +19,7 @@ var nodemailer = require('nodemailer');
 
 
 const User = require('./models').User;
+const watchlist = require('./models').watchlist;
 
 // app.use( express.static( 'public' ) )
 
