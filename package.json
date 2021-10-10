@@ -25,7 +25,7 @@
   },
   "scripts": {
     "clean": "rm dist/bundle.js",
-    "start": "snowpack dev",
+    "start": "node server.js",
     "build": "snowpack build"
   },
   "devDependencies": {
