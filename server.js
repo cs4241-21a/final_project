@@ -8,6 +8,18 @@ const server = http.createServer(),
 wsServer.on('connection', OnConnect);
 server.listen(3000);
 
+const roomCodeChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+function NewRoomCode() {
+    let newCode = ''
+    do {
+        for (let i = 0; i < 4; i++) {
+            let randi = Math.floor((Math.random() * roomCodeChars.length));
+            newCode += roomCodeChars.charAt(randi);
+        }  
+    } while (rooms.some((room) => room.code == newCode))
+    return newCode
+}
+
 function OnConnect(wsclient) {
     let client = {wsclient, room: null}
     wsclient.on('message', (data) => OnMessage(client, data));
@@ -27,7 +39,7 @@ function joinRoom(client, roomCode){
             room.sendGameStateToClients()
         }
         else{
-            client.send(JSON.stringify({type: "room full"}))
+            client.wsclient.send(JSON.stringify({type: "room full"}))
         }
     }
     else{
@@ -35,7 +47,7 @@ function joinRoom(client, roomCode){
         rooms.push(room)
         room.client1 = client
         client.room = room
-        client.send(JSON.stringify({type: "joined room", room: room.code}))
+        client.wsclient.send(JSON.stringify({type: "joined room", room: room.code}))
     }
 }
 
@@ -46,9 +58,72 @@ function OnMessage(client, data) {
     if (dataObject.type === "connect"){
         joinRoom(client, dataObject.room)
     }
+
+    if (dataObject.type === "place wall"){
+        placeWall(client, data.x, data.y, data.orientation)
+    }
+
+    if (dataObject.type === "move pawn"){
+        movePawn(client, data.x, data.y)
+    }
 };
 
+function placeWall(client, x, y, orientation) {
+    let pawn
+    let currentPlayer
+    let gameState = client.room.gameState
+    if (client.room.client1 === client){
+        pawn = gameState.pawnA
+        currentPlayer = gameState.currentPlayer
+    }
+    else{
+        pawn = gameState.pawnB
+        currentPlayer = !gameState.currentPlayer
+    }
+    if (!currentPlayer || !IsValidWallPlacement(gameState, pawn.walls, x, y, orientation)){
+        client.wsclient.send(JSON.stringify({type: "invalid move"}))
+    }
+    else{
+        gameState.wallSpaces[x][y] = orientation
+        pawn.walls -= 1
+        gameState.currentPlayer = !gameState.currentPlayer
+        client.room.sendGameStateToClients()
+    }
+}
+
+function movePawn(client, x, y) {
+    let pawn
+    let currentPlayer
+    let gameState = client.room.gameState
+    if (client.room.client1 === client){
+        pawn = gameState.pawnA
+        currentPlayer = gameState.currentPlayer
+    }
+    else{
+        pawn = gameState.pawnB
+        currentPlayer = !gameState.currentPlayer
+    }
+    if (!currentPlayer || !IsValidPawnMove(gameState, pawn, x, y)){
+        client.wsclient.send(JSON.stringify({type: "invalid move"}))
+    }
+    else{
+        pawn.x = x
+        pawn.y = y
+        gameState.currentPlayer = !gameState.currentPlayer
+        client.room.sendGameStateToClients()
+    }
+}
+
 function OnClose(client) {
+    let room = client.room
+    let otherClient
+    if (client === client.room.client1){
+        otherClient = room.client2
+    }
+    else{
+        otherClient = room.client1
+    }
+    otherClient.wsclient.send(JSON.stringify({type: "opponent disconnected"}))
     console.log('connection closed');
     console.log('disconnected');
 };
@@ -83,10 +158,10 @@ class Room {
     code
 
     constructor(newCode) {
-        code = newCode
+        this.code = newCode
         // Fill wall array with 0 (empty spot)
         for (let i=0; i < BOARDSIZE - 1; i++) {
-            gameState.wallSpaces[i] = new Array(BOARDSIZE - 1).fill(0);
+            this.gameState.wallSpaces[i] = new Array(BOARDSIZE - 1).fill(0);
         }
     }
 
@@ -194,6 +269,10 @@ function IsValidPawnMove(g, pawn, x, y) {
 // Checks whether a wall placement is valid
 function IsValidWallPlacement(g, walls, x, y, orientation) {
     if (!IsValidWallSpace(x, y)){
+        return false
+    }
+
+    if (orientation != 1 && orientation != 2){
         return false
     }
 
