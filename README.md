@@ -41,7 +41,6 @@ Our UI Team was tasked with fitting a lot of information into a screen and makin
 ![calendar](./calendar.png)
 
 5. What each group member was responsible for designing / developing.
-<<<<<<< HEAD
 ### Andrew (Backend/Database/React Development):
 - As the main developer of the Database, I was responsible for the full stack implementation of user preferences (minus setting preferences through UI).
 - I also was responsible for the development of a login system using GitHub OAuth, Passport.js, and React.
@@ -50,10 +49,6 @@ Our UI Team was tasked with fitting a lot of information into a screen and makin
     - Debugging the API
     - Filtering the API and returing a list of farmables and farming locations based on the users currently selected artifacts, weapons, and characters, along with displaying that in the Farming Display components.
     - Working with teamates to fix Data Syncronization issues
-=======
-### Andrew
-Database(some frontend, database, formatting, server handling of data & logged in users), Calendar, setting materials based on user preferences, Github Authentication & Users (frontend/middleware), automatically update database on updated prefs, assisted on API import and debugging.
->>>>>>> bbfbd21ffca806b5e7d5b502a2e9f88e424a4cef
 
 ### Nick (Backend/React Development)
 As a backend & react developer, I was responsible for assembling structure and logic on which others' code relied. This included:
