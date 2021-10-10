@@ -196,7 +196,7 @@ wss.on('connection', (socket, req) => {
                         if(lobby !== undefined) {
                           lobby.clients.forEach(c => {
                               if(c.id !== clientId) {
-                                c.send({packetType: "add_mask", cid: clientId, x: json.x, y: json.y, vx: json.vx, vy: json.vy });
+                                c.socket.send(JSON.stringify({packetType: "add_mask", cid: clientId, x: json.x, y: json.y, vx: json.vx, vy: json.vy }));
                               }
                           });
                         }else{
@@ -211,7 +211,7 @@ wss.on('connection', (socket, req) => {
                           // TODO: remove from lobby.viruses
                           lobby.clients.forEach(c => {
                               if(c.id !== clientId) {
-                                c.send({packetType: "destroy_virus", eid: json.eid});
+                                c.socket.send(JSON.stringify({packetType: "destroy_virus", eid: json.eid}));
                               }
                           });
                         }else{

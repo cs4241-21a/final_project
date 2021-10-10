@@ -116,7 +116,7 @@ function generateMask(){
   let mask = {}
   let boost = createVector(0,4)
   boost.rotate(ship.rotation)
-  let newVel = createVector(ship.vel.x, ship.vel.y)   
+  let newVel = createVector(ship.vel.x / 2, ship.vel.y / 2)   
   let newPos = createVector(0, 50)
   newPos.rotate(ship.rotation)
   newPos.add(ship.pos);
@@ -227,7 +227,14 @@ function blinkShip(counter){
 }
 
 function checkMasksForCollisions(){
-  masks.forEach(checkForCollisions, stars)
+  masks = masks.filter(m => {
+    let hit = checkForCollisions(m, stars);
+    if(hit !== null){
+      hit.diam /= 2;
+      return false;
+    }
+    return true;
+  });
 }
 
 function checkForCollisions(curr, targets){
@@ -243,8 +250,11 @@ function checkForCollisions(curr, targets){
       //We have a collision!
       print("HIT")
       //play audio
+      
+      return t;
     }
   }
+  return null;
 }
 
 function setup() {
@@ -295,9 +305,10 @@ function draw() {
   checkEdges(ship)
   checkLives()
   moveMasks()
+  checkMasksForCollisions();
   displayMasks()
   for (let [k, v] of Object.entries(otherShips)) {
-    moveMasks(v.masks))
+    moveMasks(v.masks)
     displayMasks(v.masks)
   }
   if(GameOver){
