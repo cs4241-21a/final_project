@@ -14,9 +14,33 @@
 
 <body>
     <div id="content"></div>
-    <script>
+    
+    <h3>Room Code: <code id="room-code"></code></h3>
+    
+    <form id = "moveform">
+        <p>Please select a move type:</p>
+        <div>
+          <input type="radio" id="moveType1"
+           name="move" value="movePawn" checked>
+          <label for="moveType1">Move Pawn</label>
+      
+          <input type="radio" id="moveType2"
+           name="move" value="placeHorWall">
+          <label for="moveType2">Place Horizontal Wall</label>
+      
+          <input type="radio" id="moveType3"
+           name="move" value="placeVerWall">
+          <label for="moveType3">Place Vertical Wall</label>
+        </div>
+      </form>
+
+      <script src='../js/board.js'></script>
+
+      <script>
         window.onload = wsSetup;
     </script>
-    <h3>Room Code: <code id="room-code"></code></h3>
+
+
+
 </body>
 </html>
