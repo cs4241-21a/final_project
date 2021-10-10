@@ -238,24 +238,6 @@ const MainRoute = (): JSX.Element => {
         weaponSelect={weaponSelect}
         artifactSelect={artifactSelect}
       />
-      {/* <CharacterSelect 
-        characters={characters} 
-        preferences={charPrefs} 
-        setter={setCharPrefs}
-        loading={loading}
-      />
-      <WeaponSelect
-        weapons={weapons}
-        preferences={weaponPrefs}
-        setter={setWeaponsPrefs}
-        loading={loading}
-      />
-      <ArtifactSelect
-        artifacts={artifacts}
-        preferences={artifactPrefs}
-        setter={setArtifactPrefs}
-        loading={loading}
-      /> */}
       <FarmingDisplay farmables={activeFarmables} locations={activeLocations} />
     </>
   );
