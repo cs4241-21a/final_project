@@ -49,7 +49,7 @@ const ArtifactSelect = ({
             prop={art}
             loading={loading}
           >
-            <img src={imgSrc} alt={`${art.fullname.en}-image`} width="100px" />
+            <img src={imgSrc} alt={`${art.fullname.en}-image`} className="artifactImg"/>
             <p>{art.fullname.en}</p>
           </SelectPrefButton>
         );

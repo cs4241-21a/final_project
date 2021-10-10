@@ -1,14 +1,50 @@
 .tgl-but-off {
     background-color: transparent;
-    border-radius: 25px;
+    border: 2px solid transparent;
+    height: 250px;
 }
 
 .tgl-but-on {
     background-color: rgba(255,255,255,0.4);
     border-color: #8bd1e8;
     border-radius: 25px;
+    height: 250px;
+}
+
+.tgl-but-off:hover {
+    border: 2px solid transparent;
+    border-radius: 25px;
 }
 
 .tgl-but-on:hover {
     background-color: rgba(255,255,255,0.2);
+    border: 2px solid #fff1d1;
+    border-radius: 25px;
+}
+
+.tgl-but-off p {
+    width: 130px;
+    word-wrap: break-word;
+}
+
+.tgl-but-on p {
+    width: 130px;
+    word-wrap: break-word;
+}
+
+.artifactImg {
+    width: 120px;
+}
+
+.weaponImg {
+    width: 120px;
+}
+
+.charImg {
+    width: 120px;
+    padding-top:10px;
+}
+
+.charDataImg {
+    width: 35px
 }

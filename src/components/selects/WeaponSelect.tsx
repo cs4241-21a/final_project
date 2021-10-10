@@ -46,7 +46,7 @@ const WeaponSelect = ({
             prop={wep}
             loading={loading}
           >
-            <img src={imgSrc} alt={`${wep.fullname.en}-image`} width="100px" />
+            <img src={imgSrc} alt={`${wep.fullname.en}-image`} className="weaponImg" />
             <p>{wep.fullname.en}</p>
           </SelectPrefButton>
         )

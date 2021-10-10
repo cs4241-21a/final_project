@@ -45,9 +45,9 @@ const CharacterSelect = ({
             prop={char}
             loading={loading}
           >
-                <img src={imgSrc} alt={`${char.fullname.en}-image`} width="120px" />
-                <div item-align="start"><img src={`img/weapontype/${char.weapon}.png`} alt={`${char.weapon}-image`} width="35px" />
-                <img src={`img/elements/${char.element}.png`} alt={`${char.element}-image`} width="35px" /></div>
+                <img src={imgSrc} alt={`${char.fullname.en}-image`} className="charImg" />
+                <div item-align="start"><img src={`img/weapontype/${char.weapon}.png`} alt={`${char.weapon}-image`} className="charDataImg" />
+                <img src={`img/elements/${char.element}.png`} alt={`${char.element}-image`} className="charDataImg" /></div>
             <p>{char.fullname.en}</p>
           </SelectPrefButton>
         )
