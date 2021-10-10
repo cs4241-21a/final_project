@@ -239,6 +239,12 @@ function checkEdges(obj) {
   }
 }
 
+function checkMaskEdges(obj) {
+  if ((obj.pos.x < 0)||(obj.pos.x > width)||(obj.pos.y < 0)||(obj.pos.y > height)) {
+    masks.pop()
+  }
+}
+
 function displayShip(obj = ship) {
   push();
   translate(obj.pos.x, obj.pos.y);
@@ -284,6 +290,7 @@ function checkMasksForCollisions() {
   masks = masks.filter((m, i) => {
     let hit = checkForCollisions(m, stars, "");
     if (hit !== null) {
+      masks.pop()
       if (inLobby)
         socket.send(JSON.stringify({ packetType: "remove_mask", index: i }));
       if (inLobby && !isControllerClient)
@@ -359,17 +366,11 @@ function lossOfLife() {}
 function checkLives() {
   if (ship.lives <= 0) {
     GameOver = true;
-    image(gompei_img, 0, -100, 35, 35);
-    image(gompei_img, 40, -100, 35, 35);
-    image(gompei_img, 80, -100, 35, 35);
   } else if (ship.lives === 2) {
     image(gompei_img, 0, 30, 35, 35);
     image(gompei_img, 40, 30, 35, 35);
-    image(gompei_img, 80, -100, 35, 35);
   } else if (ship.lives === 1) {
     image(gompei_img, 0, 30, 35, 35);
-    image(gompei_img, 40, -100, 35, 35);
-    image(gompei_img, 80, -100, 35, 35);
   } else {
     image(gompei_img, 0, 30, 35, 35);
     image(gompei_img, 40, 30, 35, 35);

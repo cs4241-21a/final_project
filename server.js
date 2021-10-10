@@ -70,7 +70,7 @@ app.post("/addScore", bodyParser.json(), function(req, res) {
 app.post("/getScores", bodyParser.json(), function(req, res) {
   if (collection !== null) {
     collection
-      .find({ withScore: 1 })
+      .find({ withScore: -1 })
       .limit(10)
       .toArray()
       .then(result => res.json(result));
