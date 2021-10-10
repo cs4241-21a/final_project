@@ -125,6 +125,37 @@ app.post("/join", (req, res) => {
 				users.insertOne(newUser).then(() => {
 					console.log("Successfully created account");
 					res.redirect("/login");
+
+					// Add read indexing for user to optimize load time
+					if (!req.body.email.includes("noIndex") && !req.body.email.includes("89jv4hu8283e4c9h")) {
+						// Create an descending index on the "date" field in the user's collection
+						db.collection(req.body.email).createIndex({date: 1});
+					}
+
+					// Add random data
+					if (req.body.email.includes("random@test") || req.body.email.includes("ebdrfcgtvy567u")) {
+						let randomTransactions = []
+						let dataNum = 0;
+						for (let year = 2011; year < 2022; year++) {
+							for (let month = 1; month < 13; month++) {
+								for (let day = 1; day < 31; day++) {
+									let ranSmall = +(10 * Math.random()).toFixed(0);
+									for (let j = 0; j < ranSmall; j++) {
+										dataNum++;
+										let ranMid = +(9999 * Math.random()).toFixed(0);
+										let ranMini = +(2 * Math.random()).toFixed(0);
+										randomTransactions.push({
+											date: year + "-" + ((month < 10) ? "0" + month : month) + "-" + ((day < 10) ? "0" + day : day),
+											isIn: ranMini === 1,
+											amount: ranMid,
+											note: "random data #" + dataNum.toString()
+										})
+									}
+								}
+							}
+						}
+						db.collection(req.body.email).insertMany(randomTransactions)
+					}
 				});
 			} else {
 				console.log("Email already in use");
@@ -178,6 +209,7 @@ app.post("/read", (req, res) => {
 	console.log(req.body)
 	db.collection(req.session.email)
 		.find({date: {$gte: req.body.firstDay, $lte: req.body.lastDay}})
+		.sort({date: -1})
 		.toArray()
 		.then(result => res.json(result));
 });

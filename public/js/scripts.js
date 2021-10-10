@@ -1,3 +1,6 @@
+let loadTimes = [];
+let loadTimeTotal = 0;
+
 window.onload = function () {
 	const firstDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toLocaleDateString("en-CA");
 	const lastDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).toLocaleDateString("en-CA");
@@ -10,12 +13,17 @@ window.onload = function () {
 }
 
 function pageLoad(firstDay, lastDay) {
+	const start = new Date().getTime()
+
 	// Remove old stats
 	if (!!document.getElementById("incomeCard")) document.getElementById("statsGrid").removeChild(document.getElementById("incomeCard"))
 	if (!!document.getElementById("expensesCard")) document.getElementById("statsGrid").removeChild(document.getElementById("expensesCard"))
 
 	// Remove old data
 	document.getElementById("cards").innerHTML = "";
+
+	// Remove old loader
+	if (!!document.getElementById("loader")) document.body.removeChild(document.getElementById("loader"))
 
 	// Add loader
 	const loader = document.createElement('div')
@@ -80,7 +88,7 @@ function pageLoad(firstDay, lastDay) {
 			}
 
 			// Sort data
-			res.sort((a, b) => b.date.localeCompare(a.date));
+			// res.sort((a, b) => b.date.localeCompare(a.date));
 
 			// Group data into days
 			let jsons = [];
@@ -226,6 +234,12 @@ function pageLoad(firstDay, lastDay) {
 
 			// Remove spinner
 			document.body.removeChild(document.getElementById("loader"));
+
+			const end = new Date().getTime()
+			console.log("load took: " + (end - start).toString() + " ms")
+			loadTimes.push(end - start)
+			loadTimeTotal += (end - start)
+			console.log(`${loadTimes.length} loads processed, average ${loadTimeTotal / (loadTimes.length)}`)
 		});
 }
 
