@@ -236,6 +236,8 @@ const MainRoute = (): JSX.Element => {
         weaponSelect={weaponSelect}
         artifactSelect={artifactSelect}
       />
+      <LoginButton initPrefs={initPrefs} />
+      <ResetButton handleReset={handleReset} />
       {/* <CharacterSelect 
         characters={characters} 
         preferences={charPrefs} 
@@ -255,8 +257,6 @@ const MainRoute = (): JSX.Element => {
         loading={loading}
       /> */}
       <FarmingDisplay farmables={activeFarmables} locations={activeLocations} />
-      <LoginButton initPrefs={initPrefs} />
-      <ResetButton handleReset={handleReset} />
     </>
   );
 };

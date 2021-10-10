@@ -52,7 +52,7 @@ const LoginButton = (props: { initPrefs: () => void }): JSX.Element => {
   }, [loggedin]);
 
   return (
-    <button onClick={handleUser}>
+    <button style={{float: "right"}} onClick={handleUser}>
       <FontAwesomeIcon icon={faGithub} />
       {text}
     </button>

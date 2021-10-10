@@ -76,12 +76,12 @@ button:hover {
 
 #flyoutMenu.hide {
     transform: translate3d(-30vw, 0, 0);
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 #flyoutMenu.show {
     transform: translate3d(0vw, 0, 0);
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 #flyoutMenu h2 a {
