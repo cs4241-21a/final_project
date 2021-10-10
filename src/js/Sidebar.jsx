@@ -35,13 +35,17 @@ class Sidebar extends Component {
     console.log(GLOBAL_VARIABLES.selectedCalendarId);
   }
 
-  deleteCalendar(calId) {
+  async deleteCalendar(calId) {
     let toUpdateCalendars = JSON.parse(JSON.stringify(this.state.calendars));
+    console.log(toUpdateCalendars);
+    // console.log(toUpdateCalendars);
     let calToDelete = toUpdateCalendars[calId];
     let childrenToDelete = calToDelete.children;
-    let parentToUpdate = calToDelete.parent !== '' ? undefined : toUpdateCalendars[calToDelete.parent];
+    let parentToUpdate = calToDelete.parent === '' ? undefined : toUpdateCalendars[calToDelete.parent];
+    // console.log(parentToUpdate);
     // Delete all children of calendar
     childrenToDelete.forEach(childId => {
+      this.deleteCalendar(childId);
       databaseUtils.deleteCalendar(childId);
       delete toUpdateCalendars[childId];
     });
@@ -56,11 +60,18 @@ class Sidebar extends Component {
     // Delete calendar
     databaseUtils.deleteCalendar(calId);
     delete toUpdateCalendars[calId];
+    console.log(toUpdateCalendars);
 
+    let setStateAsync = (state) => {
+      return new Promise((resolve) => {
+        this.setState(state, resolve)
+      });
+    }
     // Reset state
-    this.setState({
+    await setStateAsync({
       calendars: toUpdateCalendars
     });
+    console.log(this.state.calendars)
   }
 
   modifyCalendar(calId) {
@@ -142,7 +153,7 @@ class Sidebar extends Component {
   }
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     let calendarSidebarItems = [];
     for(const [calId, calendar] of Object.entries(this.state.calendars)) {
       if(calendar.parent === '') {
@@ -227,12 +238,9 @@ class Sidebar extends Component {
 }
 
 function CalendarSidebarItem(props) {
-  console.log(props);
   let children = [];
-  let count = 0;
   if(props.calendars[props.calendarId].children.length !== 0) {
     props.calendars[props.calendarId].children.forEach(child => {
-      count++;
       children.push(<CalendarSidebarItem calendars={props.calendars}
                                          calendarId={child}
                                          style={{padding: '10px'}}
@@ -241,7 +249,6 @@ function CalendarSidebarItem(props) {
                                          handleChange={props.handleChange}
                                          customOnClick={() => props.customOnClick(child)}/>)});
   }
-  console.log(count);
 
   return (
     <div>
