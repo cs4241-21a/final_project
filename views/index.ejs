@@ -8,7 +8,8 @@
         <script src="./js/scripts.js" defer></script>
         <%- include("./partials/nav.ejs")%>
         <div class="container-sm row mx-auto" style="width: 70%">
-            <div id="my-calendar" class="col-sm-5 m-5 p-2 bg-light border align-self-center"></div>
+            <div id="my-calendar"></div>
+            <input type="button" onclick="location.href='/addpersonal';" value="Add Item">
             <div class="col-md-4 m-5 p-3">
                 <table style="table-layout: auto;" id="eventsTable">
                     <tr>

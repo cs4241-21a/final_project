@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include("./partials/header.ejs")%>
+    <head>
+        <link rel="stylesheet" href="./css/sakura.css" type="text/css">
+    </head>
+    <body>
+        <%- include("./partials/nav.ejs")%>
+        <h1>Add Item to Personal Calendar</h1>
+        <form id = 'personalCalNewItem' action="">
+            <p><label for="eventName">Name:</label></p>
+            <input type='text' id='eventName'>
+            <p><label for="startDateTime">Start:</label></p>
+            <input type='datetime-local' id='startDateTime'>
+            <p><label for="endDateTime">End:</label></p>
+            <input type='datetime-local' id='endDateTime'>
+            <p><label for="description">Description (optional):</label></p>
+            <input type='text' id='description'>
+            <p><label for="location">Location (optional):</label></p>
+            <input type='text' id='location'>
+        </form>
+        
+        <%- include("./partials/footer.ejs")%>
+    </body>
+</html>

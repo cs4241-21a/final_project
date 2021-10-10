@@ -233,6 +233,10 @@ app.get('/login', (req,res) => {
   res.render('login', {title:"Login Page"})
 })
 
+app.get('/addpersonal', (req,res) => {
+  res.render('addpersonal');
+})
+
 
 // 404 page
 app.use((req,res) => {
