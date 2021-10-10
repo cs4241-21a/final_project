@@ -22,27 +22,18 @@ class Sidebar extends Component {
     this.newTaskSubmit = this.newTaskSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.selectCalendar = this.selectCalendar.bind(this);
-    this.deselectCalendar = this.deselectCalendar.bind(this);
   }
 
   selectCalendar(calId) {
     GLOBAL_VARIABLES.selectedCalendarId = calId;
   }
 
-  // TODO: Need to implement this somewhere
-  deselectCalendar(calId) {
-    GLOBAL_VARIABLES.selectedCalendarId = '';
-    console.log(GLOBAL_VARIABLES.selectedCalendarId);
-  }
-
   async deleteCalendar(calId) {
     let toUpdateCalendars = JSON.parse(JSON.stringify(this.state.calendars));
     console.log(toUpdateCalendars);
-    // console.log(toUpdateCalendars);
     let calToDelete = toUpdateCalendars[calId];
     let childrenToDelete = calToDelete.children;
     let parentToUpdate = calToDelete.parent === '' ? undefined : toUpdateCalendars[calToDelete.parent];
-    // console.log(parentToUpdate);
     // Delete all children of calendar
     childrenToDelete.forEach(childId => {
       this.deleteCalendar(childId);
@@ -60,7 +51,6 @@ class Sidebar extends Component {
     // Delete calendar
     databaseUtils.deleteCalendar(calId);
     delete toUpdateCalendars[calId];
-    console.log(toUpdateCalendars);
 
     let setStateAsync = (state) => {
       return new Promise((resolve) => {
