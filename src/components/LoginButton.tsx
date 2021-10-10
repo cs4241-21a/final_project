@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 const LoginButton = (props: { initPrefs: () => void }): JSX.Element => {
-  const [loggedin, setLoggedIn] = React.useState<Boolean>(false);
-  const [text, setText] = React.useState<String>("");
+  const [loggedin, setLoggedIn] = React.useState<boolean>(false);
+  const [text, setText] = React.useState<string>("");
 
   const fetchlogin = () => {
     fetch("/id", {
@@ -29,6 +29,7 @@ const LoginButton = (props: { initPrefs: () => void }): JSX.Element => {
   const handleUser = () => {
     if (loggedin) {
       logout();
+      window.location.href = "/";
     } else {
       userlogin();
     }
@@ -51,7 +52,7 @@ const LoginButton = (props: { initPrefs: () => void }): JSX.Element => {
   }, [loggedin]);
 
   return (
-    <button onClick={handleUser}>
+    <button style={{float: "right"}} onClick={handleUser}>
       <FontAwesomeIcon icon={faGithub} />
       {text}
     </button>

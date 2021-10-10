@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import MenuButton from "./MenuButton";
+import Tabs from "./Tabs"
 
 class Menu extends Component {
     render() {
@@ -14,9 +15,19 @@ class Menu extends Component {
             <div id="flyoutMenu"
                 className={visibility}>
                 <h3><MenuButton handleMouseDown={this.props.handleMouseDown} /></h3>
-                <h2><a href="#">Characters</a></h2>
-                <h2><a href="#">Weapons</a></h2>
-                <h2><a href="#">Artifacts</a></h2>
+                <div>
+                    <Tabs>
+                        <div label="Characters">
+                        {this.props.characterSelect()}
+                        </div>
+                        <div label="Weapons">
+                        {this.props.weaponSelect()}
+                        </div>
+                        <div label="Artifacts">
+                        {this.props.artifactSelect()}
+                        </div>
+                    </Tabs>
+                </div>
             </div>
         );
     }

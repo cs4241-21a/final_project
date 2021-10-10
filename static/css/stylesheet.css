@@ -76,12 +76,12 @@ button:hover {
 
 #flyoutMenu.hide {
     transform: translate3d(-30vw, 0, 0);
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 #flyoutMenu.show {
     transform: translate3d(0vw, 0, 0);
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 #flyoutMenu h2 a {
@@ -89,5 +89,25 @@ button:hover {
     margin-left: 15px;
     text-decoration: none;
 }
+
+.tab-list {
+    background-color: #2a7a9c;
+    border-bottom: 1px solid #ccc;
+    padding-left: 0;
+}
+
+.tab-list-item {
+    display: inline-block;
+    list-style: none;
+    margin-bottom: -1px;
+    padding: 1rem 1.5rem;
+}
+
+.tab-list-active {
+    background-color: #246885;
+    border: solid #0065A6;
+    border-width: 1px 1px 0 1px;
+}
+
 
 /*add: media, button:hover & button:focus, textarea/input, headers, a, table*/
