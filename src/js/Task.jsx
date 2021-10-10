@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Collapsible from 'react-collapsible';
+import Popup from 'reactjs-popup';
 import databaseUtils from './databaseUtils';
 import {GLOBAL_VARIABLES} from './globals';
 import CalendarSidebarItem from './Sidebar'
@@ -16,8 +17,6 @@ const daysMap = {
     Saturday: 6
 };
 
-
-
 function Task(props){
   console.log(props);
   let description = "No Description";
@@ -27,7 +26,7 @@ function Task(props){
   
   return (
     <div>
-      <button onClick={() => props.delete(props.taskId)}><i class="far fa-trash-alt"></i></button>
+      <button onClick={() => props.delete(props.task.taskId)}><i class="far fa-trash-alt"></i></button>
       <Popup trigger={<button><i class="far fa-edit"></i></button>} position="right center">
         {close => (
               <div classname="taskEdit">
@@ -43,21 +42,21 @@ function Task(props){
                   <input type="text" 
                         name="description"
                         placeholder="Description"
-                        onChange={this.handleChange}></input>
+                        onChange={props.handleChange}></input>
                   <label htmlFor="dueDate">Due Date</label>
                   <input type="datetime-local"
                          name="dueDate"
-                         onChange={this.handleChange}
+                         onChange={props.handleChange}
                          required></input>
-                  <button onClick={() => props.modify(props.taskId)}>Update</button>
+                  <button onClick={() => props.modify(props.task.taskId)}>Update</button>
                 </form>
               </div>
             )}
       </Popup>
-      <Collapsible trigger={this.state.task.name}>
+      <Collapsible trigger={props.task.name}>
         <p>Description: {description}</p>
-        <p>Owner: {this.state.task.user}</p>
-        <p>Due Date: {this.state.task.dueDate}</p>
+        <p>Owner: {props.task.user}</p>
+        <p>Due Date: {props.task.dueDate}</p>
       </Collapsible>
     </div>
   );
