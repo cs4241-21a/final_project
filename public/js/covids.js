@@ -228,7 +228,7 @@ function blinkShip(counter){
 
 function checkMasksForCollisions(){
   masks = masks.filter((m, i) => {
-    let hit = checkForCollisions(m, stars);
+    let hit = checkForCollisions(m, stars, "");
     if(hit !== null){
       socket.send(JSON.stringify({packetType: "remove_mask", index: i}));
       if(!isControllerClient) socket.send(JSON.stringify({packetType: "hit_virus", id: hit.id}));
@@ -252,7 +252,11 @@ function damageVirus(v){
   }
 }
 
-function checkForCollisions(curr, targets){
+function displayLives(){
+  
+}
+
+function checkForCollisions(curr, targets, input){
   
   //Note this will crash if the target object does not contain a 'pos' vector.
   for (let i = 0; i < targets.length; i++){
@@ -265,6 +269,10 @@ function checkForCollisions(curr, targets){
       //We have a collision!
       print("HIT")
       //play audio
+      if (input === "ship"){
+        print("HIT SHIP")
+        curr.lives--
+      }
       
       return t;
     }
@@ -274,8 +282,7 @@ function checkForCollisions(curr, targets){
 
 function setup() {
   frameRate(60);
-  createCanvas(750, 750) //make the size of the display whatever size the window is
-                         // (might want to keep it a fixed size because of multiplayer)
+  createCanvas(750, 750) //make display constant to preserve usability for multiplayer
   generateStars()
   ship = generateShip()
   virus_img = loadImage('https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fcoronavirus.png?v=1633701999099')
@@ -295,7 +302,7 @@ function lossOfLife(){
 }
 
 function checkLives(){
-  if (ship.lives === 0){
+  if (ship.lives <= 0){
     GameOver = true
   }
 }
@@ -316,7 +323,7 @@ function draw() {
   turnShip()
   moveShip()
   //shoot()
-  checkForCollisions(ship, stars)
+  checkForCollisions(ship, stars, "ship")
   checkEdges(ship)
   checkLives()
   moveMasks()
@@ -327,6 +334,7 @@ function draw() {
     displayMasks(v.masks)
   }
   if(GameOver){
+    print("Game Over")
     return
   }
   counter++
