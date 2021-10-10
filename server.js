@@ -208,6 +208,40 @@ app.post('/addpersonal', async(req, res) => {
   res.render('index')
 })
 
+app.post('/getavailabilityfrompersonal', async(req,res) => {
+  EventEntry.findById(req.body.eventID)
+    .then(dbresponse => {
+      let dates = dbresponse.availableDates
+      let times = dbresponse.availableTimes   //need to use times[dateIndex][timeIndex] to access time list
+      let duration = dbresponse.meetingDuration
+      let availabilityArray = []
+      for(let dateIndex = 0; dateIndex<dates.length; dateIndex++){
+        for(let timeIndex = 0; timeIndex<times.length; timeIndex++){
+          let startDateTime = new Date(dates[dateIndex])
+          if(duration === 0.5){   //if duration is 0.5
+            startDateTime.setHours(Math.floor(times[dateIndex][timeIndex]))   //need to get the floor to always get hour value only
+            if(times[dateIndex][timeIndex]%1 === 1){  //if we're on a whole hour
+              startDateTime.setMinutes(0)
+            }else{  //if we're on a half hour
+              startDateTime.setMinutes(30)
+            }
+          }else if(times[dateIndex][timeIndex]%1 === 1){  //or we're on a whole hour 
+            startDateTime.setHours(times[dateIndex][timeIndex])
+          }
+
+          let endDateTime = newDate(startDateTime.getTime() + (duration*60*60*1000))  //lol janky math
+
+          CalendarEntry.find({username: {$eq: req.session.username}, startDateTime: {$lt: endDateTime}, endDateTime: {$gte: startDateTime}})
+            .then(dbresponse => {
+              if(dbresponse.length === 0){  //no results found, user is available 
+                availabilityArray.push(startDateTime)
+              }
+            })
+        }
+      }
+    })
+})
+
 
 async function checkUsernamePassword(user, pass){
   let array = [];
