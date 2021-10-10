@@ -67,6 +67,40 @@ app.post("/newData", async (req, res) => {
   res.send({username: userNameOfU})
   });
 
+  app.post("/editData", async (req, res) => {
+    // express helps us take JS objects and send them as JSON
+    
+    //Check if data aready in server
+    const dataExists = await Task.exists({username: userNameOfU, task: req.body.taskEditing, due: req.body.dateEditing});
+    const newDataExists = await Task.exists({username: userNameOfU, task: req.body.task, due: req.body.date});
+    console.log(dataExists)
+  
+    //Old data has to exist, new data can not exist
+    if( dataExists && !newDataExists ) {
+      const dataUser = await Task.findOneAndUpdate({username: userNameOfU, task: req.body.taskEditing, due: req.body.dateEditing}, 
+        {username: userNameOfU, task: req.body.task, due: req.body.date, check: req.body.check});
+      console.log("User data edited!");
+  } else {
+    console.log('Data does not exist or attempted duplicate data!')      
+  }
+  res.send({username: userNameOfU})
+  });
+
+  app.post("/deleteData", async (req, res) => {
+    // express helps us take JS objects and send them as JSON
+    console.log(req.body)
+    
+    //Check if data aready in server
+    const dataExists = await Task.exists({username: userNameOfU, task: req.body.task, due: req.body.date});
+    console.log(dataExists)
+    if( dataExists ) {
+      await Task.findOneAndDelete({username: userNameOfU, task: req.body.task, due: req.body.date})
+      console.log("User data deleted!");
+  } else {
+    console.log('Data does not exist')      
+  }
+  res.send({username: userNameOfU})
+  });
 // cookie middleware! The keys are used for encryption and should be
 // changed
 app.use( cookie({

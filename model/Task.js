@@ -4,7 +4,7 @@ const taskSchema = new mongoose.Schema({
 id: { 
     type: String,
     required: true,
-    default: ObjectId().str
+    default: "ObjectId().str"
   },
     username: {
         type: String,

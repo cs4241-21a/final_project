@@ -58,26 +58,26 @@ console.log("hello world :o");
    var checked_bool=document.getElementById("edit_checkbox"+no).checked;
   
    document.getElementById("task_row"+no).innerHTML=task_val;
-   document.getElementById("due_row"+no).innerHTML=due_val;
+   document.getElementById("date_row"+no).innerHTML=due_val;
    document.getElementById("edit_checkbox"+no).checked=checked_bool;
   
    document.getElementById("edit_button"+no).style.display="block";
    document.getElementById("save_button"+no).style.display="none";
   
-   json = { username: '', task: task_val, due: due_val, check: checked_bool, taskEditing: taskEditing, dateEditing: dateEditing, checkEditing: checkEditing},
+   json = { username: '', task: task_val, date: due_val, check: checked_bool, taskEditing: taskEditing, dateEditing: dateEditing, checkEditing: checkEditing},
          body = JSON.stringify(json);
          console.log(body)
-//    fetch('/api/user/editData', {
-//       method: 'POST',
-//       headers: {
-//               'Accept': 'application/json, text/plain, */*',
-//               'Content-Type': 'application/json'
-//             },
-//       body: body
-//     })
-//     .then(res => res) // parse the JSON from the server
-//     .then(data => {
-//       });
+   fetch('/editData', {
+      method: 'POST',
+      headers: {
+              'Accept': 'application/json, text/plain, */*',
+              'Content-Type': 'application/json'
+            },
+      body: body
+    })
+    .then(res => res) // parse the JSON from the server
+    .then(data => {
+      });
   
       isUserEditing = false;
   }
@@ -89,21 +89,21 @@ console.log("hello world :o");
       var check_val=document.getElementById("edit_checkbox"+no).textContent;
    
   
-   json = { username: '', task: task_val, date: date_val, cehck: check_val},
+   json = { username: '', task: task_val, date: date_val, check: check_val},
    body = JSON.stringify(json);
    console.log(body)
 
-//   fetch('/api/user/deleteData', {
-//   method: 'POST',
-//   headers: {
-//         'Accept': 'application/json, text/plain, */*',
-//         'Content-Type': 'application/json'
-//       },
-//   body: body
-//   })
-//   .then(res => res) // parse the JSON from the server
-//   .then(data => {
-//   });
+  fetch('/deleteData', {
+  method: 'POST',
+  headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+  body: body
+  })
+  .then(res => res) // parse the JSON from the server
+  .then(data => {
+  });
   
   document.getElementById("row"+no+"").outerHTML="";
   }
