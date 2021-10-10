@@ -14,6 +14,9 @@ const TeamSchema = new Schema({
             type: String,
         },
     ],
+    idList: [ {
+        type: String,
+    }, ],
 });
 
 

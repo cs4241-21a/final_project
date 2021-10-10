@@ -12,7 +12,7 @@ const LandingPage = () => {
             </p>
 
             <div className='league-button-border'>
-                <button className="main" onClick={ // TODO: set link to single generation page
+                <button className="main" onClick={ 
                     () => history.push('/single')}>
                     Generate Single Game
                 </button>

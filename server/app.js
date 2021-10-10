@@ -5,7 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
 var env = process.env.NODE_ENV || 'development';
-
 var app = express();
 
 if (env === 'development') {

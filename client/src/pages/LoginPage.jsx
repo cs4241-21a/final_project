@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
 
 const LoginPage = () => {
@@ -8,13 +8,6 @@ const LoginPage = () => {
         formData: { username: '', password: '' },
         error: { username: null, password: null }
     });
-
-    // Redirect to todolist page if logged in
-    // useEffect(() => {
-    //     if (token) {
-    //         history.push(`/user/${jwt_decode(token).id}`);
-    //     }
-    // }, [token, history]);
 
     // Set state on input field change
     const onInputChange = (name, value) => {
@@ -38,7 +31,7 @@ const LoginPage = () => {
             body: JSON.stringify({
                 username: state.formData.username,
                 password: state.formData.password
-            },),
+            }),
             credentials: 'include'
         }).then(async function (response) {
             const data = await response.json();
