@@ -37,12 +37,18 @@ async function editEvent(eventID){
     let attendeesList = document.getElementById('attendees' + eventID).value.split(",");
     let evntDate = document.getElementById('finalDate' + eventID).value;
     let startTime = -1
+    let getStartTime = document.getElementById('finalTime' + eventID + evntDate).value;
 
     if (evntDate === "null"){
         evntDate = null;
         startTime = null;
     } else {
-        startTime = document.getElementById('finalTime' + eventID + evntDate).value;
+        if(getStartTime % 1 == .5 ) {
+            evntTime.setHours((getStartTime - .5), 30)
+        } else {
+            evntTime.setHours(getStartTime)
+        }
+        startTime = getStartTime;
     }
     const json = {
         eventID: eventID,
