@@ -4,10 +4,6 @@ function joinWithCode(roomCode) {
     socket.send(JSON.stringify({type: 'connect', room: roomCode}));
 }
 
-function joinWithCode(roomCode) {
-    socket.send(JSON.stringify({type: 'connect', room: roomCode}));
-}
-
 function moveMyPawn(x, y) {
     socket.send(JSON.stringify({type:'move pawn', x: x, y: y}))
 }
@@ -33,4 +29,4 @@ function wsSetup() {
     socket.onerror = function (error) {
         console.log('WebSocket error: ' + error);
     };
-};
+}
