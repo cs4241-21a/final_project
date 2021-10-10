@@ -1,17 +1,26 @@
+
+var addForm = document.getElementById("addForm");
+addForm.style.display = "none";
+
 // delete the chosen watch
 function delWatch(id) {
-    const json = {id: id};
+    if(confirm("Are you sure you want to delete this watchlist?")){
+        const json = {id: id};
 
-    fetch("/del", {
-        method: "POST",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(json),
-    }).then(function (_) {
-        fetchData();
-    });
+        fetch("/del", {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(json),
+        }).then(function (_) {
+            fetchData();
+        });
+    }
+    else{
+        alert("Delete quashed!")
+    }
 }
 
 // fetch the data
@@ -119,6 +128,8 @@ function fetchData() {
 
 // edit the chosen watch
 function loadModify(id) {
+    addForm.style.display = "block";
+
     const json = {id: id};
 
     fetch("/queryWatch", {
@@ -182,33 +193,58 @@ const submit = function (e) {
             category = document.getElementById("cat").value;
             review = document.querySelector("#review");
     
-    
+    if(desc.value === ""){
+        alert("Title cannot be null!")
+    }
+    else if(score.value === ""){
+        alert("Score cannot be null!")
+    }
+    else{
         const json = {  title: desc.value,
-                        score: score.value,
-                        date: date.value,
-                        category,
-                        review: review.value
-                    };
-    
-    
+            score: score.value,
+            date: date.value,
+            category,
+            review: review.value
+        };
 
-    fetch("/add", {
-        method: "POST",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(json),
-    }).then(function (_) {
-        fetchData();
-    });
+        addForm.style.display = "none";
 
-    return false;
+        fetch("/add", {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(json),
+        }).then(function (_) {
+            fetchData();
+        });
+    }
 };
 
+const openAdd = function(e){
+    e.preventDefault()
+
+    if(addForm.style.display==="none"){
+        addForm.style.display = "block";
+    }
+    else {
+        addForm.style.display = "none";
+    }
+}
 
 window.onload = function () {
     fetchData();
 
     document.getElementById("submitButton").onclick = submit;
+
+    const openAdd_btn = document.getElementById("openAdd");
+    openAdd_btn.onclick = openAdd;
+
+    window.onclick = function(e){
+        if(e.target == addForm){
+            addForm.style.display = "none";
+        }
+      }
+
 };

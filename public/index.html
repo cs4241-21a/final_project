@@ -39,15 +39,17 @@
       </div>
       <button id="editPassword">Edit Password</button>
 
-      <div id="editformPassword">
-        <form>
-            <h3>Edit Password</h3>
-            <label>
-              New Password:
-            </label>
-            <input type="text" id="newPassword"/>
-            <button id="submitPassword">Submit Change</button>
-        </form>
+      <div id="editformPassword" class='modal'>
+        <div class='modal-content'>
+          <form>
+              <h3>Edit Password</h3>
+              <label>
+                New Password:
+              </label>
+              <input type="text" id="newPassword"/>
+              <button id="submitPassword">Submit Change</button>
+          </form>
+        </div>
     </div>
 
       <div id="attribute">
@@ -62,6 +64,8 @@
     var personal = document.getElementById("personal");
     var userId = "";
     var username = "";
+    var editPassword = document.getElementById("editformPassword");
+    editPassword.style.display = "none";
 
 
     $(function(){
@@ -193,9 +197,6 @@
       }
     }
 
-    var editPassword = document.getElementById("editformPassword");
-    editPassword.style.display = "none";
-
     const openEditPassword = function(e){
       e.preventDefault()
 
@@ -208,6 +209,12 @@
     }
 
     window.onload = function(){
+
+      window.onclick = function(e){
+          if(e.target == editPassword){
+            editPassword.style.display = "none";
+          }
+        }
 
         const button_open_edit_password = document.getElementById("editPassword")
         button_open_edit_password.onclick = openEditPassword
