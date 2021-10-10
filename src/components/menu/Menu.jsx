@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import MenuButton from "./MenuButton";
 import Tabs from "./Tabs"
-import CharacterSelect from "../selects/CharacterSelect";
-import WeaponSelect from "../selects/WeaponSelect";
-import ArtifactSelect from "../selects/ArtifactSelect";
 
 class Menu extends Component {
     render() {
@@ -21,25 +18,13 @@ class Menu extends Component {
                 <div>
                     <Tabs>
                         <div label="Characters">
-                        <CharacterSelect 
-                            characters={this.props.characters} 
-                            preferences={this.props.charPrefs} 
-                            charSetter={this.props.charSetter}
-                        />
+                        {this.props.characterSelect()}
                         </div>
                         <div label="Weapons">
-                        <WeaponSelect
-                            weapons={this.props.weapons} 
-                            weaponPrefs={this.props.weaponPrefs} 
-                            weaponSetter={this.props.weaponSetter}
-                        />
+                        {this.props.weaponSelect()}
                         </div>
                         <div label="Artifacts">
-                        <ArtifactSelect
-                            artifacts={this.props.artifacts} 
-                            artifactPrefs={this.props.artifactPrefs} 
-                            artifactSetter={this.props.artifactSetter}
-                        />
+                        {this.props.artifactSelect()}
                         </div>
                     </Tabs>
                 </div>
