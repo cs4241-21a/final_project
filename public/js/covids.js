@@ -113,11 +113,12 @@ function drawStars(){
 
 function generateMask(){
   let mask = {}
-  let boost = createVector(0,1)
+  let boost = createVector(0,2)
   boost.rotate(ship.rotation)
   let newVel = createVector(ship.vel.x, ship.vel.y)   
-  let newPos = createVector(ship.pos.x, ship.pos.y+50)
+  let newPos = createVector(0, 50)
   newPos.rotate(ship.rotation)
+  newPos.add(ship.pos);
   newVel.add(boost)
   mask.vel = createVector(newVel.x, newVel.y)
   mask.pos = createVector(newPos.x, newPos.y)
@@ -125,7 +126,6 @@ function generateMask(){
   mask.rotation = 0
   masks.push(mask)
 }
-
 
 function generateShip() {
   let sh = {};
@@ -193,8 +193,7 @@ function displayShip(obj=ship){
     text(obj.username, 0, -30);
   }
   rotate(obj.rotation)
-  filter(INVERT);
-  tint(255, 0, 0, 127);
+  // tint(255, 0, 0, 255); // could use this if the gompei img was white instead of black, might do that later
   image(gompei_img, -25, -25, obj.diam, obj.diam)
   pop();
 }
@@ -203,6 +202,7 @@ function displayMasks(){//look into image p5 rotation
   for (let i = 0; i < masks.length; i++){
     push();
     translate(masks[i].pos.x, masks[i].pos.y)
+    rotate(new Date().getTime());
     image(mask_img, -12, -12, masks[i].diam, masks[i].diam)
     pop();
   }
@@ -210,7 +210,8 @@ function displayMasks(){//look into image p5 rotation
 
 function moveMasks(){
   for (let i = 0; i < masks.length; i++){
-    
+    masks[i].pos.x += masks[i].vel.x;
+    masks[i].pos.y += masks[i].vel.y;
   }
 }
 
@@ -288,6 +289,7 @@ function draw() {
   checkForCollisions(ship, stars)
   checkEdges(ship)
   checkLives()
+  moveMasks();
   displayMasks()
   if(GameOver){
     return
