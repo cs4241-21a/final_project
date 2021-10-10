@@ -1,6 +1,7 @@
 import FlameIcon from "../icons/FlameIcon";
 import RemoveIcon from "../icons/RemoveIcon";
 import PlayIcon from "../icons/PlayIcon";
+import SpotifyWebPlayerService from "../../services/SpotifyWebPlayerService";
 
 export default function Song(props) {
     return (
@@ -8,7 +9,7 @@ export default function Song(props) {
             <div className="song__left">
                 <div className="song__index">
                     <span>{ props.index }</span>
-                    <button className="song__button" aria-label="Play song"><PlayIcon /></button>
+                    <button className="song__button" aria-label="Play song" onClick={ SpotifyWebPlayerService.togglePlay }><PlayIcon /></button>
                 </div>
                 <div className="song__image" />
                 <div className="song__details">

@@ -1,8 +1,13 @@
 import Song from "../../components/Song/Song";
+import Script from 'react-load-script';
 
 export default function PlaylistPage() {
     return (
       <div className="playlist-page">
+          <Script
+            url="https://sdk.scdn.co/spotify-player.js"
+          />
+
           <div className="playlist-page__details">
               <div className="details__left">
                   <div className="details__title">Hip Hop Party Playlist</div>
@@ -10,6 +15,7 @@ export default function PlaylistPage() {
               </div>
               <button>Add to Spotify</button>
           </div>
+
           <div className="playlist-page__song-fields">
               <div className="song-fields__left">
                   <div>#</div><div>TITLE</div>
@@ -21,6 +27,7 @@ export default function PlaylistPage() {
                   POPULARITY
               </div>
           </div>
+
           <div className="playlist-page__songs">
               <Song index={ 1 } song={ { title: 'BOP', 'author': 'DaBaby', 'duration_ms': 207959, popularity: 51 } } />
               <Song index={ 2 } song={ { title: 'Shivers', 'author': 'Ed Sheeran', 'duration_ms': 258384, popularity: 42 } } />
