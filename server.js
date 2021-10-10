@@ -190,6 +190,20 @@ wss.on('connection', (socket, req) => {
                         }
                     }
                     break;
+                  case "add_mask":
+                      {
+                        const lobby = findLobbyWithClient(clientId);
+                        if(lobby !== undefined) {
+                          lobby.clients.forEach(c => {
+                              if(c.id !== clientId) {
+                                c.send({packetType: "add_mask", cid: clientId, x: json.x, y: json.y, vx: json.vx, vy: json.vy });
+                              }
+                          });
+                        }else{
+                          console.log("Recieved " + json.packetType + " packet from client not in a lobby: " + clientId);
+                        }
+                      }
+                      break;
                   case "destroy_virus":
                       {
                         const lobby = findLobbyWithClient(clientId);

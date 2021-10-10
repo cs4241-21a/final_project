@@ -23,6 +23,7 @@ let gompei_img
 let ship = {}
 let stars = []
 let masks = []
+
 let otherShips = {};
 
 let isControllerClient = true;
@@ -113,7 +114,7 @@ function drawStars(){
 
 function generateMask(){
   let mask = {}
-  let boost = createVector(0,2)
+  let boost = createVector(0,4)
   boost.rotate(ship.rotation)
   let newVel = createVector(ship.vel.x, ship.vel.y)   
   let newPos = createVector(0, 50)
@@ -124,7 +125,8 @@ function generateMask(){
   mask.pos = createVector(newPos.x, newPos.y)
   mask.diam = mask_size
   mask.rotation = 0
-  masks.push(mask)
+  
+  return mask;
 }
 
 function generateShip() {
@@ -152,7 +154,10 @@ function turnShip() {
 function keyPressed() {
   if (keyCode === 32){
     print("SPACE")
-    generateMask()
+    let mask = generateMask();
+    masks.push(mask);
+  
+    socket.send(JSON.stringify({packetType: "add_mask", x: mask.pos.x, y: mask.pos.y, vx: mask.vel.x, vy: mask.vel.y}));
   }
 }
 
@@ -198,20 +203,20 @@ function displayShip(obj=ship){
   pop();
 }
 
-function displayMasks(){//look into image p5 rotation
-  for (let i = 0; i < masks.length; i++){
+function displayMasks(objs=masks){//look into image p5 rotation
+  for (let i = 0; i < objs.length; i++){
     push();
-    translate(masks[i].pos.x, masks[i].pos.y)
-    rotate(new Date().getTime());
-    image(mask_img, -12, -12, masks[i].diam, masks[i].diam)
+    translate(objs[i].pos.x, objs[i].pos.y)
+    rotate(i + (new Date().getTime() / 200) % (2 * Math.PI));
+    image(mask_img, -12, -12, objs[i].diam, objs[i].diam)
     pop();
   }
 }
 
-function moveMasks(){
-  for (let i = 0; i < masks.length; i++){
-    masks[i].pos.x += masks[i].vel.x;
-    masks[i].pos.y += masks[i].vel.y;
+function moveMasks(objs=masks){
+  for (let i = 0; i < objs.length; i++){
+    objs[i].pos.x += objs[i].vel.x;
+    objs[i].pos.y += objs[i].vel.y;
   }
 }
 
@@ -289,8 +294,12 @@ function draw() {
   checkForCollisions(ship, stars)
   checkEdges(ship)
   checkLives()
-  moveMasks();
+  moveMasks()
   displayMasks()
+  for (let [k, v] of Object.entries(otherShips)) {
+    moveMasks(v.masks))
+    displayMasks(v.masks)
+  }
   if(GameOver){
     return
   }
@@ -363,6 +372,7 @@ function connectWS(){
           {
             let sh = generateShip();
             sh.username = json.username;
+            sh.masks = [];
             otherShips[json.id] = sh;
           }
           break;
@@ -373,6 +383,16 @@ function connectWS(){
             otherShips[json.id].vel.x = json.vx;
             otherShips[json.id].vel.y = json.vy;
             otherShips[json.id].desRot = json.angle;
+          }
+          break;
+        case "add_mask":
+          {
+            let mask = generateMask();
+            mask.pos.x = json.x;
+            mask.pos.y = json.y;
+            mask.vel.x = json.vx;
+            mask.vel.y = json.vy;
+            otherShips[json.cid].masks.push(mask);
           }
           break;
       }
