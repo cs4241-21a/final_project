@@ -1,9 +1,9 @@
-const PlayerState = {
+export const PlayerState = {
   PAUSED: 0,
   PLAYING: 1
 }
 
-export default new (class SpotifyWebPlayerService {
+export default class SpotifyWebPlayerService {
   player;
   deviceID;
   currentTrackURI;
@@ -61,4 +61,4 @@ export default new (class SpotifyWebPlayerService {
   async playSong(id, uri) {
     await fetch(`/api/player/${id}/play?uri=${uri}`, { method: 'PUT' }).then();
   }
-})();
+};
