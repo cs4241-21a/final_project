@@ -38,8 +38,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-let profileID;
-
 passport.serializeUser(function (user, cb) {
   cb(null, user.id);
 });
@@ -67,7 +65,7 @@ app.get(
     if (request.user) {
       let user = null;
       let dbPromise_user = collection_profile
-        .findOne({ profileID: Number(profileID) })
+        .findOne({ profileID: Number(request.user) })
         .then((read_data) => (user = read_data));
 
       await dbPromise_user;
@@ -120,7 +118,7 @@ app.get("/logout", (request, response) => {
 async function handle_login(req, res) {
   let user = null;
   let dbPromise_user = collection_profile
-    .findOne({ profileID: Number(profileID) })
+    .findOne({ profileID: Number(req.user) })
     .then((read_data) => (user = read_data));
 
   await dbPromise_user;
@@ -141,8 +139,6 @@ passport.use(
       clientSecret: process.env.OUTLOOK_CLIENT_SECRET,
     },
     function (accessToken, refreshToken, profile, done) {
-      profileID = profile.id;
-
       cb(null, profile);
     }
   )
@@ -172,8 +168,6 @@ passport.use(
       callbackURL: process.env.GIT_CALLBACK_URL,
     },
     function (accessToken, refreshToken, profile, cb) {
-      profileID = profile.id;
-
       cb(null, profile);
     }
   )
@@ -201,8 +195,6 @@ passport.use(
       passReqToCallback: true,
     },
     function (request, accessToken, refreshToken, profile, done) {
-      profileID = profile.id;
-
       return done(null, profile);
     }
   )
@@ -235,8 +227,6 @@ passport.use(
       scope: scopes,
     },
     function (accessToken, refreshToken, profile, cb) {
-      profileID = profile.id;
-
       return cb(null, profile);
     }
   )
@@ -414,7 +404,7 @@ app.post("/submit", async (request, response) => {
       bodyContent: request.body.description,
       header: request.body.title,
       date: request.body.date,
-      postedByProfile: Number(profileID),
+      postedByProfile: Number(request.user),
       forClassNumber: courseNum,
       forClassDepartment: courseDep,
     })
@@ -501,15 +491,15 @@ app.get("/profile", (request, response) => {
 });
 
 app.post("/create_profile", bodyParser.json(), async (request, response) => {
-  await collection_profile.deleteMany({ profileID: Number(profileID) });
+  await collection_profile.deleteMany({ profileID: Number(request.user) });
 
   let allSkills = request.body.skills.concat(request.body.languages);
 
-  await insertStudentClassRelation(request.body.courses);
-  await insertStudentSkillRelation(allSkills);
+  await insertStudentClassRelation(request.body.courses, request);
+  await insertStudentSkillRelation(allSkills, request);
 
   jsonToInsert = {
-    profileID: Number(profileID),
+    profileID: Number(request.user),
     linkToProfilePic: "",
     bio: request.body.bio,
     firstName: request.body.firstName,
@@ -528,7 +518,7 @@ app.post("/create_profile", bodyParser.json(), async (request, response) => {
 app.post("/get_profile", bodyParser.json(), async (request, response) => {
   let profile = null;
   await collection_profile
-    .find({ profileID: Number(profileID) })
+    .find({ profileID: Number(request.user) })
     .toArray()
     .then(async (read_data) => {
       if (read_data.length > 0) {
@@ -538,12 +528,12 @@ app.post("/get_profile", bodyParser.json(), async (request, response) => {
         let studentClasses = null;
 
         await collection_studentSkillRelation
-          .find({ profileID: Number(profileID) })
+          .find({ profileID: Number(request.user) })
           .toArray()
           .then((read_data) => (studentSkills = read_data));
 
         await collection_studentClassRelation
-          .find({ profileID: Number(profileID) })
+          .find({ profileID: Number(request.user) })
           .toArray()
           .then((read_data) => (studentClasses = read_data));
 
@@ -590,9 +580,9 @@ app.post("/get_profile", bodyParser.json(), async (request, response) => {
     });
 });
 
-async function insertStudentClassRelation(classNames) {
+async function insertStudentClassRelation(classNames, request) {
   await collection_studentClassRelation.deleteMany({
-    profileID: Number(profileID),
+    profileID: Number(request.user),
   });
 
   //console.log("removed courses already there. ")
@@ -601,13 +591,13 @@ async function insertStudentClassRelation(classNames) {
     let json = null;
     if (classNames[i] === "personal") {
       json = {
-        profileID: Number(profileID),
+        profileID: Number(request.user),
         classCourseNumber: "",
         classDepartment: classNames[i],
       };
     } else {
       json = {
-        profileID: Number(profileID),
+        profileID: Number(request.user),
         classCourseNumber: classNames[i],
         classDepartment: "CS",
       };
@@ -620,16 +610,16 @@ async function insertStudentClassRelation(classNames) {
   }
 }
 
-async function insertStudentSkillRelation(skills) {
+async function insertStudentSkillRelation(skills, request) {
   await collection_studentSkillRelation.deleteMany({
-    profileID: Number(profileID),
+    profileID: Number(request.user),
   });
 
   //console.log("removed courses already there. ")
 
   for (let i = 0; i < skills.length; i++) {
     let json = {
-      profileID: Number(profileID),
+      profileID: Number(request.user),
       skill: skills[i],
     };
     //console.log("insert into studentSkillRelation: ", json)
@@ -641,12 +631,12 @@ async function insertStudentSkillRelation(skills) {
 }
 
 app.post("/delete_post", bodyParser.json(), async (request, response) => {
-  if (Number(request.body.profileID) === Number(profileID)) {
+  if (Number(request.body.profileID) === Number(request.user)) {
     await collection_post
       .deleteOne({ _id: mongodb.ObjectId(request.body.postID) })
       .then(async () => {
         await collection_postSkillRelation.deleteMany({
-          postID: mongodb.ObjectID(request.body.postID)
+          postID: mongodb.ObjectID(request.body.postID),
         });
       });
   }
