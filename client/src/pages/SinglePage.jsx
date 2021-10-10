@@ -50,9 +50,9 @@ const SinglePage = () => {
             console.log(name.toLocaleLowerCase(), images[name.toLocaleLowerCase()]);
             try {
                 element += '<li style=\'list-style-type: none;\'><img src=' + images[name.toLocaleLowerCase()].default +
-                    ' class="champ-icon"/><p>' + e + '</p></li>';
+                    ' class="champ-icon"/><p style="display: inline-block;">' + e + '</p></li>';
             } catch (err) {
-                element += '<li style=\'list-style-type: none;\'><p>' + e + '</p></li>';
+                element += '<li style=\'list-style-type: none;\'><p style="display: inline-block;">' + e + '</p></li>';
 
             }
 
