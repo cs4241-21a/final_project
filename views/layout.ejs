@@ -32,7 +32,7 @@ console.log("hello world :o");
 
       
    task.innerHTML="<input type='text' id='task_text"+no+"' value='"+task_data+"'>";
-   date.innerHTML="<input type='text' id='date_text"+no+"' value='"+date_data+"'>";
+   date.innerHTML="<input type='text' id='due_text"+no+"' value='"+date_data+"'>";
 //    check.innerHTML="<input type='checkbox' id='check_text"+no+"' checked="+check+">";
    taskEditing = task_data;
    dateEditing = date_data;
@@ -49,6 +49,7 @@ console.log("hello world :o");
   
   function save_row(no)
   {
+    console.log(document.getElementById("task_row"+no))
     console.log(document.getElementById("task_text"+no))
     console.log(taskEditing)
 
@@ -123,35 +124,38 @@ console.log("hello world :o");
          body = JSON.stringify(json);
          console.log(body)
 
-//    fetch('/api/user/newData', {
-//             method: 'POST',
-//             headers: {
-//                     'Accept': 'application/json, text/plain, */*',
-//                     'Content-Type': 'application/json'
-//                   },
-//             body: body
-//           })
-//           .then(res => res) // parse the JSON from the server
-//           .then(data => {
-//             });
-//   }
+   fetch('/newData', {
+            method: 'POST',
+            headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                  },
+            body: body
+          })
+          .then(res => res) // parse the JSON from the server
+          .then(data => {
+            });
+  }
   
-//   function add_rowFromServer(name, country, age)
-//   {
-//    var table=document.getElementById("data_table");
-//    var table_len=(table.rows.length)-1;
-//    var row = table.insertRow(table_len).outerHTML="<tr id='row"+table_len+"'><td id='name_row"+table_len+"'>"+name+"</td><td id='country_row"+table_len+"'>"+country+"</td><td id='age_row"+table_len+"'>"+age+"</td><td><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit' onclick='edit_row("+table_len+")'> <input type='button' id='save_button"+table_len+"' value='Save' class='save' onclick='save_row("+table_len+")'> <input type='button' value='Delete' class='delete' onclick='delete_row("+table_len+")'></td></tr>";
-  
+  function add_rowFromServer(task, due, check)
+  {
+   var table=document.getElementById("data_table");
+   var table_len=(table.rows.length)-1;
+   var checkString = ''
+   if(check){
+    checkString = 'checked'
+   }
+   var row = table.insertRow(table_len).outerHTML="<tr id='row"+table_len+"'><td colspan=2 id='task_row"+table_len+"'>"+task+"</td><td colspan=2 id='date_row"+table_len+"'>"+due+"</td><td colspan=2><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit' onclick='edit_row("+table_len+")'> <input type='button' id='save_button"+table_len+"' value='Save' class='save' onclick='save_row("+table_len+")'> <input type='button' id='createsubtask_button"+table_len+"' value='Create Subtask' class='create' onclick='create_sub("+table_len+")'><input type='button' value='Delete' class='delete' onclick='delete_row("+table_len+")'></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+table_len+"' class='check' "+checkString+" onclick='check_box('"+table_len+"')'> </td></tr>";
   }
 
   window.onload = function() {
-    //   fetch("/api/user/getData")
-    //   .then(response => response.json()) // parse the JSON from the server
-    //   .then(data => {
-    //       for (var i = 0; i < data.length; i++) { 
-    //           add_rowFromServer(data[i].name, data[i].country, data[i].age);
-    //       }
-    //     });
+      fetch("/getData")
+      .then(response => response.json()) // parse the JSON from the server
+      .then(data => {
+          for (var i = 0; i < data.length; i++) { 
+              add_rowFromServer(data[i].task, data[i].due, data[i].check);
+          }
+        });
     }
 
     </script>

@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const {regValidation, logValidation} = require('./validation');
 const User = require('./model/User');
+const Task = require('./model/Task');
 const cookie  = require( 'cookie-session' );
 let userNameOfU = '';
 
@@ -36,6 +37,35 @@ app.get('/help', ((req, res) => {
 app.get('/user', ((req, res) => {
     res.render('welcome')
 }))
+
+app.get("/getData", async (req, res) => {
+    // express helps us take JS objects and send them as JSON
+    const allUserData = await Task.find({username: userNameOfU})
+    res.json(allUserData);
+  });
+
+app.post("/newData", async (req, res) => {
+    // express helps us take JS objects and send them as JSON
+    console.log(req.body)
+  
+    //Check if data aready in server
+    const dataExists = await Task.exists({username: userNameOfU, task: req.body.task, due: req.body.date});
+    if( !dataExists ) {
+  
+    const data = new Task({
+      username: userNameOfU,
+      task: req.body.task,
+      due: req.body.date,
+      check: req.body.check
+  });
+      const dataUser = await data.save();
+      console.log("User data created!");
+  //Check what data user has
+  } else {
+    console.log('Duplicate contact attempted')      
+  }
+  res.send({username: userNameOfU})
+  });
 
 // cookie middleware! The keys are used for encryption and should be
 // changed
@@ -100,7 +130,7 @@ app.post('/login', async (req, res) => {
           // the session object is added to our requests by the cookie-session middleware
           req.session.login = true
           userNameOfU = req.body.username;    
-          console.log(req.session.username)
+          console.log(userNameOfU)
           console.log("Succefull log in!")
           // since login was successful, send the user to the main content
           // use redirect to avoid authentication problems when refreshing
