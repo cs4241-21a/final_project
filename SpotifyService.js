@@ -14,7 +14,10 @@ export default (new class SpotifyService {
     accessToken;
 
     constructor() {
-        // this.createPlaylist('Bopify Playlist', '').then(id => this.addSongsToPlaylist(id, ['spotify:track:6TUf1Vw59k1f7r9X8GzYdI']));
+        // this.createPlaylist('Bopify Playlist', '').then(async id => {
+        //     await this.addSongsToPlaylist(id, ['spotify:track:6TUf1Vw59k1f7r9X8GzYdI', 'spotify:track:4HTY26kzdGCKJF1EqcRd2J']);
+        //     await this.deleteSongsFromPlaylist(id, ['spotify:track:6TUf1Vw59k1f7r9X8GzYdI']);
+        // });
     }
 
     // retrieves Spotify access token from cache or accounts.spotify.com
@@ -77,10 +80,17 @@ export default (new class SpotifyService {
     // adds songs by uri to a specified playlist
     // uris should take the form ["spotify:track:{track_id}", ...]
     addSongsToPlaylist = async (id, uris) => {
-        const response = await this.request('POST', `${this.APIPath}/playlists/${id}/tracks`, {
+        await this.request('POST', `${this.APIPath}/playlists/${id}/tracks`, {
             uris: uris
         }).catch(console.error);
-        console.log(response);
+    }
+
+    // deletes songs by uri from a specified playlist
+    // uris should take the form ["spotify:track:{track_id}", ...]
+    deleteSongsFromPlaylist = async (id, uris) => {
+        await this.request('DELETE', `${this.APIPath}/playlists/${id}/tracks`, {
+            tracks: uris.map(uri => { return { uri } })
+        }).catch(console.error);
     }
 
     // get available genre seeds (not sure if we will need this)
