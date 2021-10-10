@@ -188,6 +188,22 @@ app.post('/changePassword', function(req, res){
   User.findOneAndUpdate({_id:db.ObjectId(req.body.userId)}, {password:newPassword}, {new:true}, function(err, result){});
 })
 
+app.post('/getAttribute', function(req, res){
+
+  let getAttribute = async function(){
+    let adventure_cnt = await watchlist.countDocuments({user:req.session.userId, category:'adventure'});
+    let love_cnt = await watchlist.countDocuments({user:req.session.userId, category:'love'});
+    let suspense_cnt = await watchlist.countDocuments({user:req.session.userId, category:'suspense'});
+    let sol_cnt = await watchlist.countDocuments({user:req.session.userId, category:'sol'});
+    let fantasy_cnt = await watchlist.countDocuments({user:req.session.userId, category:'fantasy'});
+
+    res.json({adventure:adventure_cnt, love:love_cnt, suspense:suspense_cnt, sol:sol_cnt, fantasy:fantasy_cnt});
+  }
+
+  getAttribute();
+  
+})
+
 // Watchlist related
 app.post('/add', auth, function (req, res) {
   req.body.user = req.session.userId;

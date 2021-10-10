@@ -15,6 +15,7 @@
 
     <!-- Import jquery -->
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
   </head>
   <body>
@@ -50,7 +51,7 @@
     </div>
 
       <div id="attribute">
-
+        <div id="myChart"></div>
       </div>
     </div>
 
@@ -75,6 +76,72 @@
         when: new Date().getHours()
       }
     })
+
+    function generateAttributeRadar(){
+      fetch('/getAttribute', {
+        method:'POST',
+        header:{'Content-Type':'application/json' }
+      })
+      .then(response => response.json)
+      .then(attribute =>{
+        drawChart(11, 21, 15, 31, 20);
+      })
+      
+    }
+
+    function drawChart(adventure, love, suspense, sol, fantasy){
+      var myConfig = {
+        type: 'radar',
+        plot: {
+          aspect: 'area',
+          animation: {
+            effect: 3,
+            sequence: 1,
+            speed: 700
+          }
+        },
+        scaleV: {
+          visible: false
+        },
+        scaleK: {
+          values: '0:4:1',
+          labels: ['Adventure', 'Love', 'Suspense', 'Slice of Life', 'Fantasy'],
+          item: {
+            fontColor: '#607D8B',
+            backgroundColor: "white",
+            borderColor: "#aeaeae",
+            borderWidth: 1,
+            padding: '5 10',
+            borderRadius: 10
+          },
+          refLine: {
+            lineColor: '#c10000'
+          },
+          tick: {
+            lineColor: '#59869c',
+            lineWidth: 2,
+            lineStyle: 'dotted',
+            size: 20
+          },
+          guide: {
+            lineColor: "#607D8B",
+            lineStyle: 'solid',
+            alpha: 0.3,
+            backgroundColor: "#c5c5c5 #718eb4"
+          }
+        },
+        series: [
+          {
+            values: [adventure, love, suspense, sol, fantasy],
+            text: 'farm'
+          }]
+      };
+
+      zingchart.render({
+        id: 'myChart',
+        data: myConfig,
+      });
+    }
 
     function getProfile(){
       fetch("/getprofile", {
@@ -151,6 +218,7 @@
         button_change_password.onclick = changePassword
 
         getProfile();
+        generateAttributeRadar();
     }  
 
   </script>
