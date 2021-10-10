@@ -182,7 +182,17 @@ const MainRoute = () : JSX.Element => {
 
   return (
     <>
-      <MenuContainer />
+      <MenuContainer 
+        characters={characters} 
+        charPrefs={charPrefs} 
+        charSetter={setCharPrefs}
+        weapons={weapons} 
+        weaponPrefs={weaponPrefs} 
+        weaponSetter={setWeaponsPrefs}
+        artifacts={artifacts} 
+        artifactPrefs={artifactPrefs} 
+        artifactSetter={setArtifactPrefs}
+      />
       <CharacterSelect 
         characters={characters} 
         preferences={charPrefs} 
