@@ -256,7 +256,7 @@ setInterval(() => {
         c.socket.send("keepalive");
     });
 
-    lobbies.forEach(l => {
+    lobbies = lobbies.filter(l => {
         let closedClients = l.clients.filter(c => c.socket.readyState != 1);
         closedClients.forEach(closed => {
             l.clients.forEach(c => {
@@ -264,6 +264,7 @@ setInterval(() => {
             });
         });
       l.clients = l.clients.filter(c => c.socket.readyState == 1);
+      return l.clients.length > 0;
     });
 
 }, 1000);

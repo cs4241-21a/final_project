@@ -3,13 +3,7 @@
   <head>
     <title>Login Page</title>
     <meta charset="utf-8" />
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@500&display=swap" rel="stylesheet">   
-    <style>
-      body {
-        margin: 0;
-        overflow: hidden;
-      }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@500&display=swap" rel="stylesheet">
   </head>
   <body>
     <div class="wrapper">
@@ -40,12 +34,13 @@
   .wrapper{
     position: relative;
     margin: auto;
-    }
+  }
     
   .login-page {
-  position: absolute;
-  top:0;
-  right: 50%;
+    position: absolute;
+    top:0;
+    left: 50%;
+    transform: translateX(-50%);
   }
  
   body { 
@@ -53,28 +48,26 @@
     font-family: 'Libre Franklin', sans-serif;
     background-color: black; 
     text-shadow: 4px 4px 4px #aaa;
-    }
+    margin: 0;
+    overflow: hidden;
+  }
   
   #container1 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
   }
     
   #container2{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
   }
     
   #highScorePage{
-  display: inline-block;
+    display: inline-block;
   }
-    
-
-    
-
   </style>
 </html>
