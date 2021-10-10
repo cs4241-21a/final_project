@@ -25,7 +25,7 @@ const login = function(e) {
       if (user.length == 0) {
         alert("Username or password is incorrect");
       } else {
-        window.location.href = "views/snake.html";
+        window.location.href = "views/covids.html";
       }
     });
   return false;
@@ -50,7 +50,7 @@ const register = function(e) {
     body: body,
     headers: { "Content-Type": "application/json" }
   }).then(response => response.json());
-  window.location.href = "snake.html";
+  window.location.href = "views/covids.html";
 };
 
 // fun background
@@ -68,6 +68,8 @@ img.src = "https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2FcoviBack
   {
     ctx.drawImage(img, 0, imgHeight);
     ctx.drawImage(img, 0, imgHeight - can.height);
+    ctx.drawImage(img, img.width, imgHeight);
+    ctx.drawImage(img, img.width, imgHeight - can.height);
   
     imgHeight += speed;
                 

@@ -1,4 +1,4 @@
-const numOfStars = 75,
+const numOfStars = 50,
       width = 750,
       height = 750,
       min_speed = .5,
@@ -285,7 +285,7 @@ function checkForCollisions(curr, targets, input){
 }
 
 function setup() {
-  frameRate(60);
+  frameRate(60)
   createCanvas(750, 750) //make display constant to preserve usability for multiplayer
   generateStars()
   ship = generateShip()

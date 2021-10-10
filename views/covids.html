@@ -4,8 +4,15 @@
     <meta charset="utf-8" />
     <base href="https://corona-game.glitch.me/" target="_blank">
     <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js"></script>
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
+    <input type="text" id="lobbyname" name="lobbyname" placeholder="lobby">
+    <input type="text" id="lobbypass" name="lobbypass" placeholder="password">
+    <button id="lobbyButton">
+      Join/Create Lobby
+    </button>
+    <text id="status">Disconnected</text>
     <script src="js/covids.js"></script>
   </body>
 </html>

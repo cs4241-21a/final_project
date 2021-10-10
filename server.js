@@ -59,8 +59,8 @@ app.get("/", (request, response) => {
   response.sendFile(__dirname + "/views/login.html");
 });
 
-app.get("/views/snake.html", (request, response) => {
-  response.sendFile(__dirname + "/views/snake.html");
+app.get("/views/covids.html", (request, response) => {
+  response.sendFile(__dirname + "/views/covids.html");
 });
 
 app.get("/views/highscore.html", (request, response) => {
