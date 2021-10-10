@@ -15,7 +15,7 @@ function delWatch(id) {
 }
 
 function fetchData() {
-    fetch('/getCategory/Adventure')
+    fetch('/getCategory/adventure')
         .then(response => response.json())
         .then(data => {
             if (data.code === 403)
@@ -28,12 +28,13 @@ function fetchData() {
                 tableData += `<td>${data[i].score}</td>`;
                 tableData += `<td>${data[i].date}</td>`;
                 tableData += `<td>${data[i].review}</td>`;
+                tableData += `<td><a href="javascript:void(0);" onclick="delWatch('${data[i]._id}');">Remove</a></td>`;
                 tableData += "</tr>";
             }
             document.getElementById("advData").innerHTML = tableData;
         });
 
-        fetch('/getCategory/Love')
+        fetch('/getCategory/love')
         .then(response => response.json())
         .then(data => {
             if (data.code === 403)
@@ -46,12 +47,13 @@ function fetchData() {
                 tableData += `<td>${data[i].score}</td>`;
                 tableData += `<td>${data[i].date}</td>`;
                 tableData += `<td>${data[i].review}</td>`;
+                tableData += `<td><a href="javascript:void(0);" onclick="delWatch('${data[i]._id}');">Remove</a></td>`;
                 tableData += "</tr>";
             }
             document.getElementById("loveData").innerHTML = tableData;
         });
 
-        fetch('/getCategory/Suspense')
+        fetch('/getCategory/suspense')
         .then(response => response.json())
         .then(data => {
             if (data.code === 403)
@@ -64,12 +66,13 @@ function fetchData() {
                 tableData += `<td>${data[i].score}</td>`;
                 tableData += `<td>${data[i].date}</td>`;
                 tableData += `<td>${data[i].review}</td>`;
+                tableData += `<td><a href="javascript:void(0);" onclick="delWatch('${data[i]._id}');">Remove</a></td>`;
                 tableData += "</tr>";
             }
             document.getElementById("susData").innerHTML = tableData;
         });
 
-        fetch('/getCategory/Sol')
+        fetch('/getCategory/sol')
         .then(response => response.json())
         .then(data => {
             if (data.code === 403)
@@ -82,12 +85,13 @@ function fetchData() {
                 tableData += `<td>${data[i].score}</td>`;
                 tableData += `<td>${data[i].date}</td>`;
                 tableData += `<td>${data[i].review}</td>`;
+                tableData += `<td><a href="javascript:void(0);" onclick="delWatch('${data[i]._id}');">Remove</a></td>`;
                 tableData += "</tr>";
             }
             document.getElementById("solData").innerHTML = tableData;
         });
 
-        fetch('/getCategory/Fantasy')
+        fetch('/getCategory/fantasy')
         .then(response => response.json())
         .then(data => {
             if (data.code === 403)
@@ -100,7 +104,7 @@ function fetchData() {
                 tableData += `<td>${data[i].score}</td>`;
                 tableData += `<td>${data[i].date}</td>`;
                 tableData += `<td>${data[i].review}</td>`;
-                tableData += `<td><a href="javascript:void(0);" onclick="delFlight('${data[i]._id}');">Remove</a></td>`;
+                tableData += `<td><a href="javascript:void(0);" onclick="delWatch('${data[i]._id}');">Remove</a></td>`;
                 tableData += "</tr>";
             }
             document.getElementById("fanData").innerHTML = tableData;
@@ -112,15 +116,20 @@ const submit = function (e) {
     e.preventDefault();
 
     const desc = document.querySelector("#title"),
-        score = document.querySelector("#score"),
-        date = document.querySelector("#date");
-        review = document.querySelector("#review");
-
-    const json = {  title: desc.value, 
-                    score: score.value, 
-                    date: date.value,
-                    review: review.value
-                };
+            score = document.querySelector("#score"),
+            date = document.querySelector("#date"),
+            category = document.getElementById("cat").value;
+            review = document.querySelector("#review");
+    
+    
+        const json = {  title: desc.value,
+                        score: score.value,
+                        date: date.value,
+                        category,
+                        review: review.value
+                    };
+    
+    
 
     fetch("/add", {
         method: "POST",

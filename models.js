@@ -17,14 +17,14 @@ const watchSchema = mongoose.Schema(
         title:{type: String },
         category: {type: String},
         score: {type: String},
-        dateWatched: {type: String},
+        date: {type: String},
         review: {type: String},
         user: {type: String}
     },
     {versionKey: false}
 );
 
-const watchModel = mongoose.model('watchlist', userSchema, 'watchlists');
+const watchModel = mongoose.model('watchlist', watchSchema, 'watchlists');
 
 module.exports = {
     User: userModel,

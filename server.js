@@ -204,6 +204,12 @@ app.get('/getCategory/:cat', auth, function (req, res) {
   });
 });
 
+app.post('/del', auth, function (req, res) {
+  watchlist.findOneAndRemove({'_id': req.body.id, 'user': req.session.userId}, function (err, docs) {
+      res.json({code: 200, msg: 'success'});
+  });
+});
+
 app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.listen(3030)
