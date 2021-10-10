@@ -256,6 +256,10 @@ function displayLives(){
   
 }
 
+function resetShip(){
+  
+}
+
 function checkForCollisions(curr, targets, input){
   
   //Note this will crash if the target object does not contain a 'pos' vector.
@@ -335,7 +339,7 @@ function draw() {
   }
   if(GameOver){
     print("Game Over")
-    return
+    return 0
   }
   counter++
 }
