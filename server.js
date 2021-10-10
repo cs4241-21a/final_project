@@ -78,6 +78,7 @@ app.get('/auth/github/callback',
     passport.authenticate('github', { failureRedirect: '/login.html' }),
     function(req, res) {
         req.session.userId = req.user;
+        req.session.username = req.body.username;
         res.redirect('/');
     }
 );
