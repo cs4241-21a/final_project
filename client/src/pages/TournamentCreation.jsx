@@ -105,8 +105,6 @@ class TournamentCreationPage extends React.Component {
   }
 
   generateTournament(e) {
-// TODO: disable button after click
-// also add a spinny loading icon
     const generateButton = document.querySelector("#generateButton")
     generateButton.disabled = true
     this.setState({spinner:<Spinner/>})

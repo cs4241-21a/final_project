@@ -26,7 +26,6 @@ router.get('/loadTeams', async function (req, res, next) {
 });
 
 router.post('/insertTeam', async (req, res, next) => {
-    // TODO: Check for invalid sum names 
     const { userId, teamName, summoners } = req.body
     console.log("insert ", req.body.userId)
     // Check if a team already has this name under this user.
@@ -36,8 +35,8 @@ router.post('/insertTeam', async (req, res, next) => {
         return;
     }
     const idList = await getList(summoners);
-    if(!(idList)){
-        res.json({error:'Invalid summoner name.'});
+    if (!(idList)) {
+        res.json({ error: 'Invalid summoner name.' });
         return;
     }
 
@@ -137,14 +136,14 @@ router.get('/single?', async (req, res, next) => {
     console.log("generating single game")
 
     const idListb = await getList(blue);
-    if(!(idListb)){
-        res.json({error:'Invalid blue side summoner name.'});
+    if (!(idListb)) {
+        res.json({ error: 'Invalid blue side summoner name.' });
         return;
     }
 
     const idListr = await getList(red);
-    if(!(idListr)){
-        res.json({error:'Invalid red side summoner name.'});
+    if (!(idListr)) {
+        res.json({ error: 'Invalid red side summoner name.' });
         return;
     }
 
@@ -165,7 +164,7 @@ async function getList(arr1) {
                     idList.push(data.id)
                 })
         }
-        catch(err){
+        catch (err) {
             return false;
         }
     }
@@ -197,7 +196,7 @@ async function generateTeams(arr, champlist) {
  * array of champion names for team 1
  * array of champion names for team 2
  */
- async function generateChamps(idList1, idList2) {
+async function generateChamps(idList1, idList2) {
     champlist = [];
     team1 = [];
     team2 = [];
