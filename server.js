@@ -92,7 +92,11 @@ function createLobby(name, password=undefined) {
             nc.socket.send(JSON.stringify({packetType: "joined", id: c.id, username: c.username}));
         });
         lobby.clients.push(nc);
-    }
+    };
+  
+    lobby.getControllerClient = () => {
+      return lobby.clients[0];
+    };
 
     return lobby;
 }
@@ -242,7 +246,11 @@ setInterval(() => {
 setInterval(() => {
     lobbies.forEach(l => {
         l.clients.forEach(c => {
-            c.socket.send(JSON.stringify({packetType: "update_viruses", viruses: l.viruses}));
+            if(c.id !== l.getControllerClient().id) {
+              c.socket.send(JSON.stringify({packetType: "update_viruses", viruses: l.viruses}));
+            } else {
+              c.socket.send(JSON.stringify({packetType: "send_field"}));
+            }
           
             // l.clients.forEach(c2 => {
             //     if(c2.id !== c.id) {

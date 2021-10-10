@@ -25,6 +25,9 @@ let stars = []
 let masks = []
 let otherShips = {};
 
+let isControllerClient = true;
+let controllerClientTimeout = null;
+
 function randomChoice(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
 }
@@ -85,8 +88,10 @@ function drawStars(){
   for (let i = 0; i < numOfStars; i++) {
     let rando_speedx = random(min_speed,max_speed)
     let rando_speedy = random(min_speed,max_speed)
-    stars[i].x += randomChoice([stars[i].dx, rando_speedx, -rando_speedx])
-    stars[i].y += randomChoice([stars[i].dy, rando_speedy, -rando_speedy])
+    if(isControllerClient){
+      stars[i].x += randomChoice([stars[i].dx, rando_speedx, -rando_speedx])
+      stars[i].y += randomChoice([stars[i].dy, rando_speedy, -rando_speedy])
+    }
     if ((stars[i].x <= width) && (stars[i].y <= height) && (stars[i].x >= 0) && (stars[i].y >= 0)) {
       stars[i].inPlay = true
     }
@@ -293,11 +298,15 @@ function connectWS(){
           {
             inLobby = true;
             document.querySelector("#lobbyname").disabled = document.querySelector("#lobbypass").disabled = document.querySelector("#lobbyButton").disabled = inLobby;
+            isControllerClient = false;
           }
           break;
         case "send_field":
           {
             socket.send(JSON.stringify({packetType: "send_field", stars}));
+            isControllerClient = true;
+            clearTimeout(controllerClientTimeout);
+            controllerClientTimeout = setTimeout(() => isControllerClient = false, 1000);
           }
           break;
         case "update_viruses":
@@ -305,7 +314,15 @@ function connectWS(){
             json.viruses.forEach(v => {
               let st = stars.find(s => s.id == v.id);
               if(st !== undefined) {
-                st.
+                st.x = v.x;
+                st.y = v.y;
+                st.dx = v.dx;
+                st.dy = v.dy;
+                st.init_x = v.init_x;
+                st.init_y = v.init_y;
+                st.inPlay = v.inPlay;
+                st.diam = v.diam;
+                st.lives = v.lives;
               }
             })
           }
