@@ -79,7 +79,7 @@ router.post('/register', async (req, res, next) => {
 // Post request to get champion names
 router.get('/getnames?', async (req, res, next) => {
   const {blue, red} = req.query
-  res.json({ status: true, blueChamps: 'aatrox,ahri,akali,akshan,alistar', redChamps: 'anivia,annie,aphelios,ashe,azir' });
+  res.json({ status: true, blueChamps: 'aatrox,ahri,akali,akshan,alistar,gnar,gragas,graves,gwen', redChamps: 'anivia,annie,aphelios,ashe,azir,jarvan,jax,jayce' });
 
 });
 
