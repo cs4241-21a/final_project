@@ -87,3 +87,8 @@ exports.register = (request, response) => {
     });
     
 }
+
+exports.logout = async (request, response) => {
+    response.status(200).render('index', {suggesteduser: null});
+}
+

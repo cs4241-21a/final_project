@@ -4,40 +4,85 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">    
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" href="/WishListLogo.png">
     <meta name="Add an Item" content="Add an item to your list">
     <title>Add an Item</title>
     <link rel="stylesheet" href="/style.css">
     <script src="/itemScript.js" defer></script>
   </head>
   <body>
-    <header>
-      <h1>Wish List</h1>
-    </header>
+    <nav>
+        <a href="/"><img src="/WishListLogo.png" class= "logo"></a>
+        
+        <ul>
+            <li><a href="/auth/logout">Logout</a></li>
+        </ul>
+    </nav>
 
-    <main>
-      <h2>Add an Item</h2>
-      <p>to List:</p>
-      <p id='listNameForItem'>Clothes</p>
+<div class="container mt-4">
+        <div class="card">
+            <div class="card-header">Add a List:</div>
 
-      <form class="newItemForm" action='/create-item' method='POST'>
-        <label for="fname">Name:</label>
-        <input type='text' id='fname' maxlength="50">
-        </br>
-        <label for="fstore">Store:</label>
-        <input type='text' id='fstore'>
-        </br>
-        <label for="flink">Link:</label>
-        <input type='url' id='flink'>
-        </br>
-        <label for="fprice">Price:</label>
-        <input type='number' id='fprice'>
-        </br>
-        <label for="fpicture">Picture:</label>
-        <input type='file' accept='image/png'  id='fpicture'>
-        </br>
-        <button type="submit" id="create-item">Create a New Item</button>
-      </form>
+            <div class="card-body">
+                <form class="newItemForm" action='/create-item' method='POST'>
 
-    </main>
+                    <div class="mb-3">
+                      <label for="faddToList" class="form-label">Add to List:</label>
+                      <div class="dropdown show">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Dropdown link
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                          <a class="dropdown-item" href="#">Action</a>
+                          <a class="dropdown-item" href="#">Another action</a>
+                          <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                      </div>
+
+                    <div class="mb-3">
+                        <label for="fname" class="form-label">Name:</label>
+                        <input type='text' class="form-control" id='fname' maxlength="50">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="fstore" class="form-label">Store:</label>
+                        <input type='text' class="form-control" id='fstore'>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="flink" class="form-label">Link:</label>
+                        <input type='url' class="form-control" id='flink'>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="fprice" class="form-label">Price:</label>
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                          </div>
+                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                          <div class="input-group-append">
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="fpicture">Default file input example</label>
+                        <input type="file" class="form-control" accept='image/png'  id='fpicture' />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id='create-item'>Add Item</button>
+                </form>
+
+            </div>
+          </div>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
+
   </body>
 </html>

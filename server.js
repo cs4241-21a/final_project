@@ -233,7 +233,7 @@ app.post( '/create-item', bodyparser.json(), function( request, response ) {
   })
 })
 
-app.post( '/login-user', bodyparser.json(), function( request, response ) {
+app.post( '/login-user', express.json(), function( request, response ) {
 
   console.log(`login-user post request: ${request}`);
   let dataString = ''
@@ -253,7 +253,7 @@ app.post( '/login-user', bodyparser.json(), function( request, response ) {
   })
 })
 
-app.post( '/current-user', bodyparser.json(), function( request, response ) {
+app.post( '/current-user', express.json(), function( request, response ) {
 
   console.log(`current-user post request: `);
   console.log(currentUser)
