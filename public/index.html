@@ -82,9 +82,9 @@
         method:'POST',
         header:{'Content-Type':'application/json' }
       })
-      .then(response => response.json)
+      .then(response => response.json())
       .then(attribute =>{
-        drawChart(11, 21, 15, 31, 20);
+        drawChart(attribute.adventure, attribute.love, attribute.suspense, attribute.sol, attribute.fantasy);
       })
       
     }
