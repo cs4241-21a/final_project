@@ -27,6 +27,7 @@ router.get('/loadTeams', async function (req, res, next) {
 });
 
 router.post('/insertTeam', async (req, res, next) => {
+    // TODO: Check for invalid sum names 
     const { userId, teamName, summoners } = req.body
     console.log("insert ", req.body.userId)
 
@@ -87,7 +88,6 @@ router.post('/generateTournament', async (req, res, next) => {
         let newMatch = await Match({
             team1: teams[i].teamName,
             champions1: team1,
-            // TODO: What do we do when there are an odd number of teams
             team2: teams[(i + 1) % teams.length].teamName,
             champions2: team2
         });
