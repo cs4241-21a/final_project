@@ -239,6 +239,8 @@ app.post('/getavailabilityfrompersonal', async(req,res) => {
             })
         }
       }
+
+      res.json(availabilityArray)
     })
 })
 
