@@ -13,7 +13,6 @@ export default (new class SpotifyService {
     accessToken;
 
     constructor() {
-        this.getGenres().then();
     }
 
     // retrieve Spotify access token for for public API authentication
@@ -40,22 +39,20 @@ export default (new class SpotifyService {
         }
     }
 
-    // get available genre seeds
+    // get available genre seeds (not sure if we will need this)
     getGenres = async () => {
-        const { genres } = await this.request('GET', `${ this.APIPath }/recommendations/available-genre-seeds`,
-            { 'Authorization': `Bearer ${ await this.getAccessToken() }` }).catch(console.error);
+        const { genres } = await this.request('GET', `${ this.APIPath }/recommendations/available-genre-seeds`).catch(console.error);
         return genres
     }
 
-    request = (method, path, headers, data=null) => {
+    request = (method, path, headers=null, data=null) => {
         const body = data ? Object.keys(data).map(k => `${k}=${ data[k] }`).join('&') : null; // url encoding of data
-        return new Promise((resolve, reject) => {
-            fetch(`${ path }`, {
+        return new Promise(async (resolve, reject) => {
+            fetch(`${path}`, {
                 method: method,
                 body,
-                headers: new Headers({ ...headers, ...this.defaultHeaders }),
+                headers: new Headers({...headers || {'Authorization': `Bearer ${await this.getAccessToken()}`}, ...this.defaultHeaders}),
             }).then(response => {
-                console.log(response);
                 if (response.ok) {
                     resolve(response.json());
                 } else {
