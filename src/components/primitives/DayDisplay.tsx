@@ -21,7 +21,7 @@ const DayDisplay = (props: {
                         return (
                             <div>
                                 {/* TODO: Have this get the image of that material */}
-                                <img className="icon" src="/img/artifacts/Adventurer.png" /> 
+                                <img className="icon" src={"/img/farmables/"+mat.name+".png"} /> 
                                 <p>{mat.fullname.en}</p>
                             </div>
                         )

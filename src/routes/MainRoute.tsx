@@ -128,7 +128,7 @@ const MainRoute = (): JSX.Element => {
               return res.name == a;
             });
             if (mat !== undefined) {
-              if (!activeFarmables.includes(mat)) {
+              if (!tempFarming.includes(mat)) {
                 tempFarming.push(mat);
               }
             }
@@ -140,7 +140,7 @@ const MainRoute = (): JSX.Element => {
               return res.name == a;
             });
             if (mat !== undefined) {
-              if (!activeFarmables.includes(mat)) {
+              if (!tempFarming.includes(mat)) {
                 tempFarming.push(mat);
               }
             }
@@ -160,7 +160,7 @@ const MainRoute = (): JSX.Element => {
               return res.name == a;
             });
             if (mat !== undefined) {
-              if (!activeFarmables.includes(mat)) {
+              if (!tempFarming.includes(mat)) {
                 tempFarming.push(mat);
               }
             }
@@ -174,7 +174,7 @@ const MainRoute = (): JSX.Element => {
           return res.name == a.name;
         });
         if (artifact !== undefined) {
-          if (!activeFarmables.includes(artifact)) {
+          if (!tempFarming.includes(artifact)) {
             tempFarming.push(artifact);
           }
         }
@@ -186,7 +186,7 @@ const MainRoute = (): JSX.Element => {
         return res.name == f.farm_at;
       });
       if (location !== undefined) {
-        if (!activeLocations.includes(location)) {
+        if (!tempLocations.includes(location)) {
           tempLocations.push(location);
         }
       }
