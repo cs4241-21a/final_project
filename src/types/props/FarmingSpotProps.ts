@@ -14,6 +14,6 @@ export default interface FarmingSpotProps extends NamedProps {
     },
     alias_of?: string,
     day_of_week: string[],
-    resin: number,
-    type: string,
+    resin: number | null,
+    type?: string,
   }
