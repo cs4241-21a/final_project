@@ -8,4 +8,6 @@ fetch("/getScores")
   .then(response => response.json())
   .then(getScores => {
     getScores.forEach(loadScores);
+  console.log(getScores);
   });
+

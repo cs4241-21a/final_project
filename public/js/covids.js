@@ -155,7 +155,6 @@ function generateMask() {
   mask.pos = createVector(newPos.x, newPos.y);
   mask.diam = mask_size;
   mask.rotation = 0;
-
   return mask;
 }
 
@@ -242,7 +241,9 @@ function checkEdges(obj) {
 function checkMaskEdges() {
   for (let i = masks.length-1; i >= 0 ;i--){
     if ((masks[i].pos.x < 0)||(masks[i].pos.x > width)||(masks[i].pos.y < 0)||(masks[i].pos.y > height)) {
-      masks.length--
+      for (let i = masks.length-1; i >= 0 ;i--){
+        
+      }
     }
   }
 }

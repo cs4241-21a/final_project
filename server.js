@@ -67,14 +67,15 @@ app.post("/addScore", bodyParser.json(), function(req, res) {
     .then(findResponse => res.json(findResponse));
 });
 
-app.post("/getScores", bodyParser.json(), function(req, res) {
+app.get("/getScores", bodyParser.json(), function(req, res) {
   if (collection !== null) {
     collection
       .find({ withScore: -1 })
-      .limit(10)
+      //.limit(10)
       .toArray()
       .then(result => res.json(result));
   }
+  console.log('here')
 });
 
 app.get("/", (request, response) => {
