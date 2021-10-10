@@ -306,6 +306,9 @@ function connectWS(){
           {
             document.querySelector("#status").innerText = "Disconnected (not logged in)";
             document.querySelector("#lobbyname").disabled = document.querySelector("#lobbypass").disabled = document.querySelector("#lobbyButton").disabled = true;
+            if(confirm("You are not logged in, so multiplayer will be unavailable.\nClick OK to go back to the login page, or Cancel to continue playing offline.")){
+              window.location = window.location.origin;
+            }
           }
           break;
         case "joined_lobby":
@@ -365,6 +368,10 @@ function connectWS(){
     }catch(e){
       console.log("[SERVER] " + event.data);
     }
+  }
+  socket.onclose = e => {
+    document.querySelector("#status").innerText = "Disconnected";
+    setTimeout(connectWS(), 2000);
   }
 }
 
