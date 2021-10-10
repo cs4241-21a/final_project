@@ -1,6 +1,6 @@
-const mysql = require('mysql');
+/* const mysql = require('mysql');
 
-const connection = mysql.createConnection({
+const con = mysql.createConnection({
   host: 'mysql.wpi.edu',
   user: 'lauren',
   password: 'n8njyP',
@@ -28,7 +28,7 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("Items Table created");
   });
-});
+}); */
 
 // connection.connect((err) => {
 //   if (err) throw err;
