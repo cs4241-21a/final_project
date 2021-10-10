@@ -214,6 +214,7 @@ app.post('/getavailabilityfrompersonal', async(req,res) => {
       let dates = dbresponse.availableDates
       let times = dbresponse.availableTimes   //need to use times[dateIndex][timeIndex] to access time list
       let duration = dbresponse.meetingDuration
+      let attAv = dbresponse.attendeesAvailability
       let availabilityArray = []
       for(let dateIndex = 0; dateIndex<dates.length; dateIndex++){
         for(let timeIndex = 0; timeIndex<times.length; timeIndex++){
@@ -239,8 +240,15 @@ app.post('/getavailabilityfrompersonal', async(req,res) => {
             })
         }
       }
-
-      res.json(availabilityArray)
+      let newAvObj = {
+        name: req.session.username,
+        availability: availabilityArray
+      }
+      attAv.push(newAvObj)
+      EventEntry.findByIdAndUpdate(req.body.eventID, {filledOut: true, attendeesAvailability: attAv})
+      .then(result =>{
+        res.json(availabilityArray)
+      })
     })
 })
 
