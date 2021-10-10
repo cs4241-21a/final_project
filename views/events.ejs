@@ -2,7 +2,7 @@
 <html lang="en">
 <%- include("./partials/header.ejs")%>
 <head>
-    <link rel="stylesheet" href="./css/sakura.css" type="text/css">
+    <!-- <link rel="stylesheet" href="./css/sakura.css" type="text/css"> -->
 </head>
 
 <body>
@@ -189,55 +189,7 @@
         <div class="col-sm-5 m-4 p-3">
             <h2>Pending Event Invites:</h2>
             <hr>
-            <% if (pendingList.length > 0) { %>
-                <% pendingList.forEach(event => { %>
-                    <div>
-                        <h3><%= event.eventName%></h3>
-                        <br>
-                        <p>Description: <%=event.description%></p>
-                        <br>
-                        <p>Location: <%=event.location%></p>
-                        <br>
-                        <p>Attendees: <%= event.attendees%></p>
-                        <br>
-                        <p>Event Date:</p>
-                        <%if(event.chosenEventDate === null){%>
-                        <p>Event date has not been chosen yet</p>
-                        <%} else {%>
-                            <p><%=event.chosenEventDate%></p>
-                        <%}%>
-                        <br>
-                        <p>Event Time:</p>
-                        <%if(event.chosenEventDate === null){%>
-                            <p>Event time has not been chosen yet</p>
-                        <%} else {%>
-                        <p><%=event.chosenStartTime%></p>
-                        <%}%>
-                        <br>
-                        <%if (!event.attendeesAvailability.some(e => e.name === sentUsername)){%>
-
-                        <form id=<%= event._id%>>
-                            <p>Open Days and Time Slots: Click and submit to update availability</p>
-                            <%for (let i = 0; i < event.availableDates.length; i++ ){ %>
-                            <fieldset>
-                            <div id="dayTimes<%=event._id%>">
-                                    <p><%=event.availableDates[i]%></p>
-                                        <%for (let j = 0; j < event.availableTimes[i].length; j++){%>
-                                        <label for="limitingTimes<%=event._id%><%=i%><%=j%>"><%=event.availableTimes[i][j]%></label>
-                                        <input id="limitingTimes<%=event._id%><%=i%><%=j%>" type="checkbox" value=<%=event.availableTimes[i][j]%>>
-                                        <%}%>
-                                </div>
-                            <br>
-                            </fieldset>
-                            <%}%>
-                            <button type="button" id="<%=event.availableDates%>" onclick="addUserAvail(parentNode.id, id)">Accept Invite</button>
-                        </form>
-                            <%}%>
-                        <hr>
-                    </div>
-                <%})%>
-            <%}%>
-
+            <div id="pendEventList" ></div>
         </div>
     </div>
 <%- include("./partials/footer.ejs")%>

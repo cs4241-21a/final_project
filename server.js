@@ -8,7 +8,7 @@ const express = require("express"),
       EventEntry = require('./models/eventModel.js'),
       cookie = require('cookie-session'),
       app = express(),
-      staticDir  = "public",
+      staticDir  = "build",
       moment = require('moment'),
       port = 8080;
 require('dotenv').config();
