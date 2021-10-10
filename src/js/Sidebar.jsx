@@ -134,6 +134,7 @@ class Sidebar extends Component {
 
   async deleteTask(taskId) {
     // copy tasks array
+    console.log(taskId);
     let toUpdateTasks = JSON.parse(JSON.stringify(this.state.tasks));
     
     // Delete task
@@ -153,7 +154,6 @@ class Sidebar extends Component {
     await setStateAsync({
       tasks: toUpdateTasks
     });
-    console.log(this.state.tasks);
   }
 
   modifyTask(taskId){

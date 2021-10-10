@@ -26,7 +26,7 @@ function Task(props){
   
   return (
     <div>
-      <button onClick={() => props.delete(props.task.taskId)}><i class="far fa-trash-alt"></i></button>
+      <button onClick={() => props.delete(props.task._id)}><i class="far fa-trash-alt"></i></button>
       <Popup trigger={<button><i class="far fa-edit"></i></button>} position="right center">
         {close => (
               <div classname="taskEdit">

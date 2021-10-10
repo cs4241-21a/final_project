@@ -141,6 +141,7 @@ app.post('/addTask', isLoggedIn, async function(req, res) {
 });
 
 app.post('/deleteTask', isLoggedIn, async function(req, res) {
+    console.log(req.body);
     let response = await database.deleteTask(req.body._id);
     res.send(response)
 });
