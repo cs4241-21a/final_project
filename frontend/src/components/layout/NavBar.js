@@ -10,6 +10,8 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 
+import {Link} from 'react-router-dom'
+
 function NavBar(props) {
   const [auth, setAuth] = React.useState(false)
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -33,6 +35,11 @@ function NavBar(props) {
     props.handleLogin();
     setAnchorEl(null);
   };
+
+  const handleLogout = () => {
+    props.handleLogout();
+    setAnchorEl(null);
+  }
 
   const handleRegister = () => {
     props.handleRegister();
@@ -86,8 +93,8 @@ function NavBar(props) {
 
               {props.loggedIn && (
                 <div>
-                  <MenuItem onClick={handleRegister}>My Account</MenuItem>
-                  <MenuItem onClick={props.handleLogout}>Sign Out</MenuItem>
+                  <MenuItem component={Link} to="/myAccount">My Account</MenuItem>
+                  <MenuItem component={Link} to="/" onClick={handleLogout}>Sign Out</MenuItem>
                 </div>
               )}
             </Menu>

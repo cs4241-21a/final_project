@@ -1,5 +1,6 @@
 import "./App.css";
 import * as React from "react";
+import { useState, useEffect } from "react";
 
 import Layout from "./components/layout/Layout";
 
@@ -15,6 +16,8 @@ import useToken from "./store/loginStore";
 import ContactsContext from "./store/favoriteContext";
 
 import { ContactsContextProvider } from "./store/favoriteContext";
+
+import MyAccountPage from './modals/MyAccountPage'
 
 const theme = createTheme({
   palette: {
@@ -90,8 +93,7 @@ function App() {
   const handleClickOpenLogin = () => {
     setOpenLogin(true);
   };
-  const handleClickOpenLogout = async (event) => {
-    event.preventDefault();
+  const handleClickOpenLogout = async () => {
     const result = await logoutUser();
     console.log("Logging out user!" + result);
   };
@@ -127,17 +129,18 @@ function App() {
             handleClose={handleClose}
           />
         )}
-        <WelcomeMessage
-          setFavorites={setShowFavorites}
-          timestamp={timestampData}
-          loggedIn={token}
-          alignment={alignment}
-          setAlignment={setAlignment}
-        />
+
         <Switch>
           <Route path="/" exact={true}>
             {token && (
               <ContactsContextProvider>
+                <WelcomeMessage
+                  setFavorites={setShowFavorites}
+                  timestamp={timestampData}
+                  loggedIn={token}
+                  alignment={alignment}
+                  setAlignment={setAlignment}
+                />
                 <BuildingList
                   data={laundryData}
                   showFavorites={showFavorites}
@@ -146,6 +149,13 @@ function App() {
             )}
             {!token && (
               <div>
+                <WelcomeMessage
+                  setFavorites={setShowFavorites}
+                  timestamp={timestampData}
+                  loggedIn={token}
+                  alignment={alignment}
+                  setAlignment={setAlignment}
+                />
                 <BuildingList
                   data={laundryData}
                   showFavorites={showFavorites}
@@ -154,7 +164,11 @@ function App() {
             )}
           </Route>
 
-          <Route path="/favorites"></Route>
+          <Route path="/myAccount">
+            {token && (
+              <MyAccountPage username={token.username}></MyAccountPage>
+            )}
+          </Route>
         </Switch>
       </Layout>
     </ThemeProvider>
