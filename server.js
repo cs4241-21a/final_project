@@ -228,22 +228,22 @@ function IsValidPawnMove(g, pawn, x, y) {
     if (directionX != 0 && directionY != 0) {
         // Check if jumping is possible
         // Check if otherPawn is adjacent
-        if (!(
-            otherPawn.x == pawn.x && otherPawn.y == y &&
-            (IsWallBlockingDir(g, otherPawn.x, otherPawn.y, 0, directionY) || IsValidPawnSpace(otherPawn.x, otherPawn.y + directionY)) &&
-            !IsWallBlockingDir(g, pawn.x, pawn.y, 0, directionY) &&
-            !IsWallBlockingDir(g, otherPawn.x, otherPawn.y, directionX, 0)
-            )){
-                return false
+        if (otherPawn.x == pawn.x && otherPawn.y == y) {
+            return (
+                (IsWallBlockingDir(g, otherPawn.x, otherPawn.y, 0, directionY) || !IsValidPawnSpace(otherPawn.x, otherPawn.y + directionY)) &&
+                !IsWallBlockingDir(g, pawn.x, pawn.y, 0, directionY) &&
+                !IsWallBlockingDir(g, otherPawn.x, otherPawn.y, directionX, 0)
+            );
         }
-        else if (!(
-            otherPawn.y == pawn.y && otherPawn.x == x &&
-            (IsWallBlockingDir(g, otherPawn.x, otherPawn.y, directionX, 0) || IsValidPawnSpace(otherPawn.x + directionX, otherPawn.y)) &&
-            !IsWallBlockingDir(g, pawn.x, pawn.y, directionX, 0) &&
-            !IsWallBlockingDir(g, otherPawn.x, otherPawn.y, 0, directionY)
-            )){
-                return false
+        else if (otherPawn.y == pawn.y && otherPawn.x == x) {
+            return (
+                (IsWallBlockingDir(g, otherPawn.x, otherPawn.y, directionX, 0) || !IsValidPawnSpace(otherPawn.x + directionX, otherPawn.y)) &&
+                !IsWallBlockingDir(g, pawn.x, pawn.y, directionX, 0) &&
+                !IsWallBlockingDir(g, otherPawn.x, otherPawn.y, 0, directionY)
+            );
         }
+        else
+            return false;
     }
     else if (Math.abs(directionX) == 2){
         if (!(otherPawn.y == pawn.y && otherPawn.x == pawn.x + directionX/2 &&
