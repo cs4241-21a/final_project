@@ -66,7 +66,11 @@ const  path = require("path");
 const  bodyparser = require('body-parser');
 
 const publicDirectory = path.join(__dirname, './public')
+const controllersDirectory = path.join(__dirname, './controllers')
+
 app.use(express.static(publicDirectory));
+app.use(express.static(controllersDirectory));
+
 
 app.set('view engine', 'hbs');
 //app.engine('hbs', require('ejs').renderFile);

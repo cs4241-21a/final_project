@@ -18,15 +18,19 @@ const db = mysql.createConnection({
 //LOGIN PAGE
 exports.login = async (request, response) => {
     try{
-
+        
         const{ username, password } = request.body;
 
+        User = () => {
+            return {username: username}
+          }
+        
         if(!username || !password ){
             return response.status(400).render('login', {
                 message: 'Username and Password fields must be completed'
             })
         }
-
+        
         db.query( 'SELECT * FROM users WHERE username = ?', [username], async (error, results) => {
             console.log(results);
             if(!results || !(await bcrypt.compare(password, results[0].password))){
@@ -34,34 +38,13 @@ exports.login = async (request, response) => {
                     message: 'Username or Password is incorrect'
                 })
             }else{
-                response.status(200).redirect('/home')
-                // const json = { username: username },
-                //     body = JSON.stringify( json )
-                // // app.post('/login-user', (req, res) => {
-                // //     res.json({username: username})
-                // // })
-                // // fetch( '/login-user', {
-                // //     method:'POST',
-                // //     body 
-                // // })
-                // // .then( function( response ) {
-                // //     return response.json()
-                // // })
-                // // .then( function( json ) {
-                // //     console.log(json)
-                // // })
-                // $.post("http://localhost:3000/login-user",{username: username}, function(response){
-                //     // if(response === 'yes') {
-                //     //     alert("login success");
-                //     // }
-                //     console.log(response)
-                // });
+                response.status(200).render('home', {suggesteduser: username});
             }
-        })
-
-    } catch (error){
-        console.log(error);
-    }
+        });
+    
+} catch (error){
+    console.log(error);
+}
 }
 
 

@@ -1,10 +1,10 @@
-const getCurrentUser = function( e ) {
+/* const getCurrentUser = function( e ) {
     // e.preventDefault()
   
     const json = { username: 'filler' },
         body = JSON.stringify( json )
   
-    fetch( '/current-user', {
+    fetch( '/login-user', {
       method:'POST',
       body 
     })
@@ -13,7 +13,7 @@ const getCurrentUser = function( e ) {
     })
     .then( function( json ) {
       console.log('json from /current-user in homeScript:')
-      console.log(json)
+      console.log(json.body)
     })
   
     return false
@@ -22,4 +22,4 @@ const getCurrentUser = function( e ) {
   window.onload = function() {
     const currentUserHome = document.querySelector( '#currentUserHome' )
     currentUserHome.innerHTML = getCurrentUser()
-  }
+  } */
