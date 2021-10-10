@@ -1,5 +1,7 @@
 # LaundryConnect 2.0!
 
+URL: https://laundry-connect-2.herokuapp.com/
+
 This project is an improvement of the current LaundryConnect website. LaundryConnect is the service which provides data on the current progress of laundry machines at WPI; however, the website does not look great and it is hard to navigate (as shown below).
 
 Our group decided we needed to improve the user interface and add functionality to save your favorite locations on campus.
