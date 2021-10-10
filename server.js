@@ -14,15 +14,20 @@ server.listen(port);
 // middleware
 server.use(express.static(dir)); // server static client build files
 
-// api routes
+// dev routes
 server.get('/api/token', async (req, res) => {
     res.redirect(SpotifyService.getRefreshTokenURL());
 });
 
-
 server.get('/callback', async (req, res) => {
     const token = await SpotifyService.getRefreshToken(req.query.code);
     res.json(`Here is your new refresh token: ${token}. Place this in process.env.REFRESH_TOKEN for private Spotify API authorization.`);
+});
+
+// api routes
+server.delete('/playlist/:id', async (req, res) => {
+    await SpotifyService.deleteSongsFromPlaylist(req.params.id, [req.query.uri]);
+    res.json(await SpotifyService.getSongsFromPlaylist(req.params.id));
 });
 
 // client routes
