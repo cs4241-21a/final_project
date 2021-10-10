@@ -1,9 +1,14 @@
 .tgl-but-off {
-    background-color: rgba(0, 150, 177, 0.1);
+    background-color: transparent;
     border-radius: 25px;
 }
 
 .tgl-but-on {
-    background-color: rgba(199, 0, 0, 0.1);
+    background-color: rgba(255,255,255,0.4);
+    border-color: #8bd1e8;
     border-radius: 25px;
+}
+
+.tgl-but-on:hover {
+    background-color: rgba(255,255,255,0.2);
 }
