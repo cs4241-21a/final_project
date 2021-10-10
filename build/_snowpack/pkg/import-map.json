@@ -1,6 +1,15 @@
 {
   "imports": {
+    "date-fns/add_days": "./date-fns/add_days.js",
+    "date-fns/add_hours": "./date-fns/add_hours.js",
+    "date-fns/add_minutes": "./date-fns/add_minutes.js",
+    "date-fns/format": "./date-fns/format.js",
+    "date-fns/is_after": "./date-fns/is_after.js",
+    "date-fns/is_before": "./date-fns/is_before.js",
+    "date-fns/is_same_minute": "./date-fns/is_same_minute.js",
+    "date-fns/start_of_day": "./date-fns/start_of_day.js",
     "react": "./react.js",
-    "react-dom": "./react-dom.js"
+    "react-dom": "./react-dom.js",
+    "styled-components": "./styled-components.js"
   }
 }

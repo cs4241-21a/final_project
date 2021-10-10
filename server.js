@@ -98,6 +98,16 @@ app.post('/loadEvents', async (req, res) =>{
     })
 })
 
+app.get('/pendingsEvents', (req, res) => {
+    EventEntry.find({$and: [{attendees: req.session.username}]}) // {owner: {$ne: req.session.username}}, {chosenEventDate: null}
+    .then(result => {
+        res.json({
+            events: result,
+            username: req.session.username,
+        })
+    })
+})
+
 
 Date.prototype.addDays = function(days) {
   let date = new Date(this.valueOf());
@@ -109,6 +119,7 @@ function getDates(startDate, stopDate) {
   let dateArray = new Array();
   let currentDate = startDate;
   while (currentDate <= stopDate) {
+    console.log("CURR DATE: " + currentDate)
     dateArray.push(new Date (currentDate));
     currentDate = currentDate.addDays(1);
   }
@@ -136,6 +147,8 @@ app.post('/createEvent', bodyparser.json(), async (req,res) => {
   console.log(req.body);
 
   let startDate = new Date(req.body.startDate);
+  console.log("START RAW: " + req.body.startDate)
+  console.log("START DATE: " + startDate)
   let endDate = new Date(req.body.endDate);
   let dateRange = getDates(startDate,endDate);
 
@@ -151,9 +164,6 @@ app.post('/createEvent', bodyparser.json(), async (req,res) => {
   }
 
   let attendeesAvailList = [];
-  /*for (let i = 0; i < fullAttendees.length; i++){
-    attendeesAvailList.push({name: fullAttendees[i], filledOut:false, availability: []});
-  }*/
 
   const entry = new EventEntry({
     owner: req.session.username,
@@ -216,10 +226,7 @@ app.get('/index', (req, res) =>{
 app.get('/events', (req,  res) => {
   EventEntry.find({owner: req.session.username})
       .then(result1 => {
-        EventEntry.find({$and: [{attendees: req.session.username}]}) // {owner: {$ne: req.session.username}}, {chosenEventDate: null}
-            .then(result2 =>{
-              res.render('events', {eventsList: result1, pendingList:result2, sentUsername: req.session.username, title:"Events"});
-            })
+          res.render('events', {eventsList: result1, sentUsername: req.session.username, title:"Events"});
       })
 })
 

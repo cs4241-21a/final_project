@@ -7,6 +7,7 @@
 
 <body>
     <script src="./js/eventsJS.js" defer></script>
+    <script type="module" src="./js/pendingEvents.js" defer></script>
     <%- include("./partials/nav.ejs")%>
     <div class="container-sm row mx-auto" style="width: 70%">
         <button type="button" onclick="openEventMaker()" id="eventMakerBtn">Make Event</button>
@@ -189,7 +190,7 @@
         <div class="col-sm-5 m-4 p-3">
             <h2>Pending Event Invites:</h2>
             <hr>
-            <div id="pendEventList" ></div>
+            <div id="pendEventList"></div>
         </div>
     </div>
 <%- include("./partials/footer.ejs")%>
