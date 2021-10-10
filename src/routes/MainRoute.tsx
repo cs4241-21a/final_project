@@ -169,7 +169,7 @@ const MainRoute = (): JSX.Element => {
       }
     });
 
-    activeFarmables.forEach((f) => {
+    tempFarming.forEach((f) => {
       let location = locations.find((res) => {
         return res.name == f.farm_at;
       });
@@ -190,6 +190,8 @@ const MainRoute = (): JSX.Element => {
     // "activeLocations" should be the locations listed per each activeFarmable's farm_at string
     // loadData();
     filterFarmablesLocations();
+    console.log("active locations: " + activeLocations);
+    console.log("active farmables: " + activeFarmables);
     if (!loading) {
       updateDB();
     }
