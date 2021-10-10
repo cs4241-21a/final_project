@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import databaseUtils from './databaseUtils';
 import {GLOBAL_VARIABLES} from './globals';
 
 const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -28,15 +29,22 @@ function getNumDaysInMonth(month) {
     return new Date(2020, month + 1, 0).getDate();
 }
 
+let calendarState = {
+    events: GLOBAL_VARIABLES.events
+}
+
 class Calendar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             month: new Date().getMonth(),
             year: new Date().getFullYear(),
+            events: GLOBAL_VARIABLES.events
         };
         this.previousMonth = this.previousMonth.bind(this);
         this.nextMonth = this.nextMonth.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.newEventSubmit = this.newEventSubmit.bind(this);
 
         console.log("All Events:")
         console.log(GLOBAL_VARIABLES.events);
@@ -68,6 +76,40 @@ class Calendar extends React.Component {
         });
     }
 
+    newEventSubmit(e){
+        e.preventDefault();
+        console.log(this.state)
+    
+        //Make new event. Relying on this.state is probably a bad idea.
+        let newEvent = {
+            user: GLOBAL_VARIABLES.userId,
+            name: this.state.name, 
+            startTime: this.state.startTime,
+            endTime: this.state.endTime,
+            description: this.state.description,
+            calendar: GLOBAL_VARIABLES.selectedCalendarId
+        };
+    
+        databaseUtils.addEvent(newEvent)
+        .then(newEventId => {
+            newEvent._id = newEventId;
+            this.setState({
+                events: [...this.state.events, newEvent]
+            })
+        })
+    }
+
+    handleChange(e) {
+        const target = e.target;
+        const value = target.value;
+        const name = target.name;
+        console.log(name, value, target);
+    
+        this.setState({
+            [name]: value
+        });
+    }
+
     render() {
         let numWeeks = 5;
         let firstDayOfMonth = daysMap[getFirstDayOfMonth(this.state.month, this.state.year)];
@@ -78,10 +120,10 @@ class Calendar extends React.Component {
 
         for(let i = 0; i < numWeeks; i++) {
             if(i === 0) {
-                weeks.push(<CalendarWeek month={this.state.month} year={this.state.year} firstDay={firstDayOfWeek} firstWeek='true'/>);
+                weeks.push(<CalendarWeek month={this.state.month} year={this.state.year} firstDay={firstDayOfWeek} firstWeek='true' changeHandler={this.handleChange} newEventSubmit={this.newEventSubmit}/>);
             } else {
                 firstDayOfWeek = 7*i - firstDayOfMonth;
-                weeks.push(<CalendarWeek month={this.state.month} year={this.state.year} firstDay={firstDayOfWeek} firstWeek='false'/>);
+                weeks.push(<CalendarWeek month={this.state.month} year={this.state.year} firstDay={firstDayOfWeek} firstWeek='false' changeHandler={this.handleChange} newEventSubmit={this.newEventSubmit}/>);
             }
         }
 
@@ -111,6 +153,8 @@ class Calendar extends React.Component {
 }
 
 function CalendarWeek(props) {
+
+    
     let days = [];
     let numDaysLastMonth = getNumDaysInMonth(props.month - 1);
     let numDaysThisMonth = getNumDaysInMonth(props.month);
@@ -120,7 +164,7 @@ function CalendarWeek(props) {
     }
 
     for(let i = 0; i < 7; i++) {
-        days.push(<CalendarDay day={++firstDayOfWeek} events={DailyEvents()}/>);
+        days.push(<CalendarDay day={++firstDayOfWeek} changeHandler={props.changeHandler} newEventSubmit={props.newEventSubmit} events={DailyEvents()}/>);
         if(firstDayOfWeek === numDaysLastMonth && (props.firstWeek === 'true')) firstDayOfWeek = 0;
         if(firstDayOfWeek === numDaysThisMonth && (props.firstWeek === 'false')) firstDayOfWeek = 0;
     }
@@ -133,6 +177,7 @@ function CalendarWeek(props) {
 }
 
 function CalendarDay(props) {
+    
     return (
         <div className='calendar-days-day'>
             <p>{props.day}</p>
@@ -140,7 +185,7 @@ function CalendarDay(props) {
                 
             </div>
             <div className="event-dialogue">
-                <EventDialogue />
+                <EventDialogue changeHandler={props.changeHandler} newEventSubmit={props.newEventSubmit}/>
             </div>
         </div>
         
@@ -199,7 +244,8 @@ function DayName(props) {
  * Make a form for creating an event
  * @returns 
  */
-function EventDialogue(){
+function EventDialogue(props){
+    console.log(props);
     return (
         <Popup trigger={<button>Add Event</button>}>
             {close => (
@@ -208,26 +254,26 @@ function EventDialogue(){
                         <label>Create your event here!</label>
                         <label>Event Name</label>
                         <div>
-                        <input type='text' name='event-name' placeholder="Event Name"></input>
-                        </div>
-
-                        <label>Event Date</label>
-                        <div>
-                        <input type='date' name='event-date' placeholder="Event Date"></input>
+                            <input type='text' name='name' placeholder="Event Name" onChange={props.changeHandler}></input>
                         </div>
 
                         <label>Start Time</label>
                         <div>
-                        <input type='time' name='event-start-time'></input>
+                            <input type='time' name='startTime' onChange={props.changeHandler}></input>
                         </div>
 
                         <label>End Time</label>
                         <div>
-                        <input type='time' name='event-end-time'></input>
+                            <input type='time' name='endTime' onChange={props.changeHandler}></input>
+                        </div>
+
+                        <label>Description</label>
+                        <div>
+                            <input type='text' name='description' placeholder="Description" onChange={props.changeHandler}></input>
                         </div>
 
                         <div class="eventButton">
-                        <button id="add-create" onclick={newEventSubmit}>Add Event</button>
+                        <button id="add-create" onClick={props.newEventSubmit}>Add Event</button>
                         </div>
                     </form>
                 </div>
@@ -242,12 +288,25 @@ function EventDialogue(){
  */
 function newEventSubmit(e){
     e.preventDefault();
+    console.log("submitting a new event...")
 
-    const newEventInput;
+    //Make new event. Relying on this.state is probably a bad idea.
     let newEvent = {
         user: GLOBAL_VARIABLES.userId,
-        name: GLOBAL_VARIABLES.selectedCalendarId
-    }
+        name: this.state.name, //change
+        startTime: this.state.startTime,
+        endTime: this.state.endTime,
+        description: this.state.description,
+        calendar: this.state.calendar
+    };
+
+    databaseUtils.addEvent(newEvent)
+    .then(newEventId => {
+        newEvent._id = newEventId;
+        this.setState({
+            events: [...this.state.events, newEvent]
+        })
+    })
 }
 
 /**

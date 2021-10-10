@@ -1,6 +1,8 @@
 import React, {Component} from "../_snowpack/pkg/react.js";
 import Popup from "../_snowpack/pkg/reactjs-popup.js";
 import "../_snowpack/pkg/reactjs-popup/dist/index.css.proxy.js";
+import databaseUtils from "./databaseUtils.js";
+import {GLOBAL_VARIABLES} from "./globals.js";
 const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const daysInWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const daysMap = {
@@ -23,15 +25,23 @@ function getFirstDayOfMonth(month, year) {
 function getNumDaysInMonth(month) {
   return new Date(2020, month + 1, 0).getDate();
 }
+let calendarState = {
+  events: GLOBAL_VARIABLES.events
+};
 class Calendar extends React.Component {
   constructor(props2) {
     super(props2);
     this.state = {
       month: new Date().getMonth(),
-      year: new Date().getFullYear()
+      year: new Date().getFullYear(),
+      events: GLOBAL_VARIABLES.events
     };
     this.previousMonth = this.previousMonth.bind(this);
     this.nextMonth = this.nextMonth.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.newEventSubmit = this.newEventSubmit.bind(this);
+    console.log("All Events:");
+    console.log(GLOBAL_VARIABLES.events);
   }
   previousMonth() {
     let newMonth = this.state.month - 1;
@@ -57,6 +67,33 @@ class Calendar extends React.Component {
       year: newYear
     });
   }
+  newEventSubmit(e) {
+    e.preventDefault();
+    console.log(this.state);
+    let newEvent = {
+      user: GLOBAL_VARIABLES.userId,
+      name: this.state.name,
+      startTime: this.state.startTime,
+      endTime: this.state.endTime,
+      description: this.state.description,
+      calendar: GLOBAL_VARIABLES.selectedCalendarId
+    };
+    databaseUtils.addEvent(newEvent).then((newEventId) => {
+      newEvent._id = newEventId;
+      this.setState({
+        events: [...this.state.events, newEvent]
+      });
+    });
+  }
+  handleChange(e) {
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
+    console.log(name, value, target);
+    this.setState({
+      [name]: value
+    });
+  }
   render() {
     let numWeeks = 5;
     let firstDayOfMonth = daysMap[getFirstDayOfMonth(this.state.month, this.state.year)];
@@ -70,7 +107,9 @@ class Calendar extends React.Component {
           month: this.state.month,
           year: this.state.year,
           firstDay: firstDayOfWeek,
-          firstWeek: "true"
+          firstWeek: "true",
+          changeHandler: this.handleChange,
+          newEventSubmit: this.newEventSubmit
         }));
       } else {
         firstDayOfWeek = 7 * i - firstDayOfMonth;
@@ -78,7 +117,9 @@ class Calendar extends React.Component {
           month: this.state.month,
           year: this.state.year,
           firstDay: firstDayOfWeek,
-          firstWeek: "false"
+          firstWeek: "false",
+          changeHandler: this.handleChange,
+          newEventSubmit: this.newEventSubmit
         }));
       }
     }
@@ -120,6 +161,8 @@ function CalendarWeek(props2) {
   for (let i = 0; i < 7; i++) {
     days.push(/* @__PURE__ */ React.createElement(CalendarDay, {
       day: ++firstDayOfWeek,
+      changeHandler: props2.changeHandler,
+      newEventSubmit: props2.newEventSubmit,
       events: DailyEvents()
     }));
     if (firstDayOfWeek === numDaysLastMonth && props2.firstWeek === "true")
@@ -136,9 +179,12 @@ function CalendarDay(props2) {
     className: "calendar-days-day"
   }, /* @__PURE__ */ React.createElement("p", null, props2.day), /* @__PURE__ */ React.createElement("div", {
     className: "daily-events"
-  }, /* @__PURE__ */ React.createElement(Event, null)), /* @__PURE__ */ React.createElement("div", {
+  }), /* @__PURE__ */ React.createElement("div", {
     className: "event-dialogue"
-  }, /* @__PURE__ */ React.createElement(EventDialogue, null)));
+  }, /* @__PURE__ */ React.createElement(EventDialogue, {
+    changeHandler: props2.changeHandler,
+    newEventSubmit: props2.newEventSubmit
+  })));
 }
 function Event(props2) {
   return /* @__PURE__ */ React.createElement(Popup, {
@@ -174,34 +220,54 @@ function DayName(props2) {
     className: "calendar-day-name"
   }, /* @__PURE__ */ React.createElement("p", null, props2.dayName));
 }
-function EventDialogue() {
+function EventDialogue(props2) {
+  console.log(props2);
   return /* @__PURE__ */ React.createElement(Popup, {
     trigger: /* @__PURE__ */ React.createElement("button", null, "Add Event")
   }, (close) => /* @__PURE__ */ React.createElement("div", {
     classname: "eventSubmit"
-  }, /* @__PURE__ */ React.createElement("form", {
-    action: "/addEvent",
-    classname: "eventForm",
-    method: "POST"
-  }, /* @__PURE__ */ React.createElement("label", null, "Create your event here!"), /* @__PURE__ */ React.createElement("label", null, "Event Name"), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("input", {
+  }, /* @__PURE__ */ React.createElement("form", null, /* @__PURE__ */ React.createElement("label", null, "Create your event here!"), /* @__PURE__ */ React.createElement("label", null, "Event Name"), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("input", {
     type: "text",
-    name: "event-name",
-    placeholder: "Event Name"
-  })), /* @__PURE__ */ React.createElement("label", null, "Event Date"), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("input", {
-    type: "date",
-    name: "event-date",
-    placeholder: "Event Date"
+    name: "name",
+    placeholder: "Event Name",
+    onChange: props2.changeHandler
   })), /* @__PURE__ */ React.createElement("label", null, "Start Time"), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("input", {
     type: "time",
-    name: "event-start-time"
+    name: "startTime",
+    onChange: props2.changeHandler
   })), /* @__PURE__ */ React.createElement("label", null, "End Time"), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("input", {
     type: "time",
-    name: "event-end-time"
+    name: "endTime",
+    onChange: props2.changeHandler
+  })), /* @__PURE__ */ React.createElement("label", null, "Description"), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("input", {
+    type: "text",
+    name: "description",
+    placeholder: "Description",
+    onChange: props2.changeHandler
   })), /* @__PURE__ */ React.createElement("div", {
     class: "eventButton"
   }, /* @__PURE__ */ React.createElement("button", {
-    id: "add-create"
+    id: "add-create",
+    onClick: props2.newEventSubmit
   }, "Add Event")))));
+}
+function newEventSubmit(e) {
+  e.preventDefault();
+  console.log("submitting a new event...");
+  let newEvent = {
+    user: GLOBAL_VARIABLES.userId,
+    name: this.state.name,
+    startTime: this.state.startTime,
+    endTime: this.state.endTime,
+    description: this.state.description,
+    calendar: this.state.calendar
+  };
+  databaseUtils.addEvent(newEvent).then((newEventId) => {
+    newEvent._id = newEventId;
+    this.setState({
+      events: [...this.state.events, newEvent]
+    });
+  });
 }
 function DailyEvents() {
   let eventNameList = [];
