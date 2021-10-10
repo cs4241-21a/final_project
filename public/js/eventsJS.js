@@ -1,7 +1,5 @@
 const createEventForm = document.getElementById("createEventForm")
 const eventName = document.getElementById('title');
-const startDate = document.getElementById('startDate');
-const endDate = document.getElementById('endDate');
 const description = document.getElementById('description');
 const eventLocation = document.getElementById('location');
 const attendees = document.getElementById('attendees');

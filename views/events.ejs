@@ -134,21 +134,45 @@
                             <select id="finalTime<%=event._id%><%=event.availableDates[i]%>" name="finalTime<%=event._id%><%=event.availableDates[i]%>">
                                 <%for (let j = 0; j < event.availableTimes[i].length; j++ ){ %>
                                     <% if (event.availableTimes[i][j] > 11.5){ %>
-                                        <% if (event.availableTimes[i][j] == 12.5 || event.availableTimes[i][j] == 12){%>
+                                        <% if (parseFloat(event.availableTimes[i][j]) % 1 !== 0.5){%>
+                                            <% if (event.availableTimes[i][j] == 12){%>
+                                            <option value=<%=event.availableTimes[i][j]%>>
+                                                <%= event.availableTimes[i][j]%>PM
+                                            </option>
+                                            <%} else if(event.availableTimes[i][j] == 24){%>
+                                            <option value=<%=event.availableTimes[i][j]%>>
+                                                <%= event.availableTimes[i][j] - 12%>AM
+                                            </option>
+                                            <% } else {%>
+                                            <option value=<%=event.availableTimes[i][j]%>>
+                                                <%= event.availableTimes[i][j] - 12%>PM
+                                            </option>
+                                            <%}%>
+                                        <%} else { %>
+                                        <% if (event.availableTimes[i][j] == 12.5){%>
+                                            <option value=<%=event.availableTimes[i][j]%>>
+                                                <%= event.availableTimes[i][j] - .5%>:30PM
+                                            </option>
+                                            <%} else if(event.availableTimes[i][j] == 24.5){%>
+                                            <option value=<%=event.availableTimes[i][j]%>>
+                                                <%= event.availableTimes[i][j] -.5 - 12%>:30AM
+                                            </option>
+                                            <% } else {%>
+                                            <option value=<%=event.availableTimes[i][j]%>>
+                                                <%= event.availableTimes[i][j] -.5 - 12%>:30PM
+                                            </option>
+                                            <%}%>
+                                       <% }%>
+                                    <%} else {%>
+                                        <%if (parseFloat(event.availableTimes[i][j]) % 1 !== 0.5) {%>
                                         <option value=<%=event.availableTimes[i][j]%>>
-                                            <%= event.availableTimes[i][j]%>PM
+                                            <%= event.availableTimes[i][j]%>AM
                                         </option>
-                                        <%} else if(event.availableTimes[i][j] == 24 || event.availableTimes[i][j] == 24.5){%>
-                                            <%= event.availableTimes[i][j] - 12%>AM
-                                        <% } else {%>
+                                        <%} else {%>
                                         <option value=<%=event.availableTimes[i][j]%>>
-                                            <%= event.availableTimes[i][j] - 12%>PM
+                                            <%= event.availableTimes[i][j] - .5%>:30AM
                                         </option>
                                         <%}%>
-                                    <%} else {%>
-                                    <option value=<%=event.availableTimes[i][j]%>>
-                                        <%= event.availableTimes[i][j]%>AM
-                                    </option>
                                     <%}%>
                                 <%}%>
                             </select>
