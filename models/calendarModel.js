@@ -15,11 +15,11 @@ const calendarSchema = new Schema({
         required: true
     },
     startDateTime: {  //used for non recurring events
-        type: String,
+        type: Date,
         required: false
     },
     endDateTime: {   //used for non recurring events
-        type: String,
+        type: Date,
         required: false
     },
     startTime: {

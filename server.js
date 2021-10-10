@@ -181,8 +181,8 @@ app.post('/refreshpersonal', async(req,res) => {
       let jsonRes = []
       for(let i = 0; i < dbresponse.length; i++){
         let calItem = {}
-        calItem.start = dbresponse[i].startDateTime
-        calItem.end = dbresponse[i].endDateTime
+        calItem.start = dbresponse[i].startDateTime.toISOString()
+        calItem.end = dbresponse[i].endDateTime.toISOString()
         calItem.title = dbresponse[i].eventName
         calItem.location = dbresponse[i].location
         calItem.description = dbresponse[i].description
@@ -199,8 +199,8 @@ app.post('/addpersonal', async(req, res) => {
     username: req.session.username,
     eventName: req.body.eventName,
     recurring: false,
-    startDateTime: req.body.startDateTime,
-    endDateTime: req.body.endDateTime,
+    startDateTime: new Date(req.body.startDateTime),
+    endDateTime: new Date(req.body.endDateTime),
     location: req.body.location,
     description: req.body.description
   })
