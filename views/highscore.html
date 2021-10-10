@@ -6,9 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Highscore page for the Covids multiplayer arcade game.">
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@500&display=swap" rel="stylesheet">
-
+    <!-- minify -->
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
+    <!-- latest -->
+    <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
+    <!-- core style only -->
+    <link href="https://unpkg.com/nes.css/css/nes-core.min.css" rel="stylesheet" />
   </head>
   <body>
+    <div id="gomp"> 
+  <img src="https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fgompeicovid.png?v=1633902904813"> 
+ </div>   
     <h1>HIGHSCORES</h1>
     <a href = "/">
       <button id="return">Login</button>
@@ -28,5 +36,25 @@
     margin: 0;
     overflow: hidden;
     }
+  
+  #gomp {
+   bottom:15%;
+   position:absolute;
+   -webkit-animation:linear infinite;
+   -webkit-animation-name:run;
+   -webkit-animation-duration:30s;
+}
+
+@-webkit-keyframes run  {
+   0% {
+      left:0;
+      -webkit-transform:rotateY(0deg);
+   }
+   
+   50% {
+      left:82%;
+      -webkit-transform:rotateY(0deg);
+   }
+
 
 </style>

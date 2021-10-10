@@ -71,6 +71,7 @@ app.post("/getScores", bodyParser.json(), function(req, res) {
   if (collection !== null) {
     collection
       .find({ withScore: 1 })
+      .limit(10)
       .toArray()
       .then(result => res.json(result));
   }
@@ -149,7 +150,19 @@ function generateClientName() {
 }
 
 function createClient(id, socket, address, username) {
-  return { id, socket, address, username, x: 0, y: 0, vx: 0, vy: 0, angle: 0, lives: 3, iframes: 0 };
+  return {
+    id,
+    socket,
+    address,
+    username,
+    x: 0,
+    y: 0,
+    vx: 0,
+    vy: 0,
+    angle: 0,
+    lives: 3,
+    iframes: 0
+  };
 }
 
 wss.on("connection", (socket, req) => {
@@ -377,7 +390,7 @@ setInterval(() => {
   allClients = allClients.filter(c => c.socket.readyState == 1); // only keep open connections
   allClients.forEach(c => {
     //console.log(c.address + ": " + c.socket.readyState);
-    if(Math.random() > 0.8) c.socket.send("keepalive");
+    if (Math.random() > 0.8) c.socket.send("keepalive");
   });
 
   lobbies = lobbies.filter(l => {

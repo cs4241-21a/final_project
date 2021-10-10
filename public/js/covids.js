@@ -209,10 +209,9 @@ function displayShip(obj=ship){
     text(obj.username, 0, -30);
   }
   rotate(obj.rotation)
-  if(obj.iframes % 8 >= 4 || obj.lives <= 0) tint(255, 0, 0, 64);
-  // tint(255, 0, 0, 255); // could use this if the gompei img was white instead of black, might do that later
-  image(gompei_img, -25, -25, obj.diam, obj.diam)
-  noTint();
+  if(obj.iframes % 4 < 3 || (obj.lives <= 0 && counter % 8 < 2)){ // avoiding tint since it seems to cause memory problems
+    image(gompei_img, -25, -25, obj.diam, obj.diam)
+  }
   pop();
 }
 
@@ -240,6 +239,7 @@ function checkMasksForCollisions(){
       if(inLobby) socket.send(JSON.stringify({packetType: "remove_mask", index: i}));
       if(inLobby && !isControllerClient) socket.send(JSON.stringify({packetType: "hit_virus", id: hit.id}));
       damageVirus(hit);
+      score += 10
       return false;
     }
     return true;
@@ -324,7 +324,9 @@ let counter = 0
 function draw() {
   if (counter >= 60) {
     counter = 0
+    score++
   }
+  counter++
   background(255)
   drawStars()
   displayShip()
@@ -374,7 +376,6 @@ function draw() {
     text("GAME OVER", 750/2, 750/2);
     return
   }
-  counter++
 }
 
 let socket = null;

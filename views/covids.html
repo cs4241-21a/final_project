@@ -7,13 +7,19 @@
     <base href="https://corona-game.glitch.me/" target="_blank">
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@500&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js"></script>
+    <!-- minify -->
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
+    <!-- latest -->
+    <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
+    <!-- core style only -->
+    <link href="https://unpkg.com/nes.css/css/nes-core.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/style.css">
   </head>
   <h1>
      Shoot the flying COVID with a mask!
   </h1>
   <p>
-    It's even more fun with friends. Start a lobby.
+    It's even more fun with friends! Start a lobby.
   </p>
   <body>
     <input type="text" id="lobbyname" name="lobbyname" placeholder="lobby">
@@ -21,7 +27,6 @@
     <button id="lobbyButton">
       Join/Create Lobby
     </button> <br>
-       
     <text id="status">Disconnected</text>
     <button id="disconnectButton" onClick="window.location.reload()">
       Disconnect
@@ -29,15 +34,12 @@
     <script src="js/covids.js"></script>
   </body>
   <style type="text/css">
-    #disconnectButton {
-      visibility:"hidden"
-    }
     
     body{
       font-family: "Libre Franklin", sans-serif;
     }
     
-    h1 {
+    h1, p {
       text-align: center;
       margin: 0;
       overflow: hidden;
