@@ -8,7 +8,10 @@ export default (new class SpotifyService {
     authPath = 'https://accounts.spotify.com';
     APIPath = 'https://api.spotify.com/v1';
     defaultScopes = [
-        'playlist-modify-public'
+        'playlist-modify-public',
+        'streaming',
+        'user-read-email',
+        'user-read-private'
     ]
     credentials = base64.encode(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`);
     accessToken;

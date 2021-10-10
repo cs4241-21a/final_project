@@ -15,7 +15,7 @@ server.listen(port);
 server.use(express.static(dir)); // server static client build files
 
 // dev routes
-server.get('/api/token', async (req, res) => {
+server.get('/dev/token', async (req, res) => {
     res.redirect(SpotifyService.getRefreshTokenURL());
 });
 
