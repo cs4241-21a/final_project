@@ -7,9 +7,6 @@ import { DateTime } from "luxon";
 export default (new class SpotifyService {
     authPath = 'https://accounts.spotify.com';
     APIPath = 'https://api.spotify.com/v1';
-    defaultHeaders = {
-        'Content-Type': 'application/json'
-    }
     defaultScopes = [
         'playlist-modify-public',
         'playlist-modify-private'
@@ -18,7 +15,6 @@ export default (new class SpotifyService {
     accessToken;
 
     constructor() {
-        this.getAccessToken().then();
     }
 
     // retrieves Spotify access token from cache or accounts.spotify.com
@@ -68,6 +64,16 @@ export default (new class SpotifyService {
         })}`
     }
 
+    // creates new playlist with a name and description, returns playlist id
+    createPlaylist = async (name, description) => {
+        const { id } = await this.request('POST', `${ this.APIPath }/users/${process.env.CLIENT_USERNAME}/playlists`, {
+            name,
+            description,
+            "public": true
+        }).catch(console.error);
+        return id;
+    }
+
     // get available genre seeds (not sure if we will need this)
     getGenres = async () => {
         const { genres } = await this.request('GET', `${ this.APIPath }/recommendations/available-genre-seeds`).catch(console.error);
@@ -77,14 +83,14 @@ export default (new class SpotifyService {
     // returns promised fetch request with automatic header authorization
     request = async (method, path, data = null, headers = 'reserved_default') => {
         if (headers === 'reserved_default') {
-            headers = { ...this.defaultHeaders, 'Authorization': `Bearer ${await this.getAccessToken()}` }
+            headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${await this.getAccessToken()}` }
         }
 
         let body;
-        if (data && headers) {
-            body = this.encodeURL(data); // encode data as url
-        } else if (data && !headers) {
-            body = JSON.stringify(data); // stringify data
+        if (data && headers['Content-Type'] === 'application/x-www-form-urlencoded') {
+            body = this.encodeURL(data); // encode URL data
+        } else if (data && headers['Content-Type'] === 'application/json') {
+            body = JSON.stringify(data); // stringify JSON data
         }
 
         return new Promise(async (resolve, reject) => {
