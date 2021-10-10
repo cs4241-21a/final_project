@@ -4,8 +4,8 @@ const app = express()
 const port = 3000
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
-const {regValidation, logValidation} = require('validation');
-const User = require('model/User');
+const {regValidation, logValidation} = require('./validation');
+const User = require('./model/User');
 const cookie  = require( 'cookie-session' );
 let userNameOfU = '';
 
@@ -14,6 +14,11 @@ dotenv.config();
 mongoose.connect(process.env.DB_CONNECT,
 { useNewUrlParser: true}, 
 () => console.log("Connected to DB"))
+
+app.use( express.urlencoded({ extended:true }) )
+
+//Middleware
+app.use(express.json());
 
 //ejs
 app.use(express.static("views"));
