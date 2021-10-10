@@ -5,7 +5,6 @@ const LeagueJS = require('leaguejs');
 const Team = require('../schemas/Team')
 const Match = require('../schemas/Match')
 const Tournament = require('../schemas/Tournament');
-
 const api = new LeagueJS(process.env.LEAGUE_API_KEY);
 api.updateRateLimiter({ allowBursts: true })
 const Util = require('leaguejs/lib/util')
@@ -29,18 +28,24 @@ router.get('/loadTeams', async function (req, res, next) {
 router.post('/insertTeam', async (req, res, next) => {
     const { userId, teamName, summoners } = req.body
     console.log("insert ", req.body.userId)
-
     // Check if a team already has this name under this user.
     const existingTeam = await Team.findOne({ userId, teamName });
     if (existingTeam) {
         res.json({ error: 'Team with this name already exists.' });
         return;
     }
+    const idList = await getList(summoners);
+    console.log(idList);
+    if(!(idList)){
+        res.json({error:'Invalid summoner name.'});
+        return;
+    }
 
     let newTeam = await Team({
         userId,
         teamName,
-        summoners
+        summoners,
+        idList
 
     });
     newTeam = await newTeam.save();
@@ -83,7 +88,7 @@ router.post('/generateTournament', async (req, res, next) => {
     }
 
     for (let i = 0; i < teams.length; i += 2) {
-        const [team1, team2] = await generateChamps(teams[i].summoners, teams[(i + 1) % teams.length].summoners)
+        const [team1, team2] = await generateChamps(teams[i].idList, teams[(i + 1) % teams.length].idList)
         let newMatch = await Match({
             team1: teams[i].teamName,
             champions1: team1,
@@ -125,21 +130,21 @@ router.post('/loadMatches', async function (req, res, next) {
     res.json(allMatches);
 });
 
-async function getList(arr1, arr2, idList1, idList2) {
-
+async function getList(arr1) {
+    const idList = [];
     for (const element of arr1) {
-        await api.Summoner.gettingByName(element)
-            .then(data => {
-                idList1.push(data.id)
-            })
+        try {
+            await api.Summoner.gettingByName(element)
+                .then(data => {
+                    idList.push(data.id)
+                })
+        }
+        catch(err){
+            return false;
+        }
     }
+    return idList;
 
-    for (const element of arr2) {
-        await api.Summoner.gettingByName(element)
-            .then(data => {
-                idList2.push(data.id)
-            })
-    }
 }
 
 async function generateTeams(arr, champlist) {
@@ -159,15 +164,10 @@ async function generateTeams(arr, champlist) {
     }
 }
 
-async function generateChamps(arr1, arr2) {
-    idList1 = [];
-    idList2 = [];
+async function generateChamps(idList1, idList2) {
     champlist = [];
     team1 = [];
     team2 = [];
-
-    await getList(arr1, arr2, idList1, idList2)
-
     await generateTeams(idList1, champlist)
     await generateTeams(idList1, champlist)
     await generateTeams(idList2, champlist)
