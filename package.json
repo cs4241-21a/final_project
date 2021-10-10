@@ -18,7 +18,6 @@
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "node": "v14.18.0",
-    "node-fetch": "^3.0.0",
     "nodemon": "^2.0.13",
     "npm": "6.14.15"
   },

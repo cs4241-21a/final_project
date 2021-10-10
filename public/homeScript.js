@@ -1,5 +1,5 @@
 const getCurrentUser = function( e ) {
-    e.preventDefault()
+    // e.preventDefault()
   
     const json = { username: 'filler' },
         body = JSON.stringify( json )

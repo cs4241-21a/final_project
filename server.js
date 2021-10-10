@@ -247,7 +247,8 @@ app.post( '/login-user', bodyparser.json(), function( request, response ) {
 
 app.post( '/current-user', bodyparser.json(), function( request, response ) {
 
-  console.log(`current-user post request: ${request}`);
+  console.log(`current-user post request: `);
+  console.log(currentUser)
   let dataString = ''
 
   request.on( 'data', function( data ) {
