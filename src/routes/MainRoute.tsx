@@ -31,19 +31,6 @@ const MainRoute = (): JSX.Element => {
   const materials: MaterialProps[] = material_data;
   const locations: FarmingSpotProps[] = farming_spot;
 
-  // !!! TODO (Michael): Write fetch requests to API (or load JSON) to initialize static data
-  // function loadData() {
-  //   if (dataInit === false) {
-  //     characters.push(character_data);
-  //     weapons.push(weapon_data);
-  //     artifacts.push(artifact_data);
-  //     materials.push(material_data);
-  //     locations.push(farming_spot);
-  //     setData(true);
-  //   }
-  //   console.log(materials);
-  // }
-
   // These preference states record the data associated with an account
   const [charPrefs, setCharPrefs] = React.useState<CharacterPrefs[]>([]);
   const [weaponPrefs, setWeaponsPrefs] = React.useState<EnablablePrefs[]>([]);
@@ -202,8 +189,6 @@ const MainRoute = (): JSX.Element => {
     // "activeLocations" should be the locations listed per each activeFarmable's farm_at string
     // loadData();
     filterFarmablesLocations();
-    console.log(activeFarmables);
-    console.log(activeLocations);
     if (!loading) {
       updateDB();
     }
