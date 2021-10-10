@@ -10,6 +10,8 @@ const WALL_CENTER_START_X = CELL_X_OFFSET + PAWN_SIZE - (CELL_GAP / 2)
 const WALL_CENTER_START_Y = CELL_Y_OFFSET - (CELL_GAP / 2)
 const WALL_SIZE = 95
 const WALL_THICKNESS = 5
+const FORM = document.getElementById("moveform")
+let MOVE_TYPE
 
 var gameState = {
     wallSpaces: [],
@@ -56,6 +58,7 @@ function draw() {
 
 
     highlightHoveredCell()
+    highlightHoveredWall()
 
     noStroke()
     fill(0)
@@ -86,17 +89,52 @@ function draw() {
     }
 
 }
+ 
 
 function mouseClicked() {
     console.log(mouseX, mouseY)
     console.log(JSON.stringify(gameState))
-    if (gameSetup && gameState.currentPlayer === gameState.player) {
-        let clickedCell = pixelToCell(mouseX, mouseY)
-        console.log(`Moving to ${clickedCell[1] - 1}, ${clickedCell[0] - 1}`)
-        if (clickedCell[0] !== -1) {
-            moveMyPawn(clickedCell[1] - 1, clickedCell[0] - 1)
+
+    MOVE_TYPE = FORM.elements.move.value
+
+    if(MOVE_TYPE == "movePawn"){
+        console.log("move type is movePawn so moving is allowed")
+
+        // Move pawn
+        if (gameSetup && gameState.currentPlayer === gameState.player) {
+            let clickedCell = pixelToCell(mouseX, mouseY)
+            console.log(`Moving to ${clickedCell[1] - 1}, ${clickedCell[0] - 1}`)
+            if (clickedCell[0] !== -1) {
+                moveMyPawn(clickedCell[1] - 1, clickedCell[0] - 1)
+            }
         }
+
+    } else if (MOVE_TYPE == "placeHorWall"){
+        console.log("move type is placeHorWall so placing a horizontal wall is allowed")
+
+        // Place horizontal wall
+        if (gameSetup && gameState.currentPlayer === gameState.player) {
+            let clickedWall = pixelToWall(mouseX, mouseY)
+            console.log("this is the clicked wall" + clickedWall)
+            if (clickedWall[0] !== -1) {
+                placeWall(clickedWall[1] - 1, clickedWall[0] -2 , 1)
+            }
+        }
+
+    } else if (MOVE_TYPE == "placeVerWall"){
+        console.log("move type is placeVerWall so placing a vertical wall is allowed")
+
+        // Place vertical wall
+        if (gameSetup && gameState.currentPlayer === gameState.player) {
+            let clickedWall = pixelToWall(mouseX, mouseY)
+            console.log("this is the clicked wall" + clickedWall)
+            if (clickedWall[0] !== -1) {
+                placeWall(clickedWall[1] - 1, clickedWall[0] -2 , 2)
+            }
+        }
+
     }
+
 }
 
 function renderGameState() {
@@ -105,7 +143,7 @@ function renderGameState() {
     for (let row = 0; row < gameState.wallSpaces.length; row++) {
         for (let col = 0; col < gameState.wallSpaces[0].length; col++) {
             if (gameState.wallSpaces[row][col] !== 0) {
-                drawWall(row, col, gameState.wallSpaces[row][col])
+                drawWall(col, row, gameState.wallSpaces[row][col])
             }
         }
     }
@@ -119,6 +157,15 @@ function highlightHoveredCell() {
     square(bounds[0], bounds[1], 40, 5)
 }
 
+function highlightHoveredWall() {
+    let cell = pixelToWall(mouseX, mouseY)
+    let bounds = getCellBounds(cell[0], cell[1])
+    fill(255, 0, 0)
+    noStroke()
+    square(bounds[0] + 45, bounds[1] + 45, 5, 5)
+}
+
+
 function pixelToCell(pixelX, pixelY) {
     for (let row = 1; row <= 9; row++) {
         for (let col = 1; col <= 9; col++) {
@@ -127,6 +174,22 @@ function pixelToCell(pixelX, pixelY) {
             let cellYMin = bounds[1]
             let cellXMax = bounds[2]
             let cellYMax = bounds[3]
+            if (pixelX > cellXMin && pixelX < cellXMax && pixelY > cellYMin && pixelY < cellYMax) {
+                return [row, col]
+            }
+        }
+    }
+    return [-1, -1]
+}
+
+function pixelToWall(pixelX, pixelY) {
+    for (let row = 1; row <= 9; row++) {
+        for (let col = 1; col <= 9; col++) {
+            let bounds = getCellBounds(row, col)
+            let cellXMin = bounds[2]
+            let cellYMin = bounds[3]
+            let cellXMax = bounds[2] + CELL_X_OFFSET
+            let cellYMax = bounds[3] + CELL_Y_OFFSET
             if (pixelX > cellXMin && pixelX < cellXMax && pixelY > cellYMin && pixelY < cellYMax) {
                 return [row, col]
             }
@@ -229,6 +292,10 @@ function wsSetup() {
 
 function moveMyPawn(x, y) {
     socket.send(JSON.stringify({type:'move pawn', x: x, y: y}))
+}
+
+function placeWall(x, y, orientation){
+    socket.send(JSON.stringify({type : 'place wall', x : x, y : y, orientation : orientation}))
 }
 
 function getRoomCode() {
