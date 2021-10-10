@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: lightgray;
 }
 
 code {
@@ -15,5 +16,9 @@ code {
 
 .champ-icon{
   height: 100px;
-  margin: 0 -65px 0 -65px;
+  margin: -25px -65px -25px -65px;
+}
+
+.btn.btn-primary.test{
+  color:lightsalmon
 }

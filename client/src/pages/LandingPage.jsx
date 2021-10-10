@@ -10,7 +10,7 @@ const LandingPage = () => {
             <p className='lead'>Sign in to be able to generate random ARAM tournaments
                 or generate single games from the link below.
             </p>
-            <button className="btn btn-primary" onClick={ // TODO: set link to single generation page
+            <button className="btn btn-primary test" onClick={ // TODO: set link to single generation page
                 () => history.push('/single')}>
                 Generate Single Game
             </button>
