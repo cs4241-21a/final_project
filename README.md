@@ -1,6 +1,11 @@
 #### Questions
 1. A brief description of what you created, and a link to the project itself (two paragraphs of text)
 
+Players of the open-world action RPG Genshin Impact often find themselves wondering which materials they need to collect (or "farm") based on the day-of-the-week schedule and the particular characters, weapons, or artifacts they wish to improve. Rather than spending hours looking up guides, farming locations, and farming schedules, we compiled a web-based application that easily creates a schedule for players to reference. All they need to do is select the characters, weapons, and/or artifacts they wish to farm.
+
+// probably a paragraph here about how we did it. awaaaga
+
+LINK: (linkhere)[linkhere]
 // TODO: Matthew !!!
 
 *REMEMBER: Excellent projects typically serve someone/some group; for this assignment you need to define your users and stakeholders. I encourage you to identify projects that will have impact, either artistically, politically, or in terms of productivity.*
