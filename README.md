@@ -24,7 +24,7 @@ These are some of the things we added:
 
 ## Technologies used and how they were used
 
-**MongoDB**: 
+**MongoDB**: sadsf
 - 
 
 **Node**: backend server and 
