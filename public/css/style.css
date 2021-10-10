@@ -1,0 +1,43 @@
+/*html,*/
+/*body {*/
+/*  margin: 0;*/
+/*  padding: 0;*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*}*/
+
+/*div {*/
+/*  display: flex;*/
+/*}*/
+
+#content-container{
+
+}
+
+#control-container{
+  float: left;
+  width: 25%;
+  overflow-y: scroll;
+  height: 500px;
+}
+
+#control-container li, b{
+  font-size: 14px;
+}
+
+.field-row{
+  margin-bottom: 1em;
+}
+
+.rangeContainer{
+  margin-bottom: 1em;
+  width: 90%;
+}
+
+.canvas-container{
+  float: right;
+}
+
+#myRange{
+  width: 100%;
+}

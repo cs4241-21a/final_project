@@ -1,0 +1,123 @@
+<html>
+
+<head>
+    <title>The Joys of Painting</title>
+    <link rel="stylesheet" href="https://unpkg.com/98.css">
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js"></script>
+    <script src="/js/indexScript.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body style="overflow:hidden;">
+
+<div class="window" style="margin: 32px;">
+    <div class="title-bar">
+        <div class="title-bar-text">
+            Welcome to Paint
+        </div>
+        <div class="title-bar-controls">
+            <button aria-label="Minimize"></button>
+            <button aria-label="Maximize"></button>
+            <a href="/">
+                <button aria-label="Close"></button>
+            </a>
+        </div>
+    </div>
+    <div class="window-body">
+
+
+        <div id='content-container'>
+            <div id='control-container'>
+
+                <div class="field-row">
+                    <button id="clearBtn">Clear</button>
+                </div>
+
+                <div class="field-row">
+                    <input type="color" id="colorSelector" value="#000000">
+                </div>
+
+                <div class="field-row">
+                    <label for="lineWidth">Line Width:</label>
+                    <input type="number" id="lineWidth" min="1" max="100" value="50">
+                </div>
+
+
+                <div class="field-row">
+                    <input type="radio" id="actionDraw" name="action" value="Draw" checked=true>
+                    <label for="actionDraw">Draw</label>
+                    <input type="radio" id="actionErase" class="field-row" name="action" value="Erase">
+                    <label for="actionErase">Erase</label>
+                </div>
+
+                <div class="field-row">
+                    <input type="radio" id="actionCircle" name="action" value="Circle">
+                    <label for="actionCircle">Circle</label>
+
+                    <input type="radio" id="actionSquare" name="action" value="Square">
+                    <label for="actionSquare">Square</label>
+
+                    <input type="radio" id="actionTriangle" name="action" value="Triangle">
+                    <label for="actionTriangle">Triangle</label>
+                </div>
+
+                <div class="rangeContainer">
+                    <input type="checkbox" id="fillShape" name="fillShape" value="FillShape">
+                    <label for="fillShape">Fill Shape</label>
+                </div>
+
+                <div class="rangeContainer">
+                    <label for="myRange">Size of Shape</label>
+                    <input type="range" min="25" max="250" step="50" value="150" id="myRange" name="slider">
+                </div>
+
+                <div class="field-row">
+                    <h4 style="font-size: 1.5em; margin-block-end: 0">Instructions</h4>
+                </div>
+
+                <div>
+                    <b>For Drawing a Line:</b>
+                    <ol>
+                        <li>Select a color</li>
+                        <li>Select line width</li>
+                        <li>Click and drag on the canvas to make a line</li>
+                    </ol>
+                    <b>For Erasing:</b>
+                    <ol>
+                        <li>Select line width</li>
+                        <li>Click and drag on the canvas</li>
+                    </ol>
+                    <b>For Drawing a Shape:</b>
+                    <ol>
+                        <li>Select a color</li>
+                        <li>Select a shape</li>
+                        <li>Toggle the Fill Shape checkbox to enable or disable shape fill</li>
+                        <li>Drag the slider to the desired shape size</li>
+                        <li>Click on the canvas to draw the shape</li>
+                    </ol>
+                    <b>For clearing the canvas:</b>
+                    <ul>
+                        <li>Click the Clear button</li>
+                    </ul>
+                    <b>For Collaborating With Others:</b>
+                    <ol>
+                        <li>Share the link: <a href="http://mspaint.edit2014.com">mspaint.edit2014.com</a></li>
+                        <li>Have them log in and start drawing!</li>
+                    </ol>
+                    <b>For Logging Out of the App:</b>
+                    <ul>
+                        <li>Click the X button in the upper-right corner of the app window</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id='canvas-container'></div>
+        </div>
+
+
+    </div>
+</div>
+</body>
+
+
+</html>
