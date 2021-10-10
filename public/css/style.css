@@ -1,0 +1,20 @@
+html {
+  overflow: hidden;
+  background-color: #eee;
+}
+
+body {
+  margin-left: 50%;
+  transform: translateX(-50%);
+  display: inline-block;
+}
+
+main {
+  margin-top: 5px;  
+}
+
+main canvas {
+  border: 1px dashed #aaa;
+  max-width: calc(min(95vw, 95vh - 50px));
+  max-height: calc(min(95vw, 95vh - 50px));
+}
