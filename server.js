@@ -6,6 +6,7 @@ const express = require("express"),
       mongoose = require('mongoose'),
       UserEntry = require('./models/loginModel.js'),
       EventEntry = require('./models/eventModel.js'),
+      CalendarEntry = require('./models/calendarModel.js'),
       cookie = require('cookie-session'),
       app = express(),
       staticDir  = "public",
@@ -13,6 +14,7 @@ const express = require("express"),
       port = 8080;
 require('dotenv').config();
 
+const { json } = require("body-parser");
 const {response, request} = require("express");
 
 const uri = 'mongodb+srv://'+process.env.ACCOUNT+':'+process.env.PASS+'@'+process.env.HOST
@@ -172,6 +174,76 @@ app.post('/createEvent', bodyparser.json(), async (req,res) => {
   res.render('events', {eventsList: result, sentUsername: req.session.username, title:"Events"})
 })
 
+app.post('/refreshpersonal', async(req,res) => {
+  CalendarEntry.find({username: {$eq: req.session.username}})
+    .then(dbresponse =>{
+      //console.log(dbresponse)
+      let jsonRes = []
+      for(let i = 0; i < dbresponse.length; i++){
+        let calItem = {}
+        calItem.start = dbresponse[i].startDateTime.toISOString()
+        calItem.end = dbresponse[i].endDateTime.toISOString()
+        calItem.title = dbresponse[i].eventName
+        calItem.location = dbresponse[i].location
+        calItem.description = dbresponse[i].description
+        jsonRes.push(calItem)
+      }
+      
+      console.log(jsonRes)
+      res.json(jsonRes)
+    })
+})
+
+app.post('/addpersonal', async(req, res) => {
+  let dbEntry = new CalendarEntry({
+    username: req.session.username,
+    eventName: req.body.eventName,
+    recurring: false,
+    startDateTime: new Date(req.body.startDateTime),
+    endDateTime: new Date(req.body.endDateTime),
+    location: req.body.location,
+    description: req.body.description
+  })
+  await dbEntry.save()
+  res.render('index')
+})
+
+app.post('/getavailabilityfrompersonal', async(req,res) => {
+  EventEntry.findById(req.body.eventID)
+    .then(dbresponse => {
+      let dates = dbresponse.availableDates
+      let times = dbresponse.availableTimes   //need to use times[dateIndex][timeIndex] to access time list
+      let duration = dbresponse.meetingDuration
+      let availabilityArray = []
+      for(let dateIndex = 0; dateIndex<dates.length; dateIndex++){
+        for(let timeIndex = 0; timeIndex<times.length; timeIndex++){
+          let startDateTime = new Date(dates[dateIndex])
+          if(duration === 0.5){   //if duration is 0.5
+            startDateTime.setHours(Math.floor(times[dateIndex][timeIndex]))   //need to get the floor to always get hour value only
+            if(times[dateIndex][timeIndex]%1 === 1){  //if we're on a whole hour
+              startDateTime.setMinutes(0)
+            }else{  //if we're on a half hour
+              startDateTime.setMinutes(30)
+            }
+          }else if(times[dateIndex][timeIndex]%1 === 1){  //or we're on a whole hour 
+            startDateTime.setHours(times[dateIndex][timeIndex])
+          }
+
+          let endDateTime = newDate(startDateTime.getTime() + (duration*60*60*1000))  //lol janky math
+
+          CalendarEntry.find({username: {$eq: req.session.username}, startDateTime: {$lt: endDateTime}, endDateTime: {$gte: startDateTime}})
+            .then(dbresponse => {
+              if(dbresponse.length === 0){  //no results found, user is available 
+                availabilityArray.push(startDateTime)
+              }
+            })
+        }
+      }
+
+      res.json(availabilityArray)
+    })
+})
+
 
 async function checkUsernamePassword(user, pass){
   let array = [];
@@ -232,6 +304,11 @@ app.get('/signUpPage', (req,res) =>{
 app.get('/login', (req,res) => {
   res.render('login', {title:"Login Page"})
 })
+
+app.get('/addpersonal', (req,res) => {
+  res.render('addpersonal');
+})
+
 
 // 404 page
 app.use((req,res) => {

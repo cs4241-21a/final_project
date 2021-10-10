@@ -1,5 +1,5 @@
-const myCalendar = new TavoCalendar('#my-calendar',
-    {date: "2021-10-1"})
+/* const myCalendar = new TavoCalendar('#my-calendar',
+    {date: "2021-10-1"}) */
 
 const loadEvents = function(){
     
@@ -73,6 +73,31 @@ const loadEvents = function(){
       })
 }
 
+const refreshPersonalCal = function(){
+
+    fetch('/refreshpersonal', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        return response.json();
+    })
+    .then(response => {
+        console.log(response)
+        var calendarEl = document.getElementById('my-calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'timeGridWeek',
+            events: response
+        });
+        calendar.render();
+    })
+
+    
+    
+    
+}
 const createFile = function(event) {
     /*let eventDate = {
         start: event.availableDates[0],
@@ -159,4 +184,5 @@ const createFile = function(event) {
 
 window.onload = function(){
     loadEvents()
+    refreshPersonalCal()
 }
