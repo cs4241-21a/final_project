@@ -60,39 +60,43 @@
     </div>
 
     <div class="boxHolder">
-      <div class="box">
-        <form id="newTrip">
-          <h2 id = "boxTitle">Add A New Anime</h2>
+      <button id="openAdd">Add New Watchlist</button>
 
-          <label for="title">Watch Title: </label>
-          <input type="text" id="title" placeholder="Enter your watch" />
+      <div id='addForm' class="modal">
+        <div class='modal-content'>
+          <form id="newTrip">
+            <h2 id = "boxTitle">Add A New Anime</h2>
+
+            <label for="title">Watch Title: </label>
+            <input type="text" id="title" placeholder="Enter your watch" />
             
-          <label for = "category">Choose a category</label>
-          <select name = "category" id = "cat">
+            <label for = "category">Choose a category</label>
+            <select name = "category" id = "cat">
               <option value ="adventure">Adventure</option>
               <option value ="love">Love</option>
               <option value ="suspense">Suspense</option>
               <option value ="sol">Slice of Life</option>
               <option value ="fantasy">Fantasy</option>
-          </select>
+            </select>
 
-          <label for="score">Score: </label>
-          <input
-            type="text"
-            id="score"
-            placeholder="Enter score (1-10)"
-          />
+            <label for="score">Score: </label>
+            <input
+              type="text"
+              id="score"
+              placeholder="Enter score (1-10)"
+            />
 
-          <label for="date">Date: </label>
-          <input type="date" id="date" name="date" required />
+            <label for="date">Date: </label>
+            <input type="date" id="date" name="date" required />
 
-          <label for="review">Review: </label>
-          <input type="text" id="review" placeholder="reveiw" />
+            <label for="review">Review: </label>
+            <textarea type="text" id="review" placeholder="reveiw"></textarea>
           
-          <input type="hidden" id="idToModify" />
+            <input type="hidden" id="idToModify" />
 
-          <button id="submitButton">Submit</button>
-        </form>
+            <button id="submitButton">Submit</button>
+          </form>
+        </div>>
       </div>
     </div>
 
