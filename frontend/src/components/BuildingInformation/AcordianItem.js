@@ -127,7 +127,7 @@ function AccordianItem(props) {
       >
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
           <Grid container direction={"row"} spacing={2}>
-            <Grid item xs={3}>
+            <Grid item xs={3} sm={3}>
               <Typography>{props.item.humanname}</Typography>{" "}
             </Grid>
             <Grid item xs={4}>
@@ -135,16 +135,20 @@ function AccordianItem(props) {
                 <CircleIcon fontSize="small" style={{ color: washerColor }} />
                 &nbsp;
                 <Typography>
-                  {props.item.washeravailable_percent}% Washer Availability
+                  <span>
+                    {props.item.washeravailable_percent}% Washers Available
+                  </span>
                 </Typography>
               </div>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3} sm={4}>
               <div style={{ display: "inline-flex" }}>
                 <CircleIcon fontSize="small" style={{ color: dryerColor }} />
                 &nbsp;
                 <Typography>
-                  {props.item.dryeravailable_percent}% Dryer Availability
+                  <span>
+                    {props.item.dryeravailable_percent}% Dryers Available
+                  </span>
                 </Typography>
               </div>
             </Grid>

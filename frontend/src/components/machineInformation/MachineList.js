@@ -7,7 +7,7 @@ function MachineList(props) {
     <Container sx={{ py: 4 }} maxWidth="lg">
       <Grid container spacing={3}>
         {props.washerInfo.map((item, index) => (
-          <Grid item key={index} md={3}>
+          <Grid item key={index} md={3} sm={6} xs={12}>
             <WasherItem
               show={props.show}
               hide={props.onHide}
@@ -19,7 +19,7 @@ function MachineList(props) {
         ))}
 
         {props.dryerInfo.map((item, index) => (
-          <Grid item key={index} md={3}>
+          <Grid item key={index} md={3} sm={6} xs={12}>
             <DryerItem
               show={props.show}
               hide={props.onHide}
