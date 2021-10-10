@@ -29,7 +29,9 @@ class AddNewSetComponent extends React.Component {
 
     if (oldNumSets < newNumSets) {
       for (let i = oldNumSets; i < newNumSets; ++i) {
-        this.props.parent.state.sets.push(new Set ({setNumber: i, weight: 0, reps: 0, RPE: 0}));
+        this.props.parent.state.sets.push(
+          new Set({ setNumber: i, weight: 0, reps: 0, RPE: 0 })
+        );
       }
     } else if (oldNumSets > newNumSets) {
       for (let i = newNumSets; i < oldNumSets; ++i) {
@@ -86,12 +88,12 @@ class AddNewSetComponent extends React.Component {
     document.getElementById("addModifyButton").innerText = "Add New Movement";
     document.getElementById("movementName").value = "";
     document.getElementById("movementName").disabled = false;
-    let newSets = [new Set({setNumber: 0, weight: 0, reps: 0, RPE: 0})]
+    let newSets = [new Set({ setNumber: 0, weight: 0, reps: 0, RPE: 0 })];
     this.props.parent.setState({
       oldNumSets: 1,
       newNumSets: 1,
-      sets: newSets
-    })
+      sets: newSets,
+    });
     document.getElementById("cancelModifyButton").hidden = true;
   }
 
@@ -100,15 +102,17 @@ class AddNewSetComponent extends React.Component {
       `Performing render where Old value of sets=${this.props.parent.state.oldNumSets}, new value=${this.props.parent.state.newNumSets}`
     );
 
-    let setComponents = []
+    let setComponents = [];
     for (let i = 0; i < this.props.parent.state.sets.length; ++i) {
-      setComponents.push(<SetComponent 
-        parent = {this.props.parent}
-        setNumber = {this.props.parent.state.sets[i].setNumber}
-        weight = {this.props.parent.state.sets[i].weight}
-        reps = {this.props.parent.state.sets[i].reps}
-        RPE = {this.props.parent.state.sets[i].RPE}
-        ></SetComponent>)
+      setComponents.push(
+        <SetComponent
+          parent={this.props.parent}
+          setNumber={this.props.parent.state.sets[i].setNumber}
+          weight={this.props.parent.state.sets[i].weight}
+          reps={this.props.parent.state.sets[i].reps}
+          RPE={this.props.parent.state.sets[i].RPE}
+        ></SetComponent>
+      );
     }
 
     return (
@@ -127,7 +131,11 @@ class AddNewSetComponent extends React.Component {
         <button id="addModifyButton" onClick={this.addModifyButtonAction}>
           Add New Movement
         </button>
-        <button id='cancelModifyButton' hidden={true} onClick={this.cancelModify}>
+        <button
+          id="cancelModifyButton"
+          hidden={true}
+          onClick={this.cancelModify}
+        >
           Cancel Modifying
         </button>
       </div>
@@ -150,29 +158,56 @@ class SetComponent extends React.Component {
   }
 
   onWeightChange = (e) => {
-    let newSets = this.props.parent.state.sets
-    newSets[this.props.setNumber].weight = e.target.value
-    this.props.parent.setState({sets: newSets})
-  }
+    let newSets = this.props.parent.state.sets;
+    newSets[this.props.setNumber].weight = e.target.value;
+    this.props.parent.setState({ sets: newSets });
+  };
 
   onRepsChange = (e) => {
-    let newSets = this.props.parent.state.sets
-    newSets[this.props.setNumber].reps = e.target.value
-    this.props.parent.setState({sets: newSets})
-  }
+    let newSets = this.props.parent.state.sets;
+    newSets[this.props.setNumber].reps = e.target.value;
+    this.props.parent.setState({ sets: newSets });
+  };
 
   onRPEChange = (e) => {
-    let newSets = this.props.parent.state.sets
-    newSets[this.props.setNumber].RPE = e.target.value
-    this.props.parent.setState({sets: newSets})
-  }
+    let newSets = this.props.parent.state.sets;
+    newSets[this.props.setNumber].RPE = e.target.value;
+    this.props.parent.setState({ sets: newSets });
+  };
 
   render() {
     return (
-      <div id={"set" + this.props.setNumber}>
-        <input id={"weight" + this.props.setNumber} placeholder="weight" value={this.props.parent.state.sets[this.props.setNumber].weight} onChange={this.onWeightChange}/>
-        <input id={"reps" + this.props.setNumber} placeholder="reps" value={this.props.parent.state.sets[this.props.setNumber].reps} onChange={this.onRepsChange}/>
-        <input id={"RPE" + this.props.setNumber} placeholder="RPE" value={this.props.parent.state.sets[this.props.setNumber].RPE} onChange={this.onRPEChange}/>
+      <div
+        id={"set" + this.props.setNumber}
+        style={{ display: "flex", flexDirection: "row" }}
+      >
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <b>Weight</b>
+          <input
+            id={"weight" + this.props.setNumber}
+            placeholder="weight"
+            value={this.props.parent.state.sets[this.props.setNumber].weight}
+            onChange={this.onWeightChange}
+          />
+        </div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <b>Reps</b>
+          <input
+            id={"reps" + this.props.setNumber}
+            placeholder="reps"
+            value={this.props.parent.state.sets[this.props.setNumber].reps}
+            onChange={this.onRepsChange}
+          />
+        </div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <b>RPE</b>
+          <input
+            id={"RPE" + this.props.setNumber}
+            placeholder="RPE"
+            value={this.props.parent.state.sets[this.props.setNumber].RPE}
+            onChange={this.onRPEChange}
+          />
+        </div>
       </div>
     );
   }
@@ -188,7 +223,7 @@ class WrapperClass extends React.Component {
   state = {
     oldNumSets: 1,
     newNumSets: 1,
-    sets: [new Set({setNumber: 0, weight: 0, reps: 0, RPE: 0})]
+    sets: [new Set({ setNumber: 0, weight: 0, reps: 0, RPE: 0 })],
   };
 
   render() {
@@ -205,7 +240,7 @@ class WrapperClass extends React.Component {
     } else {
       return (
         <div id="workoutPage">
-          <h1>{workoutRes.name}</h1>
+          <h1 style={{ backgroundColor: "#FFFFFF" }}>{workoutRes.name}</h1>
           {workoutRes.movements.length === 0 ? (
             <div>You have no movements yet :(</div>
           ) : (
