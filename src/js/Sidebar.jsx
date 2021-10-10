@@ -139,6 +139,37 @@ class Sidebar extends Component {
       });
     })
   }
+
+  async deleteTask(taskId) {
+    // copy tasks array
+    let toUpdateTasks = JSON.parse(JSON.stringify(this.state.tasks));
+    
+    // Delete task
+    databaseUtils.deleteTask(taskId);
+
+    // update temporary tasks array
+    delete toUpdateTasks[taskId];
+
+    let setStateAsync = (state) => {
+      return new Promise((resolve) => {
+        this.setState(state, resolve)
+      });
+    }
+    // Reset state
+    await setStateAsync({
+      tasks: toUpdateTasks
+    });
+    console.log(this.state.tasks)
+
+    // Reset state with updated tasks array
+    this.setState({
+      tasks: toUpdateTasks
+    });
+  }
+
+  modifyTask(taskId){
+    // TODO: Write function
+  }
   
   // Handles the change of a form field; useful for updating state which is
   // needed to send right variables to server
