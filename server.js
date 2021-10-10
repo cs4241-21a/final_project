@@ -14,11 +14,10 @@ server.listen(port);
 // middleware
 server.use(express.static(dir)); // server static client build files
 
-// api routes
+// dev routes
 server.get('/api/token', async (req, res) => {
     res.redirect(SpotifyService.getRefreshTokenURL());
 });
-
 
 server.get('/callback', async (req, res) => {
     const token = await SpotifyService.getRefreshToken(req.query.code);

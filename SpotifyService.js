@@ -17,6 +17,7 @@ export default (new class SpotifyService {
         // this.createPlaylist('Bopify Playlist', '').then(async id => {
         //     await this.addSongsToPlaylist(id, ['spotify:track:6TUf1Vw59k1f7r9X8GzYdI', 'spotify:track:4HTY26kzdGCKJF1EqcRd2J']);
         //     await this.deleteSongsFromPlaylist(id, ['spotify:track:6TUf1Vw59k1f7r9X8GzYdI']);
+        //     this.getSongsFromPlaylist(id).then(console.log)
         // });
     }
 
@@ -91,6 +92,21 @@ export default (new class SpotifyService {
         await this.request('DELETE', `${this.APIPath}/playlists/${id}/tracks`, {
             tracks: uris.map(uri => { return { uri } })
         }).catch(console.error);
+    }
+
+    // retrieves song data from a specified playlist
+    getSongsFromPlaylist = async (id) => {
+        const params = {
+           fields: 'items(track(name,popularity,track_number,uri,id,duration_ms,artists(name),album(images)))'
+        }
+        let response = await this.request('GET', `${this.APIPath}/playlists/${id}/tracks?${this.encodeURL(params)}`).catch(console.error);
+        response = response.items.map(i => i.track);
+        response.forEach(t => {
+           t.artists = t.artists.map(a => a.name);
+           t.album_url = t.album.images.find(i => i.height === 64).url;
+           delete t.album;
+        });
+        return response;
     }
 
     // get available genre seeds (not sure if we will need this)
