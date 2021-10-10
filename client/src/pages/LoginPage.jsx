@@ -22,8 +22,7 @@ const LoginPage = () => {
 
     // Do api call on login form submission
     const onSubmit = () => {
-        // TODO: Change when deploying
-        fetch(`http://localhost:3001/login`, {
+        fetch(`/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

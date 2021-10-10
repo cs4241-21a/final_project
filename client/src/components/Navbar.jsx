@@ -1,8 +1,6 @@
 import React from "react";
-import { useHistory } from "react-router";
 
 const Navbar = ({ user }) => {
-    const history = useHistory();
 
     return (
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Navbar">

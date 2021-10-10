@@ -19,7 +19,7 @@ class TournamentPage extends React.Component {
     const body = JSON.stringify(json);
     console.log(body)
 
-    fetch("http://localhost:3001/tournament/loadMatches", {
+    fetch("/tournament/loadMatches", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',

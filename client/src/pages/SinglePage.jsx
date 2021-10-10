@@ -71,7 +71,7 @@ const SinglePage = () => {
             const team2Sums = state.formData.redSums.split(',').map(e => e.trim());
             console.log(team1Sums, team2Sums);
 
-            fetch(`http://localhost:3001/tournament/single?blue=` + team1Sums + `&red=` + team2Sums, {
+            fetch(`/tournament/single?blue=` + team1Sums + `&red=` + team2Sums, {
                 method: 'GET',
                 credentials: 'include'
             }).then(async function (response) {

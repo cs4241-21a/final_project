@@ -12,7 +12,7 @@ class TournamentCreationPage extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:3001/tournament/loadTeams", {
+    fetch("/tournament/loadTeams", {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ class TournamentCreationPage extends React.Component {
       },
       body = JSON.stringify(json);
 
-    fetch("http://localhost:3001/tournament/insertTeam", {
+    fetch("/tournament/insertTeam", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ class TournamentCreationPage extends React.Component {
         summoners: [sum1.value, sum2.value, sum3.value, sum4.value, sum5.value],
       },
       body = JSON.stringify(json);
-    fetch("http://localhost:3001/tournament/updateTeam", {
+    fetch("/tournament/updateTeam", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ class TournamentCreationPage extends React.Component {
     const json = { _id: id },
       body = JSON.stringify(json);
 
-    fetch("http://localhost:3001/tournament/deleteTeam", {
+    fetch("/tournament/deleteTeam", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ class TournamentCreationPage extends React.Component {
     const generateButton = document.querySelector("#generateButton")
     generateButton.disabled = true
     this.setState({spinner:<Spinner/>})
-    fetch("http://localhost:3001/tournament/generateTournament", {
+    fetch("/tournament/generateTournament", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',

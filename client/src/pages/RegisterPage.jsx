@@ -30,8 +30,7 @@ const RegisterPage = () => {
         e.preventDefault();
         console.log('Register form submission');
 
-        // TODO: Change when deploying
-        fetch(`http://localhost:3001/register`, {
+        fetch(`/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
