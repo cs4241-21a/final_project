@@ -196,7 +196,21 @@ wss.on('connection', (socket, req) => {
                         if(lobby !== undefined) {
                           lobby.clients.forEach(c => {
                               if(c.id !== clientId) {
-                                c.socket.send(JSON.stringify({packetType: "add_mask", cid: clientId, x: json.x, y: json.y, vx: json.vx, vy: json.vy }));
+                                c.socket.send(JSON.stringify({packetType: "add_mask", cid: clientId, x: json.x, y: json.y, vx: json.vx, vy: json.vy}));
+                              }
+                          });
+                        }else{
+                          console.log("Recieved " + json.packetType + " packet from client not in a lobby: " + clientId);
+                        }
+                      }
+                      break;
+                  case "remove_mask":
+                      {
+                        const lobby = findLobbyWithClient(clientId);
+                        if(lobby !== undefined) {
+                          lobby.clients.forEach(c => {
+                              if(c.id !== clientId) {
+                                c.socket.send(JSON.stringify({packetType: "remove_mask", cid: clientId, index: json.index}));
                               }
                           });
                         }else{

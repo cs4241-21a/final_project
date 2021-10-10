@@ -108,7 +108,7 @@ function drawStars(){
       stars[i].x = stars[i].init_x
       stars[i].y = stars[i].init_y
     }
-    image(virus_img, stars[i].x, stars[i].y, stars[i].diam, stars[i].diam)
+    image(virus_img, stars[i].x - stars[i].diam/2, stars[i].y - stars[i].diam/2, stars[i].diam, stars[i].diam)
   }
 }
 
@@ -227,10 +227,20 @@ function blinkShip(counter){
 }
 
 function checkMasksForCollisions(){
-  masks = masks.filter(m => {
+  masks = masks.filter((m, i) => {
     let hit = checkForCollisions(m, stars);
     if(hit !== null){
-      hit.diam /= 2;
+      socket.send(JSON.stringify({packetType: "remove_mask", index: i}));
+      hit.lives--;
+      if(hit.lives > 0){
+        hit.diam = [small, medium, large][hit.lives-1];
+      }else{
+        hit.x = hit.init_x;
+        hit.y = hit.init_y;
+        const set = randomChoice([{life:1, size:small}, {life:2, size:medium}, {life:3, size:large}])
+        hit.diam = set.size
+        hit.lives = set.life
+      }
       return false;
     }
     return true;
@@ -406,12 +416,19 @@ function connectWS(){
             otherShips[json.cid].masks.push(mask);
           }
           break;
+        case "remove_mask":
+          {
+            otherShips[json.cid].masks.splice(json.index, 1); // remove at index
+          }
+          break;
       }
     }catch(e){
       console.log("[SERVER] " + event.data);
     }
   }
   socket.onclose = e => {
+    socket = null;
+    inLobby = false;
     if(!gotLoggedOutWarning) {
       document.querySelector("#status").innerText = "Disconnected";
       setTimeout(connectWS(), 2000);
