@@ -123,7 +123,12 @@ function OnClose(client) {
     else{
         otherClient = room.client1
     }
-    otherClient.wsclient.send(JSON.stringify({type: "opponent disconnected"}))
+    if (otherClient !== null){
+        otherClient.wsclient.send(JSON.stringify({type: "opponent disconnected"}))
+        otherClient.wsclient.close()
+    }
+    let roomIndex = rooms.find((e) => e.code == room.code)
+    rooms.splice(roomIndex, 1)
     console.log('connection closed');
     console.log('disconnected');
 };
@@ -205,6 +210,10 @@ function IsValidPawnMove(g, pawn, x, y) {
 
     
     if (!IsValidPawnSpace(x, y)){
+        return false;
+    }
+
+    if (pawn.x == x && pawn.y == y){
         return false;
     }
     
