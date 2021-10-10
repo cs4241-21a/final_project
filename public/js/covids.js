@@ -231,20 +231,25 @@ function checkMasksForCollisions(){
     let hit = checkForCollisions(m, stars);
     if(hit !== null){
       socket.send(JSON.stringify({packetType: "remove_mask", index: i}));
-      hit.lives--;
-      if(hit.lives > 0){
-        hit.diam = [small, medium, large][hit.lives-1];
-      }else{
-        hit.x = hit.init_x;
-        hit.y = hit.init_y;
-        const set = randomChoice([{life:1, size:small}, {life:2, size:medium}, {life:3, size:large}])
-        hit.diam = set.size
-        hit.lives = set.life
-      }
+      if(!isControllerClient) socket.send(JSON.stringify({packetType: "hit_virus", id: hit.id}));
+      damageVirus(hit);
       return false;
     }
     return true;
   });
+}
+
+function damageVirus(v){
+  v.lives--;
+  if(v.lives > 0){
+    v.diam = [small, medium, large][v.lives-1];
+  }else{
+    v.x = v.init_x;
+    v.y = v.init_y;
+    const set = randomChoice([{life:1, size:small}, {life:2, size:medium}, {life:3, size:large}])
+    v.diam = set.size
+    v.lives = set.life
+  }
 }
 
 function checkForCollisions(curr, targets){
@@ -419,6 +424,12 @@ function connectWS(){
         case "remove_mask":
           {
             otherShips[json.cid].masks.splice(json.index, 1); // remove at index
+          }
+          break;
+        case "hit_virus":
+          {
+            let v = stars.find(s => s.id == json.id);
+            if(v !== undefined) damageVirus(v);
           }
           break;
       }

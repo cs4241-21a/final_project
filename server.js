@@ -218,16 +218,11 @@ wss.on('connection', (socket, req) => {
                         }
                       }
                       break;
-                  case "destroy_virus":
+                  case "hit_virus":
                       {
                         const lobby = findLobbyWithClient(clientId);
                         if(lobby !== undefined) {
-                          // TODO: remove from lobby.viruses
-                          lobby.clients.forEach(c => {
-                              if(c.id !== clientId) {
-                                c.socket.send(JSON.stringify({packetType: "destroy_virus", eid: json.eid}));
-                              }
-                          });
+                          lobby.getControllerClient().socket.send(JSON.stringify({packetType: "hit_virus", id: json.id}));
                         }else{
                           console.log("Recieved " + json.packetType + " packet from client not in a lobby: " + clientId);
                         }
@@ -290,4 +285,4 @@ setInterval(() => {
             // });
         });
     });
-}, 33);
+}, 50);
