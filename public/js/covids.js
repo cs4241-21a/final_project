@@ -239,9 +239,11 @@ function checkEdges(obj) {
   }
 }
 
-function checkMaskEdges(obj) {
-  if ((obj.pos.x < 0)||(obj.pos.x > width)||(obj.pos.y < 0)||(obj.pos.y > height)) {
-    masks.pop()
+function checkMaskEdges() {
+  for (let i = masks.length-1; i >= 0 ;i--){
+    if ((masks[i].pos.x < 0)||(masks[i].pos.x > width)||(masks[i].pos.y < 0)||(masks[i].pos.y > height)) {
+      masks.length--
+    }
   }
 }
 
@@ -290,11 +292,11 @@ function checkMasksForCollisions() {
   masks = masks.filter((m, i) => {
     let hit = checkForCollisions(m, stars, "");
     if (hit !== null) {
-      masks.pop()
       if (inLobby)
         socket.send(JSON.stringify({ packetType: "remove_mask", index: i }));
       if (inLobby && !isControllerClient)
         socket.send(JSON.stringify({ packetType: "hit_virus", id: hit.id }));
+      masks.length--
       damageVirus(hit);
       score += 10;
       return false;
@@ -435,6 +437,7 @@ function draw() {
   }
   checkEdges(ship);
   checkLives();
+  checkMaskEdges();
   controlNumMasks();
   moveMasks();
   checkMasksForCollisions();
