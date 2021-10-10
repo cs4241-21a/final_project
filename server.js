@@ -24,6 +24,12 @@ server.get('/callback', async (req, res) => {
     res.json(`Here is your new refresh token: ${token}. Place this in process.env.REFRESH_TOKEN for private Spotify API authorization.`);
 });
 
+// api routes
+server.delete('/playlist/:id', async (req, res) => {
+    await SpotifyService.deleteSongsFromPlaylist(req.params.id, [req.query.uri]);
+    res.json(await SpotifyService.getSongsFromPlaylist(req.params.id));
+});
+
 // client routes
 server.get('*', (req, res) => {
     res.sendFile(`${dir}/index.html`);
