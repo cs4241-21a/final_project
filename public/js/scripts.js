@@ -9,10 +9,15 @@ window.onload = function () {
 	document.getElementById("firstDayInput").value = firstDayOfMonth;
 	document.getElementById("lastDayInput").value = lastDayOfMonth;
 
-	pageLoad(firstDayOfMonth, lastDayOfMonth);
+	pageLoad(firstDayOfMonth, lastDayOfMonth, null);
+
+	// Relate search Enter key with submit
+	document.getElementById("searchKeyInput").addEventListener("keyup", function (event) {
+		if (event.key === "Enter") searchAllTimes()
+	});
 }
 
-function pageLoad(firstDay, lastDay) {
+function pageLoad(firstDay, lastDay, searchKey) {
 	const start = new Date().getTime()
 
 	// Remove old stats
@@ -41,16 +46,26 @@ function pageLoad(firstDay, lastDay) {
 </div>`
 	document.body.insertBefore(loader, document.getElementById('cards'))
 
+	// Create POST request body
+	let body = {}
+
+	if (searchKey === null || searchKey === "") {
+		body = {
+			"firstDay": firstDay,
+			"lastDay": lastDay,
+			"searchKey": null
+		}
+	} else {
+		body = {
+			"searchKey": searchKey
+		}
+	}
+
 	// Fetch data from server to create cards on load
 	fetch("/read", {
 		method: "POST",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			"firstDay": firstDay,
-			"lastDay": lastDay
-		})
+		headers: {"Content-Type": "application/json"},
+		body: JSON.stringify(body)
 	})
 		.then(res => {
 			return res.json();
@@ -84,6 +99,12 @@ function pageLoad(firstDay, lastDay) {
 		</button>
 	</div>
 </div>`;
+
+				const end = new Date().getTime()
+				console.log("load took: " + (end - start).toString() + " ms")
+				loadTimes.push(end - start)
+				loadTimeTotal += (end - start)
+				console.log(`${loadTimes.length} loads processed, average ${loadTimeTotal / (loadTimes.length)}`)
 				return;
 			}
 
@@ -243,14 +264,29 @@ function pageLoad(firstDay, lastDay) {
 		});
 }
 
-function updateDate() {
+function updateContent() {
 	const firstDay = document.getElementById('firstDayInput').value;
 	const lastDay = document.getElementById('lastDayInput').value;
-	if (firstDay !== null && lastDay !== null && firstDay !== "" && lastDay !== "") pageLoad(firstDay, lastDay)
+	if (firstDay !== null && lastDay !== null && firstDay !== "" && lastDay !== "") pageLoad(firstDay, lastDay, null)
 }
 
 function viewAllTimes() {
-	pageLoad("0000-00-00", "9999-99-99")
+	pageLoad("0000-00-00", "9999-99-99", null)
+}
+
+function searchAllTimes() {
+	const searchKey = document.getElementById('searchKeyInput').value;
+	if (searchKey !== null && searchKey !== "") pageLoad(null, null, searchKey)
+}
+
+function tagTo(tag) {
+	document.getElementById("searchKeyInput").value = `\"${tag}\"`;
+	pageLoad(null, null, `\"${tag}\"`)
+}
+
+function replaceTag(note) {
+	// Replace all "words" that start with a "#" with a link to searching the tag
+	return note.replace(/#(\S+)/g, value => `<u class="cursor-pointer" onclick="tagTo('${value}')">${value}</u>`);
 }
 
 function addItem() {
@@ -496,7 +532,7 @@ function createCard(json) {
 			"<span class='flex-1 w-0'>";
 
 		// Insert Note
-		list += transaction.note;
+		list += replaceTag(transaction.note);
 
 		list += `</span> </div> <div class='ml-4 flex-shrink-0'>
 			<button class='font-medium `;

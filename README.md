@@ -9,17 +9,23 @@ This is an iterated version of my A3 project which is an online expense tracker 
 ## Features:
 
 1. **Indexed Data:** Reading of data from this website is optimized to only take logarithmic time. Information stored on the database are indexed with a B-tree data structure (a self-balancing tree that maintains sorted data and allows searches, sequential access, insertions, and deletions in logarithmic time). This is implemented by configuring mongoDB's indexing feature. The following queries are optimized with indexes:
-   1. User login and account creation
-   2. Viewing of transactions based on date, sorted by date
-   3. Searching of transactions based on content
-2. **View by Selection:** View transactions according to date range selection
-3. **View all times:** View transaction of all times
-4. **Statistics of selection:** Top of page shows statistics of current filter
-5. **Main Page Content Update:** No need to reload the page to get new data anymore
-6. **Sample Data Generator:** Register an account with specific strings to generate sample data in account. See below for details.
-7. **Performance Benchmarking Tool:** every load time recorded in the console, along with count and calculated average. Updates once every "enter" hit.
-8. **Faster:** Optimized overall response times in various ways, including a complete overhaul to data structure.
-9. **UI/UX Improvements**
+	1. User login and account creation
+	2. Viewing of transactions based on date, sorted by date
+	3. Searching of transactions based on content
+2. **Global Search:** Users can use the searchbar to search for each of their transaction's note content (including its tag). Searching is optimized and indexed, results are sorted by relevance and date. Specific functionalities include:
+	1. Searching for a word - search `coffee` to get results which the note section contains the word "coffee" and similar words like "Coffee" and "coffees"
+	2. Searching multiple words - search `coffee candy bar` to get results which the note section contains either the word "coffee" or "candy" or "bar", or any of their similar words, or any combination of it.
+	3. Searching multiple words as a phrase - search `"coffee candy bar"` to get results which the note section contains the phrase "coffee candy bar" or its similar phrase like "coffee candy bars".
+	4. Searching for a word and excluding another - search `coffee -shop` to get results which the note section contains the word "coffee" and its similar words, but does not contain the word "shop" or its similar words.
+3. **Tags:** Users can enter words that start with a `#` to enter a tag for that transaction. Tags will be underlined and clickable. Clicking on a tag will show the user other transactions with the same tag.
+4. **View by Selection:** View transactions according to date range selection
+5. **View all times:** View transaction of all times
+6. **Statistics of selection:** Top of page shows statistics of current filter
+7. **Main Page Content Update:** No need to reload the page to get new data anymore
+8. **Sample/Random Data/Noun+Tag Generator:** Register an account with specific strings to generate sample/random data/noun+tag in account. See below for details.
+9. **Performance Benchmarking Tool:** every load time recorded in the console, along with count and calculated average. Updates once every "enter" hit.
+10. **Faster:** Optimized overall response times in various ways, including a complete overhaul to data structure and building indexes for querying and searching.
+11. **UI/UX Improvements:** See details below
 
 ## Sample Accounts:
 
@@ -29,7 +35,13 @@ To get an account with sample data, register an account with its email containin
 
 ### Huge, 10 years of heavy use worth of random data
 
-I made a random data generator in the server to test indexing performance. To get a not indexed account, register one with its email containing `89jv4hu8283e4c9h`. To get an account with random data, register an account with its email containing `ebdrfcgtvy567u`. Sample accounts are already made: `random@test.yesIndex` and `random@test.noIndex`, passwords are both `1`. Random data represents data amount for a heavy user that have used this website daily for 10 years (2011-2021), and each day averaged to create ~5 transactions with each one having a note of ~18 characters and amount of ~4 digits (two on each side of the decimal point).
+I made a random data generator in the server to test indexing performance. To get a not indexed account, register one with its email containing `89jv4hu8283e4c9h`. To get an account with random data, register an account with its email containing `ebdrfcgtvy567u`. Sample accounts are already made: `random@test.yesIndex` and `random@test.noIndex`, passwords are both `1`. Random data represents data amount for a heavy user that have used this website daily for 10 years (2011-2021), and each day averaged to create ~5 transactions with each one having a note of ~18 characters and transaction amount of ~4 digits (two on each side of the decimal point).
+
+### Huge(r), 10 years of heavy use worth of random nouns in notes and as tags (recommended)
+
+I made a random noun+tag generator in the server to test search indexing performance (and tag searching performance). To get an account with random data, register an account with its email containing `kmocowiamcwaiom`. Random nouns represents data amount for a heavy user that have used this website daily for 10 years (2011-2021), and each day averaged to create ~5 transactions with each one having a note of 4 nouns (2 of which are tags) and a number tag, with transaction amount of ~4 digits (two on each side of the decimal point).
+
+![RandomNouns](readme/RandomNouns.png)
 
 ## Performance Benchmarking
 
@@ -40,27 +52,31 @@ CPU: i9-9900KS, Memory: 32 GB, server hosted locally.
 Loading dates `0000-00-00` to `9999-99-99` (19676 generated transactions) data from account `random@test.666`, password `666`
 
 Indexed:
+
 - Took 177 seconds with both side sorting
 - Took 188|175 seconds with local side sorting
 - Took 167|168 seconds with database side sorting (Extremely consistent load time!?!?)
 - Took 172 seconds with no sorting
 
 Not Indexed:
+
 - Took 164 seconds with database side sorting
 
-This shows that indexing does not provide a great performance boost compared to not having indexing on when querying the entirety of the database.
+This shows that indexing does not provide a great performance boost compared to not having indexing on when querying the entirety of the database. After testing this, I added a query length limit of 2000 transactions. Still big but much better than a ~20000 list that could break user experience.
 
 ### Part data
 
 Loading dates `0000-01-01` to `2015-01-01` (7380 of 19941 generated transactions) data from account `random@test.123`, password `123`
 
 Indexed:
+
 - Took 27 seconds with both side sorting
 - Took 28 seconds with local side sorting
 - Took 28 seconds with database side sorting
 - Took 27 seconds with no sorting
 
 Not Indexed:
+
 - Took 29 seconds with both side sorting
 - Took 28 seconds with local side sorting
 - Took 27 seconds with database side sorting
@@ -70,15 +86,19 @@ This shows that indexed database side sorting also have little performance effec
 
 ### First Page
 
+For this, I made a benchmarking tool that would count starting from the client start processing the request to send to the server, to receiving all data sent back from the server and going over each to generate the day-item structure. This does not include making DOM changes, so it will stop prior to the page finish updating.
+
 Loading dates `2021-10-01` to `2021-10-31` (start page, only ~1/120 of the 19941 generated transactions) data from account `random@test.123`, password `123`
 
 Indexed:
+
 - Took 525.0 milliseconds on average to load with both side sorting
 - Took 529.3 milliseconds on average to load with local side sorting
 - Took 519.3 milliseconds on average to load with database side sorting
 - Took 514.6 milliseconds on average to load with no sorting
 
 Not Indexed:
+
 - Took 534.8 milliseconds on average to load with both side sorting
 - Took 543.6 milliseconds on average to load with local side sorting
 - Took 534.3 milliseconds on average to load with database side sorting
@@ -86,8 +106,27 @@ Not Indexed:
 
 This shows that when querying small data set from the entire database, indexed queries are effective and can reduce 12.75 ms of loading time on average for querying ~1/120 of ~20000 transactions.
 
-
 ## Develop Notes:
+
+### Search
+
+Search is performed on the server side and is optimized (indexed) for speed.
+
+Search results are sorted by relevance, discarding time:
+
+![SortByRelevance](readme/SortByRelevance.png)
+
+Words can be connected to act as one word with `""`:
+
+![SearchByPhrase](readme/SearchByPhrase.png)
+
+### Tags
+
+Users can enter a word starting with a `#` to mark it as a tag. When displayed, tags are clickable and clicking a tag searches on the server of all other items marked with that tag.
+
+![Tag](readme/Tag.png)
+
+![SearchTag](readme/SearchTag.png)
 
 ### Data structure, where computation happens, and what gets sent
 
@@ -143,3 +182,13 @@ Before:
 After:
 ![after](readme/Loading2.png)
 ![after](readme/Empty2.png)
+
+### Sort order of transactions
+
+Transactions get their date recorded, not the precise time because it's much less valuable and reliable. Transactions of the same date are ordered with such rule when displayed:
+
+1. Bigger amounts comes first
+2. The type (income/expense) of the transaction does not matter
+3. Transactions with notes are displayed first, sorted alphabetically descending
+
+![Sort](readme/Sort.png)
