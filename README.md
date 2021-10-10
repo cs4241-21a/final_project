@@ -73,7 +73,7 @@ For authentication, we wanted to challenge ourselves more than we did in A3, whe
   - page routing
   - readme and proposal writeups 
   - video scripting 
-  - lighthouse testing and site validation
+  - lighthouse testing for desktop and site validation
 - Chris
   - all database configuration, management, and querying
   - all styling
