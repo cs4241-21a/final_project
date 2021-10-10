@@ -188,7 +188,13 @@ function checkEdges(obj) {
 function displayShip(obj=ship){
   push();
   translate(obj.pos.x, obj.pos.y)
+  if(obj.username){
+    textAlign(CENTER);
+    text(obj.username, 0, -30);
+  }
   rotate(obj.rotation)
+  filter(INVERT);
+  tint(255, 0, 0, 127);
   image(gompei_img, -25, -25, obj.diam, obj.diam)
   pop();
 }
@@ -354,6 +360,7 @@ function connectWS(){
         case "joined":
           {
             let sh = generateShip();
+            sh.username = json.username;
             otherShips[json.id] = sh;
           }
           break;
