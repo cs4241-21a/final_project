@@ -146,6 +146,7 @@ wss.on('connection', (socket, req) => {
                         lobby = createLobby(json.name, json.password);
                         lobbies.push(lobby);
                         socket.send(JSON.stringify({packetType: "joined_lobby", name: lobby.name}));
+                        socket.send(JSON.stringify({packetType: "send_field"}));
                         lobby.addClient(allClients.find(c => c.id == clientId));
                       }
                     }
@@ -171,6 +172,17 @@ wss.on('connection', (socket, req) => {
                         }
                       }
                       break;
+                  case "send_field": 
+                    {
+                        const lobby = findLobbyWithClient(clientId);
+                        if(lobby !== undefined) {
+                          // TODO: remove from lobby.viruses
+                          lobby.viruses = json.stars;
+                        }else{
+                          console.log("Recieved " + json.packetType + " packet from client not in a lobby: " + clientId);
+                        }
+                    }
+                    break;
                   case "destroy_virus":
                       {
                         const lobby = findLobbyWithClient(clientId);
@@ -230,8 +242,7 @@ setInterval(() => {
 setInterval(() => {
     lobbies.forEach(l => {
         l.clients.forEach(c => {
-            // TODO: send l.viruses
-            // c.socket.send(JSON.stringify({packetType: "update_viruses", viruses: l.viruses}));
+            c.socket.send(JSON.stringify({packetType: "update_viruses", viruses: l.viruses}));
           
             // l.clients.forEach(c2 => {
             //     if(c2.id !== c.id) {

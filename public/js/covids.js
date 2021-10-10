@@ -29,6 +29,7 @@ function randomChoice(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
 }
 
+let _star_cur_id = 0;
 function generateStar(){
   let star = {} //Define star locally
   const quad = randomChoice([0, 1, 2, 3])
@@ -68,6 +69,9 @@ function generateStar(){
   const set = randomChoice([{life:1, size:small}, {life:2, size:medium}, {life:3, size:large}])
   star.diam = set.size
   star.lives = set.life
+  
+  star.id = _star_cur_id++;
+  
   stars.push(star) //Now add the star to the list
 }
 
@@ -289,6 +293,21 @@ function connectWS(){
           {
             inLobby = true;
             document.querySelector("#lobbyname").disabled = document.querySelector("#lobbypass").disabled = document.querySelector("#lobbyButton").disabled = inLobby;
+          }
+          break;
+        case "send_field":
+          {
+            socket.send(JSON.stringify({packetType: "send_field", stars}));
+          }
+          break;
+        case "update_viruses":
+          {
+            json.viruses.forEach(v => {
+              let st = stars.find(s => s.id == v.id);
+              if(st !== undefined) {
+                st.
+              }
+            })
           }
           break;
         case "joined":
