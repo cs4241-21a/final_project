@@ -34,7 +34,7 @@ function OnConnect(wsclient) {
 };
 
 function joinRoom(client, roomCode){
-    if (roomCode === "none"){
+    if (roomCode === "none" || roomCode === null || roomCode === undefined){
         roomCode = NewRoomCode()
     }
     let room = rooms.find(_room => _room.code == roomCode)
