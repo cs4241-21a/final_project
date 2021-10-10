@@ -49,8 +49,8 @@ const ArtifactSelect = ({
             prop={art}
             loading={loading}
           >
-            <img src={imgSrc} alt={`${art.name}-image`} width="100px" />
-            <p>{art.name}</p>
+            <img src={imgSrc} alt={`${art.fullname.en}-image`} width="100px" />
+            <p>{art.fullname.en}</p>
           </SelectPrefButton>
         );
       })}
