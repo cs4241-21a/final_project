@@ -62,6 +62,10 @@
                         <v-card-title>
                           <span class="text-h5">Contact Us</span>
                         </v-card-title>
+                        <br>
+                        <v-card-subtitle>
+                          <span class="text-h7">*An email will be sent to us with your comment, and cc the email address you enter below.</span>
+                        </v-card-subtitle>
 
                         <v-card-text>
                           <v-container>
@@ -69,7 +73,7 @@
                               <v-col cols="12">
                                 <v-text-field
                                   outlined
-                                  label="Email"
+                                  label="Your Email Address here"
                                   v-model="targetEmailAdress"
                                   required
                                 ></v-text-field>
@@ -77,12 +81,14 @@
                               <v-col cols="12">
                                 <v-textarea
                                   outlined
-                                  label="Comment"
+                                  label="Your Comment here"
                                   type="text"
                                   v-model="userMessage"
                                   required
                                 ></v-text-field>
                               </v-col>
+                              
+
                             </v-row>
                           </v-container>
                         </v-card-text>
