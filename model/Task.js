@@ -1,11 +1,9 @@
 const mongoose = require('mongoose');
 
+var Schema = mongoose.Schema,
+    ObjectId = Schema.ObjectId;
+
 const taskSchema = new mongoose.Schema({
-id: { 
-    type: String,
-    required: true,
-    default: ObjectId().str
-  },
     username: {
         type: String,
         required: true,
@@ -33,10 +31,13 @@ id: {
     },
     parent: {
         type: String,
-        required: true,
         default: ""
     }
 });
+
+taskSchema.virtual('categoryId').get(function() {
+    return this._id
+})
 
 module.exports = mongoose.model('Task', taskSchema);
 
