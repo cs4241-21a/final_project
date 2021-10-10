@@ -28,6 +28,13 @@
       body {
         background-color: #ffffff;
       }
+      #welcome-user {
+        white-space: nowrap;
+        
+      }
+      .welcome-user {
+        display: inline-block;
+      }
     </style>
     <script src="/homeScript.js" defer></script>
   </head>
@@ -41,10 +48,11 @@
     </nav>
 
 
-
-    <h1 style="color:#8182DB"><center>Welcome, </center></h1>
-    <h1 id='currentUserHome' style="color:#8182DB"><center>{{suggesteduser}}</center></h1>
-    <h1 style="color:#8182DB"><center>!</center></h1>
+    <div id="welcome-user">
+      <h1 class="welcome-user" style="color:#8182DB"><center>Welcome, </center></h1>
+      <h1 class="welcome-user" id='currentUserHome' style="color:#8182DB"><center>{{suggesteduser}}</center></h1>
+      <h1 class="welcome-user" style="color:#8182DB"><center>!</center></h1>
+    </div>
     <div class="grid-container">
       <div class="grid-item">
         <h2 style="left:80px; right:400px; color:#5E5CSD">Clothes</h2>
