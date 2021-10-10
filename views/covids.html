@@ -13,10 +13,15 @@
       Join/Create Lobby
     </button>
     <text id="status">Disconnected</text>
-    <button onClick="window.location.reload()" style="visibility:'hidden'">
+    <button id="disconnectButton" onClick="window.location.reload()">
       Disconnect
     </button>
     <script src="js/covids.js"></script>
   </body>
+  <style type="text/css">
+    #disconnectButton {
+      visibility:"hidden"
+    }
+  </style>
 </html>
 

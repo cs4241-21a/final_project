@@ -138,6 +138,7 @@ function generateShip() {
   sh.rotation = 0
   sh.desRot = 0
   sh.lives = num_lives
+  sh.iframes = 0;
   return sh;
 }
 
@@ -220,12 +221,6 @@ function moveMasks(objs=masks){
   }
 }
 
-function blinkShip(counter){
-  if (counter % 30 === 0) {
-    
-  }
-}
-
 function checkMasksForCollisions(){
   masks = masks.filter((m, i) => {
     let hit = checkForCollisions(m, stars, "");
@@ -252,15 +247,7 @@ function damageVirus(v){
   }
 }
 
-function displayLives(){
-  
-}
-
-function resetShip(){
-  
-}
-
-function checkForCollisions(curr, targets, input){
+function checkForCollisions(curr, targets){
   
   //Note this will crash if the target object does not contain a 'pos' vector.
   for (let i = 0; i < targets.length; i++){
@@ -273,11 +260,6 @@ function checkForCollisions(curr, targets, input){
       //We have a collision!
       print("HIT")
       //play audio
-      if (input === "ship"){
-        print("HIT SHIP")
-        curr.lives--
-      }
-      
       return t;
     }
   }
@@ -327,7 +309,21 @@ function draw() {
   turnShip()
   moveShip()
   //shoot()
-  checkForCollisions(ship, stars, "ship")
+  let hit = checkForCollisions(ship, stars);
+  if(hit !== null && ship.iframes <= 0){
+    console.log("HIT SHIP");
+    ship.lives--;
+    
+    if(!isControllerClient) socket.send(JSON.stringify({packetType: "clear_virus", id: hit.id}));
+    let v = hit;
+    v.x = v.init_x;
+    v.y = v.init_y;
+    const set = randomChoice([{life:1, size:small}, {life:2, size:medium}, {life:3, size:large}])
+    v.diam = set.size
+    v.lives = set.life
+    
+    ship.iframes = 120;
+  }
   checkEdges(ship)
   checkLives()
   moveMasks()
@@ -442,6 +438,18 @@ function connectWS(){
           {
             let v = stars.find(s => s.id == json.id);
             if(v !== undefined) damageVirus(v);
+          }
+          break;
+        case "clear_virus":
+          {
+            let v = stars.find(s => s.id == json.id);
+            if(v !== undefined) {
+              v.x = v.init_x;
+              v.y = v.init_y;
+              const set = randomChoice([{life:1, size:small}, {life:2, size:medium}, {life:3, size:large}])
+              v.diam = set.size
+              v.lives = set.life
+            }
           }
           break;
       }

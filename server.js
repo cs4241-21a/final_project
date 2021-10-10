@@ -55,6 +55,10 @@ app.post("/register", bodyParser.json(), function(req, res) {
   req.session.username = req.body.username;
 });
 
+app.post("/addScore", bodyParser.json(), function(req,res){
+  
+});
+
 app.get("/", (request, response) => {
   response.sendFile(__dirname + "/views/login.html");
 });
@@ -223,6 +227,16 @@ wss.on('connection', (socket, req) => {
                         const lobby = findLobbyWithClient(clientId);
                         if(lobby !== undefined) {
                           lobby.getControllerClient().socket.send(JSON.stringify({packetType: "hit_virus", id: json.id}));
+                        }else{
+                          console.log("Recieved " + json.packetType + " packet from client not in a lobby: " + clientId);
+                        }
+                      }
+                      break;
+                  case "clear_virus":
+                      {
+                        const lobby = findLobbyWithClient(clientId);
+                        if(lobby !== undefined) {
+                          lobby.getControllerClient().socket.send(JSON.stringify({packetType: "clear_virus", id: json.id}));
                         }else{
                           console.log("Recieved " + json.packetType + " packet from client not in a lobby: " + clientId);
                         }
