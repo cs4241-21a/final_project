@@ -77,6 +77,12 @@ body {
     width: 14.2857%;
 }
 
+.calendar-days-day[disabled='true'] {
+    border: 1px black solid;
+    width: 14.2857%;
+    background-color: black;
+}
+
 .calendar-day-container {
     margin: 20px;
     display: flex;
@@ -95,4 +101,17 @@ body {
 
 .calendar-days-week {
     flex: 1 0 auto;
+}
+
+.Collapsible {
+    background-color: #003F63;
+}
+
+.Collapsible__trigger {
+    background-color: #003F63;
+}
+
+.Collapsible__contentInner {
+    border: 1px solid black;
+    padding-left: 10px;
 }

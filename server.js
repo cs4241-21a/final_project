@@ -47,7 +47,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(user, done) {
     done(null, user);
 });
-console.log(githubClientID);
+
 passport.use(new GitHubStrategy({
     
     clientID: githubClientID,
@@ -100,7 +100,6 @@ app.post('/addCalendar', isLoggedIn, async function(req, res) {
 });
 
 app.post('/deleteCalendar', isLoggedIn, async function(req, res) {
-    console.log(req.body);
     let response = await database.deleteCalendar(req.body._id);
     res.send(response)
 });
@@ -136,13 +135,11 @@ app.get('/getAllTasks', isLoggedIn, async function(req, res) {
 });
 
 app.post('/addTask', isLoggedIn, async function(req, res) {
-    console.log(req.body);
     let response = await database.addTask(req.body);
     res.send(response)
 });
 
 app.post('/deleteTask', isLoggedIn, async function(req, res) {
-    console.log(req.body);
     let response = await database.deleteTask(req.body._id);
     res.send(response)
 });

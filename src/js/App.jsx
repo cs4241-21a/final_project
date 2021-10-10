@@ -21,10 +21,18 @@ class App extends React.Component {
       tasksLoaded: false,
       userIdLoaced: false
     };
+    this.changeSelectedCalendar = this.changeSelectedCalendar.bind(this);
   }
 
   componentWillMount() {
     this.retrieveAllGlobals();
+  }
+
+  changeSelectedCalendar(calId) {
+    GLOBAL_VARIABLES.selectedCalendarId = calId;
+    this.setState({
+      selectedCalendarId: calId
+    });
   }
   
   retrieveAllGlobals() {
@@ -73,11 +81,12 @@ class App extends React.Component {
   }
 
   render() {
+    console.log('App cal id: ', this.state.selectedCalendarId);
     return (
       <div>
         {
           (this.state.eventsLoaded && this.state.calendarsLoaded && this.state.tasksLoaded && this.state.userIdLoaced)
-          ? (<div className="App"> <Sidebar /> <Calendar /> </div>)
+          ? (<div className="App"> <Sidebar changeSelectedCalendar={this.changeSelectedCalendar}/> <Calendar selectedCalendarId={this.state.selectedCalendarId}/> </div>)
           : (<p>Loading</p>)
         }
       </div>

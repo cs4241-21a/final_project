@@ -15,12 +15,16 @@ const eventObj = {
         type: String,
         required: true,
     },
-    startTime: {
+    date: {
         type: Date,
+        required: true
+    },
+    startTime: {
+        type: String,
         required: false
     },
     endTime: {
-        type: Date,
+        type: String,
         required: false
     },
     description: {
@@ -131,7 +135,6 @@ module.exports = function(db){
         updateEventObj._id = ObjectId(updateEventObj._id);
         await Event.findByIdAndUpdate({_id: eventId }, updateEventObj, (err, res) => {
             if(err) error = err;
-            console.log('Done', res);
         })
         .clone()
         .catch(err => console.log(err));
@@ -177,7 +180,6 @@ module.exports = function(db){
         delete updateCalendarObj._id;
         await Calendar.findByIdAndUpdate({_id: calendarId}, updateCalendarObj, (err, res) => {
             if(err) error = err;
-            console.log('Done', res);
         })
         .clone()
         .catch(err => console.log(err));
@@ -223,7 +225,6 @@ module.exports = function(db){
         delete updateTaskObj._id;
         await Task.findByIdAndUpdate({ _id: taskId }, updateTaskObj, (err, res) => {
             if(err) error = err;
-            console.log('Done', res);
         })
         .clone()
         .catch(err => console.log(err));

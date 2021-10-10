@@ -4,7 +4,8 @@ import Collapsible from 'react-collapsible';
 import 'reactjs-popup/dist/index.css';
 import databaseUtils from './databaseUtils';
 import {GLOBAL_VARIABLES} from './globals';
-import Task from './Task'
+import Task from './Task';
+import CalendarSidebarItem from './CalendarSidebarItem';
 
 class Sidebar extends Component {
   constructor(props) {
@@ -14,9 +15,12 @@ class Sidebar extends Component {
       tasks: GLOBAL_VARIABLES.tasks,
       calendarSidebarItems: [],
       taskSidebarItems: [],
-      color: '#000000'
+      color: '#000000',
+      changeSelectedCalendar: props.changeSelectedCalendar
     };
-    this.newCalendarSubmit = this.newCalendarSubmit.bind(this);
+    console.log('Selected Calendar: ', GLOBAL_VARIABLES.selectedCalendarId);
+    this.newTopCalendarSubmit = this.newTopCalendarSubmit.bind(this);
+    this.newChildCalendarSubmit = this.newChildCalendarSubmit.bind(this);
     this.deleteCalendar = this.deleteCalendar.bind(this);
     this.modifyCalendar = this.modifyCalendar.bind(this);
     this.newTaskSubmit = this.newTaskSubmit.bind(this);
@@ -27,12 +31,11 @@ class Sidebar extends Component {
   }
 
   selectCalendar(calId) {
-    GLOBAL_VARIABLES.selectedCalendarId = calId;
+    this.state.changeSelectedCalendar(calId);
   }
 
   async deleteCalendar(calId) {
     let toUpdateCalendars = JSON.parse(JSON.stringify(this.state.calendars));
-    console.log(toUpdateCalendars);
     let calToDelete = toUpdateCalendars[calId];
     let childrenToDelete = calToDelete.children;
     let parentToUpdate = calToDelete.parent === '' ? undefined : toUpdateCalendars[calToDelete.parent];
@@ -63,14 +66,9 @@ class Sidebar extends Component {
     await setStateAsync({
       calendars: toUpdateCalendars
     });
-    console.log(this.state.calendars)
   }
 
-  modifyCalendar(calId) {
-    // TODO: Write function
-  }
-
-  newCalendarSubmit(e) {
+  modifyCalendar(e, calId) {
     e.preventDefault();
     let newCalendar = {
       user: GLOBAL_VARIABLES.userId,
@@ -79,39 +77,57 @@ class Sidebar extends Component {
       name: this.state.name,
       color: this.state.color
     };
+  }
+
+  newTopCalendarSubmit(e) {
+    e.preventDefault();
+    let newCalendar = {
+      user: GLOBAL_VARIABLES.userId,
+      parent: '',
+      children: [],
+      name: this.state.name,
+      color: this.state.color
+    };
     databaseUtils.addCalendar(newCalendar)
     .then(newCalId => {
       newCalendar._id = newCalId;
-      // Update children, locally and on database
-      let selectedCalendarId = GLOBAL_VARIABLES.selectedCalendarId;
-      // Update local
-      if(selectedCalendarId !== '') {
-        // Append to children the new calendar
-        let currentStateCalendars = JSON.parse(JSON.stringify(this.state.calendars));
-        currentStateCalendars[selectedCalendarId].children.push(newCalId);
-        currentStateCalendars[newCalId] = newCalendar;
-        // Update locally and on database
-        this.setState({
-          calendars: currentStateCalendars
-        }, () => {
-          GLOBAL_VARIABLES.calendars = this.state.calendars
-          databaseUtils.modifyCalendar(this.state.calendars[selectedCalendarId]);
-        })
+      // Just add the calendar to the list of global calendars
+      let currentStateCalendars = JSON.parse(JSON.stringify(this.state.calendars));
+      currentStateCalendars[newCalId] = newCalendar;
+      this.setState({
+        calendars: currentStateCalendars
+      }, () => { GLOBAL_VARIABLES.calendars = this.state.calendars });
+    })
+  }
 
-      } else {
-        // Just add the calendar to the list of global calendars
-        let currentStateCalendars = JSON.parse(JSON.stringify(this.state.calendars));
-        currentStateCalendars[newCalId] = newCalendar;
-        this.setState({
-          calendars: currentStateCalendars
-        }, () => { GLOBAL_VARIABLES.calendars = this.state.calendars });
-      }
+  newChildCalendarSubmit(e, parentId) {
+    e.preventDefault();
+    let newCalendar = {
+      user: GLOBAL_VARIABLES.userId,
+      parent: parentId,
+      children: [],
+      name: this.state.name,
+      color: this.state.color
+    };
+    databaseUtils.addCalendar(newCalendar)
+    .then(newCalId => {
+      newCalendar._id = newCalId;
+      // Append to children the new calendar
+      let currentStateCalendars = JSON.parse(JSON.stringify(this.state.calendars));
+      currentStateCalendars[parentId].children.push(newCalId);
+      currentStateCalendars[newCalId] = newCalendar;
+      // Update locally and on database
+      this.setState({
+        calendars: currentStateCalendars
+      }, () => {
+        GLOBAL_VARIABLES.calendars = this.state.calendars
+        databaseUtils.modifyCalendar(this.state.calendars[parentId]);
+      })
     })
   }
 
   newTaskSubmit(e) {
     e.preventDefault();
-    console.log(this.state);
     let tempDesc = "";
     if (this.state.description !== undefined){
       tempDesc = this.state.description;
@@ -122,7 +138,6 @@ class Sidebar extends Component {
       dueDate: this.state.dueDate,
       description: tempDesc
     };
-    console.log(newTask);
     databaseUtils.addTask(newTask)
     .then(newTaskId => {
       newTask._id = newTaskId;
@@ -134,16 +149,16 @@ class Sidebar extends Component {
 
   async deleteTask(taskId) {
     // copy tasks array
-    console.log(taskId);
-    let toUpdateTasks = JSON.parse(JSON.stringify(this.state.tasks));
+    let toUpdateTasks = [];
     
     // Delete task
-    databaseUtils.deleteTask(taskId).then( resp => {
-      console.log(resp);
-    });
+    databaseUtils.deleteTask(taskId);
 
     // update temporary tasks array
-    delete toUpdateTasks[taskId];
+    this.state.tasks.forEach(task => {
+      if(task._id === taskId) return;
+      else toUpdateTasks.push(task);
+    });
 
     let setStateAsync = (state) => {
       return new Promise((resolve) => {
@@ -156,8 +171,34 @@ class Sidebar extends Component {
     });
   }
 
-  modifyTask(taskId){
-    // TODO: Write function
+  modifyTask(e, taskId){
+    e.preventDefault();
+    let tempDesc = "";
+    let toUpdateTasks = [];
+    if (this.state.description !== undefined){
+      tempDesc = this.state.description;
+    }
+    
+    this.state.tasks.forEach(task => {
+      if(task._id === taskId) return;
+      else toUpdateTasks.push(task);
+    });
+    
+    let newTask = {
+      _id: taskId,
+      user: GLOBAL_VARIABLES.userId,
+      name: this.state.name,
+      dueDate: this.state.dueDate,
+      description: tempDesc
+    };
+    
+    databaseUtils.modifyTask(newTask)
+    .then(resp => {
+      console.log(resp);
+      this.setState({
+        tasks: [...toUpdateTasks, newTask]
+      });
+    })
   }
   
   // Handles the change of a form field; useful for updating state which is
@@ -182,7 +223,8 @@ class Sidebar extends Component {
                                   delete={this.deleteCalendar}
                                   modify={this.modifyCalendar}
                                   handleChange={this.handleChange}
-                                  customOnClick={this.selectCalendar}/>);
+                                  customOnClick={this.selectCalendar}
+                                  addChild={this.newChildCalendarSubmit}/>);
       }
     }
 
@@ -212,7 +254,7 @@ class Sidebar extends Component {
                            required/>
                     <br />
                     <input type="color" name="color" onChange={this.handleChange} />
-                    <button onClick={this.newCalendarSubmit}>Create Calendar</button>
+                    <button onClick={this.newTopCalendarSubmit}>Create Calendar</button>
                   </form>
                 </div>
               )}
@@ -238,13 +280,14 @@ class Sidebar extends Component {
                       <input type="text" 
                              name="description"
                              placeholder="Description"
-                             onChange={this.handleChange}></input>
+                             onChange={this.handleChange}
+                             required />
 
                       <label htmlFor="dueDate">Due Date</label>
                       <input type="datetime-local"
                              name="dueDate"
                              onChange={this.handleChange}
-                             required></input>
+                             required />
                       <button onClick={this.newTaskSubmit}>Create Task</button>
                     </form>
                   </div>  
@@ -260,48 +303,48 @@ class Sidebar extends Component {
   }
 }
 
-function CalendarSidebarItem(props) {
-  let children = [];
-  if(props.calendars[props.calendarId].children.length !== 0) {
-    props.calendars[props.calendarId].children.forEach(child => {
-      children.push(<CalendarSidebarItem calendars={props.calendars}
-                                         calendarId={child}
-                                         style={{padding: '10px'}}
-                                         delete={props.delete}
-                                         modify={props.modify}
-                                         handleChange={props.handleChange}
-                                         customOnClick={() => props.customOnClick(child)}/>)});
-  }
+// function CalendarSidebarItem(props) {
+//   let children = [];
+//   if(props.calendars[props.calendarId].children.length !== 0) {
+//     props.calendars[props.calendarId].children.forEach(child => {
+//       children.push(<CalendarSidebarItem calendars={props.calendars}
+//                                          calendarId={child}
+//                                          style={{padding: '10px'}}
+//                                          delete={props.delete}
+//                                          modify={props.modify}
+//                                          handleChange={props.handleChange}
+//                                          customOnClick={() => props.customOnClick(child)}/>)});
+//   }
 
-  return (
-    <div>
-      <button onClick={() => props.delete(props.calendarId)}><i class="far fa-trash-alt"></i></button>
-      <Popup trigger={<button><i class="far fa-edit"></i></button>} position="right center">
-        {close => (
-              <div classname="calendarEdit">
-                <form>
-                  <label htmlFor="name">Edit Calendar</label>
-                  <input type='text' 
-                         name='name'
-                         placeholder="Calendar Name" 
-                         onChange={props.handleChange}
-                         required/>
-                  <br />
-                  <input type="color" name="color" onChange={props.handleChange} />
-                  <button onClick={() => props.modify(props.calendarId)}>Update</button>
-                </form>
-              </div>
-              )}
-      </Popup>
-      <Collapsible 
-          trigger={props.calendars[props.calendarId].name} 
-          style={props.style} 
-          onOpening={() => props.customOnClick(props.calendarId)}
-          onClosing={() => props.customOnClick(props.calendarId)}>
-        {children}
-      </Collapsible>
-    </div>
-  );
-}
+//   return (
+//     <div>
+//       <button onClick={() => props.delete(props.calendarId)}><i class="far fa-trash-alt"></i></button>
+//       <Popup trigger={<button><i class="far fa-edit"></i></button>} position="right center">
+//         {close => (
+//               <div classname="calendarEdit">
+//                 <form>
+//                   <label htmlFor="name">Edit Calendar</label>
+//                   <input type='text' 
+//                          name='name'
+//                          placeholder="Calendar Name" 
+//                          onChange={props.handleChange}
+//                          required/>
+//                   <br />
+//                   <input type="color" name="color" onChange={props.handleChange} />
+//                   <button onClick={(e) => props.modify(e, props.calendarId)}>Update</button>
+//                 </form>
+//               </div>
+//               )}
+//       </Popup>
+//       <Collapsible 
+//           trigger={props.calendars[props.calendarId].name} 
+//           style={props.style} 
+//           onOpening={() => props.customOnClick(props.calendarId)}
+//           onClosing={() => props.customOnClick(props.calendarId)}>
+//         {children}
+//       </Collapsible>
+//     </div>
+//   );
+// }
 
 export default Sidebar;

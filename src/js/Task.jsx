@@ -18,7 +18,6 @@ const daysMap = {
 };
 
 function Task(props){
-  console.log(props);
   let description = "No Description";
   if(props.task.description !== undefined){
     description = props.task.description;
@@ -26,36 +25,35 @@ function Task(props){
   
   return (
     <div>
-      <button onClick={() => props.delete(props.task._id)}><i class="far fa-trash-alt"></i></button>
-      <Popup trigger={<button><i class="far fa-edit"></i></button>} position="right center">
-        {close => (
-              <div classname="taskEdit">
-                <form>
-                  <label htmlFor="name">Edit Task</label>
-                  <input type='text' 
-                         name='name'
-                         placeholder="Task Name" 
-                         onChange={props.handleChange}
-                         required/>
-                  <br />
-                  <label htmlFor="description">Description</label>
-                  <input type="text" 
-                        name="description"
-                        placeholder="Description"
-                        onChange={props.handleChange}></input>
-                  <label htmlFor="dueDate">Due Date</label>
-                  <input type="datetime-local"
-                         name="dueDate"
-                         onChange={props.handleChange}
-                         required></input>
-                  <button onClick={() => props.modify(props.task.taskId)}>Update</button>
-                </form>
-              </div>
-            )}
-      </Popup>
       <Collapsible trigger={props.task.name}>
+        <button onClick={() => props.delete(props.task._id)}><i class="far fa-trash-alt"></i></button>
+        <Popup trigger={<button><i class="far fa-edit"></i></button>} position="right center">
+          {close => (
+                <div classname="taskEdit">
+                  <form>
+                    <label htmlFor="name">Edit Task</label>
+                    <input type='text' 
+                           name='name'
+                           placeholder="Task Name" 
+                           onChange={props.handleChange}
+                           required/>
+                    <br />
+                    <label htmlFor="description">Description</label>
+                    <input type="text" 
+                          name="description"
+                          placeholder="Description"
+                          onChange={props.handleChange}></input>
+                    <label htmlFor="dueDate">Due Date</label>
+                    <input type="datetime-local"
+                           name="dueDate"
+                           onChange={props.handleChange}
+                           required></input>
+                    <button onClick={(e) => props.modify(e, props.task._id)}>Update</button>
+                  </form>
+                </div>
+              )}
+        </Popup>
         <p>Description: {description}</p>
-        <p>Owner: {props.task.user}</p>
         <p>Due Date: {props.task.dueDate}</p>
       </Collapsible>
     </div>
