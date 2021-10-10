@@ -1,4 +1,4 @@
-const numOfStars = 25,
+let numOfStars = 25,
   width = 750,
   height = 750,
   min_speed = 0.5,
@@ -10,7 +10,8 @@ const numOfStars = 25,
   mask_size = 25,
   ship_thrust = 0.05,
   max_ship_speed = 5,
-  num_lives = 3;
+  num_lives = 3,
+  max_num_masks = 3;
 
 let GameOver = false;
 let isThrusting = false;
@@ -154,7 +155,6 @@ function generateMask() {
   mask.vel = createVector(newVel.x, newVel.y);
   mask.pos = createVector(newPos.x, newPos.y);
   mask.diam = mask_size;
-  mask.id = mask_counter
   mask.rotation = 0;
   return mask;
 }
@@ -242,7 +242,7 @@ function checkEdges(obj) {
 function checkMaskEdges() {
   for (let i = masks.length-1; i >= 0 ;i--){
     if ((masks[i].pos.x < 0)||(masks[i].pos.x > width)||(masks[i].pos.y < 0)||(masks[i].pos.y > height)) {
-      const index = masks.indexOf(masks[i].id);
+      const index = masks.indexOf(masks[i]);
       print("Mask OOB:",index)
       if (index > -1) {
         masks.splice(index, 1);
@@ -285,7 +285,7 @@ function moveMasks(objs = masks) {
 }
 
 function controlNumMasks() {
-  if (masks.length >= 5) {
+  if (masks.length >= max_num_masks) {
     cantShoot = true;
   } else {
     cantShoot = false;
@@ -384,7 +384,6 @@ function checkLives() {
   }
 }
 
-let mask_counter = 0
 let counter = 0;
 function draw() {
   if (counter >= 60) {
@@ -392,7 +391,6 @@ function draw() {
     score++;
   }
   counter++;
-  mask_counter++;
   background(255);
   drawStars();
   displayShip();
