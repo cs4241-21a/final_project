@@ -184,6 +184,10 @@ class Room {
     }
 }
 
+function gameOver(g){
+    return (g.pawnA.y === 0 || g.pawnB.y === 8)
+}
+
 function IsValidPawnSpace(x, y) { return x >= 0 && y >= 0 && x < BOARDSIZE && y < BOARDSIZE; }
 function IsValidWallSpace(x, y) { return x >= 0 && y >= 0 && x < BOARDSIZE-1 && y < BOARDSIZE-1; }
 
@@ -220,6 +224,10 @@ function IsValidPawnMove(g, pawn, x, y) {
     }
 
     if (pawn.x == x && pawn.y == y){
+        return false;
+    }
+
+    if (gameOver(g)){
         return false;
     }
     
@@ -289,6 +297,10 @@ function IsValidWallPlacement(g, walls, x, y, orientation) {
 
     if (orientation != 1 && orientation != 2){
         return false
+    }
+
+    if (gameOver(g)){
+        return false;
     }
 
     if (walls <= 0){
