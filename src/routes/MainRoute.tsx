@@ -3,7 +3,7 @@ import * as React from "react";
 import EnablablePrefs from "../types/prefs/EnablablePrefs";
 import CharacterPrefs from "../types/prefs/CharacterPrefs";
 
-import CharacterProps from "../types/props/FarmingSpotProps";
+import CharacterProps from "../types/props/CharacterProps";
 import WeaponProps from "../types/props/WeaponProps";
 import ArtifactProps from "../types/props/ArtifactProps";
 import MaterialProps from "../types/props/MaterialProps";
