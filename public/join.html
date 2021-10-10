@@ -11,7 +11,7 @@
 <div
 		class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8"
 >
-	<div class="max-w-md w-full space-y-8">
+	<div class="max-w-lg w-full space-y-8">
 		<div>
 			<img
 					class="mx-auto h-36 w-auto filter drop-shadow-md"
@@ -72,6 +72,64 @@
 					/>
 				</div>
 			</div>
+
+			<!-- Dev Options-->
+			<div id="devOptions" class="flex items-center hidden justify-between">
+				<div class="flex items-center">
+					<input
+							id="noIndex"
+							name="noIndex"
+							type="checkbox"
+							class="h-4 w-4 text-theme-600 focus:ring-theme-400 border-gray-300 rounded"
+					/>
+					<label for="noIndex" class="ml-1 block text-sm text-gray-900">
+						🚫 Index
+					</label>
+				</div>
+				<div class="flex items-center">
+					<input
+							id="sample"
+							name="sample"
+							type="checkbox"
+							class="h-4 w-4 text-theme-600 focus:ring-theme-400 border-gray-300 rounded"
+					/>
+					<label for="sample" class="ml-1 block text-sm text-gray-900">
+						Samples
+					</label>
+				</div>
+				<div class="flex items-center">
+					<input
+							id="random"
+							name="random"
+							type="checkbox"
+							class="h-4 w-4 text-theme-600 focus:ring-theme-400 border-gray-300 rounded"
+					/>
+					<label for="random" class="ml-1 block text-sm text-gray-900">
+						Random Transactions
+					</label>
+				</div>
+				<div class="flex items-center">
+					<input
+							id="nouns"
+							name="nouns"
+							type="checkbox"
+							class="h-4 w-4 text-theme-600 focus:ring-theme-400 border-gray-300 rounded"
+					/>
+					<label for="nouns" class="ml-1 block text-sm text-gray-900">
+						Random Nouns
+					</label>
+				</div>
+			</div>
+			<script>
+				function unhidden() {
+					console.log('change')
+					if (document.getElementById('email-address').value === "Dev Options") {
+						console.log('yes')
+						document.getElementById('devOptions').setAttribute("class", "flex items-center justify-between");
+					}
+				}
+				document.getElementById('email-address').onkeyup = unhidden;
+			</script>
 
 			<div>
 				<button

@@ -29,17 +29,21 @@ This is an iterated version of my A3 project which is an online expense tracker 
 
 ## Sample Accounts:
 
+**Changes have been made - after reading this, please see below for "Dev Options"**
+
 ### Small, everyday sample data
 
-To get an account with sample data, register an account with its email containing `rv89uj4fui678fwgt3`.
+To get an account with sample data, ~~register an account with its email containing~~ `rv89uj4fui678fwgt3`.
+
+[comment]: <TODO> (Sample accounts are already made: `sample@test.com` with password: `1`.)
 
 ### Huge, 10 years of heavy use worth of random data
 
-I made a random data generator in the server to test indexing performance. To get a not indexed account, register one with its email containing `89jv4hu8283e4c9h`. To get an account with random data, register an account with its email containing `ebdrfcgtvy567u`. Sample accounts are already made: `random@test.yesIndex` and `random@test.noIndex`, passwords are both `1`. Random data represents data amount for a heavy user that have used this website daily for 10 years (2011-2021), and each day averaged to create ~5 transactions with each one having a note of ~18 characters and transaction amount of ~4 digits (two on each side of the decimal point).
+I made a random data generator in the server to test indexing performance. To get a not indexed account, ~~register one with its email containing~~ `89jv4hu8283e4c9h`. To get an account with random data, ~~register an account with its email containing~~ `ebdrfcgtvy567u`. Sample accounts are already made: `random@test.yesIndex` and `random@test.noIndex`, passwords are both `1`. Random data represents data amount for a heavy user that have used this website daily for 10 years (2011-2021), and each day averaged to create ~5 transactions with each one having a note of ~18 characters and transaction amount of ~4 digits (two on each side of the decimal point).
 
 ### Huge(r), 10 years of heavy use worth of random nouns in notes and as tags (recommended)
 
-I made a random noun+tag generator in the server to test search indexing performance (and tag searching performance). To get an account with random data, register an account with its email containing `kmocowiamcwaiom`. Random nouns represents data amount for a heavy user that have used this website daily for 10 years (2011-2021), and each day averaged to create ~5 transactions with each one having a note of 4 nouns (2 of which are tags) and a number tag, with transaction amount of ~4 digits (two on each side of the decimal point).
+I made a random noun+tag generator in the server to test search indexing performance (and tag searching performance). To get an account with random data, ~~register an account with its email containing~~ `kmocowiamcwaiom`. Random nouns represents data amount for a heavy user that have used this website daily for 10 years (2011-2021), and each day averaged to create ~5 transactions with each one having a note of 4 nouns (2 of which are tags) and a number tag, with transaction amount of ~4 digits (two on each side of the decimal point).
 
 ![RandomNouns](readme/RandomNouns.png)
 
@@ -192,3 +196,21 @@ Transactions get their date recorded, not the precise time because it's much les
 3. Transactions with notes are displayed first, sorted alphabetically descending
 
 ![Sort](readme/Sort.png)
+
+### Dev Options
+
+I got tired of creating emails that contain weird strings (also wanted to show other people, if possible) so I made this:
+
+All you need to do is to type (or paste) `Dev Options` in the email field when you register an account, you will be shown a list of "arguments" (checkboxes) that allows you to check and change the property of your account.
+
+Before:
+![DevOptionsBefore](readme/DevOptionsBefore.png)
+
+After:
+![DevOptionsAfter](readme/DevOptionsAfter.png)
+
+### 404 Page
+
+It's simple.
+
+![404](readme/404.png)
