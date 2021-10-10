@@ -38,7 +38,9 @@ const Home = () => {
       <button class = "addWorkout" onClick={newWorkout}>New Workout</button>
       <div style={{ display: "flex", flexDirection: "column" }}>
         {user.workouts.map((workout) => (
-          <div class = "workoutEntry">
+          <table id = "workoutEntries">
+              <tbody>
+              <tr id = "workoutEntry">
             <Link to={`/workout?_id=${workout._id}`}>{workout.name}</Link>
             <button
               onClick={async () => {
@@ -50,7 +52,9 @@ const Home = () => {
             >
               Delete
             </button>
-          </div>
+              </tr>
+              </tbody>
+          </table>
         ))}
       </div>
     </div>
