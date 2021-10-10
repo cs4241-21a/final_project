@@ -34,19 +34,7 @@
           <h2>Personal Information</h2>
 
       </div>
-      <button id="editUsername">Edit Username</button>
       <button id="editPassword">Edit Password</button>
-
-      <div id="editformUsername">
-          <form>
-              <h3>Edit Username</h3>
-              <label>
-                New Username:
-              </label>
-              <input type="text" id="newUsername"/>
-              <button id="submitUsername">Submit Change</button>
-          </form>
-      </div>
 
       <div id="editformPassword">
         <form>
@@ -98,27 +86,14 @@
       })
     }
 
-    var editUsername = document.getElementById("editformUsername");
-    editUsername.style.display = "none";
     var editPassword = document.getElementById("editformPassword");
     editPassword.style.display = "none";
 
-    const openEditUsername = function(e){
-      e.preventDefault()
-      if(editUsername.style.display==="none"){
-          editUsername.style.display = "block";
-          editPassword.style.display = "none";
-      }
-      else {
-          editUsername.style.display = "none";
-      }
-    }
-
     const openEditPassword = function(e){
       e.preventDefault()
+
       if(editPassword.style.display==="none"){
           editPassword.style.display = "block";
-          editUsername.style.display = "none";
       }
       else {
           editPassword.style.display = "none";
@@ -126,8 +101,6 @@
     }
 
     window.onload = function(){
-        const button_open_edit_username = document.getElementById("editUsername")
-        button_open_edit_username.onclick = openEditUsername
 
         const button_open_edit_password = document.getElementById("editPassword")
         button_open_edit_password.onclick = openEditPassword
