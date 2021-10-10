@@ -4,36 +4,30 @@ html {
 }
 
 body {
-    background-color: #49859e;
+    background-color: #246885;
     font-size: 20px;
-    color: white;
+    color: #fff1d1;
     padding: 25px;
     margin: 0;
     overflow: auto;
 }
 
 #farm {
-    background-color: rgba(255,255,255,0.1);
-    border-radius: 25px;
+    border-radius: 10px;
     padding: 10px;
-    margin-bottom: 25px;
-    margin-top: 25px;
-}
-
-#farm li {
-    margin-bottom: 10px;
+    margin: 25px 0px;
 }
 
 button {
     background-color: transparent;
     background-image: none;
     cursor: pointer;
-    border: 2px solid #FFF;
+    border: 2px solid #fff1d1;
     border-radius: 10px;
     padding: 5px 10px;
     font-family: inherit;
     font-size: 15px;
-    color: white;
+    color: #fff1d1;
 }
 
 button:hover {
@@ -61,7 +55,7 @@ button:hover {
 
 #roundButton:active {
     border-color: #003557;
-    background-color: #FFF;
+    background-color: #fff1d1;
     transform: translate(30vw);
 }
 
