@@ -104,7 +104,8 @@ class TournamentCreationPage extends React.Component {
   }
 
   generateTournament(e) {
-
+// TODO: disable button after click
+// also add a spinny loading icon
     fetch("http://localhost:3001/tournament/generateTournament", {
       method: "POST",
       headers: {
@@ -153,8 +154,7 @@ class TournamentCreationPage extends React.Component {
                 id="submit-button"
                 type="submit"
                 className="btn btn-primary mt-4"
-                onSubmit={(e) => this.submit(e)}
-              >
+                onSubmit={(e) => this.submit(e)}>
                 Submit
               </button>
             </div>

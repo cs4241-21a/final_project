@@ -26,6 +26,7 @@ router.get('/loadTeams', async function (req, res, next) {
 });
 
 router.post('/insertTeam', async (req, res, next) => {
+    // TODO: Check for invalid sum names 
     const { userId, teamName, summoners } = req.body
     console.log("insert ", req.body.userId)
     // Check if a team already has this name under this user.
@@ -92,7 +93,6 @@ router.post('/generateTournament', async (req, res, next) => {
         let newMatch = await Match({
             team1: teams[i].teamName,
             champions1: team1,
-            // TODO: What do we do when there are an odd number of teams
             team2: teams[(i + 1) % teams.length].teamName,
             champions2: team2
         });
@@ -164,7 +164,14 @@ async function generateTeams(arr, champlist) {
     }
 }
 
-async function generateChamps(idList1, idList2) {
+/**
+ * 
+ * @param {String Array} arr1 team 1 summoner names
+ * @param {String Array} arr2 team 2 summoner names
+ * @returns Array containing 2 things:
+ * 
+ */
+ async function generateChamps(idList1, idList2) {
     champlist = [];
     team1 = [];
     team2 = [];
