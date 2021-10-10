@@ -8,8 +8,35 @@
     <link rel="stylesheet" href="/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <title>Wish list Login</title>
-    <link rel="icon" href="/WishListLogo.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../public/controllers/auth.js" defer></script>
+    <script>
+        const loginFunction = function( e ) {
+            // e.preventDefault()
+            const usernameInput = document.querySelector( '#username' )
+            const json = { username: usernameInput.value },
+                body = JSON.stringify( json )
+        
+            fetch( '/login-user', {
+                method:'POST',
+                body 
+            })
+            .then( function( response ) {
+                return response.json()
+            })
+            .then( function( json ) {
+                console.log('json from /login-user in login.hbs:')
+                console.log(json)
+            })
+        
+            return false
+        }
 
+        window.onload = function() {
+            const loginButton = document.querySelector( '#login-button' )
+            loginButton.onclick = loginFunction            
+        }
+    </script>
 </head>
 <body>
     
@@ -39,7 +66,7 @@
                     </div>
 
 
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="submit" class="btn btn-primary" id='login-button'>Login</button>
                   </form>
 
             </div>
