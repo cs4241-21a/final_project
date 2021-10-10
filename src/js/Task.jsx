@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Collapsible from 'react-collapsible';
+import Popup from 'reactjs-popup';
 import databaseUtils from './databaseUtils';
 import {GLOBAL_VARIABLES} from './globals';
 import CalendarSidebarItem from './Sidebar'
@@ -16,31 +17,49 @@ const daysMap = {
     Saturday: 6
 };
 
-class Task extends Component {
-    constructor(properties) {
-        super(properties);
-        this.state = properties;
-    }
-
-    render() {
-        let description = "No Description";
-        if(this.state.task.description !== undefined){
-            description = this.state.task.description;
-        }
-        /*let month = monthNames[this.state.dueDate.getMonth()];
-        let day = daysInWeek[this.state.dueDate.getDay()];
-        let year = this.state.dueDate.getFullYear();
-        let hour = this.state.dueDate.getHours();
-        let minutes = this.state.dueDate.getMinutes();
-        let dateString = month + " " + day + ", " + year + " at " + hour + ":" + minutes;*/
-        return (
-          <Collapsible trigger={this.state.task.name}>
-            <p>Description: {description}</p>
-            <p>Owner: {this.state.task.user}</p>
-            <p>Due Date: {this.state.task.dueDate}</p>
-          </Collapsible>
-        );
-      }
+function Task(props){
+  console.log(props);
+  let description = "No Description";
+  if(props.task.description !== undefined){
+    description = props.task.description;
+  }
+  
+  return (
+    <div>
+      <button onClick={() => props.delete(props.task.taskId)}><i class="far fa-trash-alt"></i></button>
+      <Popup trigger={<button><i class="far fa-edit"></i></button>} position="right center">
+        {close => (
+              <div classname="taskEdit">
+                <form>
+                  <label htmlFor="name">Edit Task</label>
+                  <input type='text' 
+                         name='name'
+                         placeholder="Task Name" 
+                         onChange={props.handleChange}
+                         required/>
+                  <br />
+                  <label htmlFor="description">Description</label>
+                  <input type="text" 
+                        name="description"
+                        placeholder="Description"
+                        onChange={props.handleChange}></input>
+                  <label htmlFor="dueDate">Due Date</label>
+                  <input type="datetime-local"
+                         name="dueDate"
+                         onChange={props.handleChange}
+                         required></input>
+                  <button onClick={() => props.modify(props.task.taskId)}>Update</button>
+                </form>
+              </div>
+            )}
+      </Popup>
+      <Collapsible trigger={props.task.name}>
+        <p>Description: {description}</p>
+        <p>Owner: {props.task.user}</p>
+        <p>Due Date: {props.task.dueDate}</p>
+      </Collapsible>
+    </div>
+  );
 }
 
 export default Task;

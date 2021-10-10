@@ -20,6 +20,8 @@ class Sidebar extends Component {
     this.deleteCalendar = this.deleteCalendar.bind(this);
     this.modifyCalendar = this.modifyCalendar.bind(this);
     this.newTaskSubmit = this.newTaskSubmit.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
+    this.modifyTask = this.modifyTask.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.selectCalendar = this.selectCalendar.bind(this);
   }
@@ -129,6 +131,34 @@ class Sidebar extends Component {
       });
     })
   }
+
+  async deleteTask(taskId) {
+    // copy tasks array
+    let toUpdateTasks = JSON.parse(JSON.stringify(this.state.tasks));
+    
+    // Delete task
+    databaseUtils.deleteTask(taskId).then( resp => {
+      console.log(resp);
+    });
+
+    // update temporary tasks array
+    delete toUpdateTasks[taskId];
+
+    let setStateAsync = (state) => {
+      return new Promise((resolve) => {
+        this.setState(state, resolve)
+      });
+    }
+    // Reset state
+    await setStateAsync({
+      tasks: toUpdateTasks
+    });
+    console.log(this.state.tasks);
+  }
+
+  modifyTask(taskId){
+    // TODO: Write function
+  }
   
   // Handles the change of a form field; useful for updating state which is
   // needed to send right variables to server
@@ -158,7 +188,10 @@ class Sidebar extends Component {
 
     let taskSidebarItems = [];
     this.state.tasks.forEach(task => {
-      taskSidebarItems.push(<Task task={task}/>);
+      taskSidebarItems.push(<Task task={task}
+                                  handleChange={this.handleChange}
+                                  delete={this.deleteTask}
+                                  modify={this.modifyTask}/>);
     });
 
     return (
