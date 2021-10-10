@@ -11,6 +11,7 @@ class AddNewSetComponent extends React.Component {
   constructor(props) {
     super(props);
     this.onSetsChange = this.onSetsChange.bind(this);
+    this.cancelModify = this.cancelModify.bind(this);
   }
 
   onSetsChange = function (e) {
@@ -28,7 +29,7 @@ class AddNewSetComponent extends React.Component {
 
     if (oldNumSets < newNumSets) {
       for (let i = oldNumSets; i < newNumSets; ++i) {
-        this.props.parent.state.sets.push(<Set setNumber={i}></Set>);
+        this.props.parent.state.sets.push(new Set ({setNumber: i, weight: 0, reps: 0, RPE: 0}));
       }
     } else if (oldNumSets > newNumSets) {
       for (let i = newNumSets; i < oldNumSets; ++i) {
@@ -81,10 +82,34 @@ class AddNewSetComponent extends React.Component {
     location.reload();
   };
 
+  cancelModify() {
+    document.getElementById("addModifyButton").innerText = "Add New Movement";
+    document.getElementById("movementName").value = "";
+    document.getElementById("movementName").disabled = false;
+    let newSets = [new Set({setNumber: 0, weight: 0, reps: 0, RPE: 0})]
+    this.props.parent.setState({
+      oldNumSets: 1,
+      newNumSets: 1,
+      sets: newSets
+    })
+    document.getElementById("cancelModifyButton").hidden = true;
+  }
+
   render() {
     console.log(
       `Performing render where Old value of sets=${this.props.parent.state.oldNumSets}, new value=${this.props.parent.state.newNumSets}`
     );
+
+    let setComponents = []
+    for (let i = 0; i < this.props.parent.state.sets.length; ++i) {
+      setComponents.push(<SetComponent 
+        parent = {this.props.parent}
+        setNumber = {this.props.parent.state.sets[i].setNumber}
+        weight = {this.props.parent.state.sets[i].weight}
+        reps = {this.props.parent.state.sets[i].reps}
+        RPE = {this.props.parent.state.sets[i].RPE}
+        ></SetComponent>)
+    }
 
     return (
       <div id="addNewMovementForm">
@@ -97,27 +122,57 @@ class AddNewSetComponent extends React.Component {
             onChange={this.onSetsChange}
             value={this.props.parent.state.newNumSets}
           />
-          <div id="setsDiv">{this.props.parent.state.sets}</div>
+          <div id="setsDiv">{setComponents}</div>
         </form>
         <button id="addModifyButton" onClick={this.addModifyButtonAction}>
           Add New Movement
+        </button>
+        <button id='cancelModifyButton' hidden={true} onClick={this.cancelModify}>
+          Cancel Modifying
         </button>
       </div>
     );
   }
 }
 
-export class Set extends React.Component {
+export class Set {
+  constructor(props) {
+    this.setNumber = props.setNumber;
+    this.weight = props.weight;
+    this.reps = props.reps;
+    this.RPE = props.RPE;
+  }
+}
+
+class SetComponent extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  onWeightChange = (e) => {
+    let newSets = this.props.parent.state.sets
+    newSets[this.props.setNumber].weight = e.target.value
+    this.props.parent.setState({sets: newSets})
+  }
+
+  onRepsChange = (e) => {
+    let newSets = this.props.parent.state.sets
+    newSets[this.props.setNumber].reps = e.target.value
+    this.props.parent.setState({sets: newSets})
+  }
+
+  onRPEChange = (e) => {
+    let newSets = this.props.parent.state.sets
+    newSets[this.props.setNumber].RPE = e.target.value
+    this.props.parent.setState({sets: newSets})
   }
 
   render() {
     return (
       <div id={"set" + this.props.setNumber}>
-        <input id={"weight" + this.props.setNumber} placeholder="weight" />
-        <input id={"reps" + this.props.setNumber} placeholder="reps" />
-        <input id={"RPE" + this.props.setNumber} placeholder="RPE" />
+        <input id={"weight" + this.props.setNumber} placeholder="weight" value={this.props.parent.state.sets[this.props.setNumber].weight} onChange={this.onWeightChange}/>
+        <input id={"reps" + this.props.setNumber} placeholder="reps" value={this.props.parent.state.sets[this.props.setNumber].reps} onChange={this.onRepsChange}/>
+        <input id={"RPE" + this.props.setNumber} placeholder="RPE" value={this.props.parent.state.sets[this.props.setNumber].RPE} onChange={this.onRPEChange}/>
       </div>
     );
   }
@@ -133,7 +188,7 @@ class WrapperClass extends React.Component {
   state = {
     oldNumSets: 1,
     newNumSets: 1,
-    sets: [<Set setNumber={0}></Set>],
+    sets: [new Set({setNumber: 0, weight: 0, reps: 0, RPE: 0})]
   };
 
   render() {

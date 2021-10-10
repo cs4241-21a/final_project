@@ -12,34 +12,30 @@ const Movement_Card_View = (props) => {
 
   const editEntry = () => {
     const movementName = props.movement.movementName;
-    const numSets = props.movement.sets.length;
+    const numSets = props.movement.numSets;
 
     document.getElementById("addModifyButton").innerText = "Edit";
+    document.getElementById("cancelModifyButton").hidden = false;
     document.getElementById("movementName").value = movementName;
-    document.getElementById("numberOfSets").value = numSets;
+    document.getElementById("movementName").disabled = true;
+
 
     console.log('Performing editEntry')
     
-    props.parent.state.sets = [];
-
-    for (let i = 0; i < numSets; ++i) {
-      props.parent.state.sets.push(<Set setNumber={i}></Set>)
-    }
-
-    props.parent.setState({ 
-      oldNumSets: numSets,
-      newNumSets: numSets
-    });
+    let newSets = [];
 
     for (let i = 0; i < numSets; ++i) {
       let newWeight = document.getElementById(`${movementName}weight${i}`).innerHTML
       let newReps = document.getElementById(`${movementName}reps${i}`).innerHTML
       let newRPE = document.getElementById(`${movementName}RPE${i}`).innerHTML
-
-      document.getElementById(`weight${i}`).value = newWeight
-      document.getElementById(`reps${i}`).value = newReps
-      document.getElementById(`RPE${i}`).value = newRPE
+      newSets.push(new Set({setNumber: i, weight: newWeight, reps: newReps, RPE: newRPE}))
     }
+
+    props.parent.setState({ 
+      oldNumSets: numSets,
+      newNumSets: numSets,
+      sets: newSets
+    });
   };
 
   let cardRows = [];
