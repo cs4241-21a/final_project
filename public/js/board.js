@@ -13,6 +13,7 @@ const WALL_THICKNESS = 5
 const FORM = document.getElementById("moveform")
 let MOVE_TYPE
 let renderInvalidMove = false
+let isGameOver = false
 
 var gameState = {
     wallSpaces: [],
@@ -58,10 +59,6 @@ function draw() {
 
     }
 
-
-    highlightHoveredCell()
-    highlightHoveredWall()
-
     noStroke()
     fill(0)
     textSize(16);
@@ -88,6 +85,10 @@ function draw() {
 
     if (gameSetup) {
         renderGameState()
+        if (gameState.player === gameState.currentPlayer && !gameOver()) {
+            highlightHoveredCell()
+            highlightHoveredWall()
+        }
     } else {
         fill(0)
         text('Waiting for opponent', 30, 520);
@@ -159,6 +160,18 @@ function renderGameState() {
         }
     }
     fill(0)
+
+    if(isGameOver || gameOver()) {
+        isGameOver = true
+        fill(0)
+        if (currentPlayerIsWinner()) {
+            text('You Win!', 30, 520);
+        } else {
+            text('You Lose!', 30, 520);
+        }
+        return
+    }
+
     if (gameState.currentPlayer === gameState.player) {
         text('Your Turn!', 30, 520);
     } else {
@@ -176,6 +189,24 @@ function renderGameState() {
         text(`You have ${gameState.pawnB.walls} walls remaining`, 300, 520);
     }
 
+}
+
+function currentPlayerIsWinner() {
+    if (gameState.pawnA.y === 0 && gameState.player) {
+        return true
+    } else if (gameState.pawnB.y === 8 && !gameState.player) {
+        return true
+    }
+    return false
+}
+
+function gameOver() {
+    if (gameState.pawnA.y === 0) {
+        return true
+    } else if (gameState.pawnB.y === 8) {
+        return true
+    }
+    return false
 }
 
 function highlightHoveredCell() {
@@ -285,11 +316,9 @@ function drawPawnPixels(color, pixelX, pixelY) {
 var socket;
 
 function wsSetup() {
-    const content = document.getElementById('content');
-    socket = new WebSocket('ws://localhost:3000');
+    socket = new WebSocket(`ws://localhost:3000`);
 
     let roomCode = getRoomCode()
-    document.getElementById("room-code").innerText = roomCode
     console.log(roomCode)
 
     socket.onopen = function () {
@@ -298,8 +327,12 @@ function wsSetup() {
             type: "connect"
         }
         if (roomCode !== null) {
-            data.room = roomCode
+            data["room"] = roomCode
+            document.getElementById("room-code").innerText = roomCode
+        } else {
+            data["room"] = "none"
         }
+        console.log(JSON.stringify(data))
         socket.send(JSON.stringify(data))
     };
 
@@ -309,11 +342,18 @@ function wsSetup() {
         console.log(message.data)
         let json = JSON.parse(message.data)
         if (json.type === "game state") {
+            document.getElementById("friend-join").setAttribute("hidden", "")
             console.log("Got game state")
             gameState = json.gameState
             gameSetup = true
         } else if (json.type === "invalid move") {
             renderInvalidMove = true
+        } else if (json.type === "joined room") {
+            document.getElementById("room-code").innerText = json.room
+            let location = window.location.toString().split("?")[0]
+            document.getElementById("friend-join").removeAttribute("hidden")
+            document.getElementById("url").innerText= `${location}?code=${json.room}`
+            document.getElementById("url").href = `${location}?code=${json.room}`
         }
     };
 
