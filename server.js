@@ -8,6 +8,18 @@ const server = http.createServer(),
 wsServer.on('connection', OnConnect);
 server.listen(3000);
 
+const roomCodeChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+function NewRoomCode() {
+    let newCode = ''
+    do {
+        for (let i = 0; i < 4; i++) {
+            let randi = Math.floor((Math.random() * roomCodeChars.length));
+            newCode += roomCodeChars.charAt(randi);
+        }  
+    } while (rooms.some((room) => room.code == newCode))
+    return newCode
+}
+
 function OnConnect(wsclient) {
     let client = {wsclient, room: null}
     wsclient.on('message', (data) => OnMessage(client, data));
@@ -35,7 +47,7 @@ function joinRoom(client, roomCode){
         rooms.push(room)
         room.client1 = client
         client.room = room
-        client.send(JSON.stringify({type: "joined room", room: room.code}))
+        client.wsclient.send(JSON.stringify({type: "joined room", room: room.code}))
     }
 }
 
@@ -83,10 +95,10 @@ class Room {
     code
 
     constructor(newCode) {
-        code = newCode
+        this.code = newCode
         // Fill wall array with 0 (empty spot)
         for (let i=0; i < BOARDSIZE - 1; i++) {
-            gameState.wallSpaces[i] = new Array(BOARDSIZE - 1).fill(0);
+            this.gameState.wallSpaces[i] = new Array(BOARDSIZE - 1).fill(0);
         }
     }
 
