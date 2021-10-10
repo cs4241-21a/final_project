@@ -1,6 +1,13 @@
+const PlayerState = {
+  PAUSED: 0,
+  PLAYING: 1
+}
+
 export default new (class SpotifyWebPlayerService {
   player;
   deviceID;
+  currentTrackURI;
+  playerState = PlayerState.PAUSED;
 
   constructor() {
     window.onSpotifyWebPlaybackSDKReady = this.initializePlayer;
@@ -25,10 +32,6 @@ export default new (class SpotifyWebPlayerService {
       console.log('Spotify Web Player: Offline.');
     });
 
-    this.player.addListener('player_state_changed', () => {
-      console.log('Spotify Web Player: State changed.');
-    });
-
     this.player.addListener('initialization_error', ({ message }) => console.error(message));
     this.player.addListener('authentication_error', ({ message }) => console.error(message));
     this.player.addListener('account_error', ({ message }) => console.error(message));
@@ -36,8 +39,18 @@ export default new (class SpotifyWebPlayerService {
     this.player.connect();
   }
 
-  togglePlay = async () => {
-    await this.playSong(this.deviceID, 'spotify:track:1Gr90fhZQ6j9KlhVpxhoxX');
+  togglePlay = async (uri) => {
+    if (uri !== this.currentTrackURI) {
+      this.currentTrackURI = uri;
+      await this.playSong(this.deviceID, uri);
+      this.playerState = PlayerState.PLAYING;
+    } else if (this.playerState === PlayerState.PLAYING) {
+      this.player.pause();
+      this.playerState = PlayerState.PAUSED;
+    } else {
+      this.player.resume();
+      this.playerState = PlayerState.PLAYING;
+    }
   };
 
   async getAccessToken() {
