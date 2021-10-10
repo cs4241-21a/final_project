@@ -22,7 +22,10 @@ const NavigationBar = (props) => {
       ) : loading ? (
         <div>Loading</div>
       ) : (
+        <div>
+        <text>hello {user.username} </text>
         <button class = "topnavbutton" onClick={logOut}>Log Out</button>
+        </div>
       )}
     </div>
   );

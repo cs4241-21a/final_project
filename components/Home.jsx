@@ -36,28 +36,32 @@ const Home = () => {
       <div>{user.username}</div>
 
       <button class = "addWorkout" onClick={newWorkout}>New Workout</button>
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <table id = "workoutEntries" style={{ display: "flex", flexDirection: "column" }}>
+      <tbody>
+
+      {/* <div class = "entries" style={{ display: "flex", flexDirection: "column" }}> */}
         {user.workouts.map((workout) => (
-          <table id = "workoutEntries">
-              <tbody>
-              <tr id = "workoutEntry">
+              <tr class = "workoutEntry" id = {workout._id}>
             <Link to={`/workout?_id=${workout._id}`}>{workout.name}</Link>
             <button
               onClick={async () => {
                 await fetch(`/workout?_id=${workout._id}`, {
                   method: "DELETE",
                 });
+                document.getElementById(workout._id).style.height = "0px"
+                setTimeout(() => {
                 mutate();
+                //fetch(`/me`).then(userData =>set)
+                }, 1000);
               }}
             >
               Delete
             </button>
               </tr>
-              </tbody>
-          </table>
         ))}
+      </tbody>
+      </table>
       </div>
-    </div>
   );
 };
 
