@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
 
+    <!-- Import Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
 
     <!-- Import jquery -->
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -16,7 +18,16 @@
   <body>
     
     <div id="nav-placeholder"></div>
-    <h1>Hello!</h1>
+
+    <div id="greeting">
+      <h1 v-if="sentence=(when<9?'Morning!':
+                            when<12?'Morning!':
+                            when<15?'Noon!':
+                            when<19?'Afternoon!':
+                            'Evening!')">
+        {{greet}}{{sentence}}
+      </h1>
+    </div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
@@ -26,5 +37,20 @@
     $(function(){
       $("#nav-placeholder").load("nav.html");
     });
+
+    const app = new Vue({
+      el: "#greeting",
+      data: {
+        greet: "Good ",
+        sentence: "",
+        when: new Date().getHours()
+      }
+    })
   </script>
+
+  <style>
+    h1 {
+      text-align:center
+    }
+  </style>
 </html>
