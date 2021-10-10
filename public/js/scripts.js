@@ -49,6 +49,33 @@ const loadEvents = function(){
       })
 }
 
+const refreshPersonalCal = function(){
+
+    fetch('/refreshpersonal', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        return response.json();
+    })
+    .then(response => {
+        console.log(response)
+        var calendarEl = document.getElementById('my-calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'timeGridWeek',
+            events: response
+        });
+        calendar.render();
+    })
+
+    
+    
+    
+}
+
 window.onload = function(){
     loadEvents()
+    refreshPersonalCal()
 }

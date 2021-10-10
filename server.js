@@ -14,6 +14,7 @@ const express = require("express"),
       port = 8080;
 require('dotenv').config();
 
+const { json } = require("body-parser");
 const {response, request} = require("express");
 
 const uri = 'mongodb+srv://'+process.env.ACCOUNT+':'+process.env.PASS+'@'+process.env.HOST
@@ -171,6 +172,26 @@ app.post('/createEvent', bodyparser.json(), async (req,res) => {
   await entry.save()
   let result = await EventEntry.find({})
   res.render('events', {eventsList: result, sentUsername: req.session.username, title:"Events"})
+})
+
+app.post('/refreshpersonal', async(req,res) => {
+  CalendarEntry.find({username: {$eq: req.session.username}})
+    .then(dbresponse =>{
+      //console.log(dbresponse)
+      let jsonRes = []
+      for(let i = 0; i < dbresponse.length; i++){
+        let calItem = {}
+        calItem.start = dbresponse[i].startDateTime
+        calItem.end = dbresponse[i].endDateTime
+        calItem.title = dbresponse[i].eventName
+        calItem.location = dbresponse[i].location
+        calItem.description = dbresponse[i].description
+        jsonRes.push(calItem)
+      }
+      
+      console.log(jsonRes)
+      res.json(jsonRes)
+    })
 })
 
 app.post('/addpersonal', async(req, res) => {
