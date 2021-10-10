@@ -133,6 +133,7 @@ app.post("/workout", async (req, res) => {
     res.status(401).end();
   }
   console.log(`Adding new workout for user ${req.session.username}`);
+  const time = new Date();
   const updateRes = await mongoClient
     .db("final")
     .collection("users")
@@ -142,7 +143,7 @@ app.post("/workout", async (req, res) => {
         $push: {
           workouts: {
             _id: new ObjectId().toHexString(),
-            name: `New workout ${new Date().toTimeString()}`,
+            name: `New workout ${time.toLocaleString()}`,
             movements: [],
           },
         },
