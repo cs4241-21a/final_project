@@ -10,13 +10,15 @@ import SelectPrefButton from "../primitives/SelectPrefButton";
 interface CharacterSelectProps {
   characters: CharacterProps[],
   preferences: CharacterPrefs[],
-  setter: React.Dispatch<React.SetStateAction<CharacterPrefs[]>>
+  setter: React.Dispatch<React.SetStateAction<CharacterPrefs[]>>,
+  loading: boolean
 }
 
 const CharacterSelect = ({
   characters,
   preferences,
-  setter
+  setter,
+  loading
 }: CharacterSelectProps) : JSX.Element => { 
   // Add Pref using: characterPref = addCharacter(character);
   // character is a CharacterProp from characters
@@ -30,23 +32,9 @@ const CharacterSelect = ({
   // characterPref is the CharacterPrefs returned by addCharacter
   const updateCharacter = updatePref(preferences, setter);
 
-  // Demo Data !!!
-  const charTest: CharacterProps[] = [
-    {
-      name: "Character_Aether_Thumb"
-    },
-    {
-      name: "Character_Albedo_Thumb"
-    },
-    {
-      name: "Character_Ayaka_Thumb"
-    }
-  ];
-
   return (
     <>
-      {/* Demo Functionality !!! */}
-      {charTest.map((char) => {
+      {characters.map((char) => {
         const imgSrc = `img/chara/${char.name}.png`;
 
         return (
@@ -55,6 +43,7 @@ const CharacterSelect = ({
             removePref={removeCharacter}
             preferences={preferences}  
             prop={char}
+            loading={loading}
           >
             <img src={imgSrc} alt={`${char.name}-image`} width="100px" />
             <p>{char.name}</p>
