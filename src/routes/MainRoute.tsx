@@ -91,6 +91,7 @@ const MainRoute = (): JSX.Element => {
     setCharPrefs([]);
     setWeaponsPrefs([]);
     setArtifactPrefs([]);
+    window.location.href = "/";
   };
 
   // This calculates the farmable items to be displayed and their related locations
@@ -168,7 +169,7 @@ const MainRoute = (): JSX.Element => {
       }
     });
 
-    activeFarmables.forEach((f) => {
+    tempFarming.forEach((f) => {
       let location = locations.find((res) => {
         return res.name == f.farm_at;
       });
