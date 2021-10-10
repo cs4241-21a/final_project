@@ -74,7 +74,7 @@ For authentication, we wanted to challenge ourselves more than we did in A3, whe
   - page routing
   - readme and proposal writeups 
   - video scripting 
-  - lighthouse testing for desktop and site validation
+  - lighthouse testing/validation for desktop
 - Chris
   - all database configuration, management, and querying
   - all styling
@@ -98,3 +98,4 @@ For authentication, we wanted to challenge ourselves more than we did in A3, whe
 
 
 ### 6. Project Video
+https://drive.google.com/file/d/1RwW1zIC-Q2M5Gey8uhpHv-3k5dpTPMDU/view?usp=sharing
