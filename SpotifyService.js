@@ -8,13 +8,13 @@ export default (new class SpotifyService {
     authPath = 'https://accounts.spotify.com';
     APIPath = 'https://api.spotify.com/v1';
     defaultScopes = [
-        'playlist-modify-public',
-        'playlist-modify-private'
+        'playlist-modify-public'
     ]
     credentials = base64.encode(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`);
     accessToken;
 
     constructor() {
+        // this.createPlaylist('Bopify Playlist', '').then(id => this.addSongsToPlaylist(id, ['spotify:track:6TUf1Vw59k1f7r9X8GzYdI']));
     }
 
     // retrieves Spotify access token from cache or accounts.spotify.com
@@ -66,7 +66,7 @@ export default (new class SpotifyService {
 
     // creates new playlist with a name and description, returns playlist id
     createPlaylist = async (name, description) => {
-        const { id } = await this.request('POST', `${ this.APIPath }/users/${process.env.CLIENT_USERNAME}/playlists`, {
+        const { id } = await this.request('POST', `${this.APIPath}/users/${process.env.CLIENT_USERNAME}/playlists`, {
             name,
             description,
             "public": true
@@ -74,9 +74,18 @@ export default (new class SpotifyService {
         return id;
     }
 
+    // adds songs by uri to a specified playlist
+    // uris should take the form ["spotify:track:{track_id}", ...]
+    addSongsToPlaylist = async (id, uris) => {
+        const response = await this.request('POST', `${this.APIPath}/playlists/${id}/tracks`, {
+            uris: uris
+        }).catch(console.error);
+        console.log(response);
+    }
+
     // get available genre seeds (not sure if we will need this)
     getGenres = async () => {
-        const { genres } = await this.request('GET', `${ this.APIPath }/recommendations/available-genre-seeds`).catch(console.error);
+        const { genres } = await this.request('GET', `${this.APIPath}/recommendations/available-genre-seeds`).catch(console.error);
         return genres
     }
 
