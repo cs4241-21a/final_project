@@ -184,6 +184,40 @@ const MainRoute = (): JSX.Element => {
     setActiveLocations(tempLocations);
   };
 
+  const characterSelect = (): JSX.Element => {
+    return (
+      <CharacterSelect 
+        characters={characters} 
+        preferences={charPrefs} 
+        setter={setCharPrefs}
+        loading={loading}
+      />
+    );
+  };
+
+  const weaponSelect = (): JSX.Element => {
+    return (
+      <WeaponSelect
+        weapons={weapons}
+        preferences={weaponPrefs}
+        setter={setWeaponsPrefs}
+        loading={loading}
+      />
+    );
+  };
+
+  const artifactSelect = (): JSX.Element => {
+    return (
+      <ArtifactSelect
+        artifacts={artifacts}
+        preferences={artifactPrefs}
+        setter={setArtifactPrefs}
+        loading={loading}
+      />
+    );
+  };
+
+
   React.useEffect(() => {
     // !!! TODO (Micheal): Write useEffect function to refilter based off of the selected prefs changing
     // "activeFarmables" should be the artifacts selected by artifactPrefs and materials associated with selected characters
@@ -197,28 +231,14 @@ const MainRoute = (): JSX.Element => {
 
   return (
     <>
-      <MenuContainer />
-      <CharacterSelect
-        characters={characters}
-        preferences={charPrefs}
-        setter={setCharPrefs}
-        loading={loading}
-      />
-      <WeaponSelect
-        weapons={weapons}
-        preferences={weaponPrefs}
-        setter={setWeaponsPrefs}
-        loading={loading}
-      />
-      <ArtifactSelect
-        artifacts={artifacts}
-        preferences={artifactPrefs}
-        setter={setArtifactPrefs}
-        loading={loading}
-      />
-      <FarmingDisplay farmables={activeFarmables} locations={activeLocations} />
       <LoginButton initPrefs={initPrefs} />
       <ResetButton handleReset={handleReset} />
+      <MenuContainer
+        characterSelect={characterSelect}
+        weaponSelect={weaponSelect}
+        artifactSelect={artifactSelect}
+      />
+      <FarmingDisplay farmables={activeFarmables} locations={activeLocations} />
     </>
   );
 };
