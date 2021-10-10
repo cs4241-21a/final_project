@@ -46,9 +46,72 @@ function OnMessage(client, data) {
     if (dataObject.type === "connect"){
         joinRoom(client, dataObject.room)
     }
+
+    if (dataObject.type === "place wall"){
+        placeWall(client, data.x, data.y, data.orientation)
+    }
+
+    if (dataObject.type === "move pawn"){
+        movePawn(client, data.x, data.y)
+    }
 };
 
+function placeWall(client, x, y, orientation) {
+    let pawn
+    let currentPlayer
+    let gameState = client.room.gameState
+    if (client.room.client1 === client){
+        pawn = gameState.pawnA
+        currentPlayer = gameState.currentPlayer
+    }
+    else{
+        pawn = gameState.pawnB
+        currentPlayer = !gameState.currentPlayer
+    }
+    if (!currentPlayer || !IsValidWallPlacement(gameState, pawn.walls, x, y, orientation)){
+        client.wsclient.send(JSON.stringify({type: "invalid move"}))
+    }
+    else{
+        gameState.wallSpaces[x][y] = orientation
+        pawn.walls -= 1
+        gameState.currentPlayer = !gameState.currentPlayer
+        client.room.sendGameStateToClients()
+    }
+}
+
+function movePawn(client, x, y) {
+    let pawn
+    let currentPlayer
+    let gameState = client.room.gameState
+    if (client.room.client1 === client){
+        pawn = gameState.pawnA
+        currentPlayer = gameState.currentPlayer
+    }
+    else{
+        pawn = gameState.pawnB
+        currentPlayer = !gameState.currentPlayer
+    }
+    if (!currentPlayer || !IsValidPawnMove(gameState, pawn, x, y)){
+        client.wsclient.send(JSON.stringify({type: "invalid move"}))
+    }
+    else{
+        pawn.x = x
+        pawn.y = y
+        gameState.currentPlayer = !gameState.currentPlayer
+        client.room.sendGameStateToClients()
+    }
+}
+
 function OnClose(client) {
+    let room = client.room
+    let otherClient
+    if (client === client.room.client1){
+        otherClient = room.client2
+    }
+    else{
+        otherClient = room.client1
+    }
+    otherClient.wsclient.send(JSON.stringify({type: "opponent disconnected"}))
     console.log('connection closed');
     console.log('disconnected');
 };
@@ -194,6 +257,10 @@ function IsValidPawnMove(g, pawn, x, y) {
 // Checks whether a wall placement is valid
 function IsValidWallPlacement(g, walls, x, y, orientation) {
     if (!IsValidWallSpace(x, y)){
+        return false
+    }
+
+    if (orientation != 1 && orientation != 2){
         return false
     }
 
