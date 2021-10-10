@@ -302,7 +302,11 @@ function IsValidWallPlacement(g, walls, x, y, orientation) {
         return false
     }
 
-    //check if wall leaves no route for either player to the other side of the board
+    g.wallSpaces[x][y] = orientation
+    if (!DoesPathExistForPawn(g, g.pawnA) || !DoesPathExistForPawn(g, g.pawnB)) {
+        return false
+    }
+    g.wallSpaces[x][y] = 0 // Assume space was empty
 
     return true
 }
@@ -445,8 +449,3 @@ function PrintBoard(g) {
         console.log('.'+row1Text +'.\n.'+ row2Text +'.')
     }
 }
-
-console.log('Pawn A has path: ' + DoesPathExistForPawn(sampleGame, sampleGame.pawnA));
-console.log('Pawn B has path: ' + DoesPathExistForPawn(sampleGame, sampleGame.pawnB));
-
-PrintBoard(sampleGame);
