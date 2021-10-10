@@ -7,6 +7,150 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
     <title>Dad Joke</title>
+
+    <script>
+console.log("hello world :o");
+  
+  let isUserEditing = false;
+  let taskEditing = '';
+  let dateEditing = '';
+  let checkEditing = false;
+  
+  
+  function edit_row(no)
+  {
+      if(!isUserEditing){
+   document.getElementById("edit_button"+no).style.display="none";
+   document.getElementById("save_button"+no).style.display="block";
+      
+   var task=document.getElementById("name_row"+no);
+   var date=document.getElementById("country_row"+no);
+   var check=document.getElementById("edit_checkbox"+no).checked;
+      
+   var task_data=task.innerHTML;
+   var date_data=date.innerHTML;
+   var check_data=check.innerHTML;
+      
+   task.innerHTML="<input type='text' id='task_text"+no+"' value='"+task_data+"'>";
+   date.innerHTML="<input type='text' id='date_text"+no+"' value='"+date_data+"'>";
+   check.innerHTML="<input type='checkbox' id='check_text"+no+"' checked='"+check_data+"'>";
+   nameEditing = task_data;
+   countryEditing = date_data;
+   checkEditing = check_data;
+  
+   isUserEditing = true;
+      }
+      else{
+          console.log('can only edit one thing at a time!')
+      }
+  }
+  
+  
+  
+  function save_row(no)
+  {
+   var task_val=document.getElementById("task_text"+no).value;
+   var due_val=document.getElementById("due_text"+no).value;
+   var checked_bool=document.getElementById("check_text"+no).checked;
+  
+   document.getElementById("task_row"+no).innerHTML=task_val;
+   document.getElementById("due_row"+no).innerHTML=due_val;
+   document.getElementById("edit_checkbox"+no).innerHTML=checked_bool;
+  
+   document.getElementById("edit_button"+no).style.display="block";
+   document.getElementById("save_button"+no).style.display="none";
+  
+   json = { username: '', task: task_val, due: due_val, check: checked_bool, taskEditing: taskEditing, dateEditing: dateEditing, checkEditing: checkEditing},
+         body = JSON.stringify(json);
+         console.log(body)
+//    fetch('/api/user/editData', {
+//       method: 'POST',
+//       headers: {
+//               'Accept': 'application/json, text/plain, */*',
+//               'Content-Type': 'application/json'
+//             },
+//       body: body
+//     })
+//     .then(res => res) // parse the JSON from the server
+//     .then(data => {
+//       });
+  
+      isUserEditing = false;
+  }
+  
+  function delete_row(no)
+  {
+      var task_val=document.getElementById("task_row"+no).textContent;
+      var date_val=document.getElementById("date_row"+no).textContent;
+      var check_val=document.getElementById("edit_checkbox"+no).textContent;
+   
+  
+   json = { username: '', task: task_val, date: date_val, cehck: check_val},
+   body = JSON.stringify(json);
+   console.log(body)
+
+//   fetch('/api/user/deleteData', {
+//   method: 'POST',
+//   headers: {
+//         'Accept': 'application/json, text/plain, */*',
+//         'Content-Type': 'application/json'
+//       },
+//   body: body
+//   })
+//   .then(res => res) // parse the JSON from the server
+//   .then(data => {
+//   });
+  
+  document.getElementById("row"+no+"").outerHTML="";
+  }
+  
+  function add_row()
+  {
+   var new_name=document.getElementById("new_task").value;
+   var new_country=document.getElementById("new_due").value;
+      
+   var table=document.getElementById("data_table");
+   var table_len=(table.rows.length)-1;
+   var row = table.insertRow(table_len).outerHTML="<tr id='row"+table_len+"'><td id='name_row"+table_len+"'>"+new_name+"</td><td id='country_row"+table_len+"'>"+new_country+"</td><td id='age_row"+table_len+"'>"+new_age+"</td><td><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit' onclick='edit_row("+table_len+")'> <input type='button' id='save_button"+table_len+"' value='Save' class='save' onclick='save_row("+table_len+")'> <input type='button' value='Delete' class='delete' onclick='delete_row("+table_len+")'></td></tr>";
+  
+   document.getElementById("new_task").value="";
+   document.getElementById("new_due").value="";
+
+  json = { username: '', name: new_name, country: new_country, age: new_age},
+         body = JSON.stringify(json);
+//    fetch('/api/user/newData', {
+//             method: 'POST',
+//             headers: {
+//                     'Accept': 'application/json, text/plain, */*',
+//                     'Content-Type': 'application/json'
+//                   },
+//             body: body
+//           })
+//           .then(res => res) // parse the JSON from the server
+//           .then(data => {
+//             });
+//   }
+  
+//   function add_rowFromServer(name, country, age)
+//   {
+//    var table=document.getElementById("data_table");
+//    var table_len=(table.rows.length)-1;
+//    var row = table.insertRow(table_len).outerHTML="<tr id='row"+table_len+"'><td id='name_row"+table_len+"'>"+name+"</td><td id='country_row"+table_len+"'>"+country+"</td><td id='age_row"+table_len+"'>"+age+"</td><td><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit' onclick='edit_row("+table_len+")'> <input type='button' id='save_button"+table_len+"' value='Save' class='save' onclick='save_row("+table_len+")'> <input type='button' value='Delete' class='delete' onclick='delete_row("+table_len+")'></td></tr>";
+  
+  }
+
+  window.onload = function() {
+    //   fetch("/api/user/getData")
+    //   .then(response => response.json()) // parse the JSON from the server
+    //   .then(data => {
+    //       for (var i = 0; i < data.length; i++) { 
+    //           add_rowFromServer(data[i].name, data[i].country, data[i].age);
+    //       }
+    //     });
+    }
+
+    </script>
+
 </head>
 <body>
 <div class="navbar">
