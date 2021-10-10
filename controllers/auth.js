@@ -1,6 +1,7 @@
 const   mysql = require("mysql");
 const     jwt = require('jsonwebtoken');
 const  bcrypt = require('bcryptjs');
+const fetch = require('node-fetch');
 
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
@@ -30,7 +31,18 @@ exports.login = async (request, response) => {
                 })
             }else{
                 response.status(200).redirect('/home')
-            
+                const json = { username: username },
+                    body = JSON.stringify( json )
+                fetch( '/login-user', {
+                    method:'POST',
+                    body 
+                  })
+                  .then( function( response ) {
+                    return response.json()
+                  })
+                  .then( function( json ) {
+                    console.log(json)
+                  })
             }
         })
 

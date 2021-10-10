@@ -117,6 +117,8 @@ var items = [
   { 'itemName': 'Example Item Name', 'link': 'Example Link', 'price': 100.99, 'store': 'Example Store', 'picture': 'Example picture', 'listName': 'Example List Name' },
 ]
 
+var currentUser = {}
+
 
 
 // ROUTES
@@ -220,6 +222,45 @@ app.post( '/create-item', bodyparser.json(), function( request, response ) {
 
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
     response.end(JSON.stringify(items))
+  })
+})
+
+app.post( '/login-user', bodyparser.json(), function( request, response ) {
+
+  console.log(`login-user post request: ${request}`);
+  let dataString = ''
+
+  request.on( 'data', function( data ) {
+      dataString += data 
+  })
+
+  request.on( 'end', function() {
+    const json = JSON.parse( dataString )
+    currentUser = json;
+    console.log("currentUser from /login-user:");
+    console.log(currentUser);
+
+    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+    response.end(JSON.stringify(currentUser))
+  })
+})
+
+app.post( '/current-user', bodyparser.json(), function( request, response ) {
+
+  console.log(`current-user post request: ${request}`);
+  let dataString = ''
+
+  request.on( 'data', function( data ) {
+      dataString += data 
+  })
+
+  request.on( 'end', function() {
+    const json = JSON.parse( dataString )
+    console.log("currentUser from /current-user:");
+    console.log(currentUser);
+
+    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+    response.end(JSON.stringify(currentUser))
   })
 })
 
