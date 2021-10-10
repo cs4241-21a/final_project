@@ -387,7 +387,7 @@ function DoesPathExistForPawn(g, pawn) {
     
     let visited = [];
     let pos = {x: pawn.x, y: pawn.y};
-    const isFindingEndOfBoard = (pawn === g.pawnA)
+    const isFindingEndOfBoard = (pawn === g.pawnB)
     return ExpandNode(graph, pos, visited, isFindingEndOfBoard);
 }
 
