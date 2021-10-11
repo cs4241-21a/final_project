@@ -283,28 +283,28 @@ app.post('/getavailabilityfrompersonal', bodyparser.json(), async(req,res) => {
   EventEntry.findById(req.body.eventID)
     .then(async dbresponse => {
       let dates = dbresponse.availableDates
-      //console.log("dates: " + dates)
+      console.log("dates: " + dates)
       let times = dbresponse.availableTimes   //need to use times[dateIndex][timeIndex] to access time list
-      //console.log("times: " + times)
+      console.log("times: " + times)
       let duration = dbresponse.meetingDuration
       console.log("duration: " + duration)
       let attAv = dbresponse.attendeesAvailability
       let availabilityArray = []
       for(let dateIndex = 0; dateIndex<dates.length; dateIndex++){
         for(let timeIndex = 0; timeIndex<times[dateIndex].length; timeIndex++){
-          //console.log("dateIndex: " + dateIndex)
-          //console.log("timeIndex: " + timeIndex)
-          //console.log("times length:" + times.length)
+          console.log("dateIndex: " + dateIndex)
+          console.log("timeIndex: " + timeIndex)
+          console.log("times length:" + times.length)
           let startDateTime = new Date(dates[dateIndex])
           if(duration === 0.5){   //if duration is 0.5
             startDateTime.setHours(Math.floor(times[dateIndex][timeIndex]))   //need to get the floor to always get hour value only
-            //console.log("modulo: " + times[dateIndex][timeIndex]%1)
+            console.log("modulo: " + times[dateIndex][timeIndex]%1)
             if(times[dateIndex][timeIndex]%1 === 0){  //if we're on a whole hour
               startDateTime.setMinutes(0)
             }else{  //if we're on a half hour
               startDateTime.setMinutes(30)
             }
-          }else if(times[dateIndex][timeIndex]%1 === 1){  //or we're on a whole hour 
+          }else if(times[dateIndex][timeIndex]%1 === 0){  //or we're on a whole hour 
             startDateTime.setHours(times[dateIndex][timeIndex])
           }
 
@@ -312,9 +312,9 @@ app.post('/getavailabilityfrompersonal', bodyparser.json(), async(req,res) => {
 
           await CalendarEntry.find({username: {$eq: req.session.username}, startDateTime: {$lt: endDateTime}, endDateTime: {$gte: startDateTime}})
             .then(dbresponse => {
-              //console.log(req.session.username + ", " + startDateTime + ", " + endDateTime)
+              console.log(req.session.username + ", " + startDateTime + ", " + endDateTime)
               if(dbresponse.length === 0){  //no results found, user is available 
-                //console.log("dbresponse" + dbresponse)
+                console.log("dbresponse" + dbresponse)
                 availabilityArray.push(startDateTime)
               }
             })
@@ -326,11 +326,12 @@ app.post('/getavailabilityfrompersonal', bodyparser.json(), async(req,res) => {
         personalLoaded: false,
       }
       attAv.push(newAvObj)
-      //console.log(availabilityArray)
-      EventEntry.findByIdAndUpdate(req.body.eventID, {attendeesAvailability: attAv})
+      console.log(availabilityArray)
+      res.json(availabilityArray)
+      /* EventEntry.findByIdAndUpdate(req.body.eventID, {attendeesAvailability: attAv})
       .then(result =>{
         res.json(availabilityArray)
-      })
+      }) */
     })
 })
 

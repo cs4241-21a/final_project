@@ -71,7 +71,7 @@ class PendingEventList extends React.Component {
       type: "button",
       style: {maxHeight: "45px"},
       onClick: (clickEvent) => this.addUserAvail(event)
-    }, "Accept Invite"))), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("br", null))));
+    }, "Update Availability"))), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("br", null))));
   }
 }
 export default PendingEventList;

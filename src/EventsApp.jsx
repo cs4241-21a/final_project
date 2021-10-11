@@ -20,7 +20,7 @@ class EventsApp extends React.Component {
                 <div class="w-100"></div>
 
                 <div>
-                    <h2>Pending Event Invites:</h2>
+                    <h2>Event Invites:</h2>
                     <hr/>
                     <PendingEventsList/>
                 </div>

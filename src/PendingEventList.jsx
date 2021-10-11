@@ -112,7 +112,7 @@ class PendingEventList extends React.Component {
                     <p>Open Days and Time Slots: Click and submit to update availability</p>
                     <div class="containerRow">
                         <AvailabilitySchedule event={event} username={this.state.username} updateEvent={this.updateEvent}/>
-                        <button type="button" style={{maxHeight: "45px"}} onClick={clickEvent => this.addUserAvail(event)}>Accept Invite</button>
+                        <button type="button" style={{maxHeight: "45px"}} onClick={clickEvent => this.addUserAvail(event)}>Update Availability</button>
                     </div>
                     
                 </div>
