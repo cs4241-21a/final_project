@@ -149,6 +149,10 @@
             .then(json => {
               const result = json.result
               console.log(result)
+              if(!result){
+                alert("unsupported file types. Please try upload another one.")
+                return;
+              }
               str = ""
               for(let i=0;i<3;i++){
                 str += generateResults(result[i])
