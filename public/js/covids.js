@@ -9,10 +9,9 @@ const numOfStars = 25,
   ship_thrust = 0.05,
   max_ship_speed = 5,
   num_lives = 3,
-  max_num_masks = 3;
-
-let min_speed = 0.5,
-  max_speed = 2
+  max_num_masks = 3,
+  min_speed = 0.5,
+  max_speed = 2;
 
 let GameOver = false;
 let isThrusting = false;
@@ -36,16 +35,6 @@ let score = 0;
 
 function randomChoice(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
-}
-
-function changeDifficulty(){
-  if ((seconds > 60) && (seconds > 120)){
-    min_speed = 1
-    max_speed = 2.5
-  } else if (seconds > 120) {
-    min_speed = 2
-    max_speed = 4
-  }
 }
 
 let _star_cur_id = 0;
@@ -375,10 +364,6 @@ function setup() {
 
   connectWS();
 }
-
-function thrustingFeedback() {}
-
-function lossOfLife() {}
 
 function checkLives() {
   if (ship.lives <= 0) {

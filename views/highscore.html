@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Highscore page for the Covids multiplayer arcade game.">
-    <base href="https://corona-game.glitch.me/" target="_blank">
+    <base href="https://corona-game.glitch.me/">
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@500&display=swap" rel="stylesheet">
     <!-- minify -->
     <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
@@ -20,9 +20,7 @@
   <img src="https://cdn.glitch.me/ef24414d-2e2b-4125-b2ec-662f19e66c6e%2Fgompeicovid.png?v=1633902904813"> 
   </div>   
     <h1>HIGHSCORES</h1>
-    <div class="nes-container">
       <ul id="highscores"></ul>
-    </div>
     <a href = "/">
       <button id="return" class="nes-btn is-warning">Login Page</button>
     </a>
@@ -36,7 +34,7 @@
     font-family: 'Libre Franklin', sans-serif;
     overflow: hidden;
     text-align: center;
-    font-size: 30pt;
+    font-size: 15pt;
   }
   h1{
     text-align: center;
@@ -50,10 +48,10 @@
     font-size: 15pt;
   }
   
-   #container {
-    position: relative;
-    text-align: center;
-    }
+#container {
+ position: relative;
+text-align: center;
+ }
   
   #gomp {
    bottom:15%;
@@ -61,6 +59,9 @@
    -webkit-animation:linear infinite;
    -webkit-animation-name:run;
    -webkit-animation-duration:30s;
+}
+ul {
+  padding: 0;
 }
 
 @-webkit-keyframes run  {
