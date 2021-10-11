@@ -1,6 +1,9 @@
 # Team 16 - *Bopify*
 https://bopify.herokuapp.com/
 
+## Link to Youtube Demo
+https://youtu.be/aJn2yH5KZq8
+
 ### Team Members
 * Nathan Klingensmith
 * Bryan Lima
@@ -24,6 +27,7 @@ To circumvent requiring user authentication, all requests are channeled through 
   * Click the `X` button to remove a song from the playlist
   * Click the `▶`/`⏸` buttons to play/pause a song
 * Click the `View on Spotify` to open the playlist with Spotify
+* Click the `Reroll Playlist` button to generate a new playlist
 
 ## Technologies
 * `React.js` React was used as our front-end framework to build a single-page web app with more complex functionality. An internal router is used to navigate between the genre selection page and the playlist page. 
@@ -69,7 +73,7 @@ We were then able to point the Node server at these build files in order to serv
 ### Bryan Lima
 * Built reroll playlist functionality
 * Integrated API endpoints into React app
-* Attempted to figure out Autehntication with the Spotify API, so anybody could long into their personal account
+* Attempted to figure out Authentication with the Spotify API, so anybody could long into their personal account
 
 ### Ashwin Pai
 * Worked on generating a playlist of suggested songs based on users artists. 
@@ -78,7 +82,7 @@ We were then able to point the Node server at these build files in order to serv
 
 ### River Yan
 * Developed generating popular songs from a given genre function using the API
-* Hepled with generating recommendations for the user 
+* Helped with generating recommendations for the user 
 * Created API endpoints
 
 ## Design Achievements
