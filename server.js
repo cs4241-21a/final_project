@@ -153,6 +153,10 @@ app.get("/home", (request, response) => {
   response.render("home");
 });
 
+app.get("/home2", (request, response) => {
+  response.status(200).render('home', {suggesteduser: currentUser});
+});
+
 app.get("/listView", (request, response) => {
   response.render("listView");
 });
