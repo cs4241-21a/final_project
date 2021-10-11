@@ -6,6 +6,8 @@
 
 This is an iterated version of my A3 project which is an online expense tracker for users that want the least disturbing and more peace of mind.
 
+![Cover](readme/Cover.png)
+
 ## Features:
 
 1. **Indexed Data:** Reading of data from this website is optimized to only take logarithmic time. Information stored on the database are indexed with a B-tree data structure (a self-balancing tree that maintains sorted data and allows searches, sequential access, insertions, and deletions in logarithmic time). This is implemented by configuring mongoDB's indexing feature. The following queries are optimized with indexes:
