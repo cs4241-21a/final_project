@@ -132,7 +132,7 @@ console.log("hello world :o");
           })
           .then(res => res) // parse the JSON from the server
           .then(data => {
-                 var row = table.insertRow(table_len).outerHTML="<tr id="+data._id+"'><td colspan=2 id='task_row"+table_len+"'>"+new_task+"</td><td colspan=2 id='date_row"+table_len+"'>"+new_date+"</td><td colspan=2><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit' onclick='edit_row("+table_len+")'> <input type='button' id='save_button"+table_len+"' value='Save' class='save' onclick='save_row("+table_len+")'> <input type='button' id='createsubtask_button"+table_len+"' value='Create Subtask' class='create' onclick='create_sub("+table_len+")'><input type='button' value='Delete' class='delete' onclick='delete_row("+table_len+")'></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+table_len+"' class='check' onclick='check_box('"+table_len+"')'> </td></tr>";
+                 var row = table.insertRow(table_len).outerHTML="<tr id='row"+table_len+"'><td colspan=2 id='task_row"+table_len+"'>"+new_task+"</td><td colspan=2 id='date_row"+table_len+"'>"+new_date+"</td><td colspan=2><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit' onclick='edit_row("+table_len+")'> <input type='button' id='save_button"+table_len+"' value='Save' class='save' onclick='save_row("+table_len+")'> <input type='button' id='createsubtask_button"+table_len+"' value='Create Subtask' class='create' onclick='create_sub("+table_len+")'><input type='button' value='Delete' class='delete' onclick='delete_row("+table_len+")'></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+table_len+"' class='check' onclick='check_box('"+table_len+"')'> </td></tr>";
             });
   }
   
@@ -144,7 +144,7 @@ console.log("hello world :o");
    if(check){
     checkString = 'checked'
    }
-   var row = table.insertRow(table_len).outerHTML="<tr id="+_id+"><td colspan=2 id='task_row"+table_len+"'>"+task+"</td><td colspan=2 id='date_row"+table_len+"'>"+due+"</td><td colspan=2><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit' onclick='edit_row("+table_len+")'> <input type='button' id='save_button"+table_len+"' value='Save' class='save' onclick='save_row("+table_len+")'> <input type='button' id='createsubtask_button"+table_len+"' value='Create Subtask' class='create' onclick='create_sub("+table_len+")'><input type='button' value='Delete' class='delete' onclick='delete_row("+table_len+")'></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+table_len+"' class='check' "+checkString+" onclick='check_box('"+table_len+"')'> </td></tr>";
+   var row = table.insertRow(table_len).outerHTML="<tr id='row"+table_len+"'><td colspan=2 id='task_row"+table_len+"'>"+task+"</td><td colspan=2 id='date_row"+table_len+"'>"+due+"</td><td colspan=2><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit' onclick='edit_row("+table_len+")'> <input type='button' id='save_button"+table_len+"' value='Save' class='save' onclick='save_row("+table_len+")'> <input type='button' id='createsubtask_button"+table_len+"' value='Create Subtask' class='create' onclick='create_sub("+table_len+")'><input type='button' value='Delete' class='delete' onclick='delete_row("+table_len+")'></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+table_len+"' class='check' "+checkString+" onclick='check_box('"+table_len+"')'> </td></tr>";
   }
 
   function create_sub(noParent) {
