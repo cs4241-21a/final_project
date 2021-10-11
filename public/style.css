@@ -19,8 +19,8 @@
 
 .card{
     margin: 25px;
+    display:inline-block;
 }
-
 
 h4{
     font-weight: bold;
