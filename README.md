@@ -24,7 +24,7 @@ A traditional web-based API was difficult to find, so we ended up using the stat
 
 # 4. What challenges you faced in completing the project.
 - **Database**: 
-Having the application sync data between a user's session and the database was challenged due to the nature of how react loads components.  We kept running into an issue where the component would updateDB before the users preferences could get loaded from the db, causing the database to be wiped.  We remidied this by using a loading state that would utilized through the application to load data.
+Having the application sync data between a user's session and the database was challenged due to the nature of how react loads components.  We kept running into an issue where the component would updateDB before the users preferences could get loaded from the db, causing the database to be wiped.  We remedied this by using a loading state that would utilized through the application to load data.
 
 - **Data Syncronization**: 
 Pressing the toggleable buttons on our project was not updating the calendar without refreshing the webpage.  We overcame this issue by using temporary arrays and react state setter function and using useEffect to look for updates in these arrays.
