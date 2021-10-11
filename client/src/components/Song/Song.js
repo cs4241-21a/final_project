@@ -26,8 +26,8 @@ export default function Song(props) {
           <div className="song__middle">{ getDuration(props.song.duration_ms) }</div>
           <div className="song__right">
               <div className="song__popularity">
-                  { props.song.popularity > 50 && <div>
-                      <FlameIcon /> Trending
+                  { props.song.popularity > 80 && <div>
+                      <FlameIcon /> Boppin'
                   </div> }
               </div>
               <button
