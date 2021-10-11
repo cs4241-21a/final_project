@@ -66,7 +66,13 @@ As a frontend-focused developer, I primarily ensured the site itself was easy to
 - Stylizing farming calendar display
 - Stylizing selectables in menu display
 
-### Michael
+### Michael (API/Frontend Development)
+As the API developer, my job was taking the "API" (or in this case, a JSON database in multiple JS files), and allowing our code to access the data from it. After that was finished, I helped assist with the front-end development in any way I could. Here are the details:
+- With the guidance of Nick, worked on the interfaces that would interact with the API and our data
+- With the assistance of Andrew, helped debug the API implementation and how we were accessing it
+- Allowed the side menu to push the farming schedule so that it's still visible
+  - Modified the state data so that this functionality is possible
+- Added the functionality so the farming schedule shrinks as the side menu opens (so that the entire app is still visible)
 
 ### Matthew (Frontend/Middleware)
 As a frontend and middleware developer, I worked on helping design the website and worked on some of the site's functionality. This includes:
