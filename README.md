@@ -1,6 +1,7 @@
-# Team 16 Final Project Proposal
+# Team 16 - *Bopify*
+https://bopify.herokuapp.com/
 
-## Team
+### Team Members
 * Nathan Klingensmith
 * River Yan
 * Ashwin Pai

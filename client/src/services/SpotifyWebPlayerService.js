@@ -3,7 +3,7 @@ export const PlayerState = {
   PLAYING: 1
 }
 
-export default class SpotifyWebPlayerService {
+export default new (class SpotifyWebPlayerService {
   player;
   deviceID;
   currentTrackURI;
@@ -71,4 +71,4 @@ export default class SpotifyWebPlayerService {
       this.waitingToPlay = uri;
     }
   }
-};
+})();

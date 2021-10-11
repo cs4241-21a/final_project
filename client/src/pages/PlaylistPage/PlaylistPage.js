@@ -5,7 +5,6 @@ import SpotifyWebPlayerService, { PlayerState } from "../../services/SpotifyWebP
 import { Genres } from "../../globals";
 
 export default class PlaylistPage extends React.Component {
-  spotifyWebPlayerService = new SpotifyWebPlayerService();
   playlist;
   props;
 
@@ -83,7 +82,7 @@ export default class PlaylistPage extends React.Component {
   }
 
   togglePlay = async (uri) => {
-    await this.spotifyWebPlayerService.togglePlay(uri);
+    await SpotifyWebPlayerService.togglePlay(uri);
     this.setState({ songs: this.getPlaylistHTML() });
   }
 
@@ -104,7 +103,7 @@ export default class PlaylistPage extends React.Component {
         key={ song.id }
         index={ i }
         song={ song }
-        playing={ this.spotifyWebPlayerService.currentTrackURI === song.uri && this.spotifyWebPlayerService.playerState === PlayerState.PLAYING }
+        playing={ SpotifyWebPlayerService.currentTrackURI === song.uri && SpotifyWebPlayerService.playerState === PlayerState.PLAYING }
         playSongHandler={ this.togglePlay }
         deleteSongHandler={ (uri) => this.deleteSong(this.playlist.id, uri) } />);
   }
