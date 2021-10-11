@@ -40,5 +40,5 @@ const getDuration = (ms) => {
   const seconds = ms / 1000;
   const minutes = seconds / 60;
   const secondsPortion = Math.round(seconds % 60);
-  return `${ Math.floor(minutes) }:${ secondsPortion }${ secondsPortion < 10 ? 0 : '' }`
+  return `${ Math.floor(minutes) }:${ secondsPortion < 10 ? 0 : '' }${ secondsPortion }`
 }
