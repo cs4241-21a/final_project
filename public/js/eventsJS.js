@@ -261,3 +261,22 @@ async function addUserAvail(eventID, dateList){
 
     window.location.reload();
 }
+
+async function deleteEvent(eventID){
+
+    const json = {
+            eventID: eventID
+        },
+        body = JSON.stringify(json);
+
+    // submit new value
+    await fetch('/deleteEvent', {
+        method: 'POST',
+        body,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+
+    window.location.reload();
+}
