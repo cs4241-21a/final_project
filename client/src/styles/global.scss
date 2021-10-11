@@ -15,3 +15,37 @@ body {
 * {
   box-sizing: border-box;
 }
+
+.skeleton {
+  width: fit-content;
+  position: relative;
+  overflow: hidden;
+  color: transparent !important;
+  background: $color-tertiary;
+  border-radius: $border-radius;
+
+  > div {
+    position: absolute;
+    display: block;
+    left: -200%;
+    top: 0;
+    height: 100%;
+    width: 200%;
+    background: linear-gradient(
+                    to right,
+                    transparent 0%,
+                    $color-secondary 50%,
+                    transparent 100%
+    );
+    animation: load 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+}
+
+@keyframes load {
+  from {
+    left: -200%;
+  }
+  to {
+    left: 100%;
+  }
+}
