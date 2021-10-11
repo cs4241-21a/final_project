@@ -1,6 +1,8 @@
 # Final Project
 Website Link: https://aram-generator.herokuapp.com/ 
+
 Video Link: https://drive.google.com/file/d/1oLcI_5p4T-1tOXv322fftIzquvw4JZGF/view?usp=sharing
+
 ## Description
 ARAM is a 5v5 mode in League of Legends where each player is assigned a random character that they own and can trade with their teammates. Currently, there is no good way to generate an ARAM character draft in non-matchmaking player organized games, so we made a match generator which would assign characters to players for these types of games. 
 
