@@ -1,0 +1,58 @@
+#farm {
+    display: flex;
+    width: 100%;
+    text-align: center;
+    align-items: start;
+}
+
+.day {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    border: 2px solid #246885;
+}
+
+.day-title {
+    background-color: #8bd1e8;
+    width: 100%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 25px;
+    font-weight: bold;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: #000;
+    border-radius: 15px;
+    border: 1px solid #246885;
+}
+
+.loc {
+    background-color: #6696AA;
+    border-radius: 15px;
+    border: 1px solid #8bd1e8;
+    border-radius: 15px;
+    color: #000;
+    border: 1px solid #246885;
+}
+
+.loc:hover {
+    background-color: #8bd1e8;
+}
+
+.loc h2 {
+    font-size: 20px;
+}
+
+.icon {
+    height: 20%;
+    width: 20%;
+    background-color: #fff1d1;
+    border-radius: 15px;
+}
+
+p {
+    font-size: 15px;
+    padding-bottom: 20px;
+}

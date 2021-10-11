@@ -1,0 +1,57 @@
+.tgl-but-off {
+    background-color: transparent;
+    border: 2px solid transparent;
+    height: 250px;
+    color: black
+}
+
+.tgl-but-on {
+    background-color: rgba(255,241,209,0.3);
+    border-color: #fff1d1;
+    border-radius: 25px;
+    height: 250px;
+    color: black
+}
+
+.tgl-but-off:hover {
+    border: 2px solid transparent;
+    border-radius: 25px;
+    background-color: rgba(255,241,209,0.1);
+}
+
+.tgl-but-on:hover {
+    background-color: rgba(255,241,209,0.2);
+    border: 2px solid #fff1d1;
+    border-radius: 25px;
+}
+
+.tgl-but-off p {
+    width: 130px;
+    height: 60px;
+    word-wrap: break-word;
+}
+
+.tgl-but-on p {
+    width: 130px;
+    height: 60px;
+    word-wrap: break-word;
+}
+
+.artifactImg {
+    width: 120px;
+    padding-top: 10px;
+}
+
+.weaponImg {
+    width: 120px;
+    padding-top: 10px;
+}
+
+.charImg {
+    width: 120px;
+    padding-top:10px;
+}
+
+.charDataImg {
+    width: 35px
+}
