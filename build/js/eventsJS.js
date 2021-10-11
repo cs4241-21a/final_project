@@ -1,7 +1,5 @@
 const createEventForm = document.getElementById("createEventForm")
 const eventName = document.getElementById('title');
-const startDate = document.getElementById('startDate');
-const endDate = document.getElementById('endDate');
 const description = document.getElementById('description');
 const eventLocation = document.getElementById('location');
 const attendees = document.getElementById('attendees');
@@ -34,6 +32,95 @@ function alert(message, type) {
     alertWrapper.textContent = message
     
     alertContainer.appendChild(alertWrapper)
+  }
+
+async function editEvent(eventID){
+    let makePersonalEvent = false;
+    let attendeesList = document.getElementById('attendees' + eventID).value.split(",");
+    let evntDate = document.getElementById('finalDate' + eventID).value;
+    let startTime = -1
+    let getStartTime = document.getElementById('finalTime' + eventID + evntDate).value;
+
+    if (evntDate === "null"){
+        evntDate = null;
+        startTime = null;
+    } else {
+        if(getStartTime % 1 == .5 ) {
+            let waitDate = new Date(evntDate);
+            waitDate.setHours((getStartTime - .5), 30)
+            evntDate = waitDate
+        } else {
+            let wait2Date = new Date(evntDate)
+            wait2Date.setHours(getStartTime)
+            evntDate = wait2Date
+        }
+        makePersonalEvent = true;
+        startTime = getStartTime;
+    }
+
+    if (makePersonalEvent) {
+        let endEventDate = evntDate;
+        let eventDur = 1;
+        //supposed to be + event duration but no quick way to access that here
+        /*if((getStartTime) % 1 == .5 ) {
+            endEventDate = endEventDate.setHours((startTime + eventDur), 30)
+        } else {
+            endEventDate = endEventDate.setHours((startTime + eventDur))
+        }*/
+        for (let i = 0; i < attendeesList.length; i++) {
+            const json2 = {
+                    eventName: document.getElementById('eventName' + eventID).innerText,
+                    attendeeName: attendeesList[i],
+                    startDateTime: evntDate,
+                    endDateTime: evntDate,
+                    description: document.getElementById('description' + eventID).value,
+                    location: document.getElementById('location' + eventID).value,
+                },
+                body2 = JSON.stringify(json2);
+
+            // submit new value
+            await fetch('/addToOthersPersonal', {
+                method: 'POST',
+                body: body2,
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(function (response) {
+                    // do something with the response
+                    console.log("Post made to server");
+                })
+        }
+    }
+    const json = {
+        eventID: eventID,
+        chosenEventDate: evntDate,
+        chosenStartTime: startTime,
+        description: document.getElementById('description' + eventID).value,
+        location: document.getElementById('location' + eventID).value,
+        attendees: attendeesList,
+    },
+    body = JSON.stringify(json);
+    
+    // submit new value
+    await fetch('/editEvent', {
+        method: 'POST',
+        body,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then(function (response) {
+            // do something with the response
+            console.log("Post made to server");
+
+        })
+        .then(function (json) {
+            console.log(json);
+            window.location.reload();
+        })
+
+    //window.location.reload();
 }
 
 let oldElementVal = "";
@@ -116,6 +203,13 @@ async function submitHandler() {
         alert("A date range was not selected", "danger");
         return;
     }
+    console.log(timeRange)
+    // Given an error if start and end time were set as the same
+    clearAlert();
+    if (timeRange === undefined) {
+        alert("Start and end times must be farther apart", "danger");
+        return;
+    }
 
     const json = {
         title: eventName.value,
@@ -146,4 +240,40 @@ async function submitHandler() {
 function openEventMaker(){
     document.getElementById('eventMaker').style.display = "block";
     document.getElementById('eventMakerBtn').style.display = "none";
+}
+
+async function addUserAvail(eventID, dateList){
+    let newAvailTimes = [];
+    let newDateList = dateList.split(",");
+
+    for (let i = 0; i < newDateList.length; i++) {
+        let times = []
+        for (let j = 0; j < 48; j++) {
+            if (document.getElementById('limitingTimes' + eventID + i + j) !== null) {
+                if (document.getElementById('limitingTimes' + eventID + i + j).checked) {
+                    times.push(document.getElementById('limitingTimes' + eventID + i + j).value)
+                }
+            } else {
+                j = 48;
+            }
+        }
+        newAvailTimes.push(times);
+    }
+
+    const json = {
+            eventID: eventID,
+            attendeesAvailArray: newAvailTimes
+        },
+        body = JSON.stringify(json);
+
+    // submit new value
+    await fetch('/addUserAvail', {
+        method: 'POST',
+        body,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+
+    window.location.reload();
 }

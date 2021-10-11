@@ -26,6 +26,7 @@ class OwnedEventList extends React.Component {
       }
       event.pendingAttendees = pendingAttendees;
       eventInput[event._id] = {
+        name: event.name,
         description: event.description,
         attendees: event.attendees.join(","),
         location: event.location,
@@ -70,14 +71,48 @@ class OwnedEventList extends React.Component {
     eventInputs[eventID]["chosenStartTime"] = chosenTime;
   }
   async editEvent(eventID) {
+    let makePersonalEvent = false;
     let attendeesList = this.state.eventInputs[eventID]["attendees"].replace(/\s/g, "").split(",");
     let eventDate = this.state.eventInputs[eventID]["chosenEventDate"];
+    let getStartTime = this.state.eventInputs[eventID]["chosenStartTime"];
     let startTime = -1;
     if (eventDate === "null") {
       eventDate = null;
       startTime = null;
     } else {
+      if (getStartTime % 1 == 0.5) {
+        let waitDate = new Date(evntDate);
+        waitDate.setHours(getStartTime - 0.5, 30);
+        evntDate = waitDate;
+      } else {
+        let wait2Date = new Date(evntDate);
+        wait2Date.setHours(getStartTime);
+        evntDate = wait2Date;
+      }
       startTime = this.state.eventInputs[eventID]["chosenStartTime"];
+    }
+    if (makePersonalEvent) {
+      let endEventDate = evntDate;
+      let eventDur = 1;
+      for (let i = 0; i < attendeesList.length; i++) {
+        const json2 = {
+          eventName: this.state.eventInputs[eventID]["name"],
+          attendeeName: attendeesList[i],
+          startDateTime: evntDate,
+          endDateTime: evntDate,
+          description: this.state.eventInputs[eventID]["description"],
+          location: this.state.eventInputs[eventID]["location"]
+        }, body2 = JSON.stringify(json2);
+        await fetch("/addToOthersPersonal", {
+          method: "POST",
+          body: body2,
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }).then(function(response) {
+          console.log("Post made to server");
+        });
+      }
     }
     const json = {
       eventID,
@@ -88,6 +123,19 @@ class OwnedEventList extends React.Component {
       attendees: attendeesList
     }, body = JSON.stringify(json);
     await fetch("/editEvent", {
+      method: "POST",
+      body,
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+    window.location.reload();
+  }
+  async deleteEvent(eventID) {
+    const json = {
+      eventID
+    }, body = JSON.stringify(json);
+    await fetch("/deleteEvent", {
       method: "POST",
       body,
       headers: {
@@ -126,8 +174,11 @@ class OwnedEventList extends React.Component {
       selectDate: this.selectDate
     }), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("button", {
       type: "button",
-      onClick: (e) => this.editEvent(event._id.toString())
-    }, "Edit Event"), /* @__PURE__ */ React.createElement("hr", null)))));
+      onClick: (e) => this.editEvent(event._id)
+    }, "Edit Event"), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("button", {
+      type: "button",
+      onclick: (e) => this.deleteEvent(event._id)
+    }, "Delete Event"), /* @__PURE__ */ React.createElement("hr", null)))));
   }
 }
 export default OwnedEventList;

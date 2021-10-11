@@ -33,6 +33,7 @@ class OwnedEventList extends React.Component {
             }
             event.pendingAttendees = pendingAttendees
             eventInput[event._id] = {
+                name: event.name,
                 description: event.description,
                 attendees: event.attendees.join(","),
                 location: event.location,
@@ -85,16 +86,64 @@ class OwnedEventList extends React.Component {
     }
 
     async editEvent(eventID){
+        let makePersonalEvent = false;
         let attendeesList = this.state.eventInputs[eventID]["attendees"].replace(/\s/g,'').split(",");
         let eventDate = this.state.eventInputs[eventID]["chosenEventDate"];
+        let getStartTime = this.state.eventInputs[eventID]["chosenStartTime"];
         let startTime = -1
     
         if (eventDate === "null"){
             eventDate = null;
             startTime = null;
         } else {
+            if(getStartTime % 1 == .5 ) {
+                let waitDate = new Date(evntDate);
+                waitDate.setHours((getStartTime - .5), 30)
+                evntDate = waitDate
+            } else {
+                let wait2Date = new Date(evntDate)
+                wait2Date.setHours(getStartTime)
+                evntDate = wait2Date
+            }
+
             startTime = this.state.eventInputs[eventID]["chosenStartTime"];
         }
+
+        if (makePersonalEvent) {
+            let endEventDate = evntDate;
+            let eventDur = 1;
+            //supposed to be + event duration but no quick way to access that here
+            /*if((getStartTime) % 1 == .5 ) {
+                endEventDate = endEventDate.setHours((startTime + eventDur), 30)
+            } else {
+                endEventDate = endEventDate.setHours((startTime + eventDur))
+            }*/
+            for (let i = 0; i < attendeesList.length; i++) {
+                const json2 = {
+                        eventName: this.state.eventInputs[eventID]["name"],
+                        attendeeName: attendeesList[i],
+                        startDateTime: evntDate,
+                        endDateTime: evntDate,
+                        description: this.state.eventInputs[eventID]["description"],
+                        location: this.state.eventInputs[eventID]["location"],
+                    },
+                    body2 = JSON.stringify(json2);
+    
+                // submit new value
+                await fetch('/addToOthersPersonal', {
+                    method: 'POST',
+                    body: body2,
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+                .then(function (response) {
+                    // do something with the response
+                    console.log("Post made to server");
+                })
+            }
+        }
+
         const json = {
             eventID: eventID,
             chosenEventDate: eventDate,
@@ -116,7 +165,7 @@ class OwnedEventList extends React.Component {
         window.location.reload();
     }
 
-    async function deleteEvent(eventID){
+    async deleteEvent(eventID){
 
         const json = {
                 eventID: eventID
@@ -185,7 +234,7 @@ class OwnedEventList extends React.Component {
 
                     <br/>
                     <br/>
-                    <button type="button" onClick={e => this.editEvent(event._id.toString())}>Edit Event</button>
+                    <button type="button" onClick={e => this.editEvent(event._id)}>Edit Event</button>
                     <br/>
                     <button type="button" onclick={e => this.deleteEvent(event._id)}>Delete Event</button>
                     <hr/>
