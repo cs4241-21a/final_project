@@ -1,6 +1,6 @@
 {
   "name": "gp2p_expense_tracker",
-  "version": "2.3.0",
+  "version": "3.4.0",
   "description": "A website that allows user to track their spending and income with budget",
   "author": "GP2P",
   "scripts": {
@@ -32,10 +32,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GP2P/a3-persistence.git"
+    "url": "https://github.com/GP2P/final_project.git"
   },
   "bugs": {
-    "url": "https://github.com/GP2P/a3-persistence/issues"
+    "url": "https://github.com/GP2P/final_project/issues"
   },
-  "homepage": "https://github.com/GP2P/a3-persistence#readme"
+  "homepage": "https://github.com/GP2P/final_project#readme"
 }
