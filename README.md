@@ -1,6 +1,7 @@
 We created a game that promotes the fight against COVID. The gompei avatar has to shoot masks at the COVID viruses flying towards him from all different directions. Score is calculated by how long the player has stayed alive and how many viruses are hit. High scores are displayed on the High Score page. https://corona-game.glitch.me/ 
 
-To log in, enter the preferred username and password into the respective boxes, then click create account. You can then log into your account with those credentials. 
+To log in, enter the preferred username and password into the respective boxes, then click create account. You can then log into your account with those credentials.
+There are also premade usernames and passwords, one of which is username: "Test", password "test".
 
 An outline of the technologies we used and how we used them:
  - WebSockets for real-time server/client communication for multiplayer
