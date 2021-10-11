@@ -1,7 +1,7 @@
 # Team 16 - *Bopify*
 https://bopify.herokuapp.com/
 
-## Link to Youtube Demo
+#### Video Demo
 https://youtu.be/aJn2yH5KZq8
 
 ### Team Members
@@ -26,7 +26,7 @@ To circumvent requiring user authentication, all requests are channeled through 
 * Hover over songs to expose their options
   * Click the `X` button to remove a song from the playlist
   * Click the `▶`/`⏸` buttons to play/pause a song
-* Click the `View on Spotify` to open the playlist with Spotify
+* Click the `View on Spotify` button to open the playlist with Spotify
 * Click the `Reroll Playlist` button to generate a new playlist
 
 ## Technologies
@@ -76,12 +76,12 @@ We were then able to point the Node server at these build files in order to serv
 * Attempted to figure out Authentication with the Spotify API, so anybody could long into their personal account
 
 ### Ashwin Pai
-* Worked on generating a playlist of suggested songs based on users artists. 
-* Integrated /get-reccomendations endpoint into app. 
-* Worked on adding songs to a specific playlist after generation. 
+* Worked on generating a playlist of suggested songs based on favorite artists
+* Integrated the /recommendations endpoint for generating a playlist
+* Worked on adding songs to a specific playlist
 
 ### River Yan
-* Developed generating popular songs from a given genre function using the API
+* Developed function for generating popular songs from a given genre
 * Helped with generating recommendations for the user 
 * Created API endpoints
 
