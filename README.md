@@ -14,7 +14,7 @@ We used a combination of Vue.js, Node.js, Web Sockets, and MongoDB to build our 
 
 ## Challenges
 
-We had quite a few problems when developing our project. The main problem was trying to use Web Sockets. Socketio proved to be difficult to implement, as there were a few connection errors that made it difficult to conenct our frontend to our backend. CORS proved itself to be a diffcult problem to crack, so there are approximately 4 different fixes for it in our backend. Vue.js was not too difficult to implement, but it was new to some of our members, so we had a small learning curve to get over.
+We had quite a few problems when developing our project. The main problem was trying to use Web Sockets. Socketio proved to be difficult to implement, as there were a few connection errors that made it difficult to conenct our frontend to our backend. Further, utlizing it properly to allow for a live user leaderboard was a completely new challenge for all members. CORS proved itself to be a diffcult problem to crack, so there are approximately 4 different fixes for it in our backend. Vue.js was not too difficult to implement, but it was new to some of our members, so we had a small learning curve to get over. Heruko also had a learning curve, especially when combined with CORS errors.
 
 ## Group Work Distribution
 
