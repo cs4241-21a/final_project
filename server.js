@@ -233,6 +233,65 @@ app.post( '/create-item', bodyparser.json(), function( request, response ) {
   })
 })
 
+app.post( '/get-user-lists', bodyparser.json(), function( request, response ) {
+  const connection = mysql.createConnection({
+    host: 'mysql.wpi.edu',
+    user: 'lauren',
+    password: 'n8njyP',
+    database: 'wishlist'
+  });
+
+  console.log(`get-user-lists post request: ${request}`);
+  let dataString = ''
+  let selectResult;
+
+  request.on( 'data', function( data ) {
+      dataString += data 
+  })
+
+  request.on( 'end', function() {
+    const json = JSON.parse( dataString )
+    items.push(json);
+    console.log("items from /create-item:");
+    console.log(items);
+    console.log('JSON.stringify(items):')
+    console.log(JSON.stringify(items))
+    
+    connection.connect(function(err) {
+      if (err) throw err;
+      // var sql = `SELECT VERSION();`;
+      // connection.query(sql, function (err, result) {
+      //   if (err) throw err;
+      //   console.log("version");
+      //   console.log(result);
+      // });
+      // var sql = `SELECT * FROM lists WHERE (username = '${json.username}');`;
+      // console.log(`username: ${json.username}`)
+      // connection.query(sql, function (err, result, fields) {
+      //   if (err) throw err;
+      //   console.log("selecting lists for a given username");
+      //   console.log(result);
+      //   selectResult = result;
+      // });
+      var sql = `SELECT CONCAT('[',GROUP_CONCAT(CONCAT('{"listName":"', listName, '"', ',"description":"', description,  '"', ',"username":"', username, '"}' )), ']') as json FROM lists WHERE (username = '${json.username}');`;
+      console.log(`username: ${json.username}`)
+      connection.query(sql, function (err, result, fields) {
+        if (err) throw err;
+        console.log("selecting lists for a given username");
+        console.log(result);
+        console.log('result[0].json:')
+        console.log(result[0].json);
+        selectResult = result[0].json;
+        console.log('JSON.stringify(selectResult):')
+        console.log(JSON.stringify(selectResult))
+      });
+    });
+
+    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+    response.end(selectResult)
+  })
+})
+
 app.post( '/login-user', express.json(), function( request, response ) {
 
   console.log(`login-user post request: ${request}`);
