@@ -39,7 +39,10 @@ function randomChoice(arr) {
 }
 
 function changeDifficulty(){
-  if (seconds > 60){
+  if ((seconds > 60) && (seconds > 120)){
+    min_speed = 1
+    max_speed = 2.5
+  } else if (seconds > 120) {
     min_speed = 2
     max_speed = 4
   }
