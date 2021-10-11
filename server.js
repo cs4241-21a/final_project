@@ -322,6 +322,8 @@ app.post( '/get-user-items', bodyparser.json(), function( request, response ) {
   request.on( 'end', function() {
     const json = JSON.parse( dataString )
     currentList = json.listName
+    console.log('currentList form /get-user-items')
+    console.log(currentList)
     var userItems = []
     for(let i = 0; i < items.length; i++){
       if(items[i].listName === currentList.listName){
@@ -397,6 +399,7 @@ app.post( '/set-current-list', express.json(), function( request, response ) {
 app.post( '/get-current-list', express.json(), function( request, response ) {
 
   console.log(`get-current-list post request: ${request}`);
+  console.log(request)
   let dataString = ''
 
   request.on( 'data', function( data ) {

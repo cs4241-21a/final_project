@@ -61,11 +61,22 @@ const getAllLists = function( e ) {
 const getItemsHTML = function( e ) {
     // e.preventDefault()
 
-    const selectedList = document.querySelector('#flistname').value
+    const selectedList = document.querySelector('#flistname')
     console.log('selectedList:')
     console.log(selectedList)
+    let options = selectedList.options
+    console.log('options:')
+    console.log(options)
+    let selectedOption = selectedList.options[selectedList.selectedIndex]
+    console.log('selectedOption:')
+    console.log(selectedOption)
+    let selectedValue = selectedOption.value
+    // console.log('selectedList:')
+    // console.log(selectedList)
+    console.log('selectedValue:')
+    console.log(selectedValue)
 
-    const json = { listName: selectedList },
+    const json = { listName: selectedValue },
     body = JSON.stringify( json )
 
     fetch( '/get-user-items', {

@@ -1,4 +1,5 @@
 const newItemForm = document.querySelector( '#newItemForm' )
+var currentList
   
 const createItem = function( e ) {
     e.preventDefault()
@@ -10,7 +11,7 @@ const createItem = function( e ) {
         fpicture = document.querySelector( '#fpicture' ),
         listName = document.querySelector( '#listNameForItem' ),
         strs = fpicture.value.split('\\')
-        json = { itemName: fname.value, link: flink.value, price: fprice.value, store: fstore.value, picture: strs[strs.length-1], listName: listName.innerHTML },
+        json = { itemName: fname.value, link: flink.value, price: fprice.value, store: fstore.value, picture: strs[strs.length-1], listName: currentList },
         body = JSON.stringify( json )
 
     fetch( '/create-item', {
@@ -35,7 +36,33 @@ const createItem = function( e ) {
     return false
 }
   
+const getCurrentList = function( e ) {
+    // e.preventDefault()
+
+    const json = { listName: 'filler' },
+        body = JSON.stringify( json )
+
+    fetch( '/get-current-list', {
+        method:'POST',
+        body 
+    })
+    .then( function( response ) {
+        return response.json()
+    })
+    .then( function( json ) {
+        console.log(json)
+        currentList = json.listName
+        console.log('currentList from getCurrentList:')
+        console.log(currentList)
+        listName = document.querySelector( '#listNameForItem' )
+        listName.innerHTML = currentList
+    })
+
+    return false
+}
+  
 window.onload = function() {
+    getCurrentList()
     const createItemButton = document.querySelector( '#create-item' )
     createItemButton.onclick = createItem
 }
