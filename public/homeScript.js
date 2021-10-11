@@ -12,6 +12,7 @@ const getCurrentUser = function( e ) {
     console.log((currentUserHome.innerHTML === '[object Object]'))
 
     if(!(currentUserHome.innerHTML === '[object Object]')){
+        console.log("IN THE If")
         const json = { username: currentUserHome.innerHTML },
         body = JSON.stringify( json )
 
@@ -28,6 +29,8 @@ const getCurrentUser = function( e ) {
             // currentUserHome2.innerHTML = json.username
         })
     } else{
+        console.log("IN THE ELSE-")
+        document.querySelector('#currentUserHome').remove()
         const json = { username: currentUserHome.innerHTML },
         body = JSON.stringify( json )
 
@@ -44,21 +47,21 @@ const getCurrentUser = function( e ) {
         })
     }
 
-    const json = { username: currentUserHome.innerHTML },
-        body = JSON.stringify( json )
+    // const json = { username: currentUserHome.innerHTML },
+    //     body = JSON.stringify( json )
 
-    fetch( '/login-user', {
-        method:'POST',
-        body 
-    })
-    .then( function( response ) {
-        return response.json()
-    })
-    .then( function( json ) {
-        console.log('json from getCurrentUser in homeScript:')
-        console.log(json)
-        currentUserHome2.innerHTML = json.username
-    })
+    // fetch( '/login-user', {
+    //     method:'POST',
+    //     body 
+    // })
+    // .then( function( response ) {
+    //     return response.json()
+    // })
+    // .then( function( json ) {
+    //     console.log('json from getCurrentUser in homeScript:')
+    //     console.log(json)
+    //     currentUserHome2.innerHTML = json.username
+    // })
 
     return false
 }
@@ -68,7 +71,7 @@ const getAllLists = function( e ) {
 
     const currentUserHome = document.querySelector( '#currentUserHome' )
 
-    const json = { username: currentUserHome.innerHTML },
+    const json = { username: currentUserHome2.innerHTML },
         body = JSON.stringify( json )
 
     fetch( '/get-user-lists', {
