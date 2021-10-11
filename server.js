@@ -98,7 +98,7 @@ app.post('/loadEvents', async (req, res) =>{
     })
 })
 
-app.get('/pendingsEvents', (req, res) => {
+app.get('/pendingEvents', (req, res) => {
     EventEntry.find({$and: [{attendees: req.session.username}]}) // {owner: {$ne: req.session.username}}, {chosenEventDate: null}
     .then(result => {
         res.json({
@@ -106,6 +106,16 @@ app.get('/pendingsEvents', (req, res) => {
             username: req.session.username,
         })
     })
+})
+
+app.get('/ownedEvents', (req, res) => {
+  EventEntry.find({owner: req.session.username})
+  .then(result => {
+      res.json({
+          events: result,
+          username: req.session.username,
+      })
+  })
 })
 
 
@@ -129,12 +139,17 @@ function getDates(startDate, stopDate) {
 app.post('/editEvent', bodyparser.json(), async(req, res) => {
   EventEntry.findByIdAndUpdate(req.body.eventID, {chosenEventDate: req.body.chosenEventDate, chosenStartTime: req.body.chosenStartTime, location: req.body.location, description: req.body.description, attendees: req.body.attendees})
       .then(result =>{
-        //console.log(result)
+          console.log(result)
+          res.status(200)
+      })
+      .catch(result => {
+          console.log(result)
+          res.status(504)
       })
 })
 
 app.post('/addUserAvail', bodyparser.json(), async (req, res) => {
-  let userAvailObject = {name: req.session.username, filledOut:false, availability: req.body.attendeesAvailArray};
+  let userAvailObject = {name: req.session.username, availability: req.body.attendeesAvailArray};
   let eventData = await EventEntry.findById(req.body.eventID)
   let availability = eventData.attendeesAvailability
 
@@ -240,10 +255,7 @@ app.get('/index', (req, res) =>{
 })
 
 app.get('/events', (req,  res) => {
-  EventEntry.find({owner: req.session.username})
-      .then(result1 => {
-          res.render('events', {eventsList: result1, sentUsername: req.session.username, title:"Events"});
-      })
+  res.render('events', {sentUsername: req.session.username, title:"Events"});
 })
 
 app.get('/signUpPage', (req,res) =>{

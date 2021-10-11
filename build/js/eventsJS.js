@@ -34,40 +34,7 @@ function alert(message, type) {
     alertWrapper.textContent = message
     
     alertContainer.appendChild(alertWrapper)
-  }
-
-async function editEvent(eventID){
-    let attendeesList = document.getElementById('attendees' + eventID).value.split(",");
-    let evntDate = document.getElementById('finalDate' + eventID).value;
-    let startTime = -1
-
-    if (evntDate === "null"){
-        evntDate = null;
-        startTime = null;
-    } else {
-        startTime = document.getElementById('finalTime' + eventID + evntDate).value;
-    }
-    const json = {
-        eventID: eventID,
-        chosenEventDate: evntDate,
-        chosenStartTime: startTime,
-        description: document.getElementById('description' + eventID).value,
-        location: document.getElementById('location' + eventID).value,
-        attendees: attendeesList,
-    },
-    body = JSON.stringify(json);
-    
-    // submit new value
-    await fetch('/editEvent', {
-        method: 'POST',
-        body,
-        headers: {
-            "Content-Type": "application/json"
-        }
-    });
-    window.location.reload();
 }
-
 
 let oldElementVal = "";
 function showDiv(element, eventID) {
@@ -132,7 +99,7 @@ async function submitHandler() {
     
     // Given an error if dates were not selected
     clearAlert();
-    if (eventCalendar == null) {
+    if (eventCalendar == null || eventCalendar.getStartDate() == null || eventCalendar.getEndDate() == null) {
         alert("A date range was not selected", "danger");
         return;
     }

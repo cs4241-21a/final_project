@@ -4,7 +4,11 @@ import AvailabilitySchedule from "./AvailabilitySchedule";
 class PendingEventList extends React.Component {
     
     load() {
-        fetch('/pendingsEvents')
+        fetch('/pendingEvents', {
+            headers: {
+                'Cache-Control': 'no-cache'
+            }
+        })
         .then(response => response.json())
         .then(response => {
             for (let event of response.events.values()) {
@@ -77,43 +81,43 @@ class PendingEventList extends React.Component {
         return (
         <>
             {this.state.events.map(event =>
-                <>
-                    <div>
-                        <h3>{event.eventName}</h3>
-                        <br/>
-                        <p>Description: {event.description}</p>
-                        <br/>
-                        <p>Location: {event.location}</p>
-                        <br/>
-                        <p>Attendees:</p>
-                        <ul>
-                            {event.attendees.map(attendee => 
-                                <li>{attendee}</li>
-                            )}
-                        </ul>
-                        <br/>
-                        
-                        {event.chosenEventDate === null || event.chosenEventTime === null ?
-                            <p>Event date/time has not been chosen yet</p> : (
-                            <>
-                                <p>Event Date:</p>
-                                <p>{event.chosenEventDate}</p>
-                                <br/>
-                                <p>Event Time:</p>
-                                <p>{event.chosenStartTime}</p>
-                            </>
+            <>
+                <div>
+                    <h3>{event.eventName}</h3>
+                    <br/>
+                    <p>Description: {event.description}</p>
+                    <br/>
+                    <p>Location: {event.location}</p>
+                    <br/>
+                    <p>Attendees:</p>
+                    <ul>
+                        {event.attendees.map(attendee => 
+                            <li>{attendee}</li>
                         )}
-                        <br/>
+                    </ul>
+                    <br/>
+                    
+                    {event.chosenEventDate === null || event.chosenEventTime === null ?
+                        <p>Event date/time has not been chosen yet</p> : (
+                        <>
+                            <p>Event Date:</p>
+                            <p>{event.chosenEventDate}</p>
+                            <br/>
+                            <p>Event Time:</p>
+                            <p>{event.chosenStartTime}</p>
+                        </>
+                    )}
+                    <br/>
 
-                        <p>Open Days and Time Slots: Click and submit to update availability</p>
-                        <AvailabilitySchedule event={event} username={this.state.username} updateEvent={this.updateEvent}/>
-                        <br/>
-                        <br/>
-                        <button type="button" onClick={clickEvent => this.addUserAvail(event)}>Accept Invite</button>
-                    </div>
+                    <p>Open Days and Time Slots: Click and submit to update availability</p>
+                    <AvailabilitySchedule event={event} username={this.state.username} updateEvent={this.updateEvent}/>
                     <br/>
                     <br/>
-                </>
+                    <button type="button" onClick={clickEvent => this.addUserAvail(event)}>Accept Invite</button>
+                </div>
+                <br/>
+                <br/>
+            </>
             )}
         </>
         );

@@ -2,7 +2,11 @@ import React from "./_snowpack/pkg/react.js";
 import AvailabilitySchedule from "./AvailabilitySchedule.js";
 class PendingEventList extends React.Component {
   load() {
-    fetch("/pendingsEvents").then((response) => response.json()).then((response) => {
+    fetch("/pendingEvents", {
+      headers: {
+        "Cache-Control": "no-cache"
+      }
+    }).then((response) => response.json()).then((response) => {
       for (let event of response.events.values()) {
         event.availability = [];
       }

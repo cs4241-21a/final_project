@@ -33,22 +33,7 @@ class AvailabilitySchedule extends React.Component {
         this.handleChange = this.handleChange.bind(this)
     }
 
-    convertSelectionToAvailability(selection, event) {
-        let selectionObj = {}
-        for(let selected of selection) {
-            
-        }
-
-        for(let i = 0; i < this.state.numDays; i++) {
-            
-        }
-
-        return selectionObj
-    }
-
     handleChange(newSchedule) {
-        // newSchedule = this.convertSelectionToAvailability(newSchedule)
-
         this.props.updateEvent(this.props.event._id, newSchedule)
         this.setState({
             schedule: newSchedule

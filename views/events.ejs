@@ -7,7 +7,7 @@
 
 <body>
     <script src="./js/eventsJS.js" defer></script>
-    <script type="module" src="./js/pendingEvents.js" defer></script>
+    <script type="module" src="./js/eventsApp.js" defer></script>
     <%- include("./partials/nav.ejs")%>
     <div class="container-sm row mx-auto" style="width: 70%">
         <button type="button" onclick="openEventMaker()" id="eventMakerBtn">Make Event</button>
@@ -103,95 +103,8 @@
         <!-- Force next columns to break to new line -->
         <div class="w-100"></div>
         
-        <div class="col-sm-5 m-4 p-3">
-            <h2>My Events</h2>
-            <hr>
-            <% if (eventsList.length > 0) { %>
-                <% eventsList.forEach(event => { %>
-                    <form id=<%= event._id%>>
-                        <h3><%= event.eventName%></h3>
-                        <br>
-                        <label for="description<%=event._id%>">Description:</label>
-                        <textarea id="description<%=event._id%>" form=<%= event._id%> name="description<%=event._id%>"><%=event.description%></textarea>
-                        <br>
-                        <label for="location<%=event._id%>">Location:</label>
-                        <input id="location<%=event._id%>" form=<%= event._id%> name="location" value=<%=event.location%>>
-                        <br>
-                        <label for="attendees<%=event._id%>">Attendees:</label>
-                        <textarea id="attendees<%=event._id%>" form=<%=event._id%> name="attendees<%=event._id%>"><%=event.attendees%></textarea>
-                        <br>
-                        <% if(event.owner === sentUsername){%>
-                            <label for="finalDate<%=event._id%>">Choose Date:</label>
-                            <select id="finalDate<%=event._id%>" name="<%=event.availableDates.length%>" onchange="showDiv(this, parentNode.id)">
-                                    <option value="null"> No Date</option>
-                                <%for (let i = 0; i < event.availableDates.length; i++ ){ %>
-                                    <option value="<%=event.availableDates[i]%>"><%= event.availableDates[i]%></option>
-                                <%}%>
-                            </select>
-                        <br>
-                        <%for (let i = 0; i < event.availableDates.length; i++ ){ %>
-                        <div class="hidden" id="hiddenTime<%=event._id%><%=event.availableDates[i]%>">
-                            <label for="finalTime<%=event._id%><%=event.availableDates[i]%>">Choose Event Time:</label>
-                            <select id="finalTime<%=event._id%><%=event.availableDates[i]%>" name="finalTime<%=event._id%><%=event.availableDates[i]%>">
-                                <%for (let j = 0; j < event.availableTimes[i].length; j++ ){ %>
-                                    <% if (event.availableTimes[i][j] > 11.5){ %>
-                                        <% if (event.availableTimes[i][j] == 12.5 || event.availableTimes[i][j] == 12){%>
-                                        <option value=<%=event.availableTimes[i][j]%>>
-                                            <%= event.availableTimes[i][j]%>PM
-                                        </option>
-                                        <%} else if(event.availableTimes[i][j] == 24 || event.availableTimes[i][j] == 24.5){%>
-                                            <%= event.availableTimes[i][j] - 12%>AM
-                                        <% } else {%>
-                                        <option value=<%=event.availableTimes[i][j]%>>
-                                            <%= event.availableTimes[i][j] - 12%>PM
-                                        </option>
-                                        <%}%>
-                                    <%} else {%>
-                                    <option value=<%=event.availableTimes[i][j]%>>
-                                        <%= event.availableTimes[i][j]%>AM
-                                    </option>
-                                    <%}%>
-                                <%}%>
-                            </select>
-                        </div>
-                        <%}%>
-                        <div>
-                            <p>Accepted Invites:</p>
-                            <ul>
-                                <%for (let k = 0; k < event.attendeesAvailability.length; k++){%>
-                                <li><%=event.attendeesAvailability[k].name%></li>
-                                <%}%>
-                            </ul>
-                            <p>Pending Invites:</p>
-                            <ul>
-                                <%if (event.attendees.length <= event.attendeesAvailability.length){%>
-                                    <li>No pending Invitations</li>
-                                <%}%>
-                                <%for (let i = 0; i < event.attendees.length; i++){%>
-                                <%if (!event.attendeesAvailability.some(e => e.name === event.attendees[i])){%>
-                                <li><%=event.attendees[i]%></li>
-                                <%}%>
-                                <%}%>
-                            </ul>
-                        </div>
-                        <br>
-                        <br>
-                            <button type="button" onclick="editEvent(parentNode.id)">Edit Event</button>
-                        <%}%>
-                        <hr>
-                    </form>
-                <%})%>
-            <%}%>
-        </div>
-
-        <!-- Force next columns to break to new line -->
-        <div class="w-100"></div>
-
-        <div class="col-sm-5 m-4 p-3">
-            <h2>Pending Event Invites:</h2>
-            <hr>
-            <div id="pendEventList"></div>
-        </div>
+        <!-- Render the owned events and pending events -->
+        <div id="eventsApp"></div>
     </div>
 <%- include("./partials/footer.ejs")%>
 </body>
