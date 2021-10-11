@@ -34,10 +34,11 @@ const MainRoute = (): JSX.Element => {
   // These preference states record the data associated with an account
   const [charPrefs, setCharPrefs] = React.useState<CharacterPrefs[]>([]);
   const [weaponPrefs, setWeaponsPrefs] = React.useState<EnablablePrefs[]>([]);
-  const [artifactPrefs, setArtifactPrefs] = React.useState<EnablablePrefs[]>(
-    []
-  );
+  const [artifactPrefs, setArtifactPrefs] = React.useState<EnablablePrefs[]>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
+
+  // This states handles the menu display
+  const [menuVisibility, setmenuVisibility] = React.useState<string>("show");
 
   /**
    * initPrefs() fetches the user preferences from the database
@@ -217,7 +218,6 @@ const MainRoute = (): JSX.Element => {
     );
   };
 
-
   React.useEffect(() => {
     // !!! TODO (Micheal): Write useEffect function to refilter based off of the selected prefs changing
     // "activeFarmables" should be the artifacts selected by artifactPrefs and materials associated with selected characters
@@ -237,8 +237,10 @@ const MainRoute = (): JSX.Element => {
         characterSelect={characterSelect}
         weaponSelect={weaponSelect}
         artifactSelect={artifactSelect}
+        visibility={menuVisibility}
+        visibilityToggle={setmenuVisibility}
       />
-      <FarmingDisplay farmables={activeFarmables} locations={activeLocations} />
+      <FarmingDisplay farmables={activeFarmables} locations={activeLocations} visibility={menuVisibility} />
     </>
   );
 };

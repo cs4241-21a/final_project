@@ -10,6 +10,16 @@ class MenuContainer extends Component {
       visible: false,
     };
 
+    if(this.props.visibility === "hide") {
+      this.state = {
+        visible: false,
+      };
+    } else if(this.props.visibility === "show") {
+      this.state = {
+        visible: true,
+      };
+    }
+
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
   }
@@ -24,6 +34,11 @@ class MenuContainer extends Component {
     this.setState({
       visible: !this.state.visible,
     });
+    if(this.props.visibility === "hide") {
+      this.props.visibilityToggle("show");
+    } else if(this.props.visibility === "show") {
+      this.props.visibilityToggle("hide");
+    }
   }
 
   render() {
