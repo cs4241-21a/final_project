@@ -31,21 +31,23 @@ This is an iterated version of my A3 project which is an online expense tracker 
 
 ## Sample Accounts:
 
-**Changes have been made - after reading this, please see below for "Dev Options"**
+### Hidden Dev Options
+
+I got tired of creating emails that contain weird strings (also wanted to show other people, if possible) to create special accounts for testing, so I made an easter egg:
+
+When you register a new account, type (or paste) `Dev Options` in the email field and you will be shown a list of "arguments" (checkboxes) that allows you to change the property of your account. None of those conflict, but turning off indexing disallows Globle Search.
 
 ### Small, everyday sample data
 
-To get an account with sample data, ~~register an account with its email containing~~ `rv89uj4fui678fwgt3`.
+To get an account with sample data, check `Samples` in Dev Options mentioned above.
 
-[comment]: <TODO> (Sample accounts are already made: `sample@test.com` with password: `1`.)
+### Huge, 10 years of heavy use worth of random data (not recommended, see below)
 
-### Huge, 10 years of heavy use worth of random data
-
-I made a random data generator in the server to test indexing performance. To get a not indexed account, ~~register one with its email containing~~ `89jv4hu8283e4c9h`. To get an account with random data, ~~register an account with its email containing~~ `ebdrfcgtvy567u`. Sample accounts are already made: `random@test.yesIndex` and `random@test.noIndex`, passwords are both `1`. Random data represents data amount for a heavy user that have used this website daily for 10 years (2011-2021), and each day averaged to create ~5 transactions with each one having a note of ~18 characters and transaction amount of ~4 digits (two on each side of the decimal point).
+I made a random data generator in the server to test indexing performance. To get a not indexed account, check `🚫 Index` in Dev Options. To get an account with random data, check `Random Transactions` in Dev Options. Sample accounts are already made: `random@test.yesIndex` and `random@test.noIndex`, passwords are both `1`. Random data represents data amount for a heavy user that have used this website daily for 10 years (2011-2021), and each day averaged to create ~5 transactions with each one having a note of ~18 characters and transaction amount of ~4 digits (two on each side of the decimal point).
 
 ### Huge(r), 10 years of heavy use worth of random nouns in notes and as tags (recommended)
 
-I made a random noun+tag generator in the server to test search indexing performance (and tag searching performance). To get an account with random data, ~~register an account with its email containing~~ `kmocowiamcwaiom`. Random nouns represents data amount for a heavy user that have used this website daily for 10 years (2011-2021), and each day averaged to create ~5 transactions with each one having a note of 4 nouns (2 of which are tags) and a number tag, with transaction amount of ~4 digits (two on each side of the decimal point).
+I made a random noun+tag generator in the server to test search indexing performance (and tag searching performance). To get an account with random data, check `Random Nouns` in Dev Options. Random nouns represents data amount for a heavy user that have used this website daily for 10 years (2011-2021), and each day averaged to create ~5 transactions with each one having a note of 4 nouns (2 of which are tags) and a number tag, with transaction amount of ~4 digits (two on each side of the decimal point).
 
 ![RandomNouns](readme/RandomNouns.png)
 
@@ -207,9 +209,9 @@ I made one css file for each theme, just because it is hard to actually switch b
 
 ### Dev Options
 
-I got tired of creating emails that contain weird strings (also wanted to show other people, if possible) so I made this:
+I got tired of creating emails that contain weird strings (also wanted to show other people, if possible) to create special accounts for testing, so I made an easter egg:
 
-All you need to do is to type (or paste) `Dev Options` in the email field when you register an account, you will be shown a list of "arguments" (checkboxes) that allows you to check and change the property of your account.
+When you register a new account, type (or paste) `Dev Options` in the email field and you will be shown a list of "arguments" (checkboxes) that allows you to change the property of your account. None of those conflict, but turning off indexing disallows Globle Search.
 
 Before:
 ![DevOptionsBefore](readme/DevOptionsBefore.png)
