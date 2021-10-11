@@ -166,7 +166,7 @@ function getTimeRange(){
     
     while (startTime <= (endTime - meetingDur)){
         timeRange.push(startTime);
-        startTime += .5;
+        startTime += meetingDur;
     }
     
     return timeRange;
