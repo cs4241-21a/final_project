@@ -3,14 +3,14 @@ We created an application that allows users to login and register to a website. 
 You can register for an account and the website will automaticlly log you in. Username must be at least 3 charachters long and password must be at leat 6 characters long
 
 Technologies
-- cookies
-- mongoDB
-- @hapi/joi (login validation)
-- mongoose
-- Javascript
-- EJS
+- cookies: Keep the user logged in after they refresh the page
+- mongoDB: Database to store information
+- @hapi/joi: login validation
+- mongoose: Provides schemas for working with the Database
+- Javascript: Code to run commands when users perform actions
+- EJS: Helped format HTML and reduce the overall amount of HTML that had to be written
+- Water: CSS Framework providing styling for our site
 - HTML
-- CSS
 
 What challenges you faced in completing the project.
 -Some JS bugs when rendering items on page which we did not have time to identify the cause of and fix
@@ -39,6 +39,9 @@ Daniel Stusalitus
 
 **Link to Project Video**
 https://youtu.be/gQYvom4qQxo
+**Link to Glitch Page**
+https://group20-final.glitch.me/
+
 
 **Design Acievements**
 Design Achievement 1: (5 points) How site use CRAP principles in the Non-Designer's Design Book readings
