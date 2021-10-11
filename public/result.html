@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="https://glitch.com/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/style.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"
+      integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <title>Dead Meme Huh?</title>
+  </head>
+    <!--- Header Image and "Meme Results" Tag ------>
+    <img
+      class="w-full"
+      h-48
+      lg:h-auto
+      lg:w-48
+      src="https://github.com/alexiscaira/deadmemehuh/blob/main/dead%20meme.png?raw=true"
+      alt="Sunset in the mountains"
+    />
+    <div class="py-12 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:text-center">
+          <h2 class="text-base text-yellow-400 font-bold tracking-wide ">
+            Meme Results
+          </h2>
+        </div>
+      </div>
+    </div>
+
+    <!--- Start of Meme Results ------>
+    <div class="bg-white">
+      <div class="pt-6">
+        <script>
+          var MemeTitle = "";
+          var TemplateUrl = " ";
+          var Ex1Url = " ";
+          var Ex2Url = " ";
+          var Upvotes = 0;
+          var Downvotes = 0;
+          var Funny = 0;
+          var FunnyNo = 0;
+          var KnowYourMeme = "";
+          var Summary = "";
+
+          function grabMeme(e) {
+            e.preventDefault();
+
+            fetch("/randMeme", {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json"
+              }
+            })
+              .then(function(response) {
+                return response.json();
+              })
+              .then(function(json) {
+                MemeTitle = json.MemeTitle;
+                TemplateUrl = json.TemplateUrl;
+                Ex1Url = json.Ex1Url;
+                Ex2Url = json.Ex2Url;
+                Upvotes = json.UpVotes;
+                Downvotes = json.DownVotes;
+                Funny = json.Funny;
+                FunnyNo = json.NotFunny;
+                KnowYourMeme = json.KnowYourMeme;
+                Summary = json.Summary;
+              });
+            return false;
+          }
+
+          fetch("/search", {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json"
+              }
+            })
+              .then(function(response) {
+                return response.json();
+              })
+              .then(function(json) {
+                MemeTitle = json.MemeTitle;
+                TemplateUrl = json.TemplateUrl;
+                Ex1Url = json.Ex1Url;
+                Ex2Url = json.Ex2Url;
+                Upvotes = json.UpVotes;
+                Downvotes = json.DownVotes;
+                Funny = json.Funny;
+                FunnyNo = json.NotFunny;
+                KnowYourMeme = json.KnowYourMeme;
+                Summary = json.Summary;
+              });
+            return false;
+          }
+
+          function upvote(e) {
+            e.preventDefault();
+            fetch("/upvote", {
+              method: "POST"
+            })
+              .then(function(response) {
+                return response.json();
+              })
+              .then(function(json) {
+                upvotes += 1;
+                console.log(upvotes);
+              });
+            return false;
+          }
+
+          function downvote(e) {
+            e.preventDefault();
+            fetch("/downvote", {
+              method: "POST"
+            })
+              .then(function(response) {
+                return response.json();
+              })
+              .then(function(json) {
+                downvotes += 1;
+              });
+            return false;
+          }
+
+          function funnyvote(e) {
+            e.preventDefault();
+            fetch("/funny", {
+              method: "POST"
+            })
+              .then(function(response) {
+                return response.json();
+              })
+              .then(function(json) {
+                funny += 1;
+              });
+            return false;
+          }
+
+          function notfunnyvote(e) {
+            e.preventDefault();
+            fetch("/notfunny", {
+              method: "POST"
+            })
+              .then(function(response) {
+                return response.json();
+              })
+              .then(function(json) {
+                funnyno += 1;
+              });
+            return false;
+          }
+        </script>
+
+        <div>
+          <div class="center">
+            <div class="slides">
+              <input type="radio" name="radio-btn" id="radio1" />
+              <input type="radio" name="radio-btn" id="radio2" />
+              <input type="radio" name="radio-btn" id="radio3" />
+
+              <div class="image first">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/en/2/2b/Bad_Luck_Brian.jpg"
+                  alt=""
+                />
+                <!--- scr= TemplateUrl ------>
+              </div>
+
+              <div class="image two">
+                <img
+                  src="https://i.pinimg.com/originals/46/b7/50/46b750b1d5390c655201438cb3f1d140.jpg"
+                  alt=""
+                />
+                <!--- scr = Ex1Url ------>
+              </div>
+
+              <div class="image three">
+                <img src="https://i.imgflip.com/5pc443.jpg" alt="" />
+                <!--- scr= Ex2Url ------>
+              </div>
+            </div>
+            <div class"navigation-manual">
+            <label for="radio1" class="manual-btn"></label>
+            <label for="radio2" class="manual-btn"></label>
+            <label for="radio3" class="manual-btn"></label>
+          </div>
+
+          <script type="text/javascript">
+            var counter = 1;
+            setInterval(function() {
+              document.getElementById("radio" + counter).checked = true;
+              counter++;
+              if (counter > 3) {
+                counter = 1;
+              }
+            }, 5000);
+          </script>
+        </div>
+
+        <div
+          class="max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16 lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8"
+        >
+          <div class="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+            <h1
+              class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl"
+            >
+              Bad Luck Brian
+              <!--- scr= MemeTitle ------>
+            </h1>
+            <a href="https://knowyourmeme.com/memes/bad-luck-brian"
+              >KnowYourMeme Link</a
+            >
+            <!--- scr= KnowYourMeme ------>
+
+            <br />
+            <br />
+            <p class="text-2xl text-gray-900">Summary</p>
+            <p class="text-l text-gray-900">
+              Bad Luck Brian is an advice animal-style image macro series
+              featuring a photo of a blonde teenage boy wearing a plaid sweater
+              vest and braces, accompanied by captions that describe a variety
+              of embarrassing and tragic occurrences.
+            </p>
+            <!--- scr= Summary ------>
+          </div>
+
+          <div class="mt-4 lg:mt-0 lg:row-span-3">
+            <div>
+              <div
+                class="flex rounded border-b-2 border-grey-dark overflow-hidden"
+              >
+                <button
+                  class="block text-white text-sm shadow-border bg-blue-500 hover:bg-blue-dark text-sm py-3 px-4 font-sans tracking-wide uppercase font-bold"
+                  onclick="upvote()"
+                  id="notdedbutton"
+                >
+                  this meme isn't dead
+                </button>
+                <div class="bg-blue-500 shadow-border p-3">
+                  <div class="w-4 h-4">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="white"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <div>
+              <div
+                class="flex rounded border-b-2 border-grey-dark overflow-hidden"
+              >
+                <button
+                  class="block text-white text-sm shadow-border bg-orange-400 hover:bg-blue-dark text-sm py-3 px-4 font-sans tracking-wide uppercase font-bold"
+                >
+                  this meme is dead
+                </button>
+                <div class="bg-orange-400 shadow-border p-3">
+                  <div class="w-4 h-4">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="white"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <div>
+              <div
+                class="flex rounded border-b-2 border-grey-dark overflow-hidden"
+              >
+                <button
+                  class="block text-white text-sm shadow-border bg-blue-500 hover:bg-blue-dark text-sm py-3 px-4 font-sans tracking-wide uppercase font-bold"
+                >
+                  this meme is funny
+                </button>
+                <div class="bg-blue-500 shadow-border p-3">
+                  <div class="w-4 h-4">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="white"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <div>
+              <div
+                class="flex rounded border-b-2 border-grey-dark overflow-hidden"
+              >
+                <button
+                  class="block text-white text-sm shadow-border bg-orange-400 hover:bg-blue-dark text-sm py-3 px-4 font-sans tracking-wide uppercase font-bold"
+                >
+                  this meme isn't funny
+                </button>
+                <div class="bg-orange-400 shadow-border p-3">
+                  <div class="w-4 h-4">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="white"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br />
+          </div>
+
+          <div
+            class="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8"
+          >
+            <div>
+              <h3 class="sr-only">Description</h3>
+
+              <div class="mt-10">
+                <h2 class="text-sm font-medium text-gray-900">
+                  Voting Results
+                </h2>
+
+                <div class="deadChartContainer relative">
+                  <canvas id="deadnessChart"></canvas>
+                </div>
+                <div class="funnyChartContainer relative">
+                  <canvas id="funninessChart"></canvas>
+                </div>
+                <script>
+                  Chart.overrides.doughnut.cutout = "35%";
+                  Chart.defaults.plugins.title.display = true;
+                  Chart.defaults.plugins.title.padding = {
+                    top: 10,
+                    bottom: 30
+                  };
+                  Chart.defaults.plugins.title.font = { size: 28 };
+
+                  var deadnessChart = $("#deadnessChart");
+                  var funninessChart = $("#funninessChart");
+
+                  var deadnessData = {
+                    labels: ["Dead", "Not Dead"],
+                    datasets: [
+                      {
+                        data: [
+                          Math.floor(Math.random() * 100 + 1),
+                          Math.floor(Math.random() * 100 + 1)
+                        ], // FILL FROM DB, select random for display
+                        backgroundColor: [
+                          "rgb(245, 173, 84)",
+                          "rgb(54, 162, 235)"
+                        ],
+                        hoverOffset: 16
+                      }
+                    ]
+                  };
+
+                  var funninessData = {
+                    labels: ["Funny", "Not Funny"],
+                    datasets: [
+                      {
+                        data: [
+                          Math.floor(Math.random() * 100 + 1),
+                          Math.floor(Math.random() * 100 + 1)
+                        ], // FILL FROM DB, select random for display
+                        backgroundColor: [
+                          "rgb(54, 162, 235)",
+                          "rgb(245, 173, 84)"
+                        ],
+                        hoverOffset: 16
+                      }
+                    ]
+                  };
+
+                  var deadChart = new Chart(deadnessChart, {
+                    type: "doughnut",
+                    data: deadnessData,
+                    options: {
+                      plugins: {
+                        title: {
+                          text: "Is the meme dead?"
+                        }
+                      }
+                    }
+                  });
+
+                  var funnyChart = new Chart(funninessChart, {
+                    type: "doughnut",
+                    data: funninessData,
+                    options: {
+                      plugins: {
+                        title: {
+                          text: "Is the meme funny?"
+                        }
+                      }
+                    }
+                  });
+                </script>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
