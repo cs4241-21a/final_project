@@ -8,6 +8,14 @@ Given that this project involves multiple clients in a competitive setting, a la
 
 A large portion of our server code is dedicated to validating pawn and wall placements.  Because walls in Quoridor sit in between grid spaces, we had to come up with our own methods for checking blockages, calculating legal movements, and pathfinding (to satisfy Quoridor's rule that there must always be a path between each pawn and the side of the board they're trying to reach).
 
+### Instructions
+Two players (or just two browser tabs) are needed to run the game.
+Go to http://final-project-group-5.glitch.me/ to load the first client.
+The first client will provide a "join" link - open it on another device/window to start the second client and begin playing.
+(If either of these steps doesn't work, close all Quoridor windows and try again.)
+
+You only need your mouse to play.  On your turn, select what you want to do (move your pawn, place a horizontal wall, or place a vertical wall) above the board, then click on the board to make your move.  If you try to make an invalid move, a warning will be displayed under the board.
+
 ### Libraries
 - Node.js
     - Server code; manages game sessions and validates input from the client to prevent cheating
@@ -15,6 +23,8 @@ A large portion of our server code is dedicated to validating pawn and wall plac
     - Board visuals
 - Websockets (ws)
     - Simple communication between server and clients
+- Express
+    - Serving the game client page
 
 ### Work Distribution
 We all met to discuss the game and agree on a set of message formats that the server and clients would use to communicate - once that was settled, Paloma and Mark focused on the client, while Ryan and Matt focused on the server.
