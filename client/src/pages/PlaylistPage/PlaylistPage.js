@@ -87,6 +87,11 @@ export default class PlaylistPage extends React.Component {
     const response = await fetch(`/api/playlist/${id}?uri=${uri}`, { method: 'DELETE' });
     this.playlist = await response.json();
     this.setState({ songs: this.getPlaylistHTML() });
+    this.setState({
+      songs: this.getPlaylistHTML(),
+      songCount: this.playlist.songs.length,
+      playlistDuration: this.playlist.songs.reduce((duration, song) => duration + song.duration_ms, 0)
+    });
   }
 
   getPlaylistHTML = () => {
