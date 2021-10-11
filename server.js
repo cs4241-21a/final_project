@@ -12,7 +12,7 @@ app.use(bodyparser.json());
 app.use(favicon(path.join(__dirname, "public/assets/G3P-logo.png")));
 
 // Database Connection
-const uri = 'mongodb+srv://myApp:qyTOpIT3cup5lTe9@cluster0.9gtis.mongodb.net/'
+const uri = 'mongodb+srv://'+process.env.USER+':'+process.env.PASS+'@'+process.env.HOST
 const client = new mongodb.MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
 client.connect().catch(console.dir)
 const db = client.db("G3PExpenseTracker")
@@ -158,7 +158,7 @@ app.post("/join", (req, res) => {
 							date: "2021-10-03",
 							isIn: true,
 							amount: 20000,
-							note: "Thank You Gift"
+							note: "Thank You #Gift"
 						}, {
 							date: "2021-10-01",
 							isIn: false,
@@ -203,7 +203,7 @@ app.post("/join", (req, res) => {
 							date: "2021-09-25",
 							isIn: true,
 							amount: 60000,
-							note: "This weeks pay"
+							note: "This weeks #pay"
 						}, {
 							date: "2021-09-15",
 							isIn: false,
@@ -223,7 +223,7 @@ app.post("/join", (req, res) => {
 							date: "2021-09-07",
 							isIn: true,
 							amount: 42738,
-							note: "Stock Sold"
+							note: "#Stock Sold"
 						}, {
 							date: "2021-09-07",
 							isIn: false,
