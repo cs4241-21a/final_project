@@ -13,7 +13,10 @@ export default class PlaylistPage extends React.Component {
     super(props);
     this.props = props;
     this.state = { songs: null, songCount: 0, playlistDuration: 0 };
-    const id = window.sessionStorage.getItem(`${props.genre} playlist id`);
+  }
+
+  componentDidMount() {
+    const id = window.sessionStorage.getItem(`${this.props.genre} playlist id`);
     this.retrievePlaylist(id).then();
   }
 
