@@ -31,7 +31,10 @@ export default class PlaylistPage extends React.Component {
             <div className="details__title">{ Genres[this.props.genre].label } Party Playlist</div>
             <div className="details__subtitle">{this.state.songCount} songs • { getDuration(this.state.playlistDuration) }</div>
           </div>
-          <button onClick={ () => window.open(this.playlist.href, '_blank') }>View on Spotify</button>
+          <div className="details__right">
+            <button onClick={ () => window.open(this.playlist.href, '_blank') }>View on Spotify</button>
+            <button onClick={ this.shufflePlaylist }>Reroll Playlist</button>
+          </div>
         </div>
 
         <div className="playlist-page__song-fields">
@@ -81,6 +84,16 @@ export default class PlaylistPage extends React.Component {
     }
   }
 
+  shufflePlaylist = async () => {
+    const response = await fetch(`/api/playlist/${this.playlist.id}/shuffle?genre=${this.props.genre}`, { method: 'PUT' });
+    this.playlist = await response.json();
+    this.setState({
+      songs: this.getPlaylistHTML(),
+      songCount: this.playlist.songs.length,
+      playlistDuration: this.playlist.songs.reduce((duration, song) => duration + song.duration_ms, 0)
+    });
+  }
+
   togglePlay = async (uri) => {
     await SpotifyWebPlayerService.togglePlay(uri);
     this.setState({ songs: this.getPlaylistHTML() });
@@ -89,7 +102,6 @@ export default class PlaylistPage extends React.Component {
   deleteSong = async (id, uri) => {
     const response = await fetch(`/api/playlist/${id}?uri=${uri}`, { method: 'DELETE' });
     this.playlist = await response.json();
-    this.setState({ songs: this.getPlaylistHTML() });
     this.setState({
       songs: this.getPlaylistHTML(),
       songCount: this.playlist.songs.length,

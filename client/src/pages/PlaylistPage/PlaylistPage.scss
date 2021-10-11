@@ -8,20 +8,34 @@
     justify-content: space-between;
     align-items: center;
 
-    .details__title {
-      font-family: $font-family-secondary;
-      font-size: $font-size-xl;
-      line-height: 100%;
-      margin-bottom: $gap-sm;
+    .details__left {
+      display: flex;
+      flex-direction: column;
+
+      .details__title {
+        font-family: $font-family-secondary;
+        font-size: $font-size-xl;
+        line-height: 100%;
+        margin-bottom: $gap-sm;
+      }
+
+      .details__subtitle {
+        font-size: $font-size-sm;
+        color: $color-secondary;
+      }
     }
 
-    .details__subtitle {
-      font-size: $font-size-sm;
-      color: $color-secondary;
-    }
+    .details__right {
+      display: flex;
 
-    button {
-      @include mix-button-primary;
+      button:first-child {
+        @include mix-button-primary;
+        margin-right: $gap-sm;
+      }
+
+      button:not(:first-child) {
+        @include mix-button-secondary;
+      }
     }
   }
 

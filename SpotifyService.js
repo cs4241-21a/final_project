@@ -166,7 +166,7 @@ export default (new class SpotifyService {
     shufflePlaylist = async (id, genre) => {
         console.log(`Shuffling playlist ${id}...`);
 
-        const playlist = this.getPlaylist(id);
+        const playlist = await this.getPlaylist(id);
         await this.deleteSongsFromPlaylist(id, playlist.songs.map(song => song.uri));
         await this.addSongsToPlaylist(id, await this.getSongsByGenre(genre));
 
