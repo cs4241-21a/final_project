@@ -187,6 +187,13 @@ async function submitHandler() {
         alert("A date range was not selected", "danger");
         return;
     }
+    console.log(timeRange)
+    // Given an error if start and end time were set as the same
+    clearAlert();
+    if (timeRange === undefined) {
+        alert("Start and end times must be farther apart", "danger");
+        return;
+    }
 
     const json = {
         title: eventName.value,
