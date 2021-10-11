@@ -36,4 +36,4 @@ Ben Gelinas
 
 ## Project Video
 
-[](https://www.youtube.com/watch?v=GUmPWLTB3jg)
+[Project Video](https://www.youtube.com/watch?v=GUmPWLTB3jg)
