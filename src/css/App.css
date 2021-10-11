@@ -1,0 +1,117 @@
+/* Color Theme Swatches in Hex */
+.LOFT-REDUX-LMC-1-hex { color: #353D40; }
+.LOFT-REDUX-LMC-2-hex { color: #D9D9D9; }
+.LOFT-REDUX-LMC-3-hex { color: #A1A5A6; }
+.LOFT-REDUX-LMC-4-hex { color: #F2B138; }
+.LOFT-REDUX-LMC-5-hex { color: #003F63; }
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+html,
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: #A1A5A6;
+}
+
+.App {
+  font-family: 'Roboto', sans-serif;
+  height: 100vh;
+  display: flex;
+}
+
+.sidebar {
+    width: 200px;
+    height: 100%;
+    background-color: #353D40;
+    color: #D9D9D9;
+}
+
+.sidebar > button {
+    background-color: #353D40;
+    color: #D9D9D9;
+}
+
+.sidebar-calendars {
+    margin-left: 10px;
+}
+
+.calendar {
+    text-align: center;
+    width: 100%;
+    margin: 30px;
+    border: 3px #003F63 solid;
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar-monthbar {
+    display: flex;
+    justify-content: space-evenly;
+    border-bottom: 2px #003F63 solid;
+    align-items: center;
+}
+
+.calendar-monthbar > button{
+    height: 30px;
+    width: 100px;
+}
+
+.calendar-days-week {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.calendar-day-names {
+    display: flex;
+    justify-content: space-evenly;
+    max-height: 50px;
+}
+
+.calendar-day-name {
+    width: 14.2857%;
+}
+
+.calendar-days-day {
+    border: 1px black solid;
+    width: 14.2857%;
+}
+
+.calendar-days-day[disabled='true'] {
+    border: 1px black solid;
+    width: 14.2857%;
+    background-color: black;
+}
+
+.calendar-day-container {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.calendar-day-container > div {
+    flex: 1;
+}
+
+.calendar-days {
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar-days-week {
+    flex: 1 0 auto;
+}
+
+.Collapsible {
+    background-color: #003F63;
+}
+
+.Collapsible__trigger {
+    background-color: #003F63;
+}
+
+.Collapsible__contentInner {
+    border: 1px solid black;
+    padding-left: 10px;
+}
