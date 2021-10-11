@@ -1,3 +1,5 @@
+# [Genshin Farming Calculator (Group 8)](https://group8webware.herokuapp.com/)
+
 # 1. A brief description of what you created, and a link to the project itself (two paragraphs of text)
 
 Players of the open-world action RPG Genshin Impact often find themselves wondering which materials they need to collect (or "farm") based on the day-of-the-week schedule and the particular characters, weapons, or artifacts they wish to improve. Rather than spending hours looking up guides, farming locations, and farming schedules, we compiled a web-based application that easily creates a schedule for players to reference. All they need to do is select the characters, weapons, and/or artifacts they wish to farm.
