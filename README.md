@@ -72,6 +72,9 @@ We were then able to point the Node server at these build files in order to serv
 * Attempted to figure out Autehntication with the Spotify API, so anybody could long into their personal account
 
 ### Ashwin Pai
+* Worked on generating a playlist of suggested songs based on users artists. 
+* Integrated /get-reccomendations endpoint into app. 
+* Worked on adding songs to a specific playlist after generation. 
 
 ### River Yan
 * Developed generating popular songs from a given genre function using the API
