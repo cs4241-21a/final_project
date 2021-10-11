@@ -7,7 +7,7 @@ The README for your second pull request doesn’t need to be a formal report, bu
 
 We created an application that allows users to login and register to a website. The user then will be redirected to a welcome page where they can create,delete, and edit tasks and subtasks.
 
-You can regiister for an account and the website will automaticlly log you in.
+You can register for an account and the website will automaticlly log you in. Username must be at least 3 charachters long and password must be at leat
 
 Technologies
 - cookies
@@ -29,6 +29,7 @@ What each group member was responsible for designing / developing
 Orest Ropi
 - Login/Registration design and implementation. 
 - Main tasks creation, deletion, and editing. (design and implementation)
+- CSS style
 - Documentation
 
 9. A link to your project video.
