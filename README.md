@@ -6,7 +6,7 @@ A meme relevancy tracker to making sure you’re hip with the kids
 ## Group 19: Ezra W, Lorenzo L, Eva L, Alexis C
 ## DeAd MeMe HuH?
 https://group19-final.glitch.me
-youtube video link here
+https://youtu.be/efZW701TFp8
 
 ## Description of Project
 Stakeholders & Targeted Audience:
