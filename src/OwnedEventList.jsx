@@ -168,9 +168,9 @@ class OwnedEventList extends React.Component {
     async deleteEvent(eventID){
 
         const json = {
-                eventID: eventID
-            },
-            body = JSON.stringify(json);
+            eventID: eventID
+        },
+        body = JSON.stringify(json);
     
         // submit new value
         await fetch('/deleteEvent', {
@@ -236,7 +236,7 @@ class OwnedEventList extends React.Component {
                     <br/>
                     <button type="button" onClick={e => this.editEvent(event._id)}>Edit Event</button>
                     <br/>
-                    <button type="button" onclick={e => this.deleteEvent(event._id)}>Delete Event</button>
+                    <button type="button" onClick={e => this.deleteEvent(event._id)}>Delete Event</button>
                     <hr/>
                 </form>
             </>

@@ -178,7 +178,7 @@ class OwnedEventList extends React.Component {
       onClick: (e) => this.editEvent(event._id)
     }, "Edit Event"), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("button", {
       type: "button",
-      onclick: (e) => this.deleteEvent(event._id)
+      onClick: (e) => this.deleteEvent(event._id)
     }, "Delete Event"), /* @__PURE__ */ React.createElement("hr", null)))));
   }
 }
