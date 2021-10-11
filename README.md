@@ -80,8 +80,8 @@ Based on the feedback from the various students and professors, they were very a
   - Persisted user login on refresh
   - Improved accessibility by modifying components
 - Worked on backend
--   Implemented getting a user's name
--   Created functionality to change a user's password
+  - Implemented getting a user's name
+  - Created functionality to change a user's password
 - Worked on the My Account Page
   - Implemented registration and login
 
