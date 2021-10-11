@@ -1,6 +1,6 @@
 # WPI Clicker - By Group 6
 
-[WPI Clicker](https://web-ware-final.herokuapp.com/)
+[WPI Clicker](https://wpi-clicker.herokuapp.com/)
 
 ## What is WPI Clicker?
 
