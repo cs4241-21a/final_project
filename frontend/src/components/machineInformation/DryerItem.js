@@ -14,7 +14,7 @@ function getColor(value, status) {
   else if (status === "Available") return green;
   else if (status === "Offline") return black;
   else if (value === null && status === "Ready To Start") return red;
-  else if (value >= 35) return red;
+  else if (value >= 50) return red;
   else if (value >= 15) return orange;
   else if (value >= 0) return yellow;
   else if (status === "Offline") return black;
