@@ -151,7 +151,7 @@ app.post('/editEvent', bodyparser.json(), async(req, res) => {
 })
 
 app.post('/addUserAvail', bodyparser.json(), async (req, res) => {
-  let userAvailObject = {name: req.session.username, availability: req.body.attendeesAvailArray};
+  let userAvailObject = {name: req.session.username, personalLoaded: true, availability: req.body.attendeesAvailArray};
   let eventData = await EventEntry.findById(req.body.eventID)
   let availability = eventData.attendeesAvailability
 
@@ -279,7 +279,7 @@ app.post('/addToOthersPersonal', bodyparser.json(), async(req, res) => {
   await dbEntry.save()
   res.render('index')
 })
-app.post('/getavailabilityfrompersonal', async(req,res) => {
+app.post('/getavailabilityfrompersonal', bodyparser.json(), (req,res) => {
   EventEntry.findById(req.body.eventID)
     .then(dbresponse => {
       let dates = dbresponse.availableDates
@@ -301,7 +301,7 @@ app.post('/getavailabilityfrompersonal', async(req,res) => {
             startDateTime.setHours(times[dateIndex][timeIndex])
           }
 
-          let endDateTime = newDate(startDateTime.getTime() + (duration*60*60*1000))  //lol janky math
+          let endDateTime = new Date(startDateTime.getTime() + (duration*60*60*1000))  //lol janky math
 
           CalendarEntry.find({username: {$eq: req.session.username}, startDateTime: {$lt: endDateTime}, endDateTime: {$gte: startDateTime}})
             .then(dbresponse => {
@@ -313,7 +313,8 @@ app.post('/getavailabilityfrompersonal', async(req,res) => {
       }
       let newAvObj = {
         name: req.session.username,
-        availability: availabilityArray
+        availability: availabilityArray,
+        personalLoaded: false,
       }
       attAv.push(newAvObj)
       EventEntry.findByIdAndUpdate(req.body.eventID, {attendeesAvailability: attAv})

@@ -3,8 +3,8 @@ import AvailabilitySchedule from "./AvailabilitySchedule";
 
 class PendingEventList extends React.Component {
     
-    load() {
-        fetch('/pendingEvents', {
+    async load() {
+        await fetch('/pendingEvents', {
             headers: {
                 'Cache-Control': 'no-cache'
             }

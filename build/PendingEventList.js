@@ -1,8 +1,8 @@
 import React from "./_snowpack/pkg/react.js";
 import AvailabilitySchedule from "./AvailabilitySchedule.js";
 class PendingEventList extends React.Component {
-  load() {
-    fetch("/pendingEvents", {
+  async load() {
+    await fetch("/pendingEvents", {
       headers: {
         "Cache-Control": "no-cache"
       }
