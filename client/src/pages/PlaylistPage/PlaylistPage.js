@@ -11,7 +11,12 @@ export default class PlaylistPage extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;
-    this.state = { songs: null, songCount: 0, playlistDuration: 0, loading: true };
+    this.state = {
+      songs: this.getPlaylistHTML(true),
+      songCount: 0,
+      playlistDuration: 0,
+      loading: true
+    };
   }
 
   componentDidMount() {
@@ -96,7 +101,7 @@ export default class PlaylistPage extends React.Component {
 
   togglePlay = async (uri) => {
     await SpotifyWebPlayerService.togglePlay(uri);
-    this.setState({ songs: this.getPlaylistHTML() });
+    this.setState({ songs: this.getPlaylistHTML(false) });
   }
 
   deleteSong = async (id, uri) => {
@@ -105,20 +110,31 @@ export default class PlaylistPage extends React.Component {
     this.updateState();
   }
 
-  getPlaylistHTML = () => {
-    return this.playlist.songs.map((song, i) =>
-      <Song
-        key={ song.id }
-        index={ i }
-        song={ song }
-        playing={ SpotifyWebPlayerService.currentTrackURI === song.uri && SpotifyWebPlayerService.playerState === PlayerState.PLAYING }
-        playSongHandler={ this.togglePlay }
-        deleteSongHandler={ (uri) => this.deleteSong(this.playlist.id, uri) } />);
+  getPlaylistHTML = (loading) => {
+    if (!loading) {
+      return this.playlist.songs.map((song, i) =>
+        <Song
+          key={ song.id }
+          index={ i }
+          song={ song }
+          playing={ SpotifyWebPlayerService.currentTrackURI === song.uri && SpotifyWebPlayerService.playerState === PlayerState.PLAYING }
+          loading={ false }
+          playSongHandler={ this.togglePlay }
+          deleteSongHandler={ (uri) => this.deleteSong(this.playlist.id, uri) } />);
+    } else {
+      return dummyPlaylist.songs.map((song, i) =>
+        <Song
+          key={ song.id }
+          index={ i }
+          song={ song }
+          playing={ false }
+          loading={ true } />);
+    }
   }
 
   updateState = () => {
     this.setState({
-      songs: this.getPlaylistHTML(),
+      songs: this.getPlaylistHTML(false),
       songCount: this.playlist.songs.length,
       playlistDuration: this.playlist.songs.reduce((duration, song) => duration + song.duration_ms, 0),
       loading: false
@@ -127,7 +143,7 @@ export default class PlaylistPage extends React.Component {
 
   nullifyState = () => {
     this.setState({
-      songs: null,
+      songs: this.getPlaylistHTML(true),
       songCount: 0,
       playlistDuration: 0,
       loading: true
@@ -140,4 +156,27 @@ const getDuration = (ms) => {
   const minutes = seconds / 60;
   const hours = Math.floor(minutes / 60);
   return (hours > 0 ? `${hours} hour${hours > 1 ? 's' : ''}, ` : '') + `${ Math.round(minutes % 60) } minutes`
+}
+
+const getRandomString = (size) => {
+  let string = '';
+  for (let i = 0; i < Math.round(Math.random() * size) + size; i++) {
+    string += 'a';
+  }
+  return string;
+}
+
+const getDummySong = (id) => {
+  return {
+    id: id,
+    album_image_url: null,
+    name: `${getRandomString(8)} (feat. ${getRandomString(7)})`,
+    artists: [getRandomString(7), getRandomString(7)],
+    duration_ms: 99999,
+    popularity: 75
+  }
+}
+
+const dummyPlaylist = {
+  songs: Array.from({ length: 20 }, (v, i) => getDummySong(i))
 }
