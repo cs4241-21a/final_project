@@ -28,7 +28,7 @@ export default class PlaylistPage extends React.Component {
               <div className="details__title">Hip Hop Party Playlist</div>
               <div className="details__subtitle">{this.state.songCount} songs • { getDuration(this.state.playlistDuration) }</div>
             </div>
-            <button>Add to Spotify</button>
+            <button onClick={ () => window.open(this.playlist.href, '_blank') }>View on Spotify</button>
           </div>
 
           <div className="playlist-page__song-fields">
@@ -92,7 +92,7 @@ export default class PlaylistPage extends React.Component {
 
 const getDuration = (ms) => {
   const seconds = ms / 1000;
-  const minutes = Math.round(seconds / 60 % 60);
+  const minutes = seconds / 60;
   const hours = Math.floor(minutes / 60);
-  return hours > 0 ? `${hours} hours, ` : '' + `${minutes} minutes`
+  return (hours > 0 ? `${hours} hours, ` : '') + `${ Math.round(minutes % 60) } minutes`
 }
