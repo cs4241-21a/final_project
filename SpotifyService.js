@@ -95,10 +95,17 @@ export default (new class SpotifyService {
 
     // retrieves playlists with song data
     getPlaylist = async (id) => {
+        console.log(`Retrieving playlist ${id}...`);
+
         const params = {
            fields: 'id,href,items(track(name,popularity,track_number,uri,id,duration_ms,artists(name),album(images)))'
         }
         const playlist = await this.request('GET', `${this.APIPath}/playlists/${id}/tracks?${this.encodeURL(params)}`).catch(console.error);
+        if (playlist.error) {
+            console.log(`Playlist doesn't exist!`);
+            return null;
+        }
+
         const songs = playlist.items.map(i => i.track);
         songs.forEach(t => {
            t.artists = t.artists.map(a => a.name);

@@ -75,7 +75,11 @@ export default class PlaylistPage extends React.Component {
 
   getPlaylist = async (id) => {
     const response = await fetch(`/api/playlist/${id}`);
-    return await response.json();
+    if (response.ok) {
+      return await response.json();
+    } else {
+      return this.generatePlaylist(this.props.genre);
+    }
   }
 
   togglePlay = async (uri) => {
