@@ -45,7 +45,12 @@ server.get('/api/playlist/generate', async (req, res) => {
 
 // get existing playlist
 server.get('/api/playlist/:id', async (req, res) => {
-    res.json(await SpotifyService.getPlaylist(req.params.id));
+    const playlist = await SpotifyService.getPlaylist(req.params.id);
+    if (playlist) {
+        res.json(playlist);
+    } else {
+        res.status(404);
+    }
 });
 
 // delete song from playlist

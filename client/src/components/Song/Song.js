@@ -30,7 +30,11 @@ export default function Song(props) {
                       <FlameIcon /> Trending
                   </div> }
               </div>
-              <button className="song__button" aria-label="Remove song"><RemoveIcon /></button>
+              <button
+                className="song__button"
+                aria-label="Remove song"
+                onClick={ () => props.deleteSongHandler(props.song.uri) }>
+                <RemoveIcon /></button>
           </div>
       </div>
   );
