@@ -55,7 +55,10 @@
 
     <div id="attribute">
       <h5>Your attribute ↓</h5>
-      <div id="myChart"></div>
+      <div id="myChart"></div><hr>
+
+      <h5>Your Pie Chart Outcome ↓</h5>
+      <div id="myChart2"></div>
     </div>
     </div>
 
@@ -90,12 +93,13 @@
       })
       .then(response => response.json())
       .then(attribute =>{
-        drawChart(attribute.adventure, attribute.love, attribute.suspense, attribute.sol, attribute.fantasy);
+        drawRadarChart(attribute.adventure, attribute.love, attribute.suspense, attribute.sol, attribute.fantasy);
+        drawPieChart(attribute.adventure, attribute.love, attribute.suspense, attribute.sol, attribute.fantasy);
       })
       
     }
 
-    function drawChart(adventure, love, suspense, sol, fantasy){
+    function drawRadarChart(adventure, love, suspense, sol, fantasy){
       var myConfig = {
         type: 'radar',
         plot: {
@@ -146,6 +150,78 @@
       zingchart.render({
         id: 'myChart',
         data: myConfig,
+      });
+    }
+
+    function drawPieChart(adventure, love, suspense, sol, fantasy){
+      let total = adventure + love + suspense + sol + fantasy;
+
+      let adventure_percent = adventure/total * 100;
+      let love_percent = love/total * 100;
+      let suspense_percent = suspense/total * 100;
+      let sol_percent = sol/total * 100;
+      let fantasy_percent = fantasy/total * 100;
+
+      var myConfig2 = {
+        type: "pie",
+        plot: {
+          borderColor: "#2B313B",
+          borderWidth: 5,
+          // slice: 90,
+          valueBox: {
+            placement: 'out',
+            text: '%t\n%npv%',
+            fontFamily: "Open Sans"
+          },
+          tooltip: {
+            fontSize: '18',
+            fontFamily: "Open Sans",
+            padding: "5 10",
+            text: "%npv%"
+          },
+          animation: {
+            effect: 2,
+            method: 5,
+            speed: 900,
+            sequence: 1,
+            delay: 3000
+          }
+        },
+        plotarea: {
+          margin: "20 0 0 0"
+        },
+        series: [{
+            values: [adventure_percent],
+            text: "Adventure",
+            backgroundColor: '#50ADF5',
+        },
+          {
+            values: [love_percent],
+            text: "Love",
+            backgroundColor: '#FF7965',
+            detached: true
+          },
+          {
+            values: [suspense_percent],
+            text: 'Suspense',
+            backgroundColor: '#6877e5',
+            detached: true
+          },
+          {
+            text: 'Slice of Life',
+            values: [sol_percent],
+            backgroundColor: '#FFCB45'
+          },
+          {
+            text: 'Fantasy',
+            values: [fantasy_percent],
+            backgroundColor: '#6FB07F'
+          }]
+      };
+
+      zingchart.render({
+        id: 'myChart2',
+        data: myConfig2
       });
     }
 
