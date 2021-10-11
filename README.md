@@ -2,7 +2,7 @@
 
 ### Yihong Xu
 
-[https://a5-gp2p.glitch.me/](https://a5-gp2p.glitch.me/)
+[https://final-gp2p.glitch.me/](https://final-gp2p.glitch.me/)
 
 This is an iterated version of my A3 project which is an online expense tracker for users that want the least disturbing and more peace of mind.
 
