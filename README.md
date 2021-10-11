@@ -1,28 +1,21 @@
+We created an application that allows users to login and register to a website. The user then will be redirected to a welcome page where they can create,delete, and edit tasks and subtasks to track items they need to keep track of in their life.
 
-
-Deploy your app, in the form of a webpage, to Glitch/Heroku/Digital Ocean or some other service; it is critical that the application functions correctly wherever you post it.
-
-The README for your second pull request doesn’t need to be a formal report, but it should contain:
-
-
-We created an application that allows users to login and register to a website. The user then will be redirected to a welcome page where they can create,delete, and edit tasks and subtasks.
-
-You can register for an account and the website will automaticlly log you in. Username must be at least 3 charachters long and password must be at leat
+You can register for an account and the website will automaticlly log you in. Username must be at least 3 charachters long and password must be at leat 6 characters long
 
 Technologies
 - cookies
 - mongoDB
 - @hapi/joi (login validation)
-- mangoose
+- mongoose
 - Javascript
 - EJS
 - HTML
 - CSS
 
 What challenges you faced in completing the project.
--Some JS bugs when rendering
--Making sure subtasks were linked with there parent
--Visualization of subtasks
+-Some JS bugs when rendering items on page which we did not have time to identify the cause of and fix
+-Making sure subtasks were linked with their parent. Some minor mistakes early on when initially setting up the project caused serious complications for implementing subtasks, as these seemingly innocent decisions made tracking which item we were working on exceedingly difficult.
+-Visualization of subtasks. Displaying the subtasks as visually distinct from the main tasks was harder than expected and as a result we did not have time to implement this change
 -When clicking anywhere on a main task, even the Create Subtask button, it will hide/show existing subtasks. Clicking create subtask when there is exactly 1 subtask looks like the one subtask is being replaced. It's not, one is being hidden while another is created.
 
 What each group member was responsible for designing / developing
@@ -32,6 +25,17 @@ Orest Ropi
 - Main tasks creation, deletion, and editing. (design and implementation)
 - CSS style
 - Documentation
+
+Keval Ashara
+- Intial project setup
+- Setup key technologies used in the project
+- Helped implement subtasks
+
+Daniel Stusalitus
+- Implemented subtasks
+- Updated existing code to work with subtasks
+- Fixed bugs/testing
+- Created database
 
 9. A link to your project video.
 
