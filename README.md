@@ -26,6 +26,7 @@ Nicholas Markou, Kiara Munz, Liam Rathke
 
 <ins>README Report</ins><br>
 Written by Ben Gelinas
+Edited by Kiara Munz
 
 <ins>Page Styling</ins><br>
 Adam Grabowski
