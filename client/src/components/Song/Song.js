@@ -8,7 +8,7 @@ export default function Song(props) {
       <div className="song">
           <div className="song__left">
               <div className="song__index">
-                  <span>{ props.index }</span>
+                  <span>{ props.index + 1 }</span>
                   <button
                     className="song__button"
                     aria-label="Play song"
@@ -19,8 +19,8 @@ export default function Song(props) {
               </div>
               <div className="song__image" />
               <div className="song__details">
-                  <div className="song__title">{ props.song.title }</div>
-                  <div className="song__author">{ props.song.author }</div>
+                  <div className="song__title">{ props.song.name }</div>
+                  <div className="song__author">{ props.song.artists.join(', ') }</div>
               </div>
           </div>
           <div className="song__middle">{ getDuration(props.song.duration_ms) }</div>

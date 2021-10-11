@@ -12,9 +12,8 @@ class App extends Component {
             <Header />
             <div className="page">
                 <Switch>
-                    <Route path="/playlist/:genre">
-                        <PlaylistPage />
-                    </Route>
+                    <Route path="/playlist/:genre"
+                           render={ (props) => <PlaylistPage genre={ props.match.params.genre } /> } />
                     <Route path="/">
                         <HomePage />
                     </Route>

@@ -5,14 +5,15 @@ import SpotifyWebPlayerService, { PlayerState } from "../../services/SpotifyWebP
 
 export default class PlaylistPage extends React.Component {
     spotifyWebPlayerService = new SpotifyWebPlayerService();
-    state;
+    playlist;
+    props;
 
     constructor(props) {
       super(props);
-      this.state = {
-        currentTrackURI: this.spotifyWebPlayerService.currentTrackURI,
-        playerState: this.spotifyWebPlayerService.playerState,
-      }
+      this.props = props;
+      this.state = { songs: null };
+      const id = window.sessionStorage.getItem(`${props.genre} playlist id`);
+      this.retrievePlaylist(id).then();
     }
 
     render() {
@@ -43,16 +44,7 @@ export default class PlaylistPage extends React.Component {
           </div>
 
           <div className="playlist-page__songs">
-            <Song
-              index={ 1 }
-              song={ { title: 'BOP', 'author': 'DaBaby', 'duration_ms': 207959, popularity: 51, uri: 'spotify:track:6Ozh9Ok6h4Oi1wUSLtBseN' } }
-              playing={ this.spotifyWebPlayerService.currentTrackURI === 'spotify:track:6Ozh9Ok6h4Oi1wUSLtBseN' && this.spotifyWebPlayerService.playerState === PlayerState.PLAYING }
-              playSongHandler={ this.togglePlay } />
-            <Song
-              index={ 2 }
-              song={ { title: 'Shivers', 'author': 'Ed Sheeran', 'duration_ms': 258384, popularity: 42, uri: 'spotify:track:75MNhvTCCKsST3YqqUiU9r' } }
-              playing={ this.spotifyWebPlayerService.currentTrackURI === 'spotify:track:75MNhvTCCKsST3YqqUiU9r' && this.spotifyWebPlayerService.playerState === PlayerState.PLAYING }
-              playSongHandler={ this.togglePlay } />
+            { this.state.songs }
           </div>
         </div>
       );
@@ -60,10 +52,37 @@ export default class PlaylistPage extends React.Component {
 
     togglePlay = async (uri) => {
       await this.spotifyWebPlayerService.togglePlay(uri);
-      this.setState({
-        currentTrackURI: this.spotifyWebPlayerService.currentTrackURI,
-        playerState: this.spotifyWebPlayerService.playerState,
-      });
+      this.setState({ songs: this.getPlaylistHTML() });
+    }
+
+    generatePlaylist = async (genre) => {
+      const response = await fetch(`/api/playlist/generate?genre=${genre}`);
+      return await response.json();
+    }
+
+    getPlaylist = async (id) => {
+      const response = await fetch(`/api/playlist/${id}`);
+      return await response.json();
+    }
+
+    retrievePlaylist = async (id) => {
+      if (id) {
+        this.playlist = await this.getPlaylist(id);
+      } else {
+        this.playlist = await this.generatePlaylist(this.props.genre);
+        window.sessionStorage.setItem(`${this.props.genre} playlist id`, this.playlist.id);
+      }
+      this.setState({ songs: this.getPlaylistHTML() });
+    }
+
+    getPlaylistHTML = () => {
+      return this.playlist.songs.map((song, i) =>
+        <Song
+          key={ song.id }
+          index={ i }
+          song={ song }
+          playing={ this.spotifyWebPlayerService.currentTrackURI === song.uri && this.spotifyWebPlayerService.playerState === PlayerState.PLAYING }
+          playSongHandler={ this.togglePlay } />);
     }
 }
 

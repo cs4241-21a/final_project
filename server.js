@@ -43,10 +43,15 @@ server.get('/api/playlist/generate', async (req, res) => {
     res.json(await SpotifyService.generatePlaylist(req.query.genre));
 });
 
+// get existing playlist
+server.get('/api/playlist/:id', async (req, res) => {
+    res.json(await SpotifyService.getPlaylist(req.params.id));
+});
+
 // delete song from playlist
 server.delete('/api/playlist/:id', async (req, res) => {
     await SpotifyService.deleteSongsFromPlaylist(req.params.id, [req.query.uri]);
-    res.json(await SpotifyService.getSongsFromPlaylist(req.params.id));
+    res.json(await SpotifyService.getPlaylist(req.params.id));
 });
 
 // CLIENT ROUTES

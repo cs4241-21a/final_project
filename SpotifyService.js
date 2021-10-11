@@ -93,19 +93,23 @@ export default (new class SpotifyService {
         }).catch(console.error);
     }
 
-    // retrieves song data from a specified playlist
-    getSongsFromPlaylist = async (id) => {
+    // retrieves playlists with song data
+    getPlaylist = async (id) => {
         const params = {
-           fields: 'items(track(name,popularity,track_number,uri,id,duration_ms,artists(name),album(images)))'
+           fields: 'id,href,items(track(name,popularity,track_number,uri,id,duration_ms,artists(name),album(images)))'
         }
-        let response = await this.request('GET', `${this.APIPath}/playlists/${id}/tracks?${this.encodeURL(params)}`).catch(console.error);
-        response = response.items.map(i => i.track);
-        response.forEach(t => {
+        const playlist = await this.request('GET', `${this.APIPath}/playlists/${id}/tracks?${this.encodeURL(params)}`).catch(console.error);
+        const songs = playlist.items.map(i => i.track);
+        songs.forEach(t => {
            t.artists = t.artists.map(a => a.name);
-           t.album_url = t.album.images.find(i => i.height === 64).url;
+           t.album_image_url = t.album.images.find(i => i.height === 64).url;
            delete t.album;
         });
-        return response;
+        return {
+            id,
+            href: `https://open.spotify.com/playlist/${id}`,
+            songs
+        };
     }
 
     generatePlaylist = async (genre) => {
@@ -113,7 +117,7 @@ export default (new class SpotifyService {
 
         const id = await this.createPlaylist('Bopify Playlist', '');
         await this.addSongsToPlaylist(id, ['spotify:track:6TUf1Vw59k1f7r9X8GzYdI', 'spotify:track:4HTY26kzdGCKJF1EqcRd2J']);
-        return await this.getSongsFromPlaylist(id);
+        return await this.getPlaylist(id);
     }
 
     // get available genre seeds (not sure if we will need this)
