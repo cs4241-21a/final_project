@@ -20,22 +20,24 @@ console.log("hello world :o");
   const row_ID_map = new Map()
   
   
-  function edit_row(no)
+  function edit_row(id)
   {
+    var row = document.getElementById(id)
       if(!isUserEditing){
-   document.getElementById("edit_button"+no).style.display="none";
-   document.getElementById("save_button"+no).style.display="block";
+   row.getElementsByClassName("edit")[0].style.display="none";
+   row.getElementsByClassName("save")[0].style.display="block";
       
-   var task=document.getElementById("task_row"+no);
-   var date=document.getElementById("date_row"+no);
-   var check=document.getElementById("edit_checkbox"+no).checked;
+
+      var task=row.cells[0];
+      var date=row.cells[1];
+      var check=row.cells[3].textContent;
       
    var task_data=task.innerHTML;
    var date_data=date.innerHTML;
 
       
-   task.innerHTML="<input type='text' id='task_text"+no+"' value='"+task_data+"'>";
-   date.innerHTML="<input type='text' id='due_text"+no+"' value='"+date_data+"'>";
+   task.innerHTML="<input type='text' id='task_text"+id+"' value='"+task_data+"'>";
+   date.innerHTML="<input type='text' id='due_text"+id+"' value='"+date_data+"'>";
 //    check.innerHTML="<input type='checkbox' id='check_text"+no+"' checked="+check+">";
    taskEditing = task_data;
    dateEditing = date_data;
@@ -50,22 +52,24 @@ console.log("hello world :o");
   
   
   
-  function save_row(no)
+  function save_row(id)
   {
-    console.log(document.getElementById("task_row"+no))
-    console.log(document.getElementById("task_text"+no))
+    var row = document.getElementById(id)
+
+    // console.log(document.getElementById("task_row"+no))
+    // console.log(document.getElementById("task_text"+no))
     console.log(taskEditing)
 
-   var task_val=document.getElementById("task_text"+no).value;
-   var due_val=document.getElementById("due_text"+no).value;
-   var checked_bool=document.getElementById("edit_checkbox"+no).checked;
+   var task_val=document.getElementById("task_text"+id).value;
+   var due_val=document.getElementById("due_text"+id).value;
+   var checked_bool=row.cells[3].checked;
   
-   document.getElementById("task_row"+no).innerHTML=task_val;
-   document.getElementById("date_row"+no).innerHTML=due_val;
-   document.getElementById("edit_checkbox"+no).checked=checked_bool;
+   row.cells[0].innerHTML=task_val;
+   row.cells[1].innerHTML=due_val;
+   row.cells[3].checked=checked_bool;
   
-   document.getElementById("edit_button"+no).style.display="block";
-   document.getElementById("save_button"+no).style.display="none";
+   row.getElementsByClassName("edit")[0].style.display="block";
+   row.getElementsByClassName("save")[0].style.display="none";
   
    json = { username: '', task: task_val, date: due_val, check: checked_bool, taskEditing: taskEditing, dateEditing: dateEditing, checkEditing: checkEditing},
          body = JSON.stringify(json);
@@ -143,7 +147,9 @@ console.log("hello world :o");
           })
           .then(res => res.json()) // parse the JSON from the server
           .then(data => {
-                var row = table.insertRow(table_len).outerHTML="<tr id='row"+table_len+"'" + 'class="parent" id="row123" title="Click to expand/collapse" style="cursor: pointer;"'+"><td colspan=2 id='task_row"+table_len+"'>"+new_task+"</td><td colspan=2 id='date_row"+table_len+"'>"+new_date+"</td><td colspan=2><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit' onclick='edit_row("+table_len+")'> <input type='button' id='save_button"+table_len+"' value='Save' class='save' onclick='save_row("+table_len+")'> <input type='button' id='createsubtask_button"+table_len+"' value='Create Subtask' class='create' onclick='create_sub("+table_len+")'><input type='button' value='X' class='delete'" + ' onclick="delete_row(' + "'row"+table_len+"')" + '"' + "></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+table_len+"' class='check' onclick=check_box('"+table_len+"')> </td></tr>";
+                var row = table.insertRow(table_len).outerHTML="<tr id='row"+table_len+"'" + 'class="parent" title="Click to expand/collapse" style="cursor: pointer;"'+"><td colspan=2 id='task_row"+table_len+"'>"+new_task+"</td><td colspan=2 id='date_row"+table_len+"'>"+new_date+"</td><td colspan=2><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit'"+' onclick="edit_row('+"'row"+table_len+
+            "')"+'"'+"> <input type='button' id='save_button"+table_len+"' value='Save' class='save'"+' onclick="save_row('+"'row"+table_len+
+            "')"+'"'+"> <input type='button' id='createsubtask_button"+table_len+"' value='Create Subtask' class='create' onclick='create_sub("+table_len+")'><input type='button' value='X' class='delete'" + ' onclick="delete_row(' + "'row"+table_len+"')" + '"' + "></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+table_len+"' class='check' onclick=check_box('"+table_len+"')> </td></tr>";
                 row_ID_map.set("'row"+table_len+"'", data._id)
                 row_ID_map.set( data._id, "'row"+table_len+"'")
             });
@@ -161,10 +167,10 @@ console.log("hello world :o");
    "<tr id='row"+table_len+"'" + 'class="parent" title="Click to expand/collapse" style="cursor: pointer;"' + "><td colspan=2 id='task_row"+table_len+"'>"+task+
     "</td><td colspan=2 id='date_row"+table_len+"'>"+due+
         "</td><td colspan=2><input type='button' id='edit_button"+table_len+
-            "' value='Edit' class='edit' onclick='edit_row("+table_len+
-            ")'> <input type='button' id='save_button"+table_len+
-            "' value='Save' class='save' onclick='save_row("+table_len+
-            ")'> <input type='button' id='createsubtask_button"+table_len+
+            "' value='Edit' class='edit'"+' onclick="edit_row('+"'row"+table_len+
+            "')"+'"'+"> <input type='button' id='save_button"+table_len+
+            "' value='Save' class='save'"+' onclick="save_row('+"'row"+table_len+
+            "')"+'"'+"> <input type='button' id='createsubtask_button"+table_len+
             "' value='Create Subtask' class='create' onclick='create_sub("+table_len+
             ")'><input type='button' value='X' class='delete'" + ' onclick="delete_row(' + "'row"+table_len+
             "')" + '"' + "></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+table_len+"' class='check' "
@@ -203,10 +209,10 @@ console.log("hello world :o");
             table.insertRow(noParent+1+oldChildren).outerHTML = "<tr id='child-row"+noParent+"-"+oldChildren + "'" +"class='child-row"+noParent+"' style='display: table-row'><td colspan=2 id='task_row"+noParent+"'>"+new_task+
     "</td><td colspan=2 id='date_row"+noParent+"'>"+new_date+
         "</td><td colspan=2><input type='button' id='edit_button"+noParent+
-            "' value='Edit' class='edit' onclick='edit_row("+noParent+
-            ")'> <input type='button' id='save_button"+noParent+
-            "' value='Save' class='save' onclick='save_row("+noParent+
-            ")'> <input type='button' id='createsubtask_button"+noParent+
+            "' value='Edit' class='edit'"+' onclick="edit_row('+"'child-row"+noParent+"-"+oldChildren+
+            "')"+'"'+"> <input type='button' id='save_button"+noParent+
+            "' value='Save' class='save'"+' onclick="save_row('+"'child-row"+noParent+"-"+oldChildren+
+            "')"+'"'+"> <input type='button' id='createsubtask_button"+noParent+
             "' value='Create Subtask' class='create' onclick='create_sub("+noParent+
             ")'><input type='button' value='X' class='delete'" + ' onclick="delete_row(' + "'child-row"+noParent+"-"+oldChildren+
             "')" + '"' + "></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+noParent+"' class='check' "
@@ -241,10 +247,10 @@ console.log("hello world :o");
     table.insertRow(noParent+1+oldChildren).outerHTML = "<tr id='child-row"+noParent+"-"+oldChildren + "'" + "class='child-row"+noParent+"' style='display: table-row'><td colspan=2 id='task_row"+noParent+"'>"+task+
     "</td><td colspan=2 id='date_row"+noParent+"'>"+due+
         "</td><td colspan=2><input type='button' id='edit_button"+noParent+
-            "' value='Edit' class='edit' onclick='edit_row("+noParent+
-            ")'> <input type='button' id='save_button"+noParent+
-            "' value='Save' class='save' onclick='save_row("+noParent+
-            ")'> <input type='button' id='createsubtask_button"+noParent+
+            "' value='Edit' class='edit'"+' onclick="edit_row('+"'child-row"+noParent+"-"+oldChildren+
+            "')"+'"'+"> <input type='button' id='save_button"+noParent+
+            "' value='Save' class='save'"+' onclick="save_row('+"'child-row"+noParent+"-"+oldChildren+
+            "')"+'"'+"> <input type='button' id='createsubtask_button"+noParent+
             "' value='Create Subtask' class='create' onclick='create_sub('child-row"+noParent+
             "')'><input type='button' value='X' class='delete'" + ' onclick="delete_row(' + "'child-row"+noParent+"-"+oldChildren+
             "')" + '"' + "></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+noParent+"' class='check' "
@@ -289,6 +295,10 @@ console.log("hello world :o");
 	                .click(function () {  
 	                    $(this).siblings('.child-' + this.id).toggle();  
 	                });  
+                // $("#plusminus")
+                // .click(function () {  
+                //     $(this).siblings('.child-' + this.id).toggle();  
+                // }); 
 	            //$('*[@class^="child-"]').hide().children('td');  
 	} 
 
