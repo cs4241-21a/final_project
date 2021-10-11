@@ -9,7 +9,7 @@ const dir = `${path.resolve()}/client/build`;
 
 // SERVER
 const server = express();
-server.listen(port);
+server.listen(process.env.PORT || port);
 server.use(express.static(dir)); // server static client build files
 
 // DEV ROUTES
