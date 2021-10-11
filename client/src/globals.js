@@ -9,14 +9,14 @@ export const Genres = {
     label: 'Hard Rock',
     color: '#09CE9F'
   },
-  'electronic': {
-    id: 'electronic',
-    label: 'Techno',
+  'edm': {
+    id: 'edm',
+    label: 'EDM',
     color: '#096FCE'
   },
-  'club': {
-    id: 'club',
-    label: 'Club',
+  'pop': {
+    id: 'pop',
+    label: 'Pop',
     color: '#CA09CE'
   }
 }
