@@ -125,7 +125,7 @@ function AccordianItem(props) {
         expanded={props.expanded === "panel" + props.index}
         onChange={props.handleChange("panel" + props.index)}
       >
-        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+        <AccordionSummary>
           <Grid container direction={"row"} spacing={2}>
             <Grid item xs={3} sm={3}>
               <Typography>{props.item.humanname}</Typography>{" "}

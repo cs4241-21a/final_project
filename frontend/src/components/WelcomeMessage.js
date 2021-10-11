@@ -52,7 +52,7 @@ function WelcomeMessage(props) {
         <Typography variant="h4">
           <b>Welcome to LaundryConnect 2.0! </b>
         </Typography>
-        <Typography variant="h6">
+        <Typography variant="h5">
           Because Laundry Connect sucks at web design, and WPI deserves a better
           how-busy-is-the-laundry-room experience.
         </Typography>
@@ -60,39 +60,49 @@ function WelcomeMessage(props) {
         <Card sx={{ boxShadow: 3 }}>
           <List>
             <div style={{ display: "inline-flex" }}>
-              <ListItem>
-                <CircleIcon fontSize="small" style={{ color: "#90ee90" }} />
-                &nbsp;
-                <Typography>Available</Typography>
-              </ListItem>
+              <List>
+                <ListItem>
+                  <CircleIcon fontSize="small" style={{ color: "#90ee90" }} />
+                  &nbsp;
+                  <Typography>Available</Typography>
+                </ListItem>
+              </List>
             </div>
             <div style={{ display: "inline-flex" }}>
-              <ListItem>
-                <CircleIcon fontSize="small" style={{ color: "#fdec96" }} />
-                &nbsp;
-                <Typography>Almost Done</Typography>
-              </ListItem>
+              <List>
+                <ListItem>
+                  <CircleIcon fontSize="small" style={{ color: "#fdec96" }} />
+                  &nbsp;
+                  <Typography>Almost Done</Typography>
+                </ListItem>
+              </List>
             </div>
             <div style={{ display: "inline-flex" }}>
-              <ListItem>
-                <CircleIcon fontSize="small" style={{ color: "#fdb996" }} />
-                &nbsp;
-                <Typography>In Use</Typography>
-              </ListItem>
+              <List>
+                <ListItem>
+                  <CircleIcon fontSize="small" style={{ color: "#fdb996" }} />
+                  &nbsp;
+                  <Typography>In Use</Typography>
+                </ListItem>
+              </List>
             </div>
             <div style={{ display: "inline-flex" }}>
-              <ListItem>
-                <CircleIcon fontSize="small" style={{ color: "#fc647d" }} />
-                &nbsp;
-                <Typography>Just Started</Typography>
-              </ListItem>
+              <List>
+                <ListItem>
+                  <CircleIcon fontSize="small" style={{ color: "#fc647d" }} />
+                  &nbsp;
+                  <Typography>Just Started</Typography>
+                </ListItem>
+              </List>
             </div>
             <div style={{ display: "inline-flex" }}>
-              <ListItem>
-                <CircleIcon fontSize="small" style={{ color: "#000000" }} />
-                &nbsp;
-                <Typography>Out of Order</Typography>
-              </ListItem>
+              <List>
+                <ListItem>
+                  <CircleIcon fontSize="small" style={{ color: "#000000" }} />
+                  &nbsp;
+                  <Typography>Out of Order</Typography>
+                </ListItem>
+              </List>
             </div>
           </List>
         </Card>
