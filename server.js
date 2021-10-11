@@ -208,6 +208,20 @@ app.post('/addpersonal', async(req, res) => {
   res.render('index')
 })
 
+
+app.post('/addToOthersPersonal', bodyparser.json(), async(req, res) => {
+  let dbEntry = new CalendarEntry({
+    username: req.body.attendeeName,
+    eventName: req.body.eventName,
+    recurring: false,
+    startDateTime: new Date(req.body.startDateTime),
+    endDateTime: new Date(req.body.endDateTime),
+    location: req.body.location,
+    description: req.body.description
+  })
+  await dbEntry.save()
+  res.render('index')
+})
 app.post('/getavailabilityfrompersonal', async(req,res) => {
   EventEntry.findById(req.body.eventID)
     .then(dbresponse => {

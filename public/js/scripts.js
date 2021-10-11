@@ -107,10 +107,13 @@ const createFile = function(event) {
     let eventDate = null;
 
     if ((event.chosenStartTime + event.meetingDuration) % 1 == .5) {
+        let endDate = new Date(event.chosenEventDate)
+        endDate.setHours((event.chosenStartTime + event.meetingDuration - .5), 30).toString()
         eventDate = {
+
             start: convertDate(event.chosenEventDate),
             //end: convertDate(event.chosenEventDate)
-            end: convertDate(event.chosenEventDate).setHours((event.chosenStartTime + event.meetingDuration - .5), 30)
+            end: convertDate(endDate)
             //end: new Date(dateHolder.setHours((event.chosenStartTime + event.duration - .5), 30))
             //end: event.chosenEventDate.setHours((event.chosenStartTime + event.duration - .5), 30)
         }
