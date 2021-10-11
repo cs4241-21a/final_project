@@ -29,7 +29,9 @@ export default createStore({
       return user
     },
     scores(state) {
-      return state.scores
+      return state.scores.sort((a, b) => {
+        return b.score - a.score
+      })
     },
     scorePerTick(state) {
       return state.scorePerTick;
