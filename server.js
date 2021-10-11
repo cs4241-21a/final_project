@@ -133,6 +133,13 @@ app.post('/addUserAvail', bodyparser.json(), async (req, res) => {
       })
 })
 
+app.post('/deleteEvent', bodyparser.json(), async(req, res) =>{
+  EventEntry.findByIdAndDelete(req.body.eventID)
+      .then(result =>{
+        //console.log(result)
+      })
+})
+
 
 app.post('/createEvent', bodyparser.json(), async (req,res) => {
   console.log(req.body);
