@@ -73,6 +73,7 @@
                                 <v-text-field
                                   label="Your Email Address here"
                                   v-model="targetEmailAdress"
+                                  :rules="emailRules"
                                   required
                                 ></v-text-field>
                               </v-col>
@@ -143,6 +144,9 @@
       userMessage: "",
       targetEmailAdress: "",
       count: 0,
+      emailRules: [ 
+        v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+      ],
       teamMembers:[
         'Yang Lyu  jimmylyuyang@outlook.com',
         'Yonghua Wang',
