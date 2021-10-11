@@ -16,7 +16,7 @@ What challenges you faced in completing the project.
 -Some JS bugs when rendering items on page which we did not have time to identify the cause of and fix
 -Making sure subtasks were linked with their parent. Some minor mistakes early on when initially setting up the project caused serious complications for implementing subtasks, as these seemingly innocent decisions made tracking which item we were working on exceedingly difficult.
 -Visualization of subtasks. Displaying the subtasks as visually distinct from the main tasks was harder than expected and as a result we did not have time to implement this change
--When clicking anywhere on a main task, even the Create Subtask button, it will hide/show existing subtasks. Clicking create subtask when there is exactly 1 subtask looks like the one subtask is being replaced. It's not, one is being hidden while another is created.
+-**When clicking anywhere on a main task, even the Create Subtask button, it will hide/show existing subtasks. Clicking create subtask when there is exactly 1 subtask looks like the one subtask is being replaced. It's not. The one subtask is being hidden while another is being created.**
 
 What each group member was responsible for designing / developing
 
@@ -37,7 +37,8 @@ Daniel Stusalitus
 - Fixed bugs/testing
 - Created database
 
-9. A link to your project video.
+**Link to Project Video**
+https://youtu.be/gQYvom4qQxo
 
 **Design Acievements**
 Design Achievement 1: (5 points) How site use CRAP principles in the Non-Designer's Design Book readings
