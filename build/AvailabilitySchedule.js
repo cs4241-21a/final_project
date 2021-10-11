@@ -1,6 +1,20 @@
 import React from "./_snowpack/pkg/react.js";
 import ScheduleSelector from "./react-schedule-selector/src/lib/index.js";
 class AvailabilitySchedule extends React.Component {
+  async loadPersonalCalendar(eventID) {
+    const response = await fetch("/getavailabilityfrompersonal", {
+      method: "POST",
+      body: JSON.stringify({
+        eventID
+      }),
+      headers: {
+        "Cache-Control": "no-cache",
+        "Content-Type": "application/json"
+      }
+    });
+    const currSchedule = await response.json();
+    return currSchedule;
+  }
   constructor(props) {
     super(props);
     let event = this.props.event;
@@ -9,21 +23,50 @@ class AvailabilitySchedule extends React.Component {
     let hourlyChunks = 1 / event.meetingDuration;
     let minTime = event.availableTimes[0][0];
     let maxTime = event.availableTimes[0][event.availableTimes[0].length - 1];
-    let currSchedule = [];
-    for (const availability of event.attendeesAvailability) {
-      if (availability.name === this.props.username) {
-        currSchedule = availability.availability;
+    let availNotFound = true;
+    for (const availabilityBlob of event.attendeesAvailability) {
+      if (availabilityBlob.name === this.props.username) {
+        availNotFound = !availabilityBlob.personalLoaded;
+        this.state = {
+          schedule: availabilityBlob.availability,
+          startDate,
+          numDays,
+          hourlyChunks,
+          minTime,
+          maxTime
+        };
         break;
       }
     }
-    this.state = {
-      schedule: currSchedule,
-      startDate,
-      numDays,
-      hourlyChunks,
-      minTime,
-      maxTime
-    };
+    if (availNotFound) {
+      this.state = {
+        schedule: [],
+        startDate,
+        numDays,
+        hourlyChunks,
+        minTime,
+        maxTime
+      };
+      fetch("/getavailabilityfrompersonal", {
+        method: "POST",
+        body: JSON.stringify({
+          eventID: event._id
+        }),
+        headers: {
+          "Cache-Control": "no-cache",
+          "Content-Type": "application/json"
+        }
+      }).then((response) => response.json()).then((availability) => {
+        this.setState({
+          schedule: availability,
+          startDate,
+          numDays,
+          hourlyChunks,
+          minTime,
+          maxTime
+        });
+      });
+    }
     this.handleChange = this.handleChange.bind(this);
   }
   handleChange(newSchedule) {
