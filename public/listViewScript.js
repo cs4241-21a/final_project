@@ -51,6 +51,9 @@ const getAllLists = function( e ) {
         }
         divText += '</select><button type="submit" id="choose-list">Choose List</button></form>'
         newDiv.innerHTML = divText
+        // if(document.querySelector('#chooseListForm')){
+        //     document.querySelector('#chooseListForm').remove()
+        // }
         document.querySelector('#chooseListForm').remove()
         document.body.appendChild(newDiv)
     })
@@ -109,6 +112,7 @@ const getItemsHTML = function( e ) {
         document.querySelector('#item-holder').remove()
         document.body.appendChild(newDiv)
     })
+    getAllLists()
     return false
 }
 
