@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+img {
+  height: 200x;
+  width: 200;
+}
+
+.slider {
+  width: 800px;
+  height: 600px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.slides {
+  width: 500%;
+  height: 500px;
+  display: flex;
+}
+
+.slides input {
+  display: none;
+}
+
+.image {
+  width: 20%;
+  transition: 2s;
+  display: flex;
+}
+
+.slide img {
+  width: 1000px;
+  height: 800px;
+  display: flex;
+  margin: auto;
+  padding: 70px 0;
+}
+
+.navigation-manual {
+  position: center;
+  width: 800px;
+  margin-top: -40px;
+  display: flex;
+  justify-content: center;
+}
+
+.manual-btn {
+  position: center;
+  border: 2px solid #F5ad54;
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.manual-btn:not(last-child) {
+  margin-right: 40px;
+}
+
+.manual-btn:hover {
+  background: #F7be78;
+}
+
+#radio1:checked ~ .first {
+  margin-left: 0;
+}
+
+#radio2:checked ~ .first {
+  margin-left: -20%;
+}
+
+#radio3:checked ~ .first {
+  margin-left: -40%;
+}
+
+.navigation-auto {
+  position: center;
+  display: flex;
+  width: 800px;
+  justify-content: center;
+  margin-top: 460px;
+}
+
+.navigation-auto div {
+  border: 2px solid #F5ad54;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.navigation-auto div:not(:last-child) {
+  margin.right: 40px;
+}
+
+#radio1:checked ~ .naviation-auto .auto-btn1 {
+  background: ##F7be78;
+}
+
+#radio2:checked ~ .naviation-auto .auto-btn1 {
+  background: ##F7be78;
+}
+
+#radio3:checked ~ .naviation-auto .auto-btn1 {
+  background: ##F7be78;
+}
+
+.center {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
