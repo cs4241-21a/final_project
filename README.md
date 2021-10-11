@@ -18,10 +18,14 @@ These are some of the things we added:
 - Has a log-in feature with allows users to save their favorite locations
   - Users can hit the star icon to save their favorite locations and see them under the 'FAVORITE LOCATIONS' tab
 
-# This is the original LaundryConnect
+**This is the original LaundryConnect**
 
 ![FrontLC](./images/laundryconnect1.png)
 ![SpecLC](./images/laundryconnect1main.png)
+
+**This is the new and improved version of LaundryConnect**
+
+![LaundryConnect2](./images/laundryconnect2.png)
 
 ## Additional information needed to use the project
 
