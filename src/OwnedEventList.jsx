@@ -33,7 +33,7 @@ class OwnedEventList extends React.Component {
             }
             event.pendingAttendees = pendingAttendees
             eventInput[event._id] = {
-                name: event.name,
+                eventName: event.eventName,
                 description: event.description,
                 attendees: event.attendees.join(","),
                 location: event.location,
@@ -120,7 +120,7 @@ class OwnedEventList extends React.Component {
             }*/
             for (let i = 0; i < attendeesList.length; i++) {
                 const json2 = {
-                        eventName: this.state.eventInputs[eventID]["name"],
+                        eventName: this.state.eventInputs[eventID]["eventName"],
                         attendeeName: attendeesList[i],
                         startDateTime: eventDate,
                         endDateTime: eventDate,
