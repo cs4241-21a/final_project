@@ -69,11 +69,14 @@ We were then able to point the Node server at these build files in order to serv
 ### Bryan Lima
 * Built reroll playlist functionality
 * Integrated API endpoints into React app
-* Attmpted to figure out Autehntication with the Spotify API, so anybody could long into their personal account
+* Attempted to figure out Autehntication with the Spotify API, so anybody could long into their personal account
 
 ### Ashwin Pai
 
 ### River Yan
+* Developed generating popular songs from a given genre function using the API
+* Hepled with generating recommendations for the user 
+* Created API endpoints
 
 ## Design Achievements
 * **Figma Designs**: Designed app interfaces with Figma before development.
