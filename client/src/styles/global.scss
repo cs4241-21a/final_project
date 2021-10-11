@@ -1,0 +1,51 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, $font-family-primary, 'Segoe UI', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 100%;
+  line-height: 1.5;
+  color: $color-primary;
+  fill: $color-primary;
+  background: $background-secondary;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.skeleton {
+  width: fit-content;
+  position: relative;
+  overflow: hidden;
+  color: transparent !important;
+  background: $color-tertiary;
+  border-radius: $border-radius;
+
+  > div {
+    position: absolute;
+    display: block;
+    left: -200%;
+    top: 0;
+    height: 100%;
+    width: 200%;
+    background: linear-gradient(
+                    to right,
+                    transparent 0%,
+                    $color-secondary 50%,
+                    transparent 100%
+    );
+    animation: load 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+}
+
+@keyframes load {
+  from {
+    left: -200%;
+  }
+  to {
+    left: 100%;
+  }
+}

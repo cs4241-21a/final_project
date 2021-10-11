@@ -1,37 +1,26 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage/HomePage";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import PlaylistPage from "./pages/PlaylistPage/PlaylistPage";
 
 class App extends Component {
-  state = {
-    data: null
-  };
-
-  componentDidMount() {
-    this.callBackendAPI()
-        .then(res => this.setState({ data: res.express }))
-        .catch(err => console.log(err));
-  }
-  // fetching the GET route from the Express server which matches the GET route from server.js
-  callBackendAPI = async () => {
-    const response = await fetch('/api');
-    const body = await response.json();
-
-    if (response.status !== 200) {
-      throw Error(body.message)
-    }
-    return body;
-  };
-
   render() {
     return (
-        <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Welcome to React</h1>
-          </header>
-          <p className="App-intro">{this.state.data}</p>
-        </div>
+        <Router>
+            <Header />
+            <div className="page">
+                <Switch>
+                    <Route path="/playlist/:genre"
+                           render={ (props) => <PlaylistPage genre={ props.match.params.genre } /> } />
+                    <Route path="/">
+                        <HomePage />
+                    </Route>
+                </Switch>
+            </div>
+            <Footer />
+        </Router>
     );
   }
 }
