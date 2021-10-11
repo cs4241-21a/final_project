@@ -7,8 +7,6 @@ Players of the open-world action RPG Genshin Impact often find themselves wonder
 
 For context, in Genshin Impact, the player can enhance the strength of characters they own by using certain materials. Each character has their own unique set of materials that must be obtained from the world from defeating enemies around the environment. Weapons, meanwhile, can be equipped by characters, but also have their own set of materials. Artifacts can also be equipped by characters, but they are obtained through farming (note that, while all artifacts are farmable on all days, it is still important to remind players of which artifacts they were hoping to farm). Certain materials are only available on specific days of the week, so we created an application that will help a player organize and remember what materials they need.
 
-LINK: (linkhere)[linkhere]
-
 # 2. Any additional instructions that might be needed to fully use your project (login information etc.)
 
 - In order to save your preferences across instances of the program, you must be logged in.  A user can log in using github and this will cause the application to back up the user's preferences into the database.
@@ -86,4 +84,4 @@ As a frontend and middleware developer, I worked on helping design the website a
 - Stylizing the tabs in the menu display
 
 # 6. A link to your project video.
-// TODO: Team !!!
+(Video Link)[https://youtu.be/HaiIU4rQpiE]
