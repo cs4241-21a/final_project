@@ -96,7 +96,7 @@ const getAllLists = function( e ) {
             divText += json[i].listName
             divText += '</h5><p class="card-text">'
             divText += json[i].description
-            divText += '</p><a href="#" class="btn btn-primary">Go somewhere</a></div></div></div>'
+            divText += '</p><a href="/listView" class="btn btn-primary">View Items</a></div></div></div>'
           i++
         }
         divText += '</div>'
@@ -108,7 +108,32 @@ const getAllLists = function( e ) {
     return false
 }
 
+// const viewItems = function( e ) {
+//     // e.preventDefault()
+  
+//     const name = document.querySelector( '.view-items' ).previousElementSibling.previousElementSibling.innerHTML,
+//         json = { listName: name },
+//         body = JSON.stringify( json )
+
+//     console.log('name in viewItems:')
+  
+//     fetch( '/create-list', {
+//       method:'POST',
+//       body 
+//     })
+//     .then( function( response ) {
+//       return response.json()
+//     })
+//     .then( function( json ) {
+//       console.log(json)
+//     })
+  
+//     return false
+//   }
+
 window.onload = function() {
     getCurrentUser()
     getAllLists()
+    const viewItemsButton = document.querySelector( '.view-items' )
+    viewItemsButton.onclick = viewItems
 }

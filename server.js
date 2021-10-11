@@ -123,6 +123,8 @@ var items = [
 
 var currentUser = {}
 
+var currentList = lists[0]
+
 
 
 // ROUTES
@@ -308,6 +310,30 @@ app.post( '/get-user-lists', bodyparser.json(), function( request, response ) {
   })
 })
 
+app.post( '/get-user-items', bodyparser.json(), function( request, response ) {
+
+  console.log(`get-user-items post request: ${request}`);
+  let dataString = ''
+
+  request.on( 'data', function( data ) {
+      dataString += data 
+  })
+
+  request.on( 'end', function() {
+    const json = JSON.parse( dataString )
+    currentList = json.listName
+    var userItems = []
+    for(let i = 0; i < items.length; i++){
+      if(items[i].listName === currentList.listName){
+        userItems.push(items[i])
+      }
+    }
+
+    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+    response.end(JSON.stringify(userItems))
+  })
+})
+
 app.post( '/login-user', express.json(), function( request, response ) {
 
   console.log(`login-user post request: ${request}`);
@@ -345,6 +371,46 @@ app.post( '/current-user', express.json(), function( request, response ) {
 
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
     response.end(JSON.stringify(currentUser))
+  })
+})
+
+app.post( '/set-current-list', express.json(), function( request, response ) {
+
+  console.log(`set-current-list post request: ${request}`);
+  let dataString = ''
+
+  request.on( 'data', function( data ) {
+      dataString += data 
+  })
+
+  request.on( 'end', function() {
+    const json = JSON.parse( dataString )
+    currentList = json;
+    console.log("currentList from /set-current-list:");
+    console.log(currentList);
+
+    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+    response.end(JSON.stringify(currentList))
+  })
+})
+
+app.post( '/get-current-list', express.json(), function( request, response ) {
+
+  console.log(`get-current-list post request: ${request}`);
+  let dataString = ''
+
+  request.on( 'data', function( data ) {
+      dataString += data 
+  })
+
+  request.on( 'end', function() {
+    const json = JSON.parse( dataString )
+    // currentList = json;
+    console.log("currentList from /get-current-list:");
+    console.log(currentList);
+
+    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+    response.end(JSON.stringify(currentList))
   })
 })
 
