@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Homepage</title>
+
+    <!-- Import Styles -->
+    <link rel="stylesheet" href="./assets/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
+    <link rel="icon" href="./assets/images/kannadrink.png" type="image/x-icon"/>
+
+    <!-- Import Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+
+    <!-- Import jquery -->
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+  </head>
+  <body>
+    
+    <div id="nav-placeholder"></div>
+
+    <br>
+    <div class="logoutdiv">
+      <a href="/logout" class="logoutbtn">LOGOUT</a>
+    </div>
+    
+    
+    <div id="greeting">
+      <h1 v-if="sentence=(when<9?'Morning!':
+                            when<12?'Morning!':
+                            when<15?'Noon!':
+                            when<19?'Afternoon!':
+                            'Evening!')">
+        {{greet}}{{sentence}}
+      </h1>
+    </div>
+
+    <div class="boxHolder">
+      <div id='personal'>
+
+      </div>
+      <button id="editPassword">Edit Password</button>
+
+      <div id="editformPassword" class='modal'>
+        <div class='modal-content'>
+          <form>
+              <h3>Edit Password</h3>
+              <label>
+                New Password:
+              </label>
+              <input type="text" id="newPassword"/>
+              <button id="submitPassword">Submit Change</button>
+          </form>
+        </div>
+    </div>
+
+    <div id="attribute">
+      <h5>Your attribute ↓</h5>
+      <div id="myChart"></div><hr>
+
+      <h5>Your Pie Chart Outcome ↓</h5>
+      <div id="myChart2"></div>
+    </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
+  </body>
+
+  <script>
+    var personal = document.getElementById("personal");
+    var userId = "";
+    var username = "";
+    var editPassword = document.getElementById("editformPassword");
+    editPassword.style.display = "none";
+
+
+    $(function(){
+      $("#nav-placeholder").load("nav.html");
+    });
+
+    const app = new Vue({
+      el: "#greeting",
+      data: {
+        greet: "Good ",
+        sentence: "",
+        when: new Date().getHours()
+      }
+    })
+
+    function generateAttributeRadar(){
+      fetch('/getAttribute', {
+        method:'POST',
+        header:{'Content-Type':'application/json' }
+      })
+      .then(response => response.json())
+      .then(attribute =>{
+        drawRadarChart(attribute.adventure, attribute.love, attribute.suspense, attribute.sol, attribute.fantasy);
+        drawPieChart(attribute.adventure, attribute.love, attribute.suspense, attribute.sol, attribute.fantasy);
+      })
+      
+    }
+
+    function drawRadarChart(adventure, love, suspense, sol, fantasy){
+      var myConfig = {
+        type: 'radar',
+        plot: {
+          aspect: 'area',
+          animation: {
+            effect: 3,
+            sequence: 1,
+            speed: 700
+          }
+        },
+        scaleV: {
+          visible: false
+        },
+        scaleK: {
+          values: '0:4:1',
+          labels: ['Adventure', 'Love', 'Suspense', 'Slice of Life', 'Fantasy'],
+          item: {
+            fontColor: '#607D8B',
+            backgroundColor: "white",
+            borderColor: "#aeaeae",
+            borderWidth: 1,
+            padding: '5 10',
+            borderRadius: 10
+          },
+          refLine: {
+            lineColor: '#c10000'
+          },
+          tick: {
+            lineColor: '#59869c',
+            lineWidth: 2,
+            lineStyle: 'dotted',
+            size: 20
+          },
+          guide: {
+            lineColor: "#607D8B",
+            lineStyle: 'solid',
+            alpha: 0.3,
+            backgroundColor: "#c5c5c5 #718eb4"
+          }
+        },
+        series: [
+          {
+            values: [adventure, love, suspense, sol, fantasy],
+            text: 'farm'
+          }]
+      };
+
+      zingchart.render({
+        id: 'myChart',
+        data: myConfig,
+      });
+    }
+
+    function drawPieChart(adventure, love, suspense, sol, fantasy){
+      let total = adventure + love + suspense + sol + fantasy;
+
+      let adventure_percent = adventure/total * 100;
+      let love_percent = love/total * 100;
+      let suspense_percent = suspense/total * 100;
+      let sol_percent = sol/total * 100;
+      let fantasy_percent = fantasy/total * 100;
+
+      var myConfig2 = {
+        type: "pie",
+        plot: {
+          borderColor: "#2B313B",
+          borderWidth: 5,
+          // slice: 90,
+          valueBox: {
+            placement: 'out',
+            text: '%t\n%npv%',
+            fontFamily: "Open Sans"
+          },
+          tooltip: {
+            fontSize: '18',
+            fontFamily: "Open Sans",
+            padding: "5 10",
+            text: "%npv%"
+          },
+          animation: {
+            effect: 2,
+            method: 5,
+            speed: 900,
+            sequence: 1
+          }
+        },
+        plotarea: {
+          margin: "20 0 0 0"
+        },
+        series: [{
+            values: [adventure_percent],
+            text: "Adventure",
+            backgroundColor: '#50ADF5',
+        },
+          {
+            values: [love_percent],
+            text: "Love",
+            backgroundColor: '#FF7965',
+            detached: true
+          },
+          {
+            values: [suspense_percent],
+            text: 'Suspense',
+            backgroundColor: '#6877e5',
+            detached: true
+          },
+          {
+            text: 'Slice of Life',
+            values: [sol_percent],
+            backgroundColor: '#FFCB45'
+          },
+          {
+            text: 'Fantasy',
+            values: [fantasy_percent],
+            backgroundColor: '#6FB07F'
+          }]
+      };
+
+      zingchart.render({
+        id: 'myChart2',
+        data: myConfig2
+      });
+    }
+
+    function getProfile(){
+      fetch("/getprofile", {
+        method:'POST',
+        headers:{'Content-Type':'application/json' }
+      })
+      .then(response => response.json())
+      .then(userinfo =>{
+
+        userId = userinfo.userId;
+        username = userinfo.username;
+        if(username){
+          var profile = document.createElement('h4');
+          profile.innerHTML= "Username: " + username;
+
+          personal.appendChild(profile);
+        }
+      })
+    }
+
+    function changePassword(e){
+      e.preventDefault()
+
+      let newPassword = document.getElementById("newPassword");
+
+      if(username){
+        if(newPassword.value === ""){
+          alert("Can't input null password!")
+        }
+        else{
+          if(confirm("Are you sure you want to change your password?")){
+            fetch('/changePassword', {
+              method:'POST',
+              body:JSON.stringify({userId:userId, newPassword:newPassword.value}),
+              headers:{'Content-type':'application/json'}
+            })
+            .then(editPassword.style.display = "none")
+            .then(alert("Successfully update the password!"))
+          }
+          else{
+            editPassword.style.display = "none";
+            alert("Password remains unchanged")
+          }
+        }
+      }
+      else{
+        editPassword.style.display = "none";
+        alert("Since you login with GitHub, you can't change password!")
+      }
+    }
+
+    const openEditPassword = function(e){
+      e.preventDefault()
+
+      if(editPassword.style.display==="none"){
+          editPassword.style.display = "block";
+      }
+      else {
+          editPassword.style.display = "none";
+      }
+    }
+
+    window.onload = function(){
+
+      window.onclick = function(e){
+          if(e.target == editPassword){
+            editPassword.style.display = "none";
+          }
+        }
+
+        const button_open_edit_password = document.getElementById("editPassword")
+        button_open_edit_password.onclick = openEditPassword
+
+        const button_change_password = document.getElementById('submitPassword')
+        button_change_password.onclick = changePassword
+
+        getProfile();
+        generateAttributeRadar();
+    }  
+
+  </script>
+
+  <style>
+    h1 {
+      text-align:center;
+    }
+    .logoutbtn {
+      width: 200px; 
+      padding:8px;  
+      background-color: #636566;  
+      border-color: #777a7e;  
+      color: #fff;  
+      -moz-border-radius: 10px;  
+      -webkit-border-radius: 10px;  
+      border-radius: 10px; /* future proofing */  
+      -khtml-border-radius: 10px; /* for old Konqueror browsers */  
+      text-align: center;  
+      vertical-align: middle;  
+      border: 1px solid transparent;  
+      font-weight: 500;  
+      font-size:75%；
+    }
+    .logoutdiv{
+      float: right;
+    }
+  </style>
+</html>

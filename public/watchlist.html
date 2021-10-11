@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Watch List</title>
+    <meta charset="utf-8" />
+   
+    <link
+      href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="./assets/images/kannadrink.png" type="image/x-icon"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.min.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <style>
+        .collapsible {
+          color: black;
+          cursor: pointer;
+          padding: 18px;
+          width: 100%;
+          border: none;
+          text-align: left;
+          outline: none;
+          font-size: 15px;
+        }
+        
+        .active, .collapsible:hover {
+          background-color: #555;
+          color: white;
+        }
+        
+        .collapsible:after {
+          content: '\002B';
+          color: white;
+          font-weight: bold;
+          float: right;
+          margin-left: 5px;
+        }
+        
+        .active:after {
+          content: "\2212";
+        }
+        
+        .content {
+          padding: 0 18px;
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.2s ease-out;
+        }
+        </style>
+   </head>
+
+  <body>
+    <div id="nav-placeholder"></div>
+
+    <div class="boxHolder">
+      <div class="box">
+        <h1>Anime Watch List</h1>
+        <img src="./assets/images/digimon.jpg" />
+
+        <div id="travels"></div>
+      </div>
+    </div>
+
+    <div class="boxHolder">
+      <button id="openAdd">Add A New Anime</button>
+
+      <div id='addForm' class="modal">
+        <div class='modal-content'>
+          <span id='closeAdd' class="close">&times;</span>
+          <form id="newTrip">
+            <h2 id = "boxTitle">Add Anime</h2>
+
+            <label for="title">Anime Title: </label>
+            <input type="text" id="title" placeholder="Enter your watch" />
+            
+            <label for = "category">Choose a category</label>
+            <select name = "category" id = "cat">
+              <option value ="adventure">Adventure</option>
+              <option value ="love">Love</option>
+              <option value ="suspense">Suspense</option>
+              <option value ="sol">Slice of Life</option>
+              <option value ="fantasy">Fantasy</option>
+            </select>
+
+            <label for="score">Score: </label>
+            <input type="number" id="score" min="1" max="10">
+
+            <label for="date">Date: </label>
+            <input type="date" id="date" name="date" required />
+
+            <label for="review">Review: </label>
+            <textarea type="text" id="review" placeholder="reveiw"></textarea>
+          
+            <input type="hidden" id="idToModify" />
+
+            <button id="submitButton">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id='editForm' class="modal">
+      <div class='modal-content'>
+        <span id='closeEdit' class="close">&times;</span>
+        <form id="newTrip">
+          <h2 id = "boxTitle2">Edit Anime</h2>
+
+          <label for="title">Anime Title: </label>
+          <input type="text" id="title2" placeholder="Enter your watch" />
+          
+          <label for = "category">Choose a category</label>
+          <select name = "category" id = "cat2">
+            <option value ="adventure">Adventure</option>
+            <option value ="love">Love</option>
+            <option value ="suspense">Suspense</option>
+            <option value ="sol">Slice of Life</option>
+            <option value ="fantasy">Fantasy</option>
+          </select>
+
+          <label for="score">Score: </label>
+          <input type="number" id="score2" min="1" max="10">
+
+          <label for="date">Date: </label>
+          <input type="date" id="date2" name="date" required />
+
+          <label for="review">Review: </label>
+          <textarea type="text" id="review2" placeholder="reveiw"></textarea>
+        
+          <input type="hidden" id="idToModify2" />
+
+          <button id="submitEdit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+    <button class="collapsible">Adventure</button>
+        <div class ="content">
+            <table id= "advResult">
+            <thead>
+            <tr>
+              <th>Title</th>
+              <th>Score</th>
+              <th>Date</th>
+              <th>Review</th>
+              <th>Edit</th>
+              <th>Remove</th>
+            </tr>
+          </thead>
+          <tbody id="advData"></tbody>
+        </table>
+        </div>
+
+        <button class="collapsible">Love</button>
+        <div class ="content">
+          <table id="loveResult">
+            <thead>
+            <tr>
+              <th>Title</th>
+              <th>Score</th>
+              <th>Date</th>
+              <th>Review</th>
+              <th>Edit</th>
+              <th>Remove</th>
+            </tr>
+            </thead>
+            <tbody id="loveData"></tbody>
+         </table> 
+        </div>
+
+        <button class="collapsible">Suspense</button>
+        <div class ="content">
+            <table id="susResult">
+            <thead>
+            <tr>
+              <th>Title</th>
+              <th>Score</th>
+              <th>Date</th>
+              <th>Review</th>
+              <th>Edit</th>
+              <th>Remove</th>
+            </tr>
+          </thead>
+          <tbody id="susData"></tbody>
+            </table>
+        </div>
+
+        <button class="collapsible">Slice of Life</button>
+        <div class ="content">
+            <table id="solResult" >
+            <thead>
+            <tr>
+              <th>Title</th>
+              <th>Score</th>
+              <th>Date</th>
+              <th>Review</th>
+              <th>Edit</th>
+              <th>Remove</th>
+            </tr>
+          </thead>
+          <tbody id="solData"></tbody>
+        </table>
+        </div>
+
+        <button class="collapsible">Fantasy</button>
+        <div class ="content">
+            <table id="fanResult" >
+            <thead>
+            <tr>
+              <th>Title</th>
+              <th>Score</th>
+              <th>Date</th>
+              <th>Review</th>
+              <th>Edit</th>
+              <th>Remove</th>
+            </tr>
+          </thead>
+          <tbody id="fanData"></tbody>
+        </table>
+        </div>
+
+
+    <script>
+      // nav bar import function
+      $(function(){
+        $("#nav-placeholder").load("nav.html");
+      });
+
+
+      var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+            content.style.maxHeight = null;
+            } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+            } 
+        });
+        }
+      
+    </script>
+    <script src="components/watchlist.js"></script>
+
+  </body>
+</html>
