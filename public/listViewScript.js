@@ -54,7 +54,10 @@ const getAllLists = function( e ) {
         // if(document.querySelector('#chooseListForm')){
         //     document.querySelector('#chooseListForm').remove()
         // }
-        document.querySelector('#chooseListForm').remove()
+        if(presses === 0){
+            document.querySelector('#defaultchooseListForm').remove()
+            presses++
+        }        
         document.body.appendChild(newDiv)
     })
 
@@ -79,8 +82,21 @@ const getItemsHTML = function( e ) {
     console.log('selectedValue:')
     console.log(selectedValue)
 
-    const json = { listName: selectedValue },
+    // const json = { listName: selectedValue },
+    const json = { listName: 'filler' },
     body = JSON.stringify( json )
+
+    fetch( '/set-current-list', {
+        method:'POST',
+        body 
+    })
+    .then( function( response ) {
+        return response.json()
+    })
+    .then( function( json ) {
+        console.log(json)
+
+    })
 
     fetch( '/get-user-items', {
         method:'POST',
@@ -112,7 +128,7 @@ const getItemsHTML = function( e ) {
         document.querySelector('#item-holder').remove()
         document.body.appendChild(newDiv)
     })
-    getAllLists()
+    // getAllLists()
     return false
 }
 
@@ -149,3 +165,4 @@ window.onload = function() {
 }
 
 var currentUser;
+var presses = 0

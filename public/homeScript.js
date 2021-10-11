@@ -135,5 +135,5 @@ window.onload = function() {
     getCurrentUser()
     getAllLists()
     const viewItemsButton = document.querySelector( '.view-items' )
-    viewItemsButton.onclick = viewItems
+    // viewItemsButton.onclick = viewItems
 }

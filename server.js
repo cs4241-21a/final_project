@@ -321,7 +321,7 @@ app.post( '/get-user-items', bodyparser.json(), function( request, response ) {
 
   request.on( 'end', function() {
     const json = JSON.parse( dataString )
-    currentList = json.listName
+    // currentList = json.listName
     console.log('currentList form /get-user-items')
     console.log(currentList)
     var userItems = []
