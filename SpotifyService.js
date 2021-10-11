@@ -140,10 +140,9 @@ export default (new class SpotifyService {
         });
     }
 
+    //shuffle playlist with different songs of the same genre
     shufflePlaylist = async (id, genre) => {
         const playlist = this.getPlaylist(id)
-
-        const songs = playlist.items.map(i => i.track);   
 
         deleteSongsFromPlaylist(id, songs.map(song => song.uri));
 
