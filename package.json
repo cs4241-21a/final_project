@@ -1,0 +1,35 @@
+{
+  "name": "final_project",
+  "version": "1.0.0",
+  "description": "*Due before the start of class, October 11th (final day of the term)*",
+  "main": "index.js",
+  "scripts": {
+    "dev": "snowpack build && node server.js",
+    "start": "node server.js",
+    "build": "snowpack build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PraiseX/final_project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PraiseX/final_project/issues"
+  },
+  "homepage": "https://github.com/PraiseX/final_project#readme",
+  "dependencies": {
+    "axios": "^0.22.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "mongodb": "^4.1.2",
+    "query-string": "^7.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router": "^5.2.1",
+    "react-router-dom": "^5.3.0",
+    "snowpack": "^3.8.8",
+    "swr": "^1.0.1"
+  }
+}
