@@ -1,0 +1,4 @@
+Group Members: Lillian Garfinkel, David Mahany, Joe Scheufele, Michael Rossetti
+
+Our idea is to create a game inspired by the classic asteroid shooting game, but with a COVID fighting theme. There will be an option for two players, and a preliminary screen to login. The game will calculate scores and determine a winner. As time passes the game will progressively get more difficult to keep it interesting. We will add in bonus features that could provide more points, like getting a vaccination card. We also may include a high score/stats page showing scores from all users, and perhaps a method for users to communicate whilst playing each other.
+	The technologies/libraries we plan to use are p5, and pubnub. We could use react js to create our user interface for the site. We may look into expanding the game into 3 dimensions time permitting with three.js.
