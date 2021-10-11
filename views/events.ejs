@@ -9,10 +9,10 @@
     <script src="./js/eventsJS.js" defer></script>
     <script type="module" src="./js/eventsApp.js" defer></script>
     <%- include("./partials/nav.ejs")%>
-    <div class="container-sm row mx-auto" style="width: 70%">
+    <div style="width: 70%">
         <button type="button" onclick="openEventMaker()" id="eventMakerBtn">Make Event</button>
 
-        <div class="col-md-4 m-5 p-3 hidden" id="eventMaker">
+        <div class="hidden" id="eventMaker">
             <h2>Event Creator</h2>
             <hr>
             <div>
@@ -101,7 +101,7 @@
         </div>
         
         <!-- Force next columns to break to new line -->
-        <div class="w-100"></div>
+       <!-- <div class="w-100"></div>-->
         
         <!-- Render the owned events and pending events -->
         <div id="eventsApp"></div>

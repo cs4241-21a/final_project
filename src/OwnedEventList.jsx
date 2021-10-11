@@ -116,6 +116,25 @@ class OwnedEventList extends React.Component {
         window.location.reload();
     }
 
+    async function deleteEvent(eventID){
+
+        const json = {
+                eventID: eventID
+            },
+            body = JSON.stringify(json);
+    
+        // submit new value
+        await fetch('/deleteEvent', {
+            method: 'POST',
+            body,
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+    
+        window.location.reload();
+    }
+
     render() {
         return (
         <>
@@ -167,6 +186,8 @@ class OwnedEventList extends React.Component {
                     <br/>
                     <br/>
                     <button type="button" onClick={e => this.editEvent(event._id.toString())}>Edit Event</button>
+                    <br/>
+                    <button type="button" onclick={e => this.deleteEvent(event._id)}>Delete Event</button>
                     <hr/>
                 </form>
             </>
