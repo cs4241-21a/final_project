@@ -13,7 +13,7 @@ body {
 }
 
 h3 {
-    padding-left: 26vw;
+    padding-left: 20px;
 }
 
 #farm {
@@ -108,4 +108,8 @@ button:hover {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #8BD1E8;
+}
+
+#menuButton:hover {
+    background: rgba(36,104,133,0.3);
 }
