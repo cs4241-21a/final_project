@@ -67,6 +67,9 @@ We were then able to point the Node server at these build files in order to serv
 * Integrated API endpoints into React app
 
 ### Bryan Lima
+* Built reroll playlist functionality
+* Integrated API endpoints into React app
+* Attmpted to figure out Autehntication with the Spotify API, so anybody could long into their personal account
 
 ### Ashwin Pai
 
