@@ -4,6 +4,13 @@ import dotenv from 'dotenv';
 dotenv.config();
 import { DateTime } from "luxon";
 
+const GENRE_DICTIONARY = {
+    'hip-hop': '3TVXtAsR1Inumwj472S9r4,2LIk90788K0zvyj2JJVwkJ,4r63FhuTkUYltbVAg5TQnk,4Ga1P7PMIsmqEZqhYZQgDo,6l3HvQ5sa6mXTsMTB19rO5',
+    'edm': '1Cs0zKBU1kc0i8ypK3B9ai,4AVFqumd2ogHFlRbKIjp1t,64KEffDW9EtZ1y2vBYgq8T,1vCWHaC5f2uS3yhpwWbIA6,2o5jDhtHVPhrJdv3cEQ99Z',
+    'hard-rock': '776Uo845nYHJpNaStv1Ds4,6ZLTlhejhndI4Rh53vYhrY,711MCceyCBcFnzjGY4Q7Un,07XSN3sPlIlB2L2XNcTwJw,2ye2Wgw4gimLv2eAKyk1NB',
+    'pop': '4yvcSjfu4PC0CYQyLy4wSq,1Xyo4u8uXC1ZmMpatF05PJ,1uNFoZAHBGtllmzznpCI3s,6eUKZXaKkcviH0Ku9w2n3V,66CXWjxzNUsdJxJ2JdwvnR'
+};
+
 export default (new class SpotifyService {
     authPath = 'https://accounts.spotify.com';
     APIPath = 'https://api.spotify.com/v1';
@@ -14,11 +21,8 @@ export default (new class SpotifyService {
     accessToken;
 
     constructor() {
-        // this.createPlaylist('Bopify Playlist', '').then(async id => {
-        //     await this.addSongsToPlaylist(id, ['spotify:track:6TUf1Vw59k1f7r9X8GzYdI', 'spotify:track:4HTY26kzdGCKJF1EqcRd2J']);
-        //     await this.deleteSongsFromPlaylist(id, ['spotify:track:6TUf1Vw59k1f7r9X8GzYdI']);
-        //     this.getSongsFromPlaylist(id).then(console.log)
-        // });
+        let list = this.getListOfSongsByGenre("hip-hop")
+        list.then(console.log)
     }
 
     // retrieves Spotify access token from cache or accounts.spotify.com
@@ -76,6 +80,13 @@ export default (new class SpotifyService {
             "public": true
         }).catch(console.error);
         return id;
+    }
+
+    // generate a list of songs based on a genre and limit.
+    getListOfSongsByGenre = async(genre) => {
+        let listOfArtistIds = GENRE_DICTIONARY[genre]
+        const {tracks} = await this.request('GET', `${this.APIPath}/recommendations?seed_artists=${listOfArtistIds}`).catch(console.error)
+        return tracks.map(t => t.uri)
     }
 
     // adds songs by uri to a specified playlist
