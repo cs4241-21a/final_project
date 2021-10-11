@@ -41,7 +41,21 @@ const getAllLists = function( e ) {
     })
     .then( function( json ) {
         console.log('json from /get-user-lists in homeScript:')
-        console.log(json.body)
+        console.log(json)
+
+        var newDiv = document.createElement('div')
+        var divText = '<div id="list-cards">'
+        var i = 0
+          while (json[i]!=undefined) {
+            divText += '<div class="card" style="width: 18rem;"><img src="/homeimages/sunflower.png" class="card-img-top" alt="..."><div class="card-body text-center"><h5 class="card-title" style="text-align:center;">'
+            divText += json[i].listName
+            divText += '</h5><a href="#" class="btn btn-primary">View Items</a></div></div>'
+          i++
+        }
+        divTest += '</div>'
+        newDiv.innerHTML = divText
+        document.querySelector('#list-cards').remove()
+        document.body.appendChild(newDiv)
     })
 
     return false
