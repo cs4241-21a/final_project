@@ -1,51 +1,50 @@
-# Final Project
-*Due before the start of class, October 11th (final day of the term)*
+# Final Project - Meeting Scheduler (When3Meet)
 
-For your final project, you'll implement a web application that exhibits understanding of the course materials. 
-This project should provide an opportunity to both be creative and to pursue individual research and learning goals.
+## Group 7 Team Members
 
-## General description
-Your project should consist of a complete Web application, exhibiting facets of the three main sections of the course material:
+- Aidan Pecorale
+- Ben Staw
+- Josh McKeen
+- Matthew Spofford
 
-- Static Web page content and design. You should have a project that is accessible, easily navigable, and features significant content.
-- Dynamic behavior implemented with JavaScript (TypeScript is also allowed if your group wants to explore it).
-- Server-side programming *using Node.js*. Typically this will take the form of some sort of persistent data (database), authentication, and possibly server-side computation. 
-- A video (less than five minutes) where each group member explains some aspect of the project. An easy way to produce this video is for you all the groups members to join a Zoom call that is recorded; each member can share their screen when they discuss the project or one member can "drive" the interface while other members narrate (this second option will probably work better.) The video should be posted on YouTube or some other accessible video hosting service. Make sure your video is less than five minutes, but long enough to successfully  explain your project and show it in action. There is no minimum video length.
 
-## Project ideation
-Excellent projects typically serve someone/some group; for this assignment you need to define your users and stakeholders. I encourage you to identify projects that will have impact, either artistically, politically, or in terms of productivity. 
+## 1. Overview
 
-## Logistics
-### Team size
-Students are will work in teams of 3-5 students for the project; teams of two can be approved with the permission of the instructor. Working in teams should help enable you to build a good project in a limited amount of time.  Use the `#project-logistics` channel in Discord to pitch ideas for final projects and/or find fellow team members as needed.
+Our project, when3meet is a tool to help people plan their schedules, make events, and coordinate those events with other users. On the home page, each user has access to a personal calendar which contains all of their events. Each user also has access to the events they are signed up for and their details in list form as well. From the home page, personal events can be added to a user's private calendar.
 
-Teams must be in place by end of day on Saturday, September 25th. If you have not identified a team at this point, you will be assigned a team. You will be given some class time on Monday to work on your proposal, but please plan on reserving additional time as needed.
+On the events page, a user can set up events involving more people. The user will have the option to add attendees to events as well as a range of possible dates and times. Once an event is created the attendees will be able to see it in their events list and update their availability for that event. Availability is initially filled in using your personal calendar but additional edits can be made. As the attendees add their availability to the event the owner can select a time that everyone is available for on the availability table and confirm the final date and time.  Once confirmed, public events are automatically added to all invited user's personal calendars. When3meet is hosted on https://cs4241-final-project-group-7.herokuapp.com/.
 
-### Deliverables
+## 2.  Site Usage
 
-__Proposal:__ 
-Provide an outline of your project direction and the names of associated team members. 
-The outline should have enough detail so that staff can determine if it meets the minimum expectations, or if it goes too far to be reasonable by the deadline. Please include a general description of a project, and list of key technologies/libraries you plan on using (e.g. React, Three.js, Svelte, TypeScript etc.). Name the file proposal.md and submit a pull request.
-Submit a PR to turn it in by Monday, September 27th at11:59 PM. Only one pull request is required per team.
+To use the site, first create an account with a username and password and then sign in. You can then fill in your personal calendar on the homepage if you so desire. From there, users can go to the "Events" tab on the navbar, and create events. Users can than add attendees to the event, and then everyone can input their availability. If it is a user's first time filling in their availability for an event, they will also find that their availability has been auto-filled based upon their personal calendar. From there, the event owner can then select a finalized time, which will now display on your personal calendar.
 
-There are no other scheduled checkpoints for your project. 
+## 3. Technologies
 
-#### Turning in Your Outline / Project
-Submit a second PR on the final project repo to turn in your app and code. Again, only one pull request per team.
+- NodeJS = Server backend logic
+- EJS = Used for creating simple HTML layouts for all of our webpages, and enabling us to share multiple HTML elements across multiple pages (e.g. header, navbar, and footer).
+- React = Used for dynamically rendering the event availability for invited events. It also was used to render the event date/time selection menu. This involved creating a main React app that encapsulated both the event availability component, and the event date/time selection menu.
+  - react-schedule-selector = A 3rd party tool used for selecting event availibility and displaying it in colored blocks
+- MongoDB/Mongoose = Database used for storing users, personal calendars, and events, Mongoose was used to organize the schema for elements in the database
+- CSS Frameworks =
+  - Bootstrap = used for some styling of elements
+  - Sakura = primary styling used for page elements
+- TavoCalendar = Calendar Library used for selecting date ranges on event creation page
+- FullCalendarIO = Calendar Library used on home page for sorting and displaying personal calendar events
+- ICS = standardized calender event creator to share with other calendar apps
 
-Deploy your app, in the form of a webpage, to Glitch/Heroku/Digital Ocean or some other service; it is critical that the application functions correctly wherever you post it.
 
-The README for your second pull request doesn’t need to be a formal report, but it should contain:
+## 4. Challenges
 
-1. A brief description of what you created, and a link to the project itself (two paragraphs of text)
-2. Any additional instructions that might be needed to fully use your project (login information etc.)
-3. An outline of the technologies you used and how you used them.
-4. What challenges you faced in completing the project.
-5. What each group member was responsible for designing / developing.
-6. A link to your project video.
+- Primary challenge was working with Date types in Javascript and getting those in the correct format to integrate with the the calendar libraries we were using. Often came accross problems with different timezones or not saving the date type correctly.
 
-Think of 1,3, and 4 in particular in a similar vein to the design / tech achievements for A1—A4… make a case for why what you did was challenging and why your implementation deserves a grade of 100%.
+## 5. Task breakdown
 
-## FAQs
+- Matthew: Focused on get React components with event availability and time selection working. Fixed general bugs on backend and little CSS styling.
+- Aidan: Setup work for database and creating/editing/availability on events. Groundwork for interacting/changing values of events.
+- Ben: Worked creating ICS files for the events and large amount of CSS work.
+- Josh: Primarily worked on setting up the personal calendar and integrating that with automatically filling availability on the event invite.
 
-- **Can I use XYZ framework?** You can use any web-based frameworks or tools available, but for your server programming you need to use Node.js. Your client-side scripting language should be either JavaScript or TypeScript.
+
+## 6. Project video link
+
+https://youtu.be/MgIiy-XE7hI

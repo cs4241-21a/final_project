@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("./partials/header.ejs")%>
+<head>
+    <link rel="stylesheet" href="./css/sakura.css" type="text/css">
+</head>
+
+<body>
+    <script type="module" src="./js/pendingEvents.js" defer></script>
+    <%- include("./partials/nav.ejs")%>
+    <div>
+        <!-- Render the pending events -->
+        <h2>Pending Event Invites:</h2>
+        <hr/>
+        <div id="pendingEventList"></div>
+    </div>
+</body>
+</html>

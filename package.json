@@ -1,0 +1,43 @@
+{
+  "name": "final_project",
+  "version": "1.0.0",
+  "description": "- Aidan Pecorale\r - Ben Staw\r - Josh McKeen\r - Matthew Spofford",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "clean": "rm dist/bundle.js",
+    "dev": "snowpack dev",
+    "build": "snowpack build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MatthewSpofford/final_project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MatthewSpofford/final_project/issues"
+  },
+  "homepage": "https://github.com/MatthewSpofford/final_project#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-session": "^1.4.0",
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "fullcalendar": "^5.9.0",
+    "moment": "^2.29.1",
+    "mongodb": "^4.1.2",
+    "mongoose": "^6.0.8",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.13",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-schedule-selector": "^3.0.0",
+    "styled-components": ">=5.0"
+  },
+  "devDependencies": {
+    "snowpack": "^3.8.8"
+  }
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include("./partials/header.ejs")%>
+    <head>
+        <link rel="stylesheet" href="./css/sakura.css" type="text/css">
+    </head>
+    <body>
+        <%- include("./partials/nav.ejs")%>
+        <script src="./js/jsSignUp.js" defer></script>
+        <div class="row mh-100">
+            <div class="col loginDiv mh-100">
+                <p class="loginText">Create an Account</p>
+                <form action='/signUp' method='POST'>
+                    <input type='text' name='username' placeholder="Username">
+                    <br>
+                    <input type='password' name='password' placeholder="Password">
+                    <br>
+                    <button onclick="usernameTaken()" type='submit'>Sign Up</button>
+                </form>
+                <!--<p class="hidden text-danger" id="hiddenTxt">It looks like that username may be taken already.</p>-->
+            </div>
+        </div>
+        <%- include("./partials/footer.ejs")%>
+    </body>
+</html>
