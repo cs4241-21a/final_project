@@ -1,8 +1,6 @@
 const numOfStars = 25,
   width = 750,
   height = 750,
-  min_speed = 0.5,
-  max_speed = 2,
   small = 22,
   medium = 40,
   large = 70,
@@ -12,6 +10,9 @@ const numOfStars = 25,
   max_ship_speed = 5,
   num_lives = 3,
   max_num_masks = 3;
+
+let min_speed = 0.5,
+  max_speed = 2
 
 let GameOver = false;
 let isThrusting = false;
@@ -35,6 +36,13 @@ let score = 0;
 
 function randomChoice(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function changeDifficulty(){
+  if (seconds > 60){
+    min_speed = 2
+    max_speed = 4
+  }
 }
 
 let _star_cur_id = 0;
@@ -383,11 +391,12 @@ function checkLives() {
     image(gompei_img, 80, 30, 35, 35);
   }
 }
-
+let seconds = 0;
 let counter = 0;
 function draw() {
   if (counter >= 60) {
-    counter = 0
+    counter = 0;
+    seconds++;
     score++;
   }
   counter++;
@@ -410,7 +419,8 @@ function draw() {
       ship.lives--;
 
       console.log("SCORE CHECK " + (ship.lives === 0) + " " + (socket !== null));
-      if (ship.lives === 0) {
+      if (ship.lives === 0 && socket !== null) {
+        console.log("!!! SENDING SCORE");
         const json = { score: score },
           body = JSON.stringify(json);
         
