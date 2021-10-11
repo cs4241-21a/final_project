@@ -1,22 +1,19 @@
-#### Questions
-1. A brief description of what you created, and a link to the project itself (two paragraphs of text)
+# Questions
+## 1. A brief description of what you created, and a link to the project itself (two paragraphs of text)
 
 Players of the open-world action RPG Genshin Impact often find themselves wondering which materials they need to collect (or "farm") based on the day-of-the-week schedule and the particular characters, weapons, or artifacts they wish to improve. Rather than spending hours looking up guides, farming locations, and farming schedules, we compiled a web-based application that easily creates a schedule for players to reference. All they need to do is select the characters, weapons, and/or artifacts they wish to farm.
 
 For context, in Genshin Impact, the player can enhance the strength of characters they own by using certain materials. Each character has their own unique set of materials that must be obtained from the world from defeating enemies around the environment. Weapons, meanwhile, can be equipped by characters, but also have their own set of materials. Artifacts can also be equipped by characters, but they are obtained through farming (note that, while all artifacts are farmable on all days, it is still important to remind players of which artifacts they were hoping to farm). Certain materials are only available on specific days of the week, so we created an application that will help a player organize and remember what materials they need.
 
-// probably a paragraph here about how we did it. awaaaga
-
 LINK: (linkhere)[linkhere]
-// TODO: Matthew !!!
 
 *REMEMBER: Excellent projects typically serve someone/some group; for this assignment you need to define your users and stakeholders. I encourage you to identify projects that will have impact, either artistically, politically, or in terms of productivity.*
 
-2. Any additional instructions that might be needed to fully use your project (login information etc.)
+## 2. Any additional instructions that might be needed to fully use your project (login information etc.)
 
 - In order to save your preferences across instances of the program, you must be logged in.  A user can log in using github and this will cause the application to back up the user's preferences into the database.
 
-3. An outline of the technologies you used and how you used them.
+## 3. An outline of the technologies you used and how you used them.
 - **React**:
 We utilized React components to create abstract, easily-recyclable components which leverage React states and effects for a web of interconnected functionality. By utilizing a Route-Component model, different components of the application interact with the main route to invoke and read from shared data across the webpage.
 - **MongoDB**:
@@ -28,7 +25,7 @@ TypeScript was the first time for many of our team to experiment with typed data
 - **[Genshin Impact API](https://github.com/bongikairu/genshin-farming-database)**:
 A traditional web-based API was difficult to find, so we ended up using the static json data provided by this repository to provide the data we needed locally. This choice meant we had to interact with the foreign library to integrate the data it provided with our own, as well as relate the relevant images to that data.
 
-4. What challenges you faced in completing the project.
+## 4. What challenges you faced in completing the project.
 - **Database**: 
 Having the application sync data between a user's session and the database was challenged due to the nature of how react loads components.  We kept running into an issue where the component would updateDB before the users preferences could get loaded from the db, causing the database to be wiped.  We remidied this by using a loading state that would utilized through the application to load data.
 
@@ -47,7 +44,7 @@ Our UI Team was tasked with fitting a lot of information into a screen and makin
 ![selectables](./selectables.png)
 ![calendar](./calendar.png)
 
-5. What each group member was responsible for designing / developing.
+## 5. What each group member was responsible for designing / developing.
 ### Andrew (Backend/Database/React Development):
 - As the main developer of the Database, I was responsible for the full stack implementation of user preferences (minus setting preferences through UI).
 - I also was responsible for the development of a login system using GitHub OAuth, Passport.js, and React.
