@@ -183,6 +183,7 @@ function submitModify(e) {
         body: JSON.stringify(json),
     }).then(function (_) {
         editForm.style.display = "none";
+        alert("successfully edited!")
         fetchData();
     });
 }
@@ -222,6 +223,7 @@ const submit = function (e) {
             body: JSON.stringify(json),
         }).then(function (_) {
             addForm.style.display = "none";
+            alert("successfully added!");
             fetchData();
         });
     }
