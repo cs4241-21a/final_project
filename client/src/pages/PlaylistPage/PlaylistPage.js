@@ -2,6 +2,7 @@ import Song from "../../components/Song/Song";
 import Script from 'react-load-script';
 import React from "react";
 import SpotifyWebPlayerService, { PlayerState } from "../../services/SpotifyWebPlayerService";
+import { Genres } from "../../globals";
 
 export default class PlaylistPage extends React.Component {
     spotifyWebPlayerService = new SpotifyWebPlayerService();
@@ -25,7 +26,7 @@ export default class PlaylistPage extends React.Component {
 
           <div className="playlist-page__details">
             <div className="details__left">
-              <div className="details__title">Hip Hop Party Playlist</div>
+              <div className="details__title">{ Genres[this.props.genre].label } Party Playlist</div>
               <div className="details__subtitle">{this.state.songCount} songs • { getDuration(this.state.playlistDuration) }</div>
             </div>
             <button onClick={ () => window.open(this.playlist.href, '_blank') }>View on Spotify</button>
