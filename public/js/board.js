@@ -84,11 +84,11 @@ function draw() {
     text('1',2, 475);
 
     if (gameSetup) {
-        renderGameState()
         if (gameState.player === gameState.currentPlayer && !gameOver()) {
             highlightHoveredCell()
             highlightHoveredWall()
         }
+        renderGameState()
     } else {
         fill(0)
         text('Waiting for opponent', 30, 520);
@@ -316,7 +316,7 @@ function drawPawnPixels(color, pixelX, pixelY) {
 var socket;
 
 function wsSetup() {
-    socket = new WebSocket(`ws://localhost:3000`);
+    socket = new WebSocket(`wss://final-project-group-5.glitch.me/:3000`);
 
     let roomCode = getRoomCode()
     console.log(roomCode)

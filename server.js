@@ -12,7 +12,7 @@ server.listen(3000);
 
 app.use(express.static("public/views"))
 app.use(express.static("public"))
-app.listen(3001);
+//app.listen(3000);
 
 const roomCodeChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 function NewRoomCode() {
@@ -469,3 +469,6 @@ function PrintBoard(g) {
         console.log('.'+row1Text +'.\n.'+ row2Text +'.')
     }
 }
+
+
+server.on('request', app)
