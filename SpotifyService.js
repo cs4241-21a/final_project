@@ -144,9 +144,9 @@ export default (new class SpotifyService {
     shufflePlaylist = async (id, genre) => {
         const playlist = this.getPlaylist(id)
 
-        deleteSongsFromPlaylist(id, songs.map(song => song.uri));
+        await this.deleteSongsFromPlaylist(id, songs.map(song => song.uri));
 
-        addSongsToPlaylist(id, getSongsByGenre(genre));
+        await this.addSongsToPlaylist(id, getSongsByGenre(genre));
 
         return playlist;
     }
