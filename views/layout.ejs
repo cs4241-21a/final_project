@@ -169,8 +169,24 @@ console.log("hello world :o");
       var new_date=document.getElementById("new_due").value;
 
       var parent=document.getElementById("row"+noParent+"");
-      noParent = parent.rowIndex+1
-      table.insertRow(noParent).outerHTML = "<tr class='child-row"+noParent+"' style='display: table-row'><td colspan=2 id='task_row"+noParent+"'>"+new_task+
+
+      json = { username: '', task: new_task, date: new_date, check: false, parent: row_ID_map.get("row" + noParent)},
+         body = JSON.stringify(json);
+         console.log(body)
+
+      noParent = parent.rowIndex
+
+      fetch('/newData', {
+            method: 'POST',
+            headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                  },
+            body: body
+          })
+          .then(res => res) // parse the JSON from the server
+          .then(data => {
+            table.insertRow(noParent+1).outerHTML = "<tr class='child-row"+noParent+"' style='display: table-row'><td colspan=2 id='task_row"+noParent+"'>"+new_task+
     "</td><td colspan=2 id='date_row"+noParent+"'>"+new_date+
         "</td><td colspan=2><input type='button' id='edit_button"+noParent+
             "' value='Edit' class='edit' onclick='edit_row("+noParent+
@@ -181,6 +197,10 @@ console.log("hello world :o");
             ")'><input type='button' value='Delete' class='delete' onclick='delete_row("+noParent+
             ")'></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+noParent+"' class='check' "
                 +''+" onclick='check_box('"+noParent+"')'> </td></tr>"
+      
+                row_ID_map.set("'child-row"+noParent+"'", data._id)
+            });
+
       
 
       document.getElementById("new_task").value="";
