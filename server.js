@@ -332,34 +332,6 @@ function IsValidWallPlacement(g, walls, x, y, orientation) {
 }
 
 
-
-// -- SAMPLE GAME STATE --
-// For testing purposes
-
-const sampleGame = {
-    // Walls: 2D array, 1 unit smaller than actual board; 0 = none, 1 = horizontal, 2 = vertical
-    // A column on the board is a row in the array, so we can use wallSpaces[x][y]
-    wallSpaces: [
-        [2,0,2,1,0,0,0,2],
-        [0,1,0,1,1,1,0,0],
-        [0,0,0,1,0,1,1,0],
-        [0,1,0,0,1,0,0,0],
-        [0,0,2,0,2,1,0,0],
-        [0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,2,1,0],
-        [0,0,0,2,0,1,0,0],
-    ],
-
-    // Pawns
-    pawnA: {x: 0, y: 0, walls: 10},
-    pawnB: {x: 0, y: 6, walls: 10},
-
-    // Whose turn is it
-    currentPlayer: true, //true is pawnA, false is pawnB
-    player: true
-};
-
-
 // -- PATHFINDING HELPERS --
 
 function ReachableFrom(g, pawn, x, y) {

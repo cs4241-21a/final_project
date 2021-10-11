@@ -52,9 +52,6 @@ function draw() {
             fill(240, 220, 182)
             noStroke()
             square(x, y, 40, 5)
-
-            // console.log("x = " + x + " , y = " + y)
-
         }
 
     }
@@ -104,42 +101,34 @@ function draw() {
 
 function mouseClicked() {
     renderInvalidMove = false
-    console.log(mouseX, mouseY)
-    console.log(JSON.stringify(gameState))
 
     MOVE_TYPE = FORM.elements.move.value
 
     if(MOVE_TYPE == "movePawn"){
-        console.log("move type is movePawn so moving is allowed")
 
         // Move pawn
         if (gameSetup && gameState.currentPlayer === gameState.player) {
             let clickedCell = pixelToCell(mouseX, mouseY)
-            console.log(`Moving to ${clickedCell[1] - 1}, ${clickedCell[0] - 1}`)
             if (clickedCell[0] !== -1) {
                 moveMyPawn(clickedCell[1] - 1, clickedCell[0] - 1)
             }
         }
 
     } else if (MOVE_TYPE == "placeHorWall"){
-        console.log("move type is placeHorWall so placing a horizontal wall is allowed")
 
         // Place horizontal wall
         if (gameSetup && gameState.currentPlayer === gameState.player) {
             let clickedWall = pixelToWall(mouseX, mouseY)
-            console.log("this is the clicked wall" + clickedWall)
             if (clickedWall[0] !== -1) {
                 placeWall(clickedWall[1] - 1, clickedWall[0] -2 , 1)
             }
         }
 
     } else if (MOVE_TYPE == "placeVerWall"){
-        console.log("move type is placeVerWall so placing a vertical wall is allowed")
 
         // Place vertical wall
         if (gameSetup && gameState.currentPlayer === gameState.player) {
             let clickedWall = pixelToWall(mouseX, mouseY)
-            console.log("this is the clicked wall" + clickedWall)
             if (clickedWall[0] !== -1) {
                 placeWall(clickedWall[1] - 1, clickedWall[0] -2 , 2)
             }
@@ -175,7 +164,7 @@ function renderGameState() {
     if (gameState.currentPlayer === gameState.player) {
         text('Your Turn!', 30, 520);
     } else {
-        text('Opponents Turn!', 30, 520);
+        text('Opponent\'s Turn!', 30, 520);
     }
     if (gameState.player) {
         text('You are the black pawn!', 30, 550);
@@ -319,7 +308,6 @@ function wsSetup() {
     socket = new WebSocket(`wss://final-project-group-5.glitch.me/:3000`);
 
     let roomCode = getRoomCode()
-    console.log(roomCode)
 
     socket.onopen = function () {
         // Sending to server
@@ -332,18 +320,14 @@ function wsSetup() {
         } else {
             data["room"] = "none"
         }
-        console.log(JSON.stringify(data))
         socket.send(JSON.stringify(data))
     };
 
     // Receiving from server
     socket.onmessage = function (message) {
-        // content.innerHTML += message.data +'<br />';
-        console.log(message.data)
         let json = JSON.parse(message.data)
         if (json.type === "game state") {
             document.getElementById("friend-join").setAttribute("hidden", "")
-            console.log("Got game state")
             gameState = json.gameState
             gameSetup = true
         } else if (json.type === "invalid move") {
