@@ -39,8 +39,8 @@ export default class PlaylistPage extends React.Component {
               </div>
           }
           <div className="details__right">
-            <button onClick={ () => window.open(this.playlist.href, '_blank') }>View on Spotify</button>
-            <button onClick={ this.shufflePlaylist }>Reroll Playlist</button>
+            <button onClick={ () => window.open(this.playlist.href, '_blank') } disabled={ this.state.loading }>View on Spotify</button>
+            <button onClick={ this.shufflePlaylist } disabled={ this.state.loading }>Reroll Playlist</button>
           </div>
         </div>
 
