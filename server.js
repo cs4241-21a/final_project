@@ -49,23 +49,28 @@ app.post("/newData", async (req, res) => {
     console.log(req.body)
   
     //Check if data aready in server
-    const dataExists = await Task.exists({username: userNameOfU, task: req.body.task, due: req.body.date});
+    const dataExists = await Task.exists({username: userNameOfU, task: req.body.task, due: req.body.date, parent: req.body.parent});
     if( !dataExists ) {
   
     const data = new Task({
       username: userNameOfU,
       task: req.body.task,
       due: req.body.date,
-      check: req.body.check
+      check: req.body.check,
+      parent: req.body.parent
   });
-      const dataUser = await data.save();
-      console.log("User data created!");
+      const dataUser = await data.save()
+      if(dataUser !== null){
+        res.json(dataUser)
+        console.log(dataUser)
+      }
   //Check what data user has
   } else {
     console.log('Duplicate contact attempted')      
+    newData = await Task.find({username: userNameOfU, task: req.body.task, due: req.body.date, parent: req.body.parent})
+    res.json(newData)
   }
-  newData = await Task.find({username: userNameOfU, task: req.body.task, due: req.body.date})
-  res.json(newData)
+  
   // res.send({username: userNameOfU})
   });
 

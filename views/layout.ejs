@@ -78,7 +78,7 @@ console.log("hello world :o");
             },
       body: body
     })
-    .then(res => res) // parse the JSON from the server
+    .then(res => res.json()) // parse the JSON from the server
     .then(data => {
       });
   
@@ -104,10 +104,11 @@ console.log("hello world :o");
       },
   body: body
   })
-  .then(res => res) // parse the JSON from the server
+  .then(res => res.json()) // parse the JSON from the server
   .then(data => {
   });
   
+  row_ID_map.delete("'row" + no + "'")
   document.getElementById("row"+no+"").outerHTML="";
   }
   
@@ -133,10 +134,11 @@ console.log("hello world :o");
                   },
             body: body
           })
-          .then(res => res) // parse the JSON from the server
+          .then(res => res.json()) // parse the JSON from the server
           .then(data => {
-                var row = table.insertRow(table_len).outerHTML="<tr id='row"+table_len+"'><td colspan=2 id='task_row"+table_len+"'>"+new_task+"</td><td colspan=2 id='date_row"+table_len+"'>"+new_date+"</td><td colspan=2><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit' onclick='edit_row("+table_len+")'> <input type='button' id='save_button"+table_len+"' value='Save' class='save' onclick='save_row("+table_len+")'> <input type='button' id='createsubtask_button"+table_len+"' value='Create Subtask' class='create' onclick='create_sub("+table_len+")'><input type='button' value='Delete' class='delete' onclick='delete_row("+table_len+")'></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+table_len+"' class='check' onclick='check_box('"+table_len+"')'> </td></tr>";
+                var row = table.insertRow(table_len).outerHTML="<tr id='row"+table_len+"'" + 'class="parent" id="row123" title="Click to expand/collapse" style="cursor: pointer;"'+"><td colspan=2 id='task_row"+table_len+"'>"+new_task+"</td><td colspan=2 id='date_row"+table_len+"'>"+new_date+"</td><td colspan=2><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit' onclick='edit_row("+table_len+")'> <input type='button' id='save_button"+table_len+"' value='Save' class='save' onclick='save_row("+table_len+")'> <input type='button' id='createsubtask_button"+table_len+"' value='Create Subtask' class='create' onclick='create_sub("+table_len+")'><input type='button' value='Delete' class='delete' onclick='delete_row("+table_len+")'></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+table_len+"' class='check' onclick='check_box('"+table_len+"')'> </td></tr>";
                 row_ID_map.set("'row"+table_len+"'", data._id)
+                row_ID_map.set( data._id, "'row"+table_len+"'")
             });
   }
   
@@ -161,6 +163,7 @@ console.log("hello world :o");
             ")'></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+table_len+"' class='check' "
                 +checkString+" onclick='check_box('"+table_len+"')'> </td></tr>"
    row_ID_map.set("'row"+table_len+"'", _id)
+   row_ID_map.set( _id, "'row"+table_len+"'")
 }
 
   function create_sub(noParent) {
@@ -170,9 +173,10 @@ console.log("hello world :o");
 
       var parent=document.getElementById("row"+noParent+"");
 
-      json = { username: '', task: new_task, date: new_date, check: false, parent: row_ID_map.get("row" + noParent)},
+      json = { username: '', task: new_task, date: new_date, check: false, parent: row_ID_map.get("'row" + noParent + "'")},
          body = JSON.stringify(json);
          console.log(body)
+         console.log(row_ID_map.get("'row" + noParent +"'"))
 
       noParent = parent.rowIndex
 
@@ -184,7 +188,7 @@ console.log("hello world :o");
                   },
             body: body
           })
-          .then(res => res) // parse the JSON from the server
+          .then(res => res.json()) // parse the JSON from the server
           .then(data => {
             table.insertRow(noParent+1).outerHTML = "<tr class='child-row"+noParent+"' style='display: table-row'><td colspan=2 id='task_row"+noParent+"'>"+new_task+
     "</td><td colspan=2 id='date_row"+noParent+"'>"+new_date+
@@ -199,6 +203,11 @@ console.log("hello world :o");
                 +''+" onclick='check_box('"+noParent+"')'> </td></tr>"
       
                 row_ID_map.set("'child-row"+noParent+"'", data._id)
+                row_ID_map.set( data._id, "'child-row"+noParent+"'")
+
+                if(document.getElementsByClassName("child-row"+noParent).length === 1){
+                    toggleAssign("row"+noParent)
+                }
             });
 
       
@@ -208,12 +217,41 @@ console.log("hello world :o");
 
   }
 
+  function add_subrow(_id, task, due, check, parent){
+   var table=document.getElementById("data_table");
+   var checkString = ''
+   var noParent = (row_ID_map.get(parent)).substring(row_ID_map.get(parent).indexOf("row") + 3)
+
+   if(check){
+    checkString = 'checked'
+   }
+    table.insertRow(noParent+1).outerHTML = "<tr class='child-row"+noParent+"' style='display: table-row'><td colspan=2 id='task_row"+noParent+"'>"+task+
+    "</td><td colspan=2 id='date_row"+noParent+"'>"+due+
+        "</td><td colspan=2><input type='button' id='edit_button"+noParent+
+            "' value='Edit' class='edit' onclick='edit_row("+noParent+
+            ")'> <input type='button' id='save_button"+noParent+
+            "' value='Save' class='save' onclick='save_row("+noParent+
+            ")'> <input type='button' id='createsubtask_button"+noParent+
+            "' value='Create Subtask' class='create' onclick='create_sub("+noParent+
+            ")'><input type='button' value='Delete' class='delete' onclick='delete_row("+noParent+
+            ")'></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+noParent+"' class='check' "
+                +''+" onclick='check_box('"+noParent+"')'> </td></tr>"
+      
+                row_ID_map.set("'child-row"+noParent+"'", _id)
+                row_ID_map.set( _id, "'child-row"+noParent+"'")
+  }
+
   window.onload = function() {
       fetch("/getData")
       .then(response => response.json()) // parse the JSON from the server
       .then(data => {
           for (var i = 0; i < data.length; i++) { 
+              if(data[i].parent === null || data[i].parent === ""){
               add_rowFromServer(data[i]._id, data[i].task, data[i].due, data[i].check);
+            }
+            else {
+                add_subrow(data[i]._id, data[i].task, data[i].due, data[i].check, data[i].parent)
+            }
           }
           toggleAssign()
         });
@@ -221,6 +259,16 @@ console.log("hello world :o");
 
     function toggleAssign() {  
 	            $('tr.parent')  
+	                .css("cursor", "pointer")  
+	                .attr("title", "Click to expand/collapse")  
+	                .click(function () {  
+	                    $(this).siblings('.child-' + this.id).toggle();  
+	                });  
+	            //$('*[@class^="child-"]').hide().children('td');  
+	} 
+
+    function toggleAssign(id) {  
+	            $('#' + id)  
 	                .css("cursor", "pointer")  
 	                .attr("title", "Click to expand/collapse")  
 	                .click(function () {  
