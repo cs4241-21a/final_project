@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("./partials/header.ejs")%>
+<head>
+    <link rel="stylesheet" href="./css/sakura.css" type="text/css">
+</head>
+
+<body>
+    <script src="./js/eventsJS.js" defer></script>
+    <script type="module" src="./js/ownedEvents.js" defer></script>
+    <%- include("./partials/nav.ejs")%>
+    <div>
+        <button type="button" onclick="openEventMaker()" id="eventMakerBtn">Make Event</button>
+
+        <div class="hidden" id="eventMaker">
+            <h2>Event Creator</h2>
+            <hr>
+            <div>
+                <h4>Event Date Ranges:</h4>
+                <div id="eventCalendar"></div>
+            </div>
+            <form id="createEventForm">
+                <label for="title">Title:</label>
+                <input id="title" name="title">
+                <br><br>
+                    
+                <label for="attendees">Attendees:</label>
+                <textarea id="attendees" form="createEventForm" name="attendees" placeholder="List all attendees username seperated by a comma"></textarea>
+                <br>
+                
+                <label for="timeStart">Available Time Start:</label>
+                <select id="timeStart" name="timeStart">
+                    <option value="1.0">1</option>
+                    <option value="2.0">2</option>
+                    <option value="3.0">3</option>
+                    <option value="4.0">4</option>
+                    <option value="5.0">5</option>
+                    <option value="6.0">6</option>
+                    <option value="7.0">7</option>
+                    <option value="8.0">8</option>
+                    <option value="9.0">9</option>
+                    <option value="10.0">10</option>
+                    <option value="11.0">11</option>
+                    <option value="12.0">12</option>
+                </select>
+                <select id="timeStartMin" name="timeStartMin">
+                    <option value="0">:00</option>
+                    <option value="30">:30</option>
+                </select>
+                <select id="amPM1" name="amPM1">
+                    <option value="AM">AM</option>
+                    <option value="PM">PM</option>
+                </select>
+                <br><br>
+                
+                <label for="timeEnd">Available Time End:</label>
+                <select id="timeEnd" name="timeEnd">
+                    <option value="1.0">1</option>
+                    <option value="2.0">2</option>
+                    <option value="3.0">3</option>
+                    <option value="4.0">4</option>
+                    <option value="5.0">5</option>
+                    <option value="6.0">6</option>
+                    <option value="7.0">7</option>
+                    <option value="8.0">8</option>
+                    <option value="9.0">9</option>
+                    <option value="10.0">10</option>
+                    <option value="11.0">11</option>
+                    <option value="12.0">12</option>
+                </select>
+                <select id="timeEndMin" name="timeEndMin">
+                    <option value="0">:00</option>
+                    <option value="30">:30</option>
+                </select>
+                <select id="amPM2" name="amPM2">
+                    <option value="AM">AM</option>
+                    <option value="PM">PM</option>
+                </select>
+                <br><br>
+                
+                <label for="duration">Duration:</label>
+                <select id="duration" name="duration">
+                    <option value="1">1hr</option>
+                    <option value=".5">30mins</option>
+                </select>
+                <br><br>
+                
+                <label for="description">Description:</label>
+                <textarea id="description" form="createEventForm" name="description"></textarea>
+                <br>
+                
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location">
+                <br><br>
+                
+                <button type="button" onclick="submitHandler()" id="submitButton">Submit</button>
+                
+                <div id="alertContainer"></div>
+
+            </form>
+        </div>
+        
+        <!-- Force next columns to break to new line -->
+       <!-- <div class="w-100"></div>-->
+        
+        <!-- Render the owned events and pending events -->
+        <h2>My Events</h2>
+        <hr/>
+        <div id="ownedEventList"></div>
+    </div>
+</body>
+</html>

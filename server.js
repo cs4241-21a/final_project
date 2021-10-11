@@ -379,6 +379,14 @@ app.get('/events', (req,  res) => {
   res.render('events', {sentUsername: req.session.username, title:"Events"});
 })
 
+app.get('/myEvents', (req,  res) => {
+  res.render('myEvents', {sentUsername: req.session.username, title:"Events"});
+})
+
+app.get('/eventInvites', (req,  res) => {
+  res.render('eventInvites', {sentUsername: req.session.username, title:"Events"});
+})
+
 app.get('/signUpPage', (req,res) =>{
   res.render('signUpPage');
 })

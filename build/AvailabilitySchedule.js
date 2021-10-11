@@ -22,7 +22,7 @@ class AvailabilitySchedule extends React.Component {
     let numDays = event.availableDates.length;
     let hourlyChunks = 1 / event.meetingDuration;
     let minTime = event.availableTimes[0][0];
-    let maxTime = event.availableTimes[0][event.availableTimes[0].length - 1] + hourlyChunks;
+    let maxTime = event.availableTimes[0][event.availableTimes[0].length - 1] + event.meetingDuration;
     let availNotFound = true;
     for (const availabilityBlob of event.attendeesAvailability) {
       if (availabilityBlob.name === this.props.username) {
