@@ -17,7 +17,7 @@ export default function Song(props) {
                     { props.playing ? <PauseIcon /> : <PlayIcon /> }
                   </button>
               </div>
-              <div className="song__image" />
+              <img src={ props.song.album_image_url } alt="Album cover" />
               <div className="song__details">
                   <div className="song__title">{ props.song.name }</div>
                   <div className="song__author">{ props.song.artists.join(', ') }</div>
