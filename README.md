@@ -60,17 +60,17 @@ Deploying the React app and Node server was also not an easy feat. This is becau
 We were then able to point the Node server at these build files in order to serve the website. 
 
 ## Team Contributions
-###Nathan Klingensmith
+### Nathan Klingensmith
 * Built core React app with JSX and SCSS
 * Integrated Spotify Web Playback SDK into React app
 * Authenticated Spotify SDK and API with client/secret credentials and an OAuth token
 * Integrated API endpoints into React app
 
-###Bryan Lima
+### Bryan Lima
 
-###Ashwin Pai
+### Ashwin Pai
 
-###River Yan
+### River Yan
 
 ## Design Achievements
 * **Figma Designs**: Designed app interfaces with Figma before development.
