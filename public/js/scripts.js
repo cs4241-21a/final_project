@@ -1,6 +1,8 @@
 /* const myCalendar = new TavoCalendar('#my-calendar',
     {date: "2021-10-1"}) */
 
+//const { info } = require("npmlog");
+
 const loadEvents = function(){
     
     fetch( '/loadEvents', {
@@ -89,15 +91,35 @@ const refreshPersonalCal = function(){
         var calendarEl = document.getElementById('my-calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'timeGridWeek',
-            events: response
+            events: response,
+            eventClick: function(info){
+                info.jsEvent.preventDefault();
+                //console.log(info.event)
+                let del = confirm("Would you like to delete the event: " + info.event.title + "?")
+
+                if(del){
+                    console.log(info.event.id)
+                    fetch('/removepersonal', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            id: info.event.id
+                        })
+                    })
+                        .then(response => {
+                            location.reload()
+                        })
+                }
+            }
         });
         calendar.render();
     })
 
-    
-    
-    
 }
+
+
 const createFile = function(event) {
     /*let eventDate = {
         start: event.availableDates[0],

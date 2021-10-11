@@ -186,10 +186,11 @@ app.post('/refreshpersonal', async(req,res) => {
         calItem.title = dbresponse[i].eventName
         calItem.location = dbresponse[i].location
         calItem.description = dbresponse[i].description
+        calItem.id = dbresponse[i]._id.toString()
         jsonRes.push(calItem)
       }
       
-      console.log(jsonRes)
+      //console.log(jsonRes)
       res.json(jsonRes)
     })
 })
@@ -205,7 +206,15 @@ app.post('/addpersonal', async(req, res) => {
     description: req.body.description
   })
   await dbEntry.save()
-  res.render('index')
+  res.redirect('/index')
+})
+
+app.post('/removepersonal', bodyparser.json(), async(req,res) => {
+  console.log(req.body)
+  CalendarEntry.deleteOne({_id: req.body.id})
+    .then(response => {
+      res.render('index')
+    })
 })
 
 app.post('/getavailabilityfrompersonal', async(req,res) => {
