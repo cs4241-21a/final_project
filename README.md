@@ -94,6 +94,7 @@ Based on the feedback from the various students and professors, they were very a
   - Pushed the webscraper data to mongo
 - Worked on backend
 - Did frontend UI touchups
+- Edited the absolute masterclass that is the project video
 
 **Steven Tran**:
 - Worked on frontend
