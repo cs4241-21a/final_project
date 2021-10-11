@@ -1,9 +1,7 @@
 #### Turning in Your Outline / Project
 
-1. A brief description of what you created, and a link to the project itself (two paragraphs of text)
-- Website: https://workout-pal.glitch.me/login
-- We created a personal workout tracking tool. The tracking tool allows for users to create their own workout routines and add it to a list, users can also modfy the workout as needed.
-
+1. Website: https://workout-pal.glitch.me/login
+   We created a personal workout tracking tool. The tracking tool allows for users to create their own workout routines and add it to a list, users can also modfy the workout as      needed.
 2. See video for further instructions
 3. An outline of the technologies you used and how you used them.
    Snowpack: Building static html files
