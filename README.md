@@ -1,51 +1,24 @@
-# Final Project
-*Due before the start of class, October 11th (final day of the term)*
+# Music Library
 
-For your final project, you'll implement a web application that exhibits understanding of the course materials. 
-This project should provide an opportunity to both be creative and to pursue individual research and learning goals.
+For our final project we created a music library. This web app allows users to add songs to the music library as well as comment on already existing songs. Users are able to see the music library dashboard without an account, but they need an account to access any other functionallity of the web app. To create an account they just need to click the login button and then click sign up. Here they will set their username, display name, and password.
 
-## General description
-Your project should consist of a complete Web application, exhibiting facets of the three main sections of the course material:
+Once their account is created, they will be prompted to log in with those credentials and then they will be able to access the full functionallity of the web app. When a user is signed in they can access their user dashboard (My Songs). Here they can add songs not already included in the music library. The user can also remove any song they add to the library. Last but not least, the user can make comments on any song in the music library from the main dashboard (the home screen). Every user can see the comments of other users and when they where posted.
 
-- Static Web page content and design. You should have a project that is accessible, easily navigable, and features significant content.
-- Dynamic behavior implemented with JavaScript (TypeScript is also allowed if your group wants to explore it).
-- Server-side programming *using Node.js*. Typically this will take the form of some sort of persistent data (database), authentication, and possibly server-side computation. 
-- A video (less than five minutes) where each group member explains some aspect of the project. An easy way to produce this video is for you all the groups members to join a Zoom call that is recorded; each member can share their screen when they discuss the project or one member can "drive" the interface while other members narrate (this second option will probably work better.) The video should be posted on YouTube or some other accessible video hosting service. Make sure your video is less than five minutes, but long enough to successfully  explain your project and show it in action. There is no minimum video length.
+Here is the link to our project:
+https://final-project-group-23.herokuapp.com/
 
-## Project ideation
-Excellent projects typically serve someone/some group; for this assignment you need to define your users and stakeholders. I encourage you to identify projects that will have impact, either artistically, politically, or in terms of productivity. 
+No additional information is required to run our project. Just make sure to go to the sign up page (link in log in page) to make your own account so you can access the full functionality of the app.
 
-## Logistics
-### Team size
-Students are will work in teams of 3-5 students for the project; teams of two can be approved with the permission of the instructor. Working in teams should help enable you to build a good project in a limited amount of time.  Use the `#project-logistics` channel in Discord to pitch ideas for final projects and/or find fellow team members as needed.
+The technologies we used were React, Express, MongoDB, Passport.JS, bcrypt, HTML, CSS, JS, EJS, and Shazam's API (RapidAPI). We used React, EJS, HTML, CSS, and JS to set up and style our frontend. We used MongoDB for storing user and music data in a NoSQL database. We used Express for our server as well as making API requests and keeping setting up a user session. We used Passport.JS to authenticate users on login and serializing usernames. We used bcrypt for encrypting users' passwords. We used Shazam's API to get data related to the song the user added to the library (title, artists, cover art).
 
-Teams must be in place by end of day on Saturday, September 25th. If you have not identified a team at this point, you will be assigned a team. You will be given some class time on Monday to work on your proposal, but please plan on reserving additional time as needed.
+We didn't face to many challenges when completing this project. One challenge was that we couldn't get an error message to display when the user put in the wrong username or password. We also had to learn how to use Shazam's API and properly filter the data we got from it. The other notbale challenge was the creation and updating of the dashboards (both main and user) with the proper song data.
 
-### Deliverables
+We all worked together to come up with the design for the web app.
 
-__Proposal:__ 
-Provide an outline of your project direction and the names of associated team members. 
-The outline should have enough detail so that staff can determine if it meets the minimum expectations, or if it goes too far to be reasonable by the deadline. Please include a general description of a project, and list of key technologies/libraries you plan on using (e.g. React, Three.js, Svelte, TypeScript etc.). Name the file proposal.md and submit a pull request.
-Submit a PR to turn it in by Monday, September 27th at11:59 PM. Only one pull request is required per team.
+Ben and Bill worked on the dashboards pages (main and user), adding/deleting songs on the user dashboard, keeping them updated properly, and getting song data through Shazam's API.
 
-There are no other scheduled checkpoints for your project. 
+Ke worked on setting up the login/sign up pages, authenticating the user, adding them to the database, and setting up most of the checks on user input for login/sign up.
 
-#### Turning in Your Outline / Project
-Submit a second PR on the final project repo to turn in your app and code. Again, only one pull request per team.
+Evan worked on ensuring that there were no duplicate songs in the database as well as adding a timestamp to the comments posted by users. He also helped Ke a bit with polishing the login/sign up pages and wrote this README file.
 
-Deploy your app, in the form of a webpage, to Glitch/Heroku/Digital Ocean or some other service; it is critical that the application functions correctly wherever you post it.
-
-The README for your second pull request doesn’t need to be a formal report, but it should contain:
-
-1. A brief description of what you created, and a link to the project itself (two paragraphs of text)
-2. Any additional instructions that might be needed to fully use your project (login information etc.)
-3. An outline of the technologies you used and how you used them.
-4. What challenges you faced in completing the project.
-5. What each group member was responsible for designing / developing.
-6. A link to your project video.
-
-Think of 1,3, and 4 in particular in a similar vein to the design / tech achievements for A1—A4… make a case for why what you did was challenging and why your implementation deserves a grade of 100%.
-
-## FAQs
-
-- **Can I use XYZ framework?** You can use any web-based frameworks or tools available, but for your server programming you need to use Node.js. Your client-side scripting language should be either JavaScript or TypeScript.
+Link to video: https://drive.google.com/file/d/1fDQ8l2DS2iVOv_tTbP-nDjnIxvqylaS_/view?usp=sharing
