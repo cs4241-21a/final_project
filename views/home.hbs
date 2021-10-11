@@ -40,7 +40,7 @@
   </head>
   <body>
         <nav>
-        <a href="/"><img src="/WishListLogo.png" class= "logo"></a>
+        <a href="/home2"><img src="/WishListLogo.png" class= "logo"></a>
         
         <ul>
             <li><a href="/addList">Add List</a></li>
@@ -52,16 +52,18 @@
     <div id="welcome-user">
       <h1 class="welcome-user" style="color:#8182DB"><center>Welcome, </center></h1>
       <h1 class="welcome-user" style="color:#8182DB"><center id='currentUserHome'>{{suggesteduser}}</center></h1>
+      <h1 class="welcome-user" style="color:#8182DB"><center id='currentUserHome2'></center></h1>
       <h1 class="welcome-user" style="color:#8182DB"><center>!</center></h1>
     </div>
 
-<div class= "cardPlaceholder">
+<div id= "cardPlaceholder">
 
         <div class="card" style="width: 18rem;">
           <div class="card-body text-center">
             <h5 class="card-title" style="text-align:center;">Clothes</h5>
             <p class="card-text">Description</p>
-            <a href="/listView" class="btn btn-primary">List</a>
+            <a class="btn btn-primary view-items">View Items</a>
+            {{!-- <a href="#" class="btn btn-primary">View Items</a> --}}
           </div>
         </div>
 

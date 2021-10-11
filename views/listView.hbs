@@ -6,6 +6,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <title>View Wish List</title>
     <link rel="icon" href="/WishListLogo.png">
+    <script src="/listViewScript.js" defer></script>
 
     <meta charset="utf-8">
     <style>
@@ -31,7 +32,7 @@
   
   <body>
     <nav>
-        <a href="/home"><img src="/WishListLogo.png" class= "logo"></a>
+        <a href="/home2"><img src="/WishListLogo.png" class= "logo"></a>
         
         <ul>
             <li><a href="/addItem">Add Item</a></li>
@@ -39,27 +40,36 @@
         </ul>
     </nav>
 
-    <h1 style="text-align:left""color:#8182DB"> <center> List Name </center> </h1>
+    <h1 style="text-align:left""color:#8182DB"> <center id='listNameInListView'> List Name </center> </h1>
+
+    <form id="chooseListForm" action='/choose-list' method='POST'>
+      <label for="flistname">Choose a List to View the Items of:</label>
+      <select id="flistname" name="Lists">
+        <option value="volvo">Volvo</option>
+      </select>
+      </br>
+      <button type="submit" id="choose-list">Choose List</button>
+    </form>
 
 
-    <div class="card" style="width: 18rem;">
-      <img src="/listimages/blackcocktaildress.png" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Nicole Sweetheart Neck Cocktail Dress</h5>
-        <p class="card-text">Nordstrom</p>
-        <p class="card-text">$148.00</p>
-        <a href="https://www.nordstrom.com/s/dress-the-population-nicole-sweetheart-neck-cocktail-dress/5157641?origin=category-personalizedsort&breadcrumb=Home%2FWomen%2FClothing%2FDresses&color=001" class="btn btn-primary">Link</a>
+    <div id='item-holder'>
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Nicole Sweetheart Neck Cocktail Dress</h5>
+          <p class="card-text">Nordstrom</p>
+          <p class="card-text">$148.00</p>
+          <a href="https://www.nordstrom.com/s/dress-the-population-nicole-sweetheart-neck-cocktail-dress/5157641?origin=category-personalizedsort&breadcrumb=Home%2FWomen%2FClothing%2FDresses&color=001" class="btn btn-primary">Link</a>
+        </div>
       </div>
-    </div>
 
-    <div class="card" style="width: 18rem;">
-      <img src="/listimages/popovershirt.png" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Woven Popover Shirt</h5>
-        <p class="card-text">Hollister</p>
-        <p class="card-text">$39.95</p>
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Woven Popover Shirt</h5>
+          <p class="card-text">Hollister</p>
+          <p class="card-text">$39.95</p>
 
-        <a href="https://www.hollisterco.com/shop/us/p/woven-popover-shirt-42580319?categoryId=166318&seq=02&faceout=prod1" class="btn btn-primary">Link</a>
+          <a href="https://www.hollisterco.com/shop/us/p/woven-popover-shirt-42580319?categoryId=166318&seq=02&faceout=prod1" class="btn btn-primary">Link</a>
+        </div>
       </div>
     </div>
     
