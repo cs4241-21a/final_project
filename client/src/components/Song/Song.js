@@ -5,39 +5,50 @@ import PauseIcon from "../icons/PauseIcon";
 
 export default function Song(props) {
   return (
-      <div className="song">
-          <div className="song__left">
-              <div className="song__index">
-                  <span>{ props.index + 1 }</span>
-                  <button
-                    className="song__button"
-                    aria-label="Play song"
-                    onClick={ () => props.playSongHandler(props.song.uri) }
-                  >
-                    { props.playing ? <PauseIcon /> : <PlayIcon /> }
-                  </button>
-              </div>
-              <img src={ props.song.album_image_url } alt="Album cover" />
-              <div className="song__details">
-                  <div className="song__title">{ props.song.name }</div>
-                  <div className="song__author">{ props.song.artists.join(', ') }</div>
-              </div>
-          </div>
-          <div className="song__middle">{ getDuration(props.song.duration_ms) }</div>
-          <div className="song__right">
-              <div className="song__popularity">
-                  { props.song.popularity > 50 && <div>
-                      <FlameIcon /> Trending
-                  </div> }
-              </div>
-              <button
-                className="song__button"
-                aria-label="Remove song"
-                onClick={ () => props.deleteSongHandler(props.song.uri) }>
-                <RemoveIcon /></button>
-          </div>
+    <div className={ 'song' + (props.loading ? ' loading' : '') }>
+      <div className="song__left">
+        <div className="song__index">
+          { !props.loading ? <div>{ props.index + 1 }</div> : <div className="skeleton">{ props.index + 1 }<div>/</div></div> }
+          <button
+            className="song__button"
+            aria-label="Play song"
+            onClick={ () => props.playSongHandler(props.song.uri) }
+          >
+            { props.playing ? <PauseIcon /> : <PlayIcon /> }
+          </button>
+        </div>
+        { !props.loading ?
+          <img src={props.song.album_image_url} alt="Album cover"/> :
+          <div className="song__image skeleton"><div/></div> }
+        { !props.loading ?
+          <div className="song__details">
+            <div className="song__title">{ props.song.name }</div>
+            <div className="song__author">{ props.song.artists.join(', ') }</div>
+          </div> :
+          <div className="song__details">
+            <div className="song__title skeleton">{ props.song.name }<div/></div>
+            <div className="song__author skeleton">{ props.song.artists.join(', ') }<div/></div>
+          </div> }
       </div>
-  );
+
+      { !props.loading ?
+        <div className="song__middle">{ getDuration(props.song.duration_ms) }</div> :
+        <div className="song__middle skeleton">{ getDuration(props.song.duration_ms) }<div/></div> }
+
+      <div className="song__right">
+        <div className="song__popularity">
+          { props.song.popularity > 80 && <div>
+              <FlameIcon /> Boppin'
+          </div> }
+        </div>
+        <button
+          className="song__button"
+          aria-label="Remove song"
+          onClick={ () => props.deleteSongHandler(props.song.uri) }>
+          <RemoveIcon /></button>
+      </div>
+    </div>
+);
 }
 
 const getDuration = (ms) => {

@@ -13,12 +13,14 @@
   &:hover {
     background: $background-tertiary;
 
-    .song__button {
-      display: flex;
-    }
+    &:not(.loading) {
+      .song__button {
+        display: flex;
+      }
 
-    .song__left .song__index span {
-      display: none;
+      .song__left .song__index span {
+        display: none;
+      }
     }
   }
 
@@ -29,20 +31,28 @@
 
     .song__index {
       text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       width: $button-width;
       font-size: $font-size-lg;
       font-family: $font-family-secondary;
       margin-right: $gap-md;
 
-      span {
+      .skeleton {
+        min-width: 20px;
+      }
+
+      div:not(.skeleton) {
         margin-bottom: $gap-xs;
       }
     }
 
-    img {
+    img, .song__image {
       height: 40px;
       width: 40px;
       margin-right: $gap-md;
+      border-radius: 0;
     }
 
     .song__details {
@@ -50,13 +60,16 @@
       flex-direction: column;
 
       .song__title {
-        width: 360px;
         text-overflow: ellipsis;
         overflow-x: clip;
         white-space: nowrap;
         font-size: $font-size-lg;
         font-weight: 600;
         margin-bottom: $gap-sm;
+
+        &:not(.skeleton) {
+          width: 360px;
+        }
       }
 
       .song__author {
@@ -69,6 +82,11 @@
   .song__middle {
     width: 80px;
     text-align: center;
+
+    &.skeleton {
+      width: 80px - $gap-md * 2;
+      margin: 0 $gap-md;
+    }
   }
 
   .song__right {

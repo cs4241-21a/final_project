@@ -46,3 +46,16 @@
     box-shadow: 0 0 0 1px $color-primary;
   }
 }
+
+@mixin mix-button-secondary {
+  @include mix-shadow-down;
+  border: 1px solid $color-primary;
+  border-radius: $border-radius;
+  color: $color-primary;
+  padding: $gap-sm * 1.5 $gap-md * 1.5;
+
+  &:active, &:hover, &:focus {
+    border-color: $accent-primary;
+    color: $accent-primary;
+  }
+}
