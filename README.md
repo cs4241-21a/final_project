@@ -1,4 +1,11 @@
 # Final Project
+
+Group 3 Team Members
+- Felix Chen
+- Jason Odell
+- Timothy Goon
+- Denver Blake
+
 Website Link: https://aram-generator.herokuapp.com/ 
 
 Video Link: https://drive.google.com/file/d/1oLcI_5p4T-1tOXv322fftIzquvw4JZGF/view?usp=sharing
