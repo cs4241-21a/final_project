@@ -23,6 +23,7 @@ What challenges you faced in completing the project.
 -Some JS bugs when rendering
 -Making sure subtasks were linked with there parent
 -Visualization of subtasks
+-When clicking anywhere on a main task, even the Create Subtask button, it will hide/show existing subtasks. Clicking create subtask when there is exactly 1 subtask looks like the one subtask is being replaced. It's not, one is being hidden while another is created.
 
 What each group member was responsible for designing / developing
 
