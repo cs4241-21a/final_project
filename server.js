@@ -163,10 +163,10 @@ app.get("/test", (request, response) => {
 
 app.post( '/create-list', bodyparser.json(), function( request, response ) {
   const connection = mysql.createConnection({
-    host: 'mysql.wpi.edu',
-    user: 'lauren',
-    password: 'n8njyP',
-    database: 'wishlist'
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE
   });
 
   console.log(`create-list post request: ${request}`);
@@ -199,10 +199,10 @@ app.post( '/create-list', bodyparser.json(), function( request, response ) {
 
 app.post( '/create-item', bodyparser.json(), function( request, response ) {
   const connection = mysql.createConnection({
-    host: 'mysql.wpi.edu',
-    user: 'lauren',
-    password: 'n8njyP',
-    database: 'wishlist'
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE
   });
 
   console.log(`create-item post request: ${request}`);
@@ -235,10 +235,10 @@ app.post( '/create-item', bodyparser.json(), function( request, response ) {
 
 app.post( '/get-user-lists', bodyparser.json(), function( request, response ) {
   const connection = mysql.createConnection({
-    host: 'mysql.wpi.edu',
-    user: 'lauren',
-    password: 'n8njyP',
-    database: 'wishlist'
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE
   });
 
   console.log(`get-user-lists post request: ${request}`);
