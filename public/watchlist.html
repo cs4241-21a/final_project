@@ -54,7 +54,6 @@
     <div class="boxHolder">
       <div class="box">
         <h1>Watch List</h1>
-        <a href="/logout">LOGOUT</a>
         <div id="travels"></div>
       </div>
     </div>
@@ -64,6 +63,7 @@
 
       <div id='addForm' class="modal">
         <div class='modal-content'>
+          <span id='closeAdd' class="close">&times;</span>
           <form id="newTrip">
             <h2 id = "boxTitle">Add A New Anime</h2>
 
@@ -96,9 +96,48 @@
 
             <button id="submitButton">Submit</button>
           </form>
-        </div>>
+        </div>
       </div>
     </div>
+
+    <div id='editForm' class="modal">
+      <div class='modal-content'>
+        <span id='closeEdit' class="close">&times;</span>
+        <form id="newTrip">
+          <h2 id = "boxTitle2">Edit Watch</h2>
+
+          <label for="title">Watch Title: </label>
+          <input type="text" id="title2" placeholder="Enter your watch" />
+          
+          <label for = "category">Choose a category</label>
+          <select name = "category" id = "cat2">
+            <option value ="adventure">Adventure</option>
+            <option value ="love">Love</option>
+            <option value ="suspense">Suspense</option>
+            <option value ="sol">Slice of Life</option>
+            <option value ="fantasy">Fantasy</option>
+          </select>
+
+          <label for="score">Score: </label>
+          <input
+            type="text"
+            id="score2"
+            placeholder="Enter score (1-10)"
+          />
+
+          <label for="date">Date: </label>
+          <input type="date" id="date2" name="date" required />
+
+          <label for="review">Review: </label>
+          <textarea type="text" id="review2" placeholder="reveiw"></textarea>
+        
+          <input type="hidden" id="idToModify2" />
+
+          <button id="submitEdit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
 
     <button class="collapsible">Adventure</button>
         <div class ="content">
