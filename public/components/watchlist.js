@@ -150,6 +150,7 @@ function loadModify(id) {
           document.getElementById("score2").value = data.result.score;
           document.getElementById("date2").value = data.result.date;
           document.getElementById("idToModify2").value = id;
+          document.getElementById("review2").value = data.result.review;
 
           document.getElementById("title").focus();
       });
