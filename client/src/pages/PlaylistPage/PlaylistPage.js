@@ -2,17 +2,19 @@ import Song from "../../components/Song/Song";
 import Script from 'react-load-script';
 import React from "react";
 import SpotifyWebPlayerService, { PlayerState } from "../../services/SpotifyWebPlayerService";
+import { Genres } from "../../globals";
 
 export default class PlaylistPage extends React.Component {
     spotifyWebPlayerService = new SpotifyWebPlayerService();
-    state;
+    playlist;
+    props;
 
     constructor(props) {
       super(props);
-      this.state = {
-        currentTrackURI: this.spotifyWebPlayerService.currentTrackURI,
-        playerState: this.spotifyWebPlayerService.playerState,
-      }
+      this.props = props;
+      this.state = { songs: null, songCount: 0, playlistDuration: 0 };
+      const id = window.sessionStorage.getItem(`${props.genre} playlist id`);
+      this.retrievePlaylist(id).then();
     }
 
     render() {
@@ -24,10 +26,10 @@ export default class PlaylistPage extends React.Component {
 
           <div className="playlist-page__details">
             <div className="details__left">
-              <div className="details__title">Hip Hop Party Playlist</div>
-              <div className="details__subtitle">10 songs • 2 hours, 14 minutes</div>
+              <div className="details__title">{ Genres[this.props.genre].label } Party Playlist</div>
+              <div className="details__subtitle">{this.state.songCount} songs • { getDuration(this.state.playlistDuration) }</div>
             </div>
-            <button>Add to Spotify</button>
+            <button onClick={ () => window.open(this.playlist.href, '_blank') }>View on Spotify</button>
           </div>
 
           <div className="playlist-page__song-fields">
@@ -43,16 +45,7 @@ export default class PlaylistPage extends React.Component {
           </div>
 
           <div className="playlist-page__songs">
-            <Song
-              index={ 1 }
-              song={ { title: 'BOP', 'author': 'DaBaby', 'duration_ms': 207959, popularity: 51, uri: 'spotify:track:6Ozh9Ok6h4Oi1wUSLtBseN' } }
-              playing={ this.spotifyWebPlayerService.currentTrackURI === 'spotify:track:6Ozh9Ok6h4Oi1wUSLtBseN' && this.spotifyWebPlayerService.playerState === PlayerState.PLAYING }
-              playSongHandler={ this.togglePlay } />
-            <Song
-              index={ 2 }
-              song={ { title: 'Shivers', 'author': 'Ed Sheeran', 'duration_ms': 258384, popularity: 42, uri: 'spotify:track:75MNhvTCCKsST3YqqUiU9r' } }
-              playing={ this.spotifyWebPlayerService.currentTrackURI === 'spotify:track:75MNhvTCCKsST3YqqUiU9r' && this.spotifyWebPlayerService.playerState === PlayerState.PLAYING }
-              playSongHandler={ this.togglePlay } />
+            { this.state.songs }
           </div>
         </div>
       );
@@ -60,10 +53,47 @@ export default class PlaylistPage extends React.Component {
 
     togglePlay = async (uri) => {
       await this.spotifyWebPlayerService.togglePlay(uri);
+      this.setState({ songs: this.getPlaylistHTML() });
+    }
+
+    generatePlaylist = async (genre) => {
+      const response = await fetch(`/api/playlist/generate?genre=${genre}`);
+      return await response.json();
+    }
+
+    getPlaylist = async (id) => {
+      const response = await fetch(`/api/playlist/${id}`);
+      return await response.json();
+    }
+
+    retrievePlaylist = async (id) => {
+      if (id) {
+        this.playlist = await this.getPlaylist(id);
+      } else {
+        this.playlist = await this.generatePlaylist(this.props.genre);
+        window.sessionStorage.setItem(`${this.props.genre} playlist id`, this.playlist.id);
+      }
       this.setState({
-        currentTrackURI: this.spotifyWebPlayerService.currentTrackURI,
-        playerState: this.spotifyWebPlayerService.playerState,
+        songs: this.getPlaylistHTML(),
+        songCount: this.playlist.songs.length,
+        playlistDuration: this.playlist.songs.reduce((duration, song) => duration + song.duration_ms, 0)
       });
+    }
+
+    getPlaylistHTML = () => {
+      return this.playlist.songs.map((song, i) =>
+        <Song
+          key={ song.id }
+          index={ i }
+          song={ song }
+          playing={ this.spotifyWebPlayerService.currentTrackURI === song.uri && this.spotifyWebPlayerService.playerState === PlayerState.PLAYING }
+          playSongHandler={ this.togglePlay } />);
     }
 }
 
+const getDuration = (ms) => {
+  const seconds = ms / 1000;
+  const minutes = seconds / 60;
+  const hours = Math.floor(minutes / 60);
+  return (hours > 0 ? `${hours} hours, ` : '') + `${ Math.round(minutes % 60) } minutes`
+}
