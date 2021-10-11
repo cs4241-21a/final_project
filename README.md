@@ -38,15 +38,15 @@ Deploy your app, in the form of a webpage, to Glitch/Heroku/Digital Ocean or som
 
 The README for your second pull request doesn’t need to be a formal report, but it should contain:
 
-1. A brief description of what you created, and a link to the project itself (two paragraphs of text)
-2. Any additional instructions that might be needed to fully use your project (login information etc.)
-3. An outline of the technologies you used and how you used them.
-4. What challenges you faced in completing the project.
-5. What each group member was responsible for designing / developing.
-6. A link to your project video.
+1. Our group created a calendar application displaying both events and tasks the user can use to keep track of what they need to do. A key feature of our calendars is being able to nest them, allowing for easier compartmentalization of events and the ability to avoid clutter that can plague particularly busy calendars. For example, if you have a classes calendar, you can put in calendars for each of your classes. If you make an event for one of the individual classes, it will show up in that individual class calendar alongside the general classes calendar. Likewise, events created in a parent calendar will not be shown to its children. All calendars and tasks are displayed in the left sidebar of the application.
+2. Project uses Github Authentication, requiring one to use their github account to use the calendar.
+3. We used React to create an object-oriented frontend for our project, which included our calendar, the weeks and days within our calendar, and a sidebar that allows the user to view their calendars and tasks. Our React hierarchy is rather complex, with days being deeply nested inside of calendars. We also used Mongoose alongside MongoDB, allowing us to organize our database functions more efficiently than standard expressJS mongoDB functions. Our login is handled by Github Authentification, allowing each user's calendar information to be tied to their github account.
+4. The project ended up being wildly out of scope and complex considering the skillset of most of our team, leading to Taylor needing to help Garrett and Geoff a lot with many aspects of implementation. This immense complexity combined with all of us being drowned in work for other classes during the first week and a half of the project's development lead to a rather botched development cycle. Despite having to scale down considerably though, we managed to make a functional prototype of a product that has an interesting niche compared to mainstream calendar applications.
+5.Responsibilies:
+- Taylor: Github OAuth integration, Database, Add/Modify/Delete Calendar
+- Geoff:  Add/Modify Tasks
+- Garrett: CSS design, Add/Delete Events
+6. https://youtu.be/sYE92Lx7pRM
 
 Think of 1,3, and 4 in particular in a similar vein to the design / tech achievements for A1—A4… make a case for why what you did was challenging and why your implementation deserves a grade of 100%.
 
-## FAQs
-
-- **Can I use XYZ framework?** You can use any web-based frameworks or tools available, but for your server programming you need to use Node.js. Your client-side scripting language should be either JavaScript or TypeScript.
