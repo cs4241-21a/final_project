@@ -275,7 +275,7 @@ app.post('/getavailabilityfrompersonal', async(req,res) => {
         availability: availabilityArray
       }
       attAv.push(newAvObj)
-      EventEntry.findByIdAndUpdate(req.body.eventID, {filledOut: true, attendeesAvailability: attAv})
+      EventEntry.findByIdAndUpdate(req.body.eventID, {attendeesAvailability: attAv})
       .then(result =>{
         res.json(availabilityArray)
       })
