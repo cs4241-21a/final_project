@@ -5,3 +5,13 @@ button {
 .hidden {
     display: none;
 }
+
+.containerRow{
+    display:flex;
+    flex-direction:row;
+}
+
+.containerColumn{
+    display:flex;
+    flex-direction:column;
+}

@@ -61,14 +61,17 @@ class PendingEventList extends React.Component {
     });
   }
   render() {
-    return /* @__PURE__ */ React.createElement(React.Fragment, null, this.state.events.map((event) => /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("h3", null, event.eventName), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("p", null, "Description: ", event.description), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("p", null, "Location: ", event.location), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("p", null, "Attendees:"), /* @__PURE__ */ React.createElement("ul", null, event.attendees.map((attendee) => /* @__PURE__ */ React.createElement("li", null, attendee))), /* @__PURE__ */ React.createElement("br", null), event.chosenEventDate === null || event.chosenEventTime === null ? /* @__PURE__ */ React.createElement("p", null, "Event date/time has not been chosen yet") : /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("p", null, "Event Date:"), /* @__PURE__ */ React.createElement("p", null, event.chosenEventDate), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("p", null, "Event Time:"), /* @__PURE__ */ React.createElement("p", null, event.chosenStartTime)), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("p", null, "Open Days and Time Slots: Click and submit to update availability"), /* @__PURE__ */ React.createElement(AvailabilitySchedule, {
+    return /* @__PURE__ */ React.createElement(React.Fragment, null, this.state.events.map((event) => /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("h3", null, event.eventName), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("p", null, "Description: ", event.description), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("p", null, "Location: ", event.location), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("p", null, "Attendees:"), /* @__PURE__ */ React.createElement("ul", null, event.attendees.map((attendee) => /* @__PURE__ */ React.createElement("li", null, attendee))), /* @__PURE__ */ React.createElement("br", null), event.chosenEventDate === null || event.chosenEventTime === null ? /* @__PURE__ */ React.createElement("p", null, "Event date/time has not been chosen yet") : /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("p", null, "Event Date:"), /* @__PURE__ */ React.createElement("p", null, event.chosenEventDate), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("p", null, "Event Time:"), /* @__PURE__ */ React.createElement("p", null, event.chosenStartTime)), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("p", null, "Open Days and Time Slots: Click and submit to update availability"), /* @__PURE__ */ React.createElement("div", {
+      class: "containerRow"
+    }, /* @__PURE__ */ React.createElement(AvailabilitySchedule, {
       event,
       username: this.state.username,
       updateEvent: this.updateEvent
-    }), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("button", {
+    }), /* @__PURE__ */ React.createElement("button", {
       type: "button",
+      style: {maxHeight: "45px"},
       onClick: (clickEvent) => this.addUserAvail(event)
-    }, "Accept Invite")), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("br", null))));
+    }, "Accept Invite"))), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("br", null))));
   }
 }
 export default PendingEventList;
