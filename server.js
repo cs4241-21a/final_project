@@ -279,6 +279,7 @@ app.post( '/get-user-lists', bodyparser.json(), function( request, response ) {
         if (err) throw err;
         console.log("selecting lists for a given username");
         console.log(result);
+        //then( result => response.json(result) )
         console.log('result[0].json:')
         console.log(result[0].json);
         selectResult = result[0].json;
