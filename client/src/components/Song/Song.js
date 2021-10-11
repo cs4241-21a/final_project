@@ -37,7 +37,7 @@ export default function Song(props) {
 }
 
 const getDuration = (ms) => {
-    const seconds = ms / 1000;
-    const minutes = seconds / 60;
-    return `${ Math.floor(minutes) }:${ Math.round(seconds % 60) }`
+  const seconds = ms / 1000;
+  const minutes = seconds / 60;
+  return `${ Math.floor(minutes) }:${ Math.round(seconds % 60) }`
 }

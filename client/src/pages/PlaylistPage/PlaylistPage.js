@@ -11,7 +11,7 @@ export default class PlaylistPage extends React.Component {
     constructor(props) {
       super(props);
       this.props = props;
-      this.state = { songs: null };
+      this.state = { songs: null, songCount: 0, playlistDuration: 0 };
       const id = window.sessionStorage.getItem(`${props.genre} playlist id`);
       this.retrievePlaylist(id).then();
     }
@@ -26,7 +26,7 @@ export default class PlaylistPage extends React.Component {
           <div className="playlist-page__details">
             <div className="details__left">
               <div className="details__title">Hip Hop Party Playlist</div>
-              <div className="details__subtitle">10 songs • 2 hours, 14 minutes</div>
+              <div className="details__subtitle">{this.state.songCount} songs • { getDuration(this.state.playlistDuration) }</div>
             </div>
             <button>Add to Spotify</button>
           </div>
@@ -72,7 +72,11 @@ export default class PlaylistPage extends React.Component {
         this.playlist = await this.generatePlaylist(this.props.genre);
         window.sessionStorage.setItem(`${this.props.genre} playlist id`, this.playlist.id);
       }
-      this.setState({ songs: this.getPlaylistHTML() });
+      this.setState({
+        songs: this.getPlaylistHTML(),
+        songCount: this.playlist.songs.length,
+        playlistDuration: this.playlist.songs.reduce((duration, song) => duration + song.duration_ms, 0)
+      });
     }
 
     getPlaylistHTML = () => {
@@ -86,3 +90,9 @@ export default class PlaylistPage extends React.Component {
     }
 }
 
+const getDuration = (ms) => {
+  const seconds = ms / 1000;
+  const minutes = Math.round(seconds / 60 % 60);
+  const hours = Math.floor(minutes / 60);
+  return hours > 0 ? `${hours} hours, ` : '' + `${minutes} minutes`
+}
