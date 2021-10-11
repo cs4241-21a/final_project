@@ -7,13 +7,14 @@
 - Yang Lyu
 - Jingyu Xie
 
-Link to the project: Glitch, Heroku
+- Link to the project: [https://bigsmart-anime-service.glitch.me/](https://bigsmart-anime-service.glitch.me/)
+- Project showcase link: [https://youtu.be/UfD0MB-sd6E](https://youtu.be/UfD0MB-sd6E)
 
 # General Description
 
 As we were brainstorming ideas for the final project, we realized we all share a love for anime. It led us into creating a website for anime-viewers to create and share their own anime lists. This is especially convenient for those times when someone complains about having nothing to watch. In this scenario, the user can log into the website and share their anime list with their friends instead of struggling to remember what they have watched before. 
 
-The website allows users to log in with username/password or through Github authentication. In the homepage, users can edit their password; also, there is a data visualization graph(Radar Chart) that is generated based on the users’ preferred genres. This is convenient for when the user wants to know what they are into; they can do so at a glance. For the watchlist, the user can add, edit, and remove reviews for individual anime they have added. The watchlist will categorize the added anime to the corresponding anime list. There are five categories: adventure, love, suspense, slice of life, and fantasy. In addition, we implemented an anime search engine API from [Trace.moe API] (https://soruly.github.io/trace.moe-api/#/) in the search page, which allows the user to search for unknown animes based on screenshots. For the About Us page, we have listed the name of the team members who contributed to this project. Moreover, the user can use the CONTACT US button to send emails to us and receive a copy of the email immediately.
+The website allows users to log in with username/password or through Github authentication. In the homepage, users can edit their password; also, there is a data visualization graph(Radar Chart) that is generated based on the users’ preferred genres. This is convenient for when the user wants to know what they are into; they can do so at a glance. For the watchlist, the user can add, edit, and remove reviews for individual anime they have added. The watchlist will categorize the added anime to the corresponding anime list. There are five categories: adventure, love, suspense, slice of life, and fantasy. In addition, we implemented an anime search engine API from [Trace.moe API](https://soruly.github.io/trace.moe-api/#/) in the search page, which allows the user to search for unknown animes based on screenshots. For the About Us page, we have listed the name of the team members who contributed to this project. Moreover, the user can use the CONTACT US button to send emails to us and receive a copy of the email immediately.
 
 # Additional Instruction
 Login with github or register with your own account
@@ -47,4 +48,3 @@ The rest should be self-evident
 - Yang Lyu: About Us, Contact US, embellish the CSS file
 - Jingyu Xie: Homepage, attribute generator and pie chart, embellish the watchlist with pop up window, css, some user experience edition (eg. alerting)
 
-# Project Showcase Link
