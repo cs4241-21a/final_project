@@ -8,6 +8,8 @@ Given that this project involves multiple clients in a competitive setting, a la
 
 A large portion of our server code is dedicated to validating pawn and wall placements.  Because walls in Quoridor sit in between grid spaces, we had to come up with our own methods for checking blockages, calculating legal movements, and pathfinding (to satisfy Quoridor's rule that there must always be a path between each pawn and the side of the board they're trying to reach).
 
+Overview video of our project: https://www.youtube.com/watch?v=gbEOEv0PTZ4
+
 ### Instructions
 Two players (or just two browser tabs) are needed to run the game.
 Go to http://final-project-group-5.glitch.me/ to load the first client.
