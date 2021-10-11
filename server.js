@@ -251,45 +251,54 @@ app.post( '/get-user-lists', bodyparser.json(), function( request, response ) {
 
   request.on( 'end', function() {
     const json = JSON.parse( dataString )
-    items.push(json);
-    console.log("items from /create-item:");
-    console.log(items);
-    console.log('JSON.stringify(items):')
-    console.log(JSON.stringify(items))
+    var userLists = []
+    for(let i = 0; i < lists.length; i++){
+      if(lists[i].username === currentUser){
+        userLists.push(lists[i])
+      }
+    }
+    console.log('userLists:')
+    console.log(userLists)
+
+    // // items.push(json);
+    // console.log("items from /create-item:");
+    // console.log(items);
+    // console.log('JSON.stringify(items):')
+    // console.log(JSON.stringify(items))
     
-    connection.connect(function(err) {
-      if (err) throw err;
-      // var sql = `SELECT VERSION();`;
-      // connection.query(sql, function (err, result) {
-      //   if (err) throw err;
-      //   console.log("version");
-      //   console.log(result);
-      // });
-      // var sql = `SELECT * FROM lists WHERE (username = '${json.username}');`;
-      // console.log(`username: ${json.username}`)
-      // connection.query(sql, function (err, result, fields) {
-      //   if (err) throw err;
-      //   console.log("selecting lists for a given username");
-      //   console.log(result);
-      //   selectResult = result;
-      // });
-      var sql = `SELECT CONCAT('[',GROUP_CONCAT(CONCAT('{"listName":"', listName, '"', ',"description":"', description,  '"', ',"username":"', username, '"}' )), ']') as json FROM lists WHERE (username = '${json.username}');`;
-      console.log(`username: ${json.username}`)
-      connection.query(sql, function (err, result, fields) {
-        if (err) throw err;
-        console.log("selecting lists for a given username");
-        console.log(result);
-        //then( result => response.json(result) )
-        console.log('result[0].json:')
-        console.log(result[0].json);
-        selectResult = result[0].json;
-        console.log('JSON.stringify(selectResult):')
-        console.log(JSON.stringify(selectResult))
-      });
-    });
+    // connection.connect(function(err) {
+    //   if (err) throw err;
+    //   // var sql = `SELECT VERSION();`;
+    //   // connection.query(sql, function (err, result) {
+    //   //   if (err) throw err;
+    //   //   console.log("version");
+    //   //   console.log(result);
+    //   // });
+    //   // var sql = `SELECT * FROM lists WHERE (username = '${json.username}');`;
+    //   // console.log(`username: ${json.username}`)
+    //   // connection.query(sql, function (err, result, fields) {
+    //   //   if (err) throw err;
+    //   //   console.log("selecting lists for a given username");
+    //   //   console.log(result);
+    //   //   selectResult = result;
+    //   // });
+    //   var sql = `SELECT CONCAT('[',GROUP_CONCAT(CONCAT('{"listName":"', listName, '"', ',"description":"', description,  '"', ',"username":"', username, '"}' )), ']') as json FROM lists WHERE (username = '${json.username}');`;
+    //   console.log(`username: ${json.username}`)
+    //   connection.query(sql, function (err, result, fields) {
+    //     if (err) throw err;
+    //     console.log("selecting lists for a given username");
+    //     console.log(result);
+    //     console.log('result[0].json:')
+    //     console.log(result[0].json);
+    //     selectResult = result[0].json;
+    //     console.log('JSON.stringify(selectResult):')
+    //     console.log(JSON.stringify(selectResult))
+    //   });
+    // });
 
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end(selectResult)
+    // response.end(selectResult)
+    response.end(JSON.stringify(userLists))
   })
 })
 
