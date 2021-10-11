@@ -64,7 +64,9 @@ app.post("/newData", async (req, res) => {
   } else {
     console.log('Duplicate contact attempted')      
   }
-  res.send({username: userNameOfU})
+  newData = await Task.find({username: userNameOfU, task: req.body.task, due: req.body.date})
+  res.json(newData)
+  // res.send({username: userNameOfU})
   });
 
   app.post("/editData", async (req, res) => {
