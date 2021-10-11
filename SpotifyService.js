@@ -140,6 +140,18 @@ export default (new class SpotifyService {
         });
     }
 
+    shufflePlaylist = async (id, genre) => {
+        const playlist = this.getPlaylist(id)
+
+        const songs = playlist.items.map(i => i.track);   
+
+        deleteSongsFromPlaylist(id, songs.map(song => song.uri));
+
+        addSongsToPlaylist(id, getSongsByGenre(genre));
+
+        return playlist;
+    }
+
     // returns promised fetch request with automatic header authorization
     request = async (method, path, data = null, headers = 'reserved_default') => {
         if (headers === 'reserved_default') {
