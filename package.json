@@ -1,0 +1,27 @@
+{
+  "name": "aram_match_generator",
+  "version": "0.0.0",
+  "private": true,
+  "description": "",
+  "engines": {
+    "node": "16.x"
+  },
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "leaguejs": "^2.2.2",
+    "mongoose": "^6.0.8",
+    "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.13"
+  }
+}

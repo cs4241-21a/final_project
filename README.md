@@ -1,51 +1,103 @@
 # Final Project
-*Due before the start of class, October 11th (final day of the term)*
 
-For your final project, you'll implement a web application that exhibits understanding of the course materials. 
-This project should provide an opportunity to both be creative and to pursue individual research and learning goals.
+Group 3 Team Members
+- Felix Chen
+- Jason Odell
+- Timothy Goon
+- Denver Blake
 
-## General description
-Your project should consist of a complete Web application, exhibiting facets of the three main sections of the course material:
+Website Link: https://aram-generator.herokuapp.com/ 
 
-- Static Web page content and design. You should have a project that is accessible, easily navigable, and features significant content.
-- Dynamic behavior implemented with JavaScript (TypeScript is also allowed if your group wants to explore it).
-- Server-side programming *using Node.js*. Typically this will take the form of some sort of persistent data (database), authentication, and possibly server-side computation. 
-- A video (less than five minutes) where each group member explains some aspect of the project. An easy way to produce this video is for you all the groups members to join a Zoom call that is recorded; each member can share their screen when they discuss the project or one member can "drive" the interface while other members narrate (this second option will probably work better.) The video should be posted on YouTube or some other accessible video hosting service. Make sure your video is less than five minutes, but long enough to successfully  explain your project and show it in action. There is no minimum video length.
+Video Link: https://drive.google.com/file/d/1oLcI_5p4T-1tOXv322fftIzquvw4JZGF/view?usp=sharing
 
-## Project ideation
-Excellent projects typically serve someone/some group; for this assignment you need to define your users and stakeholders. I encourage you to identify projects that will have impact, either artistically, politically, or in terms of productivity. 
+## Description
+ARAM is a 5v5 mode in League of Legends where each player is assigned a random character that they own and can trade with their teammates. Currently, there is no good way to generate an ARAM character draft in non-matchmaking player organized games, so we made a match generator which would assign characters to players for these types of games. 
 
-## Logistics
-### Team size
-Students are will work in teams of 3-5 students for the project; teams of two can be approved with the permission of the instructor. Working in teams should help enable you to build a good project in a limited amount of time.  Use the `#project-logistics` channel in Discord to pitch ideas for final projects and/or find fellow team members as needed.
+Using the Riot API, each time we generate a draft of characters, we retrieve each player’s owned character pool and grab a total of 10 characters for each team.
 
-Teams must be in place by end of day on Saturday, September 25th. If you have not identified a team at this point, you will be assigned a team. You will be given some class time on Monday to work on your proposal, but please plan on reserving additional time as needed.
+Our interface has the user input 10 usernames with 5 on each team. After clicking a ‘generate’ button, our program outputs 10 characters for each team to select from, with each username owning at least 2 out of the 10 generated characters.
 
-### Deliverables
+We also created a tournament generator where you can add teams to a database and randomly generate matches so that every team has a match against another team.
 
-__Proposal:__ 
-Provide an outline of your project direction and the names of associated team members. 
-The outline should have enough detail so that staff can determine if it meets the minimum expectations, or if it goes too far to be reasonable by the deadline. Please include a general description of a project, and list of key technologies/libraries you plan on using (e.g. React, Three.js, Svelte, TypeScript etc.). Name the file proposal.md and submit a pull request.
-Submit a PR to turn it in by Monday, September 27th at11:59 PM. Only one pull request is required per team.
+## Additional Instructions
 
-There are no other scheduled checkpoints for your project. 
+The requests on our app require the use of the Riot API which is unreliable and may fail. If any request takes more than 1 minute refresh the page on our app and try again.
+Also, if too many people are using our app at once the Riot API may stop responding. In this case wait a few minutes and try again later.
+Additionally if you wish to test our code on your own machine, you will need your own Riot API key. You can get a developer API key by going to https://developer.riotgames.com
 
-#### Turning in Your Outline / Project
-Submit a second PR on the final project repo to turn in your app and code. Again, only one pull request per team.
+Here is a list of valid League of Legends summoner names to test the app with.
 
-Deploy your app, in the form of a webpage, to Glitch/Heroku/Digital Ocean or some other service; it is critical that the application functions correctly wherever you post it.
+1. Xialblo
+2. NearbyAnt
+3. Tiicho
+4. Kyøu
+5. Time to Break
+6. Kieran2500
+7. Planet 9
+8. Big Jadeo
+9. Deino Mite
+10. jairzinho
+11. Robertdobert
+12. happynoob23
+13. ezra3102
+14. uginghostdragon
+15. FC Wombat
+16. Schnellaffe
+17. Xyatz314
+18. WrÆth
+19. WalrusKing21
+20. link101011
+21. maxchief101
+22. luckybanana16
+23. HexKnight 
+24. Wephen
+25. Dragonkillermega
+26. TeaGoon
+27. Emperor Gandalf
+28. TheSimoneseCat
+29. Viserra
+30. Trutru32
+31. Dayanah
+32. cadgweep
+33. Mumichu
+34. Megagamer10
+35. jhooney WPI
+36. Ksesha
+37. ricetoeatyou
+38. Rilay
+39. ItsMyMiddleLane
+40. GriffonStrike14
+41. The Quıpster
+42. Gearldine6Z
+43. Yuumíí
+44. SovietPupper
+45. rathmadara
+46. Flagged ID
+47. HideOnShrubbery
+48. Parzival0913
 
-The README for your second pull request doesn’t need to be a formal report, but it should contain:
+## Technologies
+- Javascript
+- Nodejs
+- Bootstrap - used for styling 
+- React - used for frontend 
+  - react-router-dom
+- Heroku - used to deploy the website
+- Express - used for backend
+- Mongodb - used for storing users, teams, matches, and tournaments
+- Mongoose - used to store & retrieve data from mongodb
+- Riot Games API - used for generating champions and getting IDs linked to summoner names
+- LeagueJS - Wrapper for riot API calls 
 
-1. A brief description of what you created, and a link to the project itself (two paragraphs of text)
-2. Any additional instructions that might be needed to fully use your project (login information etc.)
-3. An outline of the technologies you used and how you used them.
-4. What challenges you faced in completing the project.
-5. What each group member was responsible for designing / developing.
-6. A link to your project video.
+## Challenges
+The Riot API takes longer to respond than expected so our code runs a lot slower than we’d like. Additionally the API doesn’t always respond when called. 
+CORS was inconvenient during development
+Formatting the images to show next to each character was annoying
 
-Think of 1,3, and 4 in particular in a similar vein to the design / tech achievements for A1—A4… make a case for why what you did was challenging and why your implementation deserves a grade of 100%.
+## Responsibilities
 
-## FAQs
+- Felix Chen - Front end for single draft generation and some css styling
+- Jason Odell - API functions champion generation & getting account IDs from summoner names. Added checks for valid summoner name input
+- Timothy Goon - login and register system, connect single match generation page with backend, code reviews and refactoring, app deployment
+- Denver Blake - Front & Back end for TournamentCreation page, set up database schemas for tournament, matches, and teams
 
-- **Can I use XYZ framework?** You can use any web-based frameworks or tools available, but for your server programming you need to use Node.js. Your client-side scripting language should be either JavaScript or TypeScript.
