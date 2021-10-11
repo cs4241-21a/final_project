@@ -3,6 +3,8 @@
 
 Players of the open-world action RPG Genshin Impact often find themselves wondering which materials they need to collect (or "farm") based on the day-of-the-week schedule and the particular characters, weapons, or artifacts they wish to improve. Rather than spending hours looking up guides, farming locations, and farming schedules, we compiled a web-based application that easily creates a schedule for players to reference. All they need to do is select the characters, weapons, and/or artifacts they wish to farm.
 
+For context, in Genshin Impact, the player can enhance the strength of characters they own by using certain materials. Each character has their own unique set of materials that must be obtained from the world from defeating enemies around the environment. Weapons, meanwhile, can be equipped by characters, but also have their own set of materials. Artifacts can also be equipped by characters, but they are obtained through farming (note that, while all artifacts are farmable on all days, it is still important to remind players of which artifacts they were hoping to farm). Certain materials are only available on specific days of the week, so we created an application that will help a player organize and remember what materials they need.
+
 // probably a paragraph here about how we did it. awaaaga
 
 LINK: (linkhere)[linkhere]
@@ -72,7 +74,13 @@ As a frontend-focused developer, I primarily ensured the site itself was easy to
 
 ### Michael
 
-### Matthew
+### Matthew (Frontend/Middleware)
+As a frontend and middleware developer, I worked on helping design the website and worked on some of the site's functionality. This includes:
+- Helping with mockups of overall website layout
+- Adding functionality to the menu to help with its opening and closing capabilities
+- Added tabs to the menu to store the menu's content
+- Worked with implementing other react components to display in the different tabs' content
+- Stylizing the tabs in the menu display
 
 6. A link to your project video.
 // TODO: Team !!!
