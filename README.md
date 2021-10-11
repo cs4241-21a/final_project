@@ -2,6 +2,8 @@
 
 URL: https://laundry-connect-2.herokuapp.com/
 
+Video: https://youtu.be/uUjDJQXlr1U
+
 This project is an improvement of the current LaundryConnect website. LaundryConnect is the service which provides data on the current progress of laundry machines at WPI; however, the website does not look great and it is hard to navigate (as shown below).
 
 Our group decided we needed to improve the user interface and add functionality to save your favorite locations on campus.
@@ -115,6 +117,3 @@ Based on the feedback from the various students and professors, they were very a
   - Created user login, registration
   - Implemented the ability to get data from the Mongo server
   - Implemented Mongoose data structure
-
-## Link to the video
-
