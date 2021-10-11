@@ -220,7 +220,8 @@ console.log("hello world :o");
   function add_subrow(_id, task, due, check, parent){
    var table=document.getElementById("data_table");
    var checkString = ''
-   var noParent = (row_ID_map.get(parent)).substring(row_ID_map.get(parent).indexOf("row") + 3)
+   var noParent = (row_ID_map.get(parent)).substring(row_ID_map.get(parent).indexOf("row") + 3, row_ID_map.get(parent).length-1)
+   noParent = parseInt(noParent)
 
    if(check){
     checkString = 'checked'
@@ -257,18 +258,15 @@ console.log("hello world :o");
         });
     }
 
-    function toggleAssign() {  
-	            $('tr.parent')  
-	                .css("cursor", "pointer")  
-	                .attr("title", "Click to expand/collapse")  
-	                .click(function () {  
-	                    $(this).siblings('.child-' + this.id).toggle();  
-	                });  
-	            //$('*[@class^="child-"]').hide().children('td');  
-	} 
-
-    function toggleAssign(id) {  
-	            $('#' + id)  
+    function toggleAssign(id) {
+        let search
+        if(id === undefined){
+            search = 'tr.parent'
+        }  
+        else{
+            search = '#' + id
+        }
+	            $(search)  
 	                .css("cursor", "pointer")  
 	                .attr("title", "Click to expand/collapse")  
 	                .click(function () {  
