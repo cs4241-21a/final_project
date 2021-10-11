@@ -23,7 +23,7 @@ We also created a tournament generator where you can add teams to a database and
 
 The requests on our app require the use of the Riot API which is unreliable and may fail. If any request takes more than 1 minute refresh the page on our app and try again.
 Also, if too many people are using our app at once the Riot API may stop responding. In this case wait a few minutes and try again later.
-
+Additionally if you wish to test our code on your own machine, you will need your own Riot API key. You can get a developer API key by going to https://developer.riotgames.com
 Here is a list of valid League of Legends summoner names to test the app with.
 
 1. Xialblo
