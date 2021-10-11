@@ -391,7 +391,7 @@ setInterval(() => {
   allClients = allClients.filter(c => c.socket.readyState == 1); // only keep open connections
   allClients.forEach(c => {
     //console.log(c.address + ": " + c.socket.readyState);
-    if (Math.random() > 0.8) c.socket.send("keepalive");
+    if (Math.random() > 0.8) c.socket.send("keepalive"); // dumb way to make it not send as fast
   });
 
   lobbies = lobbies.filter(l => {

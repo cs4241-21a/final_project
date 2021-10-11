@@ -385,7 +385,7 @@ function draw() {
   if (counter >= 60) {
     counter = 0;
     seconds++;
-    score++;
+    if(!GameOver) score++;
   }
   counter++;
   background(255);
@@ -549,6 +549,11 @@ function connectWS() {
             sh.username = json.username;
             sh.masks = [];
             otherShips[json.id] = sh;
+          }
+          break;
+        case "disconnected":
+          {
+            delete otherShips[json.id];
           }
           break;
         case "update_player":
