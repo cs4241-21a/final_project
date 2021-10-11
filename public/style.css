@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+
+* {font-family: 'PT Sans', sans-serif;}
+
+.jumbotron {
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    background-color: #E6E6FA;
+    border-radius: .3rem;
+}
+
+.logo{
+    width: 20%;
+}
+
+.example{
+    width: 40%;
+}
+
+.card{
+    margin: 25px;
+    display:inline-block;
+}
+
+h4{
+    font-weight: bold;
+}
+
+nav{
+    background-color: #8182DB;
+    color: white;
+    padding: 10px 60px;
+    display: flex;
+    justify-content: space-between;
+}
+
+nav ul{
+    display: flex;
+    justify-content: space-around; 
+    align-items: center; 
+}
+
+nav li{
+    list-style: none;
+}
+
+nav li a{
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px 8px;
+}
+
+nav li a:hover{
+    color: #5e5c5D;
+    text-decoration: none;
+}
+
+

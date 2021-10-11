@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">    
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title>View Wish List</title>
+    <link rel="icon" href="/WishListLogo.png">
+    <script src="/listViewScript.js" defer></script>
+
+    <meta charset="utf-8">
+    <style>
+      .grid-container {
+        display: grid;
+        grid-template-columns: auto auto;
+        background-color: #D1CDCF;
+        padding: 10px;
+      }
+      .grid-item {
+        background-color: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(0, 0, 0, 0.8);
+        padding: 20px;
+        font-size: 30px;
+        text-align: center;
+      }
+      body {
+        background-color: #ffffff;
+      }
+      
+    </style>
+  </head>
+  
+  <body>
+    <nav>
+        <a href="/home2"><img src="/WishListLogo.png" class= "logo"></a>
+        
+        <ul>
+            <li><a href="/addItem">Add Item</a></li>
+            <li><a href="/auth/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <h1 style="text-align:left""color:#8182DB"> <center id='listNameInListView'> List Name </center> </h1>
+
+    <form id="defaultchooseListForm" action='/choose-list' method='POST'>
+      <label for="dflistname">Choose a List to View the Items of:</label>
+      <select id="dflistname" name="Lists">
+        <option value="default">Default</option>
+      </select>
+      </br>
+      <button type="submit" id="choose-list">Choose List</button>
+    </form>
+
+
+    <div id='item-holder'>
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Nicole Sweetheart Neck Cocktail Dress</h5>
+          <p class="card-text">Nordstrom</p>
+          <p class="card-text">$148.00</p>
+          <a href="https://www.nordstrom.com/s/dress-the-population-nicole-sweetheart-neck-cocktail-dress/5157641?origin=category-personalizedsort&breadcrumb=Home%2FWomen%2FClothing%2FDresses&color=001" class="btn btn-primary">Link</a>
+        </div>
+      </div>
+
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Woven Popover Shirt</h5>
+          <p class="card-text">Hollister</p>
+          <p class="card-text">$39.95</p>
+
+          <a href="https://www.hollisterco.com/shop/us/p/woven-popover-shirt-42580319?categoryId=166318&seq=02&faceout=prod1" class="btn btn-primary">Link</a>
+        </div>
+      </div>
+    </div>
+    
+
+       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
+  </body>
+</html>
