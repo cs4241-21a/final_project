@@ -8,11 +8,11 @@ const server = http.createServer(),
       rooms = []
 
 wsServer.on('connection', OnConnect);
-server.listen(3000);
+server.listen(3001);
 
 app.use(express.static("public/views"))
 app.use(express.static("public"))
-app.listen(3001);
+app.listen(3000);
 
 const roomCodeChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 function NewRoomCode() {
