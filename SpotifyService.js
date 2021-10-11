@@ -77,6 +77,15 @@ export default (new class SpotifyService {
         return id;
     }
 
+    // retrieves most popular songs from each genre ?device_id=${id}
+    retreivePopularSongs = async (genre) => {
+        const { id } = await this.request('POST', `${this.APIPath}/users/${process.env.CLIENT_USERNAME}/recommendations?min_popularity=$80`, {
+            genre,
+            "public": true
+        }).catch(console.error);
+        return id;
+    }
+
     // adds songs by uri to a specified playlist
     // uris should take the form ["spotify:track:{track_id}", ...]
     addSongsToPlaylist = async (id, uris) => {
