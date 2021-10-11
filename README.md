@@ -1,4 +1,4 @@
-# WPI Clicker - By (Team Name)
+# WPI Clicker - By Group 6
 
 [WPI Clicker](https://web-ware-final.herokuapp.com/)
 
