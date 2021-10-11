@@ -27,6 +27,10 @@ These are some of the things we added:
 
 ![LaundryConnect2](./images/laundryconnect2.png)
 
+## Accessibility
+![LaundryConnectLighthouseReport](./images/LaundryConnectLighthouseReport.png)
+In order to provide an accessible experience for all users, we used a grid layout within Material UI so that components render correctly on both desktop and mobile. We put a large focus on making sure mobile users in particular were able to use our website since most users will be viewing our website on their phones from within the laundry room. We also made sure to contain all list items within their respective lists and follow an ordered structure from h1 to h6 in order to make our website accessible for users with screenreaders and other assistive devices.
+
 ## Additional information needed to use the project
 
 **Login**:
@@ -73,14 +77,18 @@ Based on the feedback from the various students and professors, they were very a
 **Andrew Kerekon**:
 - Worked on frontend
   - Added UI flair
-  - Persists user login on refresh
+  - Persisted user login on refresh
+  - Improved accessibility by modifying components
+- Worked on backend
+-   Implemented getting a user's name
+-   Created functionality to change a user's password
 - Worked on the My Account Page
   - Implemented registration and login
 
 **Owen McGinley**:
 - Developed the webscraper for the laundry data
   - Hosted webscraper on personal server
-  - Implented auto data fetching every two minutes
+  - Implemented auto data fetching every two minutes
   - Pushed the webscraper data to mongo
 - Worked on backend
 - Did frontend UI touchups
