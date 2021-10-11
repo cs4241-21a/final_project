@@ -22,7 +22,11 @@
     
     <div id="nav-placeholder"></div>
 
-    <a href="/logout">LOGOUT</a>
+    <br>
+    <div class="logoutdiv">
+      <a href="/logout" class="logoutbtn">LOGOUT</a>
+    </div>
+    
     
     <div id="greeting">
       <h1 v-if="sentence=(when<9?'Morning!':
@@ -232,7 +236,26 @@
 
   <style>
     h1 {
-      text-align:center
+      text-align:center;
+    }
+    .logoutbtn {
+      width: 200px; 
+      padding:8px;  
+      background-color: #636566;  
+      border-color: #777a7e;  
+      color: #fff;  
+      -moz-border-radius: 10px;  
+      -webkit-border-radius: 10px;  
+      border-radius: 10px; /* future proofing */  
+      -khtml-border-radius: 10px; /* for old Konqueror browsers */  
+      text-align: center;  
+      vertical-align: middle;  
+      border: 1px solid transparent;  
+      font-weight: 500;  
+      font-size:75%；
+    }
+    .logoutdiv{
+      float: right;
     }
   </style>
 </html>
