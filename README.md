@@ -31,21 +31,38 @@ Submit a PR to turn it in by Monday, September 27th at11:59 PM. Only one pull re
 There are no other scheduled checkpoints for your project. 
 
 #### Turning in Your Outline / Project
-Submit a second PR on the final project repo to turn in your app and code. Again, only one pull request per team.
+View the images here in google docs - https://docs.google.com/document/d/1bMv7plXMPmSIIITZAykPUUnefPlw9rqQ6PdeSVBhUtg/edit?usp=sharing 
 
-Deploy your app, in the form of a webpage, to Glitch/Heroku/Digital Ocean or some other service; it is critical that the application functions correctly wherever you post it.
+We created a website where you can create wish lists for items you wish to buy in the future. The user can create different lists with different purposes (ex: one for clothes, one for shoes, etc). The user can add as many items to each list as wanted. 
 
-The README for your second pull request doesn’t need to be a formal report, but it should contain:
+https://final-project-wishlist.herokuapp.com/ (sometimes the link doesn't work, let us know if it doesn't, please reach out to us via email or discord and we will redeploy it)
 
-1. A brief description of what you created, and a link to the project itself (two paragraphs of text)
-2. Any additional instructions that might be needed to fully use your project (login information etc.)
-3. An outline of the technologies you used and how you used them.
-4. What challenges you faced in completing the project.
-5. What each group member was responsible for designing / developing.
-6. A link to your project video.
+To use the page: first, the user starts at a page where they can either log in or register an account. To register an account, you need to input a username and password (Image 1). The same information is then needed when you login after registering (Image 2). After logging in, the user is taken to the homepage. The homepage lists all of the current wish lists that the user has created(Image 3). There is also a button for the user to create a new list. When clicked, it takes you to a new page. It asks for a name for the new list, as well as a description of the list (Image 4). Then, once the information for the new list is submitted, you can head back to the home page by clicking the logo. Now, you can view all of the lists associated with your account (Image 5). If you click on one of them, you can see all of the items that have been added to the list. The page also includes a button to add a new item to the list. Once you click the add item button, it takes you to a new page. You must input the name of the item, where it is from, the link to the item, the price, and a picture of the item. Then, you return to the list page and see all of the items. 
 
-Think of 1,3, and 4 in particular in a similar vein to the design / tech achievements for A1—A4… make a case for why what you did was challenging and why your implementation deserves a grade of 100%.
+Image 1: Registering a New User 
 
-## FAQs
+Image 2: Login Page
 
-- **Can I use XYZ framework?** You can use any web-based frameworks or tools available, but for your server programming you need to use Node.js. Your client-side scripting language should be either JavaScript or TypeScript.
+Image 3: Home Page for New User
+
+Image 4: Adding a New List
+
+Image 5: New List Added to Home Page
+
+The only tip we have for our project is when you upload an item, make sure you have a picture downloaded - and it should be in a PNG format! Otherwise, you can just register yourself as a new user to log in and have fun! 
+
+We used an array of different technologies, middlewares and templating tools for our project. First of all, we used Handlebars to template and generate our HTML files. These .hbs files were stylized and templated with Bootstrap by using different components (e.x Jumbotron, cards, header, forms, and different form input types). The middleware packages used in this project were the following:
+All post and get requests were done through app.get() and app.post() for easier routing
+app.use(express.json()) to automatically convert incoming requests into json.
+app.engine to enable handlebars
+app.set to set my handlebars
+app.use(express.static("public")) allows access to the rest of my files in public
+Used bcrypt to hash and dehash user passwords
+Our project’s database is set based on MySQL. We tried to use WPI’s SQL server, but this server would not allow us to deploy in Heroku. Therefore, we created a new database with the ClearDB MySQL add-on that Heroku provides. That way, once we modified our code to handle this new database, the deployment was successful. 
+
+With our project, we definitely faced a couple challenges. To start off, we had a few issues with the database, as well as learning the hard lesson that the WPI database only works when you are on campus using campus wifi. However, as mentioned before, the WPI SQL database stopped working for us anyway, so we created our own  using ClearDB MySQL (which now works! yay). We also had a tough time working to get SELECT to send information from the database to javascript as well. The three members of our group are pretty new to Node.js, express, Bootstrap, and request/response methods. Some implementations and errors took more than others due to our novice experience with these technologies. 
+
+Carlos Velasquez - Carlos made the register user and log in pages and functionality, as well as hooked them up to the database. He templated the HTML files with Bootstrap, that would give them a cleaner look. He also deployed the app and database to Heroku.
+Lauren Wasserman - Lauren, created an ERD and schema for the diagram, and set up the database and MySQL tables. She also handled the sql insert statements for adding lists and items to the database. The user can do this by accessing the addList and addItem pages, which she made. She has done a lot of the connecting of the front end to the server end, by implementing the GET/POST functions on the server side and in the js files for each html page that allow for the functionality of our page and handle the data that the user is storing, or has previously stored. Part of this involved making sure that the home screen displayed the correct lists created by the currentUser. She also worked on keeping track of the currentUser.
+Kate Sincaglia - Kate came up with the overall theme for the site. This includes the font used, the color scheme, and the main design choices found all over the site (including creating the website logo). She also worked with the team to create the primary sketches of the site, as well as listing what needed to be included in each page (data and user input wise). She also did most of the writing. 
+
