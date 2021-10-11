@@ -27,9 +27,11 @@ export default class SpotifyWebPlayerService {
     this.player.addListener('ready', ({ device_id }) => {
       console.log('Spotify Web Player: Online.');
       this.deviceID = device_id;
-      this.playSong(device_id, this.waitingToPlay).then(() => {
-        this.waitingToPlay = null;
-      });
+      if (this.waitingToPlay) {
+        this.playSong(device_id, this.waitingToPlay).then(() => {
+          this.waitingToPlay = null;
+        });
+      }
     });
 
     this.player.addListener('not_ready', () => {
