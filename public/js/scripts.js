@@ -35,9 +35,28 @@ const loadEvents = function(){
             let item3 = document.createTextNode("No time chosen");
             let item4 = document.createTextNode(json[count].location);
             let allowButton = false
+            let storedTime = json[count].chosenStartTime
+            let pm = false;
             if (json[count].chosenEventDate !== null){
                 item2 = document.createTextNode(json[count].chosenEventDate.slice(0,10));
-                item3 = document.createTextNode(json[count].chosenStartTime);
+                if (storedTime > 12){
+                    storedTime -= 12;
+                    pm = true;
+                }
+                if (storedTime % 1 == .5){
+                    if (pm){
+                        item3 = document.createTextNode(storedTime + ':30 PM');
+                    } else {
+                        item3 = document.createTextNode(storedTime + ':30 AM');
+                    }
+                } else {
+                    if (pm){
+                        item3 = document.createTextNode(storedTime + ':00 PM');
+                    } else {
+                        item3 = document.createTextNode(storedTime + ':00 AM');
+                    }
+                }
+
                 allowButton = true
             }
             let item5 = null
@@ -129,10 +148,13 @@ const createFile = function(event) {
     let eventDate = null;
 
     if ((event.chosenStartTime + event.meetingDuration) % 1 == .5) {
+        let endDate = new Date(event.chosenEventDate)
+        endDate.setHours((event.chosenStartTime + event.meetingDuration - .5), 30).toString()
         eventDate = {
+
             start: convertDate(event.chosenEventDate),
             //end: convertDate(event.chosenEventDate)
-            end: convertDate(event.chosenEventDate).setHours((event.chosenStartTime + event.meetingDuration - .5), 30)
+            end: convertDate(endDate)
             //end: new Date(dateHolder.setHours((event.chosenStartTime + event.duration - .5), 30))
             //end: event.chosenEventDate.setHours((event.chosenStartTime + event.duration - .5), 30)
         }

@@ -34,6 +34,7 @@ function alert(message, type) {
   }
 
 async function editEvent(eventID){
+    let makePersonalEvent = false;
     let attendeesList = document.getElementById('attendees' + eventID).value.split(",");
     let evntDate = document.getElementById('finalDate' + eventID).value;
     let startTime = -1
@@ -45,14 +46,50 @@ async function editEvent(eventID){
     } else {
         if(getStartTime % 1 == .5 ) {
             let waitDate = new Date(evntDate);
-            waitDate.setHours((getStartTime - .5 - 4), 30)
+            waitDate.setHours((getStartTime - .5), 30)
             evntDate = waitDate
         } else {
             let wait2Date = new Date(evntDate)
-            wait2Date.setHours(getStartTime - 4)
+            wait2Date.setHours(getStartTime)
             evntDate = wait2Date
         }
+        makePersonalEvent = true;
         startTime = getStartTime;
+    }
+
+    if (makePersonalEvent) {
+        let endEventDate = evntDate;
+        let eventDur = 1;
+        //supposed to be + event duration but no quick way to access that here
+        /*if((getStartTime) % 1 == .5 ) {
+            endEventDate = endEventDate.setHours((startTime + eventDur), 30)
+        } else {
+            endEventDate = endEventDate.setHours((startTime + eventDur))
+        }*/
+        for (let i = 0; i < attendeesList.length; i++) {
+            const json2 = {
+                    eventName: document.getElementById('eventName' + eventID).innerText,
+                    attendeeName: attendeesList[i],
+                    startDateTime: evntDate,
+                    endDateTime: evntDate,
+                    description: document.getElementById('description' + eventID).value,
+                    location: document.getElementById('location' + eventID).value,
+                },
+                body2 = JSON.stringify(json2);
+
+            // submit new value
+            await fetch('/addToOthersPersonal', {
+                method: 'POST',
+                body: body2,
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(function (response) {
+                    // do something with the response
+                    console.log("Post made to server");
+                })
+        }
     }
     const json = {
         eventID: eventID,
@@ -71,8 +108,20 @@ async function editEvent(eventID){
         headers: {
             "Content-Type": "application/json"
         }
-    });
-    window.location.reload();
+    })
+        .then(function (response) {
+            // do something with the response
+            console.log("Post made to server");
+
+        })
+        .then(function (json) {
+            console.log(json);
+            window.location.reload();
+        })
+
+    //window.location.reload();
+
+
 }
 
 

@@ -108,7 +108,7 @@
             <% if (eventsList.length > 0) { %>
                 <% eventsList.forEach(event => { %>
                     <form id=<%= event._id%>>
-                        <h3><%= event.eventName%></h3>
+                        <h3 id="eventName<%= event._id%>"><%= event.eventName%></h3>
                         <br>
                         <label for="description<%=event._id%>">Description:</label>
                         <textarea id="description<%=event._id%>" form=<%= event._id%> name="description<%=event._id%>"><%=event.description%></textarea>
