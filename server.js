@@ -253,10 +253,14 @@ app.post( '/get-user-lists', bodyparser.json(), function( request, response ) {
     const json = JSON.parse( dataString )
     var userLists = []
     for(let i = 0; i < lists.length; i++){
+      console.log(`lists[${i}]`)
+      console.log(lists[i])
       if(lists[i].username === currentUser){
         userLists.push(lists[i])
       }
     }
+    console.log('lists:')
+    console.log(lists)
     console.log('userLists:')
     console.log(userLists)
 
