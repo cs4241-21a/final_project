@@ -136,7 +136,7 @@ console.log("hello world :o");
           })
           .then(res => res.json()) // parse the JSON from the server
           .then(data => {
-                var row = table.insertRow(table_len).outerHTML="<tr id='row"+table_len+"'" + 'class="parent" id="row123" title="Click to expand/collapse" style="cursor: pointer;"'+"><td colspan=2 id='task_row"+table_len+"'>"+new_task+"</td><td colspan=2 id='date_row"+table_len+"'>"+new_date+"</td><td colspan=2><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit' onclick='edit_row("+table_len+")'> <input type='button' id='save_button"+table_len+"' value='Save' class='save' onclick='save_row("+table_len+")'> <input type='button' id='createsubtask_button"+table_len+"' value='Create Subtask' class='create' onclick='create_sub("+table_len+")'><input type='button' value='Delete' class='delete' onclick='delete_row("+table_len+")'></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+table_len+"' class='check' onclick='check_box('"+table_len+"')'> </td></tr>";
+                var row = table.insertRow(table_len).outerHTML="<tr id='row"+table_len+"'" + 'class="parent" id="row123" title="Click to expand/collapse" style="cursor: pointer;"'+"><td colspan=2 id='task_row"+table_len+"'>"+new_task+"</td><td colspan=2 id='date_row"+table_len+"'>"+new_date+"</td><td colspan=2><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit' onclick='edit_row("+table_len+")'> <input type='button' id='save_button"+table_len+"' value='Save' class='save' onclick='save_row("+table_len+")'> <input type='button' id='createsubtask_button"+table_len+"' value='Create Subtask' class='create' onclick='create_sub("+table_len+")'><input type='button' value='Delete' class='delete' onclick='delete_row("+table_len+")'></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+table_len+"' class='check' onclick=check_box('"+table_len+"')> </td></tr>";
                 row_ID_map.set("'row"+table_len+"'", data._id)
                 row_ID_map.set( data._id, "'row"+table_len+"'")
             });
@@ -161,7 +161,7 @@ console.log("hello world :o");
             "' value='Create Subtask' class='create' onclick='create_sub("+table_len+
             ")'><input type='button' value='Delete' class='delete' onclick='delete_row("+table_len+
             ")'></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+table_len+"' class='check' "
-                +checkString+" onclick='check_box('"+table_len+"')'> </td></tr>"
+                +checkString+" onclick=check_box('"+table_len+"')> </td></tr>"
    row_ID_map.set("'row"+table_len+"'", _id)
    row_ID_map.set( _id, "'row"+table_len+"'")
 }
@@ -200,7 +200,7 @@ console.log("hello world :o");
             "' value='Create Subtask' class='create' onclick='create_sub("+noParent+
             ")'><input type='button' value='Delete' class='delete' onclick='delete_row("+noParent+
             ")'></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+noParent+"' class='check' "
-                +''+" onclick='check_box('"+noParent+"')'> </td></tr>"
+                +''+" onclick=check_box('"+noParent+"')> </td></tr>"
       
                 row_ID_map.set("'child-row"+noParent+"'", data._id)
                 row_ID_map.set( data._id, "'child-row"+noParent+"'")
@@ -236,10 +236,15 @@ console.log("hello world :o");
             "' value='Create Subtask' class='create' onclick='create_sub("+noParent+
             ")'><input type='button' value='Delete' class='delete' onclick='delete_row("+noParent+
             ")'></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+noParent+"' class='check' "
-                +''+" onclick='check_box('"+noParent+"')'> </td></tr>"
+                +''+" onclick=check_box('"+noParent+"')> </td></tr>"
       
                 row_ID_map.set("'child-row"+noParent+"'", _id)
                 row_ID_map.set( _id, "'child-row"+noParent+"'")
+  }
+
+  function check_box(id){
+    //   var cBox = document.getElementById("edit_checkbox" + id)
+    //   cbox.checked = !cBox.checked
   }
 
   window.onload = function() {
