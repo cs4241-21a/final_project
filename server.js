@@ -142,11 +142,11 @@ app.post('/editEvent', bodyparser.json(), async(req, res) => {
   EventEntry.findByIdAndUpdate(req.body.eventID, {chosenEventDate: req.body.chosenEventDate, chosenStartTime: req.body.chosenStartTime, location: req.body.location, description: req.body.description, attendees: req.body.attendees})
       .then(result =>{
           console.log(result)
-          res.status(200)
+          res.sendStatus(200)
       })
       .catch(result => {
           console.log(result)
-          res.status(504)
+          res.sendStatus(504)
       })
 })
 
@@ -178,7 +178,7 @@ app.post('/addUserAvail', bodyparser.json(), async (req, res) => {
 app.post('/deleteEvent', bodyparser.json(), async(req, res) =>{
   EventEntry.findByIdAndDelete(req.body.eventID)
       .then(result =>{
-        //console.log(result)
+          res.sendStatus(200)
       })
 })
 

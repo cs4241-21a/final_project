@@ -81,25 +81,25 @@ class OwnedEventList extends React.Component {
       startTime = null;
     } else {
       if (getStartTime % 1 == 0.5) {
-        let waitDate = new Date(evntDate);
+        let waitDate = new Date(eventDate);
         waitDate.setHours(getStartTime - 0.5, 30);
-        evntDate = waitDate;
+        eventDate = waitDate;
       } else {
-        let wait2Date = new Date(evntDate);
+        let wait2Date = new Date(eventDate);
         wait2Date.setHours(getStartTime);
-        evntDate = wait2Date;
+        eventDate = wait2Date;
       }
       startTime = this.state.eventInputs[eventID]["chosenStartTime"];
     }
     if (makePersonalEvent) {
-      let endEventDate = evntDate;
+      let endEventDate = eventDate;
       let eventDur = 1;
       for (let i = 0; i < attendeesList.length; i++) {
         const json2 = {
           eventName: this.state.eventInputs[eventID]["name"],
           attendeeName: attendeesList[i],
-          startDateTime: evntDate,
-          endDateTime: evntDate,
+          startDateTime: eventDate,
+          endDateTime: eventDate,
           description: this.state.eventInputs[eventID]["description"],
           location: this.state.eventInputs[eventID]["location"]
         }, body2 = JSON.stringify(json2);
