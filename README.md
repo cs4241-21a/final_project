@@ -35,9 +35,9 @@ These are some of the things we added:
 
 ## Technologies used and how they were used
 
-**MongoDB**: sadsf
+**MongoDB**: MongoDB was the main database we used. This is where all the LaundryConnect data is sent.
 
-**Node**: backend server and 
+**Node**: Node was used for our backend server which retrieved and sent data between the database and the client.
 
 **React**: frontend framework based on components
 
