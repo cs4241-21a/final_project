@@ -1,6 +1,10 @@
 
 var addForm = document.getElementById("addForm");
 addForm.style.display = "none";
+var editForm = document.getElementById("editForm");
+editForm.style.display = "none";
+var closeAdd = document.getElementById('closeAdd');
+var closeEdit = document.getElementById('closeEdit');
 
 // delete the chosen watch
 function delWatch(id) {
@@ -128,7 +132,7 @@ function fetchData() {
 
 // edit the chosen watch
 function loadModify(id) {
-    addForm.style.display = "block";
+    editForm.style.display = "block";
 
     const json = {id: id};
 
@@ -141,13 +145,11 @@ function loadModify(id) {
         body: JSON.stringify(json),
     }).then(response => response.json())
       .then(data => {
-          document.getElementById("boxTitle").innerText = "Edit Watch";
-          document.getElementById("title").value = data.result.title;
-          document.getElementById("cat").value = data.result.category;
-          document.getElementById("score").value = data.result.score;
-          document.getElementById("date").value = data.result.date;
-          document.getElementById("idToModify").value = id;
-          document.getElementById("submitButton").onclick = submitModify;
+          document.getElementById("title2").value = data.result.title;
+          document.getElementById("cat2").value = data.result.category;
+          document.getElementById("score2").value = data.result.score;
+          document.getElementById("date2").value = data.result.date;
+          document.getElementById("idToModify2").value = id;
 
           document.getElementById("title").focus();
       });
@@ -156,12 +158,12 @@ function loadModify(id) {
 function submitModify(e) {
     
     e.preventDefault();
-    const id = document.querySelector("#idToModify").value;
-    const desc = document.querySelector("#title"),
-    score = document.querySelector("#score"),
-    date = document.querySelector("#date"),
-    category = document.getElementById("cat").value;
-    review = document.querySelector("#review");
+    const id = document.querySelector("#idToModify2").value;
+    const desc = document.querySelector("#title2"),
+    score = document.querySelector("#score2"),
+    date = document.querySelector("#date2"),
+    category = document.getElementById("cat2").value;
+    review = document.querySelector("#review2");
 
 
     const json = {  id,
@@ -179,7 +181,8 @@ function submitModify(e) {
         },
         body: JSON.stringify(json),
     }).then(function (_) {
-        window.location.reload();
+        editForm.style.display = "none";
+        fetchData();
     });
 }
 
@@ -217,6 +220,7 @@ const submit = function (e) {
             },
             body: JSON.stringify(json),
         }).then(function (_) {
+            addForm.style.display = "none";
             fetchData();
         });
     }
@@ -237,14 +241,16 @@ window.onload = function () {
     fetchData();
 
     document.getElementById("submitButton").onclick = submit;
+    document.getElementById("submitEdit").onclick = submitModify;
 
     const openAdd_btn = document.getElementById("openAdd");
     openAdd_btn.onclick = openAdd;
 
-    window.onclick = function(e){
-        if(e.target == addForm){
-            addForm.style.display = "none";
-        }
-      }
+    closeAdd.onclick = function() {
+        addForm.style.display = "none";
+    }
 
+    closeEdit.onclick = function(){
+        editForm.style.display = "none";
+    }
 };

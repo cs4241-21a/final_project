@@ -67,7 +67,6 @@
     <div class="boxHolder">
       <div class="box">
         <h1>Not sure which anime? Start searching!</h1>
-        <a href="/logout">LOGOUT</a>
         <img src="https://cdn.hipwallpaper.com/m/81/89/1vnrg8.jpg" />
       </div>
     </div>
@@ -130,8 +129,10 @@
             if (fileSize > MAX_FILE_SIZE) {
               this.setCustomValidity("File must not exceed 25 MB!");
               this.reportValidity();
+              $('#submit_screenshot').prop('disabled', true)
             } else {
               this.setCustomValidity("");
+              $('#submit_screenshot').prop('disabled', false)
             }
           });
 
