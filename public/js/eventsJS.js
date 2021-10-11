@@ -68,7 +68,7 @@ async function editEvent(eventID){
         }*/
         for (let i = 0; i < attendeesList.length; i++) {
             const json2 = {
-                    eventName: "QQQQ",
+                    eventName: document.getElementById('eventName' + eventID).innerText,
                     attendeeName: attendeesList[i],
                     startDateTime: evntDate,
                     endDateTime: evntDate,
