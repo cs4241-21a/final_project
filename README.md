@@ -61,6 +61,26 @@ How did you use alignment to organize information and/or increase contrast for p
 
 I used alignment to organize information and/or increase contrast for particular elements. For example, in the login page the login button and the header for the login button are both slightly to the left of the center of the screen. This allows the user to organize them together(i.e. they would organize 'Log in here!' and the log in button). Another example, in the login page the register button and the header for the register button are both slightly to the left of the center of the screen. This allows the user to organize them together(i.e. they would organize 'Register in here!' and register the button). I also aligned the buttons and headers towards the center, so they would still be close to the boxes were the user is putting the data. In my user data page all the elements in my table cells are aligned in the center so they are easier to see. This also makes the cells more distinguishable from one another giving an increased contrast between them.
 
+(5 points per person, with a max of 10 points) Test your user interface with other students in the class. Define a specific task for them to complete (ideally something short that takes <10 minutes), and then use the think-aloud protocol to obtain feedback on your design (talk-aloud is also find). Important considerations when designing your study:
+Design Achievement 2:
+Provide the last name of each student you conduct the evaluation with. Stusalitus
+
+What problems did the user have with your design? Really crammed text in my table, the coloring was not pleasing
+
+What comments did they make that surprised you? They liked the font and spacing of the data that was relayed back to the user, and the derived data had differantiating comments.
+
+What would you change about the interface based on their feedback? I would space out my text more and choose better colors. Maybe consult an artist about my website color and design.
+
+Provide the last name of each student you conduct the evaluation with. Ropi (This was my brother, not sure if this is allowed but i dont know anyone else in the class)
+
+What problems did the user have with your design? He used a mobile device and some of the text was getting jumbled up together
+
+What comments did they make that surprised you? He said it was impossible to accomplish my task, due to the inabillity to read the content on the screen
+
+What would you change about the interface based on their feedback? I had to move some things around just to adjust for the drastic change when using a mobile device. In the future I should focus on compatibility more, so more people can have access to the content.
+
+
 **Technological Achievements**
 Technological Achievement 1: (10 points)
 We implemented one of our large stretch goals of creating login/register functionallity. We achieved this using cookies, happi joi, and mogoDB/mangooose.
+
