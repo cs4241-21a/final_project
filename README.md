@@ -1,5 +1,7 @@
 CS 4241 Group 12 Final Project: FoldCal
+
 Authors: Taylor Cox, Geoffrey Garsson, Garrett Sheehan
+
 Project Link: https://final-project-group-12.glitch.me/
 
 Our group created a calendar application displaying both events and tasks the user can use to keep track of what they need to do. A key feature of our calendars is being able to nest them, allowing for easier compartmentalization of events and the ability to avoid clutter that can plague particularly busy calendars. For example, if you have a classes calendar, you can put in calendars for each of your classes. If you make an event for one of the individual classes, it will show up in that individual class calendar alongside the general classes calendar. Likewise, events created in a parent calendar will not be shown to its children. All calendars and tasks are displayed in the left sidebar of the application.
