@@ -1,4 +1,5 @@
 # [Genshin Farming Calculator (Group 8)](https://group8webware.herokuapp.com/)
+https://group8webware.herokuapp.com/
 
 # 1. A brief description of what you created, and a link to the project itself (two paragraphs of text)
 
