@@ -39,17 +39,17 @@ These are some of the things we added:
 
 **Node**: Node was used for our backend server which retrieved and sent data between the database and the client.
 
-**React**: frontend framework based on components
+**React**: React was the frontend framework used to model our entire website and refresh data.
 
-**Mongoose**: SQL like structure to db
+**Mongoose**: Mongoose allowed us to easily access the data from the MongoDB database. Allowed for convenience with our data.
 
-**Express**: login stuff
+**Express**: Express was the middleware we used to handle server logic and dataflow. It processed the JSON data sent with POST requests and also GET requests.
 
-**Material UI**: prettify website/ accessibility
+**Material UI**: Material UI was used as our frontend framework which had many React components. This allowed us to add flair to our website and make it look clean. It also allowed us to implement mobile accessibility.
 
-**Heroku**: put website on
+**Heroku**: This is where our website is hosted.
 
-**Session Storage**: store user logins 
+**Session Storage**: This is how the user logins are stored and saved so the website will keep users signed on.
 
 
 ## Technical Achievements
