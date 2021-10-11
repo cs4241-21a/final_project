@@ -14,6 +14,11 @@ Jack Ayvazian, Jack Campanale, Federico Galbiati, Winnie Ly, Vansh Patel
 
 <p>We played close attention to detail in our CSS styling with the four main Simon colors of red, yellow, green, and blue as our theme, with the use of dark gray to give contrast to the surrounding white background. We added shadows and hover effects for the main buttons, as well as custom SVG shapes and animations with Anime.js. The instructions transition from off screen when clicked, and the main navigation buttons seamlessly transition into the game board when clicking play as it redirects to a new page.</p>
 
+### Potential Issues
+<p>A potential issue that could occur is that when launching the webpage, the games played and score may not update the first time when
+a new user logins in for the first time. This can be solved with the user logging in for the second time and from this it updates their
+games played and high score to the leaderboard.</p>
+
 ### Technologies
 #### MERN Stack
 * MongoDB  
