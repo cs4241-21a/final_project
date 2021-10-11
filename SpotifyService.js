@@ -41,7 +41,6 @@ export default (new class SpotifyService {
     accessToken;
 
     constructor() {
-        this.getListOfSongsByGenre('hip-hop').then(console.log);
     }
 
     // retrieves Spotify access token from cache or accounts.spotify.com

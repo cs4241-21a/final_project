@@ -60,8 +60,8 @@ server.delete('/api/playlist/:id', async (req, res) => {
 });
 
 // shuffle playlist
-server.put('/api/player/:id/shuffle', async (req, res) => {
-    res.json(await SpotifyService.shufflePlaylist(req.params.id, req.query.genre))
+server.put('/api/playlist/:id/shuffle', async (req, res) => {
+    res.json(await SpotifyService.shufflePlaylist(req.params.id, req.query.genre));
 });
 
 // CLIENT ROUTES
