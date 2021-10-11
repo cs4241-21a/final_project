@@ -76,7 +76,7 @@ class OwnedEventList extends React.Component {
     let eventDate = this.state.eventInputs[eventID]["chosenEventDate"];
     let getStartTime = this.state.eventInputs[eventID]["chosenStartTime"];
     let startTime = -1;
-    if (eventDate === "null") {
+    if (eventDate === null) {
       eventDate = null;
       startTime = null;
     } else {
@@ -89,6 +89,7 @@ class OwnedEventList extends React.Component {
         wait2Date.setHours(getStartTime);
         eventDate = wait2Date;
       }
+      makePersonalEvent = true;
       startTime = this.state.eventInputs[eventID]["chosenStartTime"];
     }
     if (makePersonalEvent) {
