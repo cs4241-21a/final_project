@@ -1,0 +1,43 @@
+{
+  "name": "final_project",
+  "version": "1.0.0",
+  "description": "CS4241 - Webware Final Project Proposal Group 11 Names: Jack Ayvazian, Jack Campanale, Federico Galbiati, Winnie Ly, Vansh Patel",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "build": "snowpack build",
+    "clean": "rm dist/bundle.js",
+    "dev": "snowpack dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theaniartist/final_project.git"
+  },
+  "author": "Group 11",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/theaniartist/final_project/issues"
+  },
+  "homepage": "https://github.com/theaniartist/final_project#readme",
+  "dependencies": {
+    "animejs": "^3.2.1",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cookie-session": "^1.4.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "mime": "^2.5.2",
+    "mongodb": "^4.1.2",
+    "passport": "^0.5.0",
+    "passport-github2": "^0.1.12",
+    "path": "^0.12.7",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-native": "^0.66.0"
+  },
+  "devDependencies": {
+    "snowpack": "^3.8.8"
+  }
+}
