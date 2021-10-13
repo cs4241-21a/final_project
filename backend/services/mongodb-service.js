@@ -51,8 +51,10 @@ exports.createUser = async function(user){
       highscore: 0,
       gamesplayed: 0
     })
-    .then(data => {
-      resolve(data)
+    .then(ack => {
+      exports.getGitHubUser(user.id)
+      .then( (data) => resolve(data) )
+      .catch( (e) => reject(e))
     })
   })
 }
