@@ -12,7 +12,7 @@ Technologies
 - Water: CSS Framework providing styling for our site
 - HTML
 
-What challenges you faced in completing the project.
+What challenges you faced in completing the project.(fixed most rendering bugs)
 -Some JS bugs when rendering items on page which we did not have time to identify the cause of and fix
 -Making sure subtasks were linked with their parent. Some minor mistakes early on when initially setting up the project caused serious complications for implementing subtasks, as these seemingly innocent decisions made tracking which item we were working on exceedingly difficult.
 -Visualization of subtasks. Displaying the subtasks as visually distinct from the main tasks was harder than expected and as a result we did not have time to implement this change
@@ -24,6 +24,7 @@ Orest Ropi
 - Login/Registration design and implementation. 
 - Main tasks creation, deletion, and editing. (design and implementation)
 - CSS style
+- Fixed bugs/testing
 - Documentation
 
 Keval Ashara
@@ -44,14 +45,15 @@ https://group20-final.glitch.me/
 
 
 **Design Acievements**
-Design Achievement 1: (5 points) How site use CRAP principles in the Non-Designer's Design Book readings
+Design Achievement 1: 
+(5 points) How site use CRAP principles in the Non-Designer's Design Book readings
 Which element received the most emphasis (contrast) on each page?
 
 The elements that received the most contrast were my buttons and title. They were what I wanted the user attention to be drawn to. Information about what they could do and how they can do it is the users main priority. I used dark blue for the title and black for the buttons because they contrasted the white background really well. In my log in page I also made the register and login buttons have a colored background. This is so the user can immediately locate them and use them. I had grey boxes in the login page to represent what sections were for login or registering, so the user could more easily differentiate between the two. Lastly I left the background white(on my login page and page with data) so the user would focus more on the application which they would be using, and not getting distracted by unnecessary images or colors.
 
 How did you use proximity to organize the visual information on your page?
 
-I used proximity to organize the visual information on your page by grouping together items that were related to one another. On my login page I had the user login information all together inside a box. This allowed the user to find everything he needed about logging in quickly. I also had the registration information all together inside a box. This allowed the user to find everything he needed about registering quickly. Putting these items in my logging page together also reduced clutter. In my page with the user data I grouped together all the information of a single contact together. In the user data page, I also grouped up the title with the table so the user knows exactly what they can put into the table, and what might not be allowed(such as duplicate contacts).
+I used proximity to organize the visual information on your page by grouping together items that were related to one another. On my login page I had the user login information all together inside a box. This allowed the user to find everything he needed about logging in quickly. I also had the registration information all together inside a box. This allowed the user to find everything he needed about registering quickly. Putting these items in my logging page together also reduced clutter. In my page with the user data I grouped together all the information of a single contact together. In the user data page, I also grouped up the title with the table so the user knows exactly what they can put into the table.
 
 What design elements (colors, fonts, layouts, etc.) did you use repeatedly throughout your site?
 
@@ -61,23 +63,18 @@ How did you use alignment to organize information and/or increase contrast for p
 
 I used alignment to organize information and/or increase contrast for particular elements. For example, in the login page the login button and the header for the login button are both slightly to the left of the center of the screen. This allows the user to organize them together(i.e. they would organize 'Log in here!' and the log in button). Another example, in the login page the register button and the header for the register button are both slightly to the left of the center of the screen. This allows the user to organize them together(i.e. they would organize 'Register in here!' and register the button). I also aligned the buttons and headers towards the center, so they would still be close to the boxes were the user is putting the data. In my user data page all the elements in my table cells are aligned in the center so they are easier to see. This also makes the cells more distinguishable from one another giving an increased contrast between them.
 
-(5 points per person, with a max of 10 points) Test your user interface with other students in the class. Define a specific task for them to complete (ideally something short that takes <10 minutes), and then use the think-aloud protocol to obtain feedback on your design (talk-aloud is also find). Important considerations when designing your study:
 Design Achievement 2:
-Provide the last name of each student you conduct the evaluation with. Stusalitus
+(5 points per person, with a max of 10 points) Test your user interface with other students in the class. Define a specific task for them to complete (ideally something short that takes <10 minutes), and then use the think-aloud protocol to obtain feedback on your design (talk-aloud is also find). Important considerations when designing your study:
 
-What problems did the user have with your design? Really crammed text in my table, the coloring was not pleasing
+Task: Register for an account, create some tasks, create some subtasks, edit some tasks, edit some subtasks, delete some tasks, and delete some subtasks.
 
-What comments did they make that surprised you? They liked the font and spacing of the data that was relayed back to the user, and the derived data had differantiating comments.
+(5 points)Provide the last name of each person you conduct the evaluation with. Ropi (This was my brother, not sure if this is allowed but i dont know anyone else in the class)
 
-What would you change about the interface based on their feedback? I would space out my text more and choose better colors. Maybe consult an artist about my website color and design.
+What problems did the user have with your design? He said he did not like how the background of the webpage was completely white. He called the login page "boring". Creating a subtasks was weird at first for him, as the create a task button and create a subtask button both used the same input text field.
 
-Provide the last name of each student you conduct the evaluation with. Ropi (This was my brother, not sure if this is allowed but i dont know anyone else in the class)
+What comments did they make that surprised you? He said it was really easy to accomplish his task, due to abillity to read the content on the screen very clearly. Font was large and colors were complementary.
 
-What problems did the user have with your design? He used a mobile device and some of the text was getting jumbled up together
-
-What comments did they make that surprised you? He said it was impossible to accomplish my task, due to the inabillity to read the content on the screen
-
-What would you change about the interface based on their feedback? I had to move some things around just to adjust for the drastic change when using a mobile device. In the future I should focus on compatibility more, so more people can have access to the content.
+What would you change about the interface based on their feedback? I would add something to make the user feel excited about the website at the login page. For example, maybe an animation or a small game that could serve as a "wow factor". I would also make it so that creating a subtask would be done through another input text field or a pop-up.
 
 
 **Technological Achievements**
