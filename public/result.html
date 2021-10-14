@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="https://glitch.com/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/style.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+
+    <script src="script.js"></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"
+      integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <title>Dead Meme Huh?</title>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+    />
+
+    <script
+      type="text/javascript"
+      src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+    ></script>
+  </head>
+
+  <body>
+    <!--- Header Image and "Meme Results" Tag Start------>
+    <img
+      class="w-full"
+      h-48
+      lg:h-auto
+      lg:w-48
+      src="https://github.com/alexiscaira/deadmemehuh/blob/main/dead%20meme.png?raw=true"
+      alt="header"
+    />
+    <br />
+    <div class="lg:text-center">
+      <h2 class="text-base text-yellow-400 font-bold tracking-wide ">
+        Meme Results
+      </h2>
+      <br />
+    </div>
+
+    <!--- Header Image and "Meme Results" Tag End------>
+    <div class="center" align="center">
+      <div class="fade">
+        <div>
+          <img
+            src="https://i.pinimg.com/originals/46/b7/50/46b750b1d5390c655201438cb3f1d140.jpg"
+            alt=""
+            width="300"
+            height="300"
+          />
+        </div>
+        <div>
+          <img
+            src="https://i.imgflip.com/5pc443.jpg"
+            alt=""
+            width="300"
+            height="300"
+          />
+        </div>
+      </div>
+
+      <script
+        type="text/javascript"
+        src="//code.jquery.com/jquery-1.11.0.min.js"
+      ></script>
+      <script
+        type="text/javascript"
+        src="//code.jquery.com/jquery-migrate-1.2.1.min.js"
+      ></script>
+      <script
+        type="text/javascript"
+        src="//cdn.jsdelivr.net/jquery.slick/1.3.11/slick.min.js"
+      ></script>
+
+      <script type="text/javascript">
+        $(document).ready(function() {
+          $(".fade").slick({
+            dots: false,
+            infinite: true,
+            speed: 700,
+            autoplay: true,
+            autoplaySpeed: 2000,
+            arrows: false,
+            slidesToShow: 1,
+            slidesToScroll: 1
+          });
+        });
+      </script>
+    </div>
+
+    <!--- Start of Meme Results ------>
+    <div class="bg-white">
+      <div
+        class="max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16 lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8"
+      >
+        <div class="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+          <h1
+            class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl"
+          >
+            <div class="memeTitle">
+              Bad Luck Brian
+              <!--- scr= MemeTitle ------>
+            </div>
+          </h1>
+          <div class="KYMurl">
+            <a href="https://knowyourmeme.com/memes/bad-luck-brian"
+              >KnowYourMeme Link</a
+            >
+          </div>
+          <!--- scr= KnowYourMeme ------>
+
+          <br />
+          <br />
+
+          <p class="text-2xl text-gray-900">Summary</p>
+          <div class="summary">
+            <p class="text-l text-gray-900">
+              Bad Luck Brian is an advice animal-style image macro series
+              featuring a photo of a blonde teenage boy wearing a plaid sweater
+              vest and braces, accompanied by captions that describe a variety
+              of embarrassing and tragic occurrences.
+            </p>
+          </div>
+          <!--- scr= Summary ------>
+        </div>
+
+        <div class="mt-4 lg:mt-0 lg:row-span-3">
+          <div>
+            <div
+              class="flex rounded border-b-2 border-grey-dark overflow-hidden"
+            >
+              <button
+                class="block text-white text-sm shadow-border bg-blue-500 hover:bg-blue-dark text-sm py-3 px-4 font-sans tracking-wide uppercase font-bold"
+                onclick="upvote()"
+                id="notdedbutton"
+              >
+                this meme isn't dead
+              </button>
+
+              <div class="bg-blue-500 shadow-border p-3">
+                <div class="w-4 h-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="white"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+
+          <div>
+            <div
+              class="flex rounded border-b-2 border-grey-dark overflow-hidden"
+            >
+              <button
+                class="block text-white text-sm shadow-border bg-orange-400 hover:bg-blue-dark text-sm py-3 px-4 font-sans tracking-wide uppercase font-bold"
+              >
+                this meme is dead
+              </button>
+              <div class="bg-orange-400 shadow-border p-3">
+                <div class="w-4 h-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="white"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+
+          <div>
+            <div
+              class="flex rounded border-b-2 border-grey-dark overflow-hidden"
+            >
+              <button
+                class="block text-white text-sm shadow-border bg-blue-500 hover:bg-blue-dark text-sm py-3 px-4 font-sans tracking-wide uppercase font-bold"
+              >
+                this meme is funny
+              </button>
+              <div class="bg-blue-500 shadow-border p-3">
+                <div class="w-4 h-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="white"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+
+          <div>
+            <div
+              class="flex rounded border-b-2 border-grey-dark overflow-hidden"
+            >
+              <button
+                class="block text-white text-sm shadow-border bg-orange-400 hover:bg-blue-dark text-sm py-3 px-4 font-sans tracking-wide uppercase font-bold"
+              >
+                this meme isn't funny
+              </button>
+              <div class="bg-orange-400 shadow-border p-3">
+                <div class="w-4 h-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="white"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+
+          <div>
+            <div
+              class="flex rounded border-b-2 border-grey-dark overflow-hidden"
+            >
+              <button
+                class="block text-white text-sm shadow-border bg-purple-400 hover:bg-blue-dark text-sm py-3 px-4 font-sans tracking-wide uppercase font-bold"
+              >
+                show another meme
+              </button>
+              <div class="bg-purple-400 shadow-border p-3">
+                <div class="w-4 h-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="white"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <br />
+          <br />
+        </div>
+
+        <div
+          class="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8"
+        >
+          <!--- Voting Chart Start ------>
+          <div class="mt-10">
+            <h2 class="text-sm font-medium text-gray-900">
+              Voting Results
+            </h2>
+
+            <div class="deadChartContainer relative">
+              <canvas id="deadnessChart"></canvas>
+            </div>
+            <div class="funnyChartContainer relative">
+              <canvas id="funninessChart"></canvas>
+            </div>
+
+            <script>
+              Chart.overrides.doughnut.cutout = "35%";
+              Chart.defaults.plugins.title.display = true;
+              Chart.defaults.plugins.title.padding = {
+                top: 10,
+                bottom: 30
+              };
+              Chart.defaults.plugins.title.font = { size: 28 };
+
+              var deadnessChart = $("#deadnessChart");
+              var funninessChart = $("#funninessChart");
+
+              var deadnessData = {
+                labels: ["Dead", "Not Dead"],
+                datasets: [
+                  {
+                    data: [
+                      Math.floor(Math.random() * 100 + 1),
+                      Math.floor(Math.random() * 100 + 1)
+                    ], // FILL FROM DB, select random for display
+                    backgroundColor: ["rgb(245, 173, 84)", "rgb(54, 162, 235)"],
+                    hoverOffset: 16
+                  }
+                ]
+              };
+
+              var funninessData = {
+                labels: ["Funny", "Not Funny"],
+                datasets: [
+                  {
+                    data: [
+                      Math.floor(Math.random() * 100 + 1),
+                      Math.floor(Math.random() * 100 + 1)
+                    ], // FILL FROM DB, select random for display
+                    backgroundColor: ["rgb(54, 162, 235)", "rgb(245, 173, 84)"],
+                    hoverOffset: 16
+                  }
+                ]
+              };
+
+              var deadChart = new Chart(deadnessChart, {
+                type: "doughnut",
+                data: deadnessData,
+                options: {
+                  plugins: {
+                    title: {
+                      text: "Is the meme dead?"
+                    }
+                  }
+                }
+              });
+
+              var funnyChart = new Chart(funninessChart, {
+                type: "doughnut",
+                data: funninessData,
+                options: {
+                  plugins: {
+                    title: {
+                      text: "Is the meme funny?"
+                    }
+                  }
+                }
+              });
+            </script>
+          </div>
+
+          <!--- Voting Chart Ends ------>
+        </div>
+      </div>
+    </div>
+    <!--- End of Meme Results ------>
+  </body>
+</html>
