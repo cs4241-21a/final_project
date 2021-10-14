@@ -33,7 +33,7 @@ Server side serving of pages
 MongoDB (https://www.mongodb.com/) -- Eva
 Stores meme databases, we will need to populate as part of the project.
 
-//alexis populated the database, added connectivitiy, and all post/get req
+//alexis populated the database
 
 TailwindCSS (https://tailwindcss.com/) -- Alexis
 Imports CSS and creates HTML objects formated nice and pretty
