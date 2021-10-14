@@ -1,51 +1,84 @@
-# Final Project
-*Due before the start of class, October 11th (final day of the term)*
+We created an application that allows users to login and register to a website. The user then will be redirected to a welcome page where they can create,delete, and edit tasks and subtasks to track items they need to keep track of in their life.
 
-For your final project, you'll implement a web application that exhibits understanding of the course materials. 
-This project should provide an opportunity to both be creative and to pursue individual research and learning goals.
+You can register for an account and the website will automaticlly log you in. Username must be at least 3 charachters long and password must be at leat 6 characters long
 
-## General description
-Your project should consist of a complete Web application, exhibiting facets of the three main sections of the course material:
+Technologies
+- cookies: Keep the user logged in after they refresh the page
+- mongoDB: Database to store information
+- @hapi/joi: login validation
+- mongoose: Provides schemas for working with the Database
+- Javascript: Code to run commands when users perform actions
+- EJS: Helped format HTML and reduce the overall amount of HTML that had to be written
+- Water: CSS Framework providing styling for our site
+- HTML
 
-- Static Web page content and design. You should have a project that is accessible, easily navigable, and features significant content.
-- Dynamic behavior implemented with JavaScript (TypeScript is also allowed if your group wants to explore it).
-- Server-side programming *using Node.js*. Typically this will take the form of some sort of persistent data (database), authentication, and possibly server-side computation. 
-- A video (less than five minutes) where each group member explains some aspect of the project. An easy way to produce this video is for you all the groups members to join a Zoom call that is recorded; each member can share their screen when they discuss the project or one member can "drive" the interface while other members narrate (this second option will probably work better.) The video should be posted on YouTube or some other accessible video hosting service. Make sure your video is less than five minutes, but long enough to successfully  explain your project and show it in action. There is no minimum video length.
+What challenges you faced in completing the project.
+-Various minor rendering bugs popped up, though we were able to fix most, some were hard to find/difficult to debug and we may not have caught all of them
+-Making sure subtasks were linked with their parent. Some minor mistakes early on when initially setting up the project caused serious complications for implementing subtasks, as these seemingly innocent decisions made tracking which item we were working on exceedingly difficult.
+-Visualization of subtasks. Displaying the subtasks as visually distinct from the main tasks was harder than expected and we had to settle for just using different colors
+-It was difficult to allow for collapsible subtasks without causing issues where some of a tasks's subtasks would be collpased but not all
+-Issues with updating the database when a user clicked on the checkbox to mark a task as complete or no longer complete
 
-## Project ideation
-Excellent projects typically serve someone/some group; for this assignment you need to define your users and stakeholders. I encourage you to identify projects that will have impact, either artistically, politically, or in terms of productivity. 
+What each group member was responsible for designing / developing
 
-## Logistics
-### Team size
-Students are will work in teams of 3-5 students for the project; teams of two can be approved with the permission of the instructor. Working in teams should help enable you to build a good project in a limited amount of time.  Use the `#project-logistics` channel in Discord to pitch ideas for final projects and/or find fellow team members as needed.
+Orest Ropi
+- Login/Registration design and implementation. 
+- Main tasks creation, deletion, and editing. (design and implementation)
+- CSS style
+- Fixed bugs/testing
+- Documentation
 
-Teams must be in place by end of day on Saturday, September 25th. If you have not identified a team at this point, you will be assigned a team. You will be given some class time on Monday to work on your proposal, but please plan on reserving additional time as needed.
+Keval Ashara
+- Intial project setup
+- Setup key technologies used in the project
+- Helped implement subtasks
 
-### Deliverables
+Daniel Stusalitus
+- Implemented subtasks
+- Updated existing code to work with subtasks
+- Fixed bugs/testing
+- Created database
 
-__Proposal:__ 
-Provide an outline of your project direction and the names of associated team members. 
-The outline should have enough detail so that staff can determine if it meets the minimum expectations, or if it goes too far to be reasonable by the deadline. Please include a general description of a project, and list of key technologies/libraries you plan on using (e.g. React, Three.js, Svelte, TypeScript etc.). Name the file proposal.md and submit a pull request.
-Submit a PR to turn it in by Monday, September 27th at11:59 PM. Only one pull request is required per team.
+**Link to Project Video**
+https://youtu.be/gQYvom4qQxo
+**Link to Glitch Page**
+https://group20-final.glitch.me/
 
-There are no other scheduled checkpoints for your project. 
 
-#### Turning in Your Outline / Project
-Submit a second PR on the final project repo to turn in your app and code. Again, only one pull request per team.
+**Design Acievements**
+Design Achievement 1: 
+(5 points) How site use CRAP principles in the Non-Designer's Design Book readings
+Which element received the most emphasis (contrast) on each page?
 
-Deploy your app, in the form of a webpage, to Glitch/Heroku/Digital Ocean or some other service; it is critical that the application functions correctly wherever you post it.
+The elements that received the most contrast were my buttons and title. They were what I wanted the user attention to be drawn to. Information about what they could do and how they can do it is the users main priority. I used dark blue for the title and black for the buttons because they contrasted the white background really well. In my log in page I also made the register and login buttons have a colored background. This is so the user can immediately locate them and use them. I had grey boxes in the login page to represent what sections were for login or registering, so the user could more easily differentiate between the two. Lastly I left the background white(on my login page and page with data) so the user would focus more on the application which they would be using, and not getting distracted by unnecessary images or colors.
 
-The README for your second pull request doesn’t need to be a formal report, but it should contain:
+How did you use proximity to organize the visual information on your page?
 
-1. A brief description of what you created, and a link to the project itself (two paragraphs of text)
-2. Any additional instructions that might be needed to fully use your project (login information etc.)
-3. An outline of the technologies you used and how you used them.
-4. What challenges you faced in completing the project.
-5. What each group member was responsible for designing / developing.
-6. A link to your project video.
+I used proximity to organize the visual information on your page by grouping together items that were related to one another. On my login page I had the user login information all together inside a box. This allowed the user to find everything he needed about logging in quickly. I also had the registration information all together inside a box. This allowed the user to find everything he needed about registering quickly. Putting these items in my logging page together also reduced clutter. In my page with the user data I grouped together all the information of a single contact together. In the user data page, I also grouped up the title with the table so the user knows exactly what they can put into the table.
 
-Think of 1,3, and 4 in particular in a similar vein to the design / tech achievements for A1—A4… make a case for why what you did was challenging and why your implementation deserves a grade of 100%.
+What design elements (colors, fonts, layouts, etc.) did you use repeatedly throughout your site?
 
-## FAQs
+I used the design elements of colors, fonts, and layout repeatedly throughout my site. I used colors to show similarities between logging in and registering. They both require a username and password to be inputted so I made their box, text, and background color the same. It also helps distinguish between the two options. This is since both have a similar color scheme and layout it is obvious that they are not interconnected. In my data page I repeatedly use blue color and large font to show important information. The user eventually gets used to the blue color and large font signifying important information that needs to be read. I also use bolded black on all my text in the labels of the tables. From this the user can concur that those are labels and not another data entry.
 
-- **Can I use XYZ framework?** You can use any web-based frameworks or tools available, but for your server programming you need to use Node.js. Your client-side scripting language should be either JavaScript or TypeScript.
+How did you use alignment to organize information and/or increase contrast for particular elements?
+
+I used alignment to organize information and/or increase contrast for particular elements. For example, in the login page the login button and the header for the login button are both slightly to the left of the center of the screen. This allows the user to organize them together(i.e. they would organize 'Log in here!' and the log in button). Another example, in the login page the register button and the header for the register button are both slightly to the left of the center of the screen. This allows the user to organize them together(i.e. they would organize 'Register in here!' and register the button). I also aligned the buttons and headers towards the center, so they would still be close to the boxes were the user is putting the data. In my user data page all the elements in my table cells are aligned in the center so they are easier to see. This also makes the cells more distinguishable from one another giving an increased contrast between them.
+
+Design Achievement 2:
+(5 points per person, with a max of 10 points) Test your user interface with other students in the class. Define a specific task for them to complete (ideally something short that takes <10 minutes), and then use the think-aloud protocol to obtain feedback on your design (talk-aloud is also find). Important considerations when designing your study:
+
+Task: Register for an account, create some tasks, create some subtasks, edit some tasks, edit some subtasks, delete some tasks, and delete some subtasks.
+
+(5 points)Provide the last name of each person you conduct the evaluation with. Ropi (This was my brother, not sure if this is allowed but i dont know anyone else in the class)
+
+What problems did the user have with your design? He said he did not like how the background of the webpage was completely white. He called the login page "boring". Creating a subtasks was weird at first for him, as the create a task button and create a subtask button both used the same input text field.
+
+What comments did they make that surprised you? He said it was really easy to accomplish his task, due to abillity to read the content on the screen very clearly. Font was large and colors were complementary.
+
+What would you change about the interface based on their feedback? I would add something to make the user feel excited about the website at the login page. For example, maybe an animation or a small game that could serve as a "wow factor". I would also make it so that creating a subtask would be done through another input text field or a pop-up.
+
+
+**Technological Achievements**
+Technological Achievement 1: (10 points)
+We implemented one of our large stretch goals of creating login/register functionallity. We achieved this using cookies, happi joi, and mogoDB/mangooose.
+
