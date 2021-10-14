@@ -23,10 +23,6 @@ Once they have done that, they are shown the overall statistics for how dead the
 Database connections were hard as we could not get it functional but we designed the page regardless to show what the page would have looked like. The same can be said for the search bar as we lacked the database connections to view memes and receive them,
 it was difficult to implement such a feature that relied on inputting information and querying that data. 
 
-Decided to implement a custom version
-as there were build errors and issues with receiving randomized links read from csv's. Slick was difficult to work with
-while incorporating this feature and the team saw best to pursue a customized slick that suited our interests, since there was errors with the jQuery usage in the Slick build.
-
 ## Libraries/Tech Used
 
 Node.js
