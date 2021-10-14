@@ -12,11 +12,12 @@ Technologies
 - Water: CSS Framework providing styling for our site
 - HTML
 
-What challenges you faced in completing the project.(fixed most rendering bugs)
--Some JS bugs when rendering items on page which we did not have time to identify the cause of and fix
+What challenges you faced in completing the project.
+-Various minor rendering bugs popped up, though we were able to fix most, some were hard to find/difficult to debug and we may not have caught all of them
 -Making sure subtasks were linked with their parent. Some minor mistakes early on when initially setting up the project caused serious complications for implementing subtasks, as these seemingly innocent decisions made tracking which item we were working on exceedingly difficult.
--Visualization of subtasks. Displaying the subtasks as visually distinct from the main tasks was harder than expected and as a result we did not have time to implement this change
--**When clicking anywhere on a main task, even the Create Subtask button, it will hide/show existing subtasks. Clicking create subtask when there is exactly 1 subtask looks like the one subtask is being replaced. It's not. The one subtask is being hidden while another is being created.**
+-Visualization of subtasks. Displaying the subtasks as visually distinct from the main tasks was harder than expected and we had to settle for just using different colors
+-It was difficult to allow for collapsible subtasks without causing issues where some of a tasks's subtasks would be collpased but not all
+-Issues with updating the database when a user clicked on the checkbox to mark a task as complete or no longer complete
 
 What each group member was responsible for designing / developing
 
