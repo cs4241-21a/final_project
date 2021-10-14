@@ -30,10 +30,6 @@ app.get('/', (req, res) => {
     res.render('login')
 })
 
-app.get('/help', ((req, res) => {
-    res.render('help')
-}))
-
 app.get('/user', ((req, res) => {
     res.render('welcome')
 }))
@@ -149,7 +145,7 @@ app.post('/register', async (req, res) => {
     }else{
       // password incorrect, redirect back to login page
       console.log("Failed registration!")
-      res.render('login')
+      res.render('help')
     } 
   })
 
@@ -181,7 +177,7 @@ app.post('/login', async (req, res) => {
         }else{
           // password incorrect, redirect back to login page
           console.log("Failed log in!")
-          res.render('login')
+          res.render('help')
         }  
       })
 
@@ -190,7 +186,7 @@ app.use( function( req,res,next) {
     if( req.session.login === true )
       next()
     else
-      res.render('login')
+      res.render('help')
   })
 
 app.listen(port, () => {

@@ -20,6 +20,40 @@
     max-width: calc(100% - 5rem);
     line-height: 1.1;
   }
+
+  h8 {
+    font-size:x-large;
+    text-align: center;
+    font-family: sans-serif;
+    color: rgb(185, 37, 37);
+    max-width: calc(100% - 5rem);
+    line-height: 1.1;
+  }
+
+  h7 {
+    font-size:xx-large;
+    text-align: center;
+    font-family: sans-serif;
+    color: rgb(23, 57, 121);
+    max-width: calc(100% - 5rem);
+    line-height: 1.1;
+  }
+
+  title {
+    text-align: center;
+    font-style: italic;
+    color: rgb(0, 0, 0);
+    max-width: calc(100% - 5rem);
+    line-height: 1.1;
+  }
+
+  p {
+    text-align: center;
+    font-family: sans-serif;
+    color: rgb(0, 0, 0);
+    max-width: calc(100% - 5rem);
+    line-height: 1.1;
+  }
   
   form {
     margin: 0 auto; 

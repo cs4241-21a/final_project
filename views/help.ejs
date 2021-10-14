@@ -1,2 +1,17 @@
-<h1>Help</h1>
-<a href="/">go to home</a>
+<h8>Failed Login,Registration, or Account Authentication!</h8><br><br> 
+<h7>Try Login or Registration again!</h7><br><br><br> 
+<h1>Login here!</h1>
+    <form action='/login' method='POST'>
+      <input type='text' name='username' placeholder="your username here" aria-label="username">
+      <input type='text' name='password' placeholder="your password here" aria-label="password">
+      <button>login</button>
+    </form>
+
+    <h1>Register here!</h1>
+    <p>Username must be 3 characters long.</p>
+    <p>Password must be 6 characters long.</p>
+    <form action='/register' method='POST'>
+      <input type='text' name='username' placeholder="make a username!" aria-label="username">
+      <input type='text' name='password' placeholder="make a password!" aria-label="password">
+      <button>register</button>
+    </form>
