@@ -151,7 +151,7 @@ console.log("hello world :o");
           .then(data => {
                 var row = table.insertRow(table_len).outerHTML="<tr style='background-color:Tan' id='row"+table_len+"'" + 'class="parent" title="Click to expand/collapse" style="cursor: pointer;"'+"><td colspan=2 id='task_row"+table_len+"'>"+new_task+"</td><td colspan=2 id='date_row"+table_len+"'>"+new_date+"</td><td colspan=2><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit'"+' onclick="edit_row('+"'row"+table_len+
             "')"+'"'+"> <input type='button' id='save_button"+table_len+"' value='Save' class='save'"+' onclick="save_row('+"'row"+table_len+
-            "')"+'"'+"> <input type='button' id='createsubtask_button"+table_len+"' value='Create Subtask' class='create' onclick='create_sub("+table_len+")'><input type='button' value='X' class='delete'" + ' onclick="delete_row(' + "'row"+table_len+"')" + '"' + "></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+table_len+"' class='check' onclick=check_box('"+table_len+"')> </td></tr>";
+            "')"+'"'+"> <input type='button' id='createsubtask_button"+table_len+"' value='Create Subtask' class='create' onclick='create_sub("+table_len+")'><input type='button' value='X' class='delete'" + ' onclick="delete_row(' + "'row"+table_len+"')" + '"' + "></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+table_len+"' class='check' onclick=check_box('row"+table_len+"')> </td></tr>";
                 row_ID_map.set("'row"+table_len+"'", data._id)
                 row_ID_map.set( data._id, "'row"+table_len+"'")
             });
@@ -176,7 +176,7 @@ console.log("hello world :o");
             "' value='Create Subtask' class='create' onclick='create_sub("+table_len+
             ")'><input type='button' value='X' class='delete'" + ' onclick="delete_row(' + "'row"+table_len+
             "')" + '"' + "></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+table_len+"' class='check' "
-                +checkString+" onclick=check_box('"+table_len+"')> </td></tr>"
+                +checkString+" onclick=check_box('row"+table_len+"')> </td></tr>"
    row_ID_map.set("'row"+table_len+"'", _id)
    row_ID_map.set( _id, "'row"+table_len+"'")
 }
@@ -218,7 +218,7 @@ console.log("hello world :o");
             "' value='Create Subtask' class='create' onclick='create_sub("+noParent+
             ")'><input type='button' value='X' class='delete'" + ' onclick="delete_row(' + "'child-row"+noParent+"-"+oldChildren+
             "')" + '"' + "></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+noParent+"' class='check' "
-                +''+" onclick=check_box('"+noParent+"')> </td></tr>"
+                +''+" onclick=check_box('child-row"+noParent+"-" + oldChildren + "')> </td></tr>"
       
                 row_ID_map.set("'child-row"+noParent+"-"+oldChildren+"'", data._id)
                 row_ID_map.set( data._id, "'child-row"+noParent+"'")
@@ -256,15 +256,33 @@ console.log("hello world :o");
             "' value='Create Subtask' class='create' onclick='create_sub('child-row"+noParent+
             "')'><input type='button' value='X' class='delete'" + ' onclick="delete_row(' + "'child-row"+noParent+"-"+oldChildren+
             "')" + '"' + "></td><td colspan=2> <input type='checkbox' id='edit_checkbox"+noParent+"' class='check' "
-                +''+" onclick=check_box('"+noParent+"')> </td></tr>"
+                +''+" onclick=check_box('child-row"+noParent+"-" + oldChildren + "')> </td></tr>"
       
                 row_ID_map.set("'child-row"+noParent+"-"+oldChildren+"'", _id)
                 row_ID_map.set( _id, "'child-row"+noParent+"'")
   }
 
   function check_box(id){
-    //   var cBox = document.getElementById("edit_checkbox" + id)
-    //   cbox.checked = !cBox.checked
+    var row = document.getElementById(id)
+    var task_val=row.cells[0].textContent;
+      var due_val=row.cells[1].textContent;
+      var checked_bool=row.cells[3].children[0].checked;
+    checkEditing = !checked_bool
+
+    json = { username: '', task: task_val, date: due_val, check: checked_bool, taskEditing: task_val, dateEditing: due_val, checkEditing: checkEditing},
+         body = JSON.stringify(json);
+         console.log(body)
+   fetch('/editData', {
+      method: 'POST',
+      headers: {
+              'Accept': 'application/json, text/plain, */*',
+              'Content-Type': 'application/json'
+            },
+      body: body
+    })
+    .then(res => res.json()) // parse the JSON from the server
+    .then(data => {
+      });
   }
 
   window.onload = function() {

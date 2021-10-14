@@ -75,7 +75,8 @@ app.post("/newData", async (req, res) => {
     
     //Check if data aready in server
     const dataExists = await Task.exists({username: userNameOfU, task: req.body.taskEditing, due: req.body.dateEditing});
-    const newDataExists = await Task.exists({username: userNameOfU, task: req.body.task, due: req.body.date});
+    // var checkVal = (req.body.check === '  ') ? true : false
+    const newDataExists = await Task.exists({username: userNameOfU, task: req.body.task, due: req.body.date, check: req.body.check});
     console.log(dataExists)
   
     //Old data has to exist, new data can not exist
