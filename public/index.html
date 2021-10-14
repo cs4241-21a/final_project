@@ -10,7 +10,9 @@
       rel="stylesheet"
     />
     <title>Dead Meme Huh?</title>
+    <script src="script.js"></script>
   </head>
+
   <body>
     <img
       class="w-full"
@@ -20,61 +22,46 @@
       src="https://github.com/alexiscaira/deadmemehuh/blob/main/dead%20meme.png?raw=true"
       alt="header"
     />
-    <div class="py-12 bg-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="lg:text-center">
-          <h2 class="text-base text-yellow-400 font-semibold tracking-wide ">
-            A meme relevancy tracker to making sure you’re hip with the kids
-          </h2>
 
-          <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-            To get started click the button below to get a randomly generated
-            <a href="https://en.wikipedia.org/wiki/Meme">meme</a>!
-          </p>
-        </div>
+    <div class="lg:text-center">
+      <h2 class="text-base text-yellow-400 font-semibold tracking-wide ">
+        A meme relevancy tracker to making sure you’re hip with the kids
+      </h2>
 
-        <br />
-        <div class="content" role="main">
-          <div class="meme-form">
-            <br />
-            <div class="content" role="main">
-              <div class="meme-form">
-                <form class="meme-search" method="post">
-                  <label for="meme">
-                    <input
-                      class="bg-grey-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                      id="meme"
-                      type="text"
-                      value="bad luck brian"
-                    />
-                  </label>
+      <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+        To get started click the button below to either search or generate a
+        random <a href="https://en.wikipedia.org/wiki/Meme">meme</a>!
+      </p>
+      <br />
+      <br />
+    </div>
 
-                  <!-- If the user submits a value through the form 
-                 it'll be passed to the server in the request body  -->
-                  <br />
-                  <br />
-                  <button
-                    class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded-full"
-                    type="button"
-                    post="/search"
-                    onclick="location.href='result.html'"
-                  >
-                    Search
-                  </button>
-                  <button
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                    type="button"
-                    post="/result"
-                    onclick="location.href='result.html'"
-                  >
-                    Take the Red Pill
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="meme-form">
+      <label for="memeSearch">
+        <input
+          class="bg-grey-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+          id="memeSearchForm"
+          type="text"
+          value="Bad Luck Brian"
+        />
+      </label>
+
+      <button
+        class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded-full"
+        type="submit"
+        onclick="location.href='result.html'"
+      >
+        Search
+      </button>
+
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+        type="button"
+        post="/randMeme"
+        onclick="location.href='result.html'"
+      >
+        Random
+      </button>
     </div>
   </body>
 </html>
