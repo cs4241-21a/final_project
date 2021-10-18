@@ -1,0 +1,304 @@
+  body {
+    background-color:  #F2F2F2;
+    color: black;
+    margin: 0;
+    box-sizing: border-box;
+    font: 14px "Century Gothic", Futura, sans-serif;
+  } 
+  
+  .menubar {
+    display: block;
+    height: 60px;
+    box-shadow: 2px 5px 5px 0 rgba(0,0,0,.12);
+    text-align: center;
+  }
+    
+  .menubar span {
+    display: inline-block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: 300;
+    font-size: 2em;
+    line-height: 60px;
+  }
+  
+  #hambmenu {
+    position: relative;
+    width: 40px;
+    height: 45px;
+    float: left;
+    transition: .5s ease-in-out;
+    cursor: pointer;
+   }
+  #hambmenu span {
+      position: absolute;
+      height: 5px;
+      width: 100%;
+      vertical-align: middle;
+      margin: 20px 0 0 15px;
+      background: white;
+      border-radius: 8px;
+      opacity: 1;
+      left: 0;
+      transform: rotate(0deg);
+      transition: .25s ease-in-out;
+      padding: 0px;
+  }
+  
+  .hambclicker {
+    content: '';
+    height: 48px;
+    width: 55px;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    cursor: pointer;
+    z-index: 9;
+  }
+  #hambmenu  span:nth-child(1) {
+    top: 0px;
+  }
+  #hambmenu  span:nth-child(2),#hambmenu  span:nth-child(3) {
+    top: 10px;
+  }
+  #hambmenu  span:nth-child(4) {
+    top: 20px;
+  }
+  #hambmenu span:nth-child(1) {
+    top: 18px;
+    width: 0%;
+    left: 50%;
+    opacity: 0;
+  }
+  #hambmenu span:nth-child(2) {
+    transform: rotate(45deg);
+  }
+  #hambmenu span:nth-child(3) {
+    transform: rotate(-45deg);
+  }
+  #hambmenu span:nth-child(4) {
+    top: 18px;
+    width: 0%;
+    left: 50%;
+    opacity: 0;
+  }
+  
+  #menu {
+    position: absolute;
+    height: calc(100vh - 60px);
+    width: 210px;
+    background-color: white;
+    transform: translateX(-100%);
+    transition: transform 300ms;
+  }
+
+  #modules {
+    position: absolute;
+    height: calc(100vh - 60px);
+    width: 210px;
+    background-color: lightgray;
+    transform: translateX(100%);
+    transition: transform 300ms;
+  }
+
+  #modules ul {
+    position: absolute;
+    height: calc(100vh - 60px);
+    width: 210px;
+    background-color: lightgray;
+    transform: translateX(0%);
+    transition: transform 300ms;
+  }
+
+  #modules ul {
+    margin-top: 0px;
+    padding: 0px;
+    color: black;
+    list-style-type: none;
+    text-align: left;
+  }
+  #modules li {
+    padding: 30px 0 20px 20px;
+    font-size: 1.5em;
+    border-bottom: 1px solid rgba(0,0,0,.14);
+  }
+
+  #menu ul {
+    margin-top: 0px;
+    padding: 0px;
+    color: black;
+    list-style-type: none;
+    text-align: left;
+  }
+  #menu li {
+    padding: 30px 0 20px 20px;
+    font-size: 1.5em;
+    border-bottom: 1px solid rgba(0,0,0,.14);
+  }
+  #menu li:last-child {
+      border-bottom: none;
+  }
+
+  #menu.isopen {
+    background-color: lightgray;
+  }
+
+  #menu.notopen {
+    background-color: white;
+  }
+
+  #modules {
+    top: 0px;
+    z-index: -1;
+  }
+
+  #modules.isopen {
+    transform: translateX(100%), translateY(0%);
+  }
+
+  #infosection.isopen {
+    background-color: lightgray;
+  }
+
+  #infosection.notopen {
+    background-color: white;
+  }
+
+  #modules.notopen {
+    transform: translateX(-100%);
+  }
+
+  #addButton {
+    color: green;
+  }
+
+  #closeModal {
+    float: right;
+    background-color: red;
+    border-radius: 3px 3px 3px 3px;
+    padding: 5px 10px;
+    border: none;
+  }
+
+  #submitButton {
+    float: right;
+    background-color: green;
+    color: white;
+    border-radius: 3px 3px 3px 3px;
+    padding: 5px 10px;
+    border: none;
+  }
+
+  .toggleButton {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 5px;
+  }
+
+  .deleteButton {
+    background-color: red; /* Green */
+    border: none;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .fa {
+    color: black;
+    padding-right: 8px;
+  }
+  li a {
+    text-decoration: none;
+    color: black;
+  }
+  
+  #menu {
+    transform: none;
+  }
+  
+  @media screen and (max-width: 420px) {
+    .menubar span {
+      font-size: 1.2em;
+    }
+  }
+  
+    
+    ol, ul {
+      padding-left: 30px;
+    }
+    
+    .board-row:after {
+      clear: both;
+      content: "";
+      display: table;
+    }
+    
+    .status {
+      margin-bottom: 10px;
+    }
+    
+    .square {
+      background: #fff;
+      border: 1px solid #999;
+      float: left;
+      font-size: 24px;
+      font-weight: bold;
+      line-height: 34px;
+      height: 34px;
+      margin-right: -1px;
+      margin-top: -1px;
+      padding: 0;
+      text-align: center;
+      width: 34px;
+    }
+    
+    .square:focus {
+      outline: none;
+    }
+    
+    .kbd-navigation .square:focus {
+      background: #ddd;
+    }
+    
+    .game {
+      display: flex;
+      flex-direction: row;
+    }
+    
+    .game-info {
+      margin-left: 20px;
+    }
+  
+    
+  .css-jrgp79 {
+    width: 60%;
+    float: right;
+    margin: 15px;
+  }
+
+  .remirror-editor-wrapper > div{
+    background-color: #ffffff;
+    width: 500px;
+    height: 647px;
+  }
+
+  .ReactModal__Content--after-open>form>.css-jrgp79{
+    width: 95%;
+    float: center;
+    margin: 15px;
+  }
+
+.ReactModal__Content--after-open>form>.css-jrgp79>.remirror-theme>.remirror-editor-wrapper>div{
+    width: 100%;
+    height: 400px;
+  }
+    
