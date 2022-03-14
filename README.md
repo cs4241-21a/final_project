@@ -1,8 +1,6 @@
 # G3P Expense Tracker
 
-### Yihong Xu
-
-[https://final-gp2p.glitch.me/](https://final-gp2p.glitch.me/)
+[https://g3p.glitch.me/](https://g3p.glitch.me/)
 
 This is an iterated version of my A3 project which is an online expense tracker for users that want the least disturbing and more peace of mind.
 
