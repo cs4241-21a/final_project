@@ -11,6 +11,7 @@ import Card from "@mui/material/Card";
 import CircleIcon from "@mui/icons-material/Circle";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import Alert from "@mui/material/Alert"
 
 function WelcomeMessage(props) {
   const handleChange = (event, newAlignment) => {
@@ -49,6 +50,7 @@ function WelcomeMessage(props) {
           },
         }}
       >
+        <Alert severity="warning">Laundry Connect 2 will be moving to <a href="https://lc2.owenthe.dev">lc2.owenthe.dev</a> by October 31, 2022 due to Heroku discontinuing free dynos. Laundry Connect 2 will continue to be accessible on Heroku until November 28, 2022.</Alert>
         <Typography variant="h4">
           <b>Welcome to LaundryConnect 2.0! </b>
         </Typography>
