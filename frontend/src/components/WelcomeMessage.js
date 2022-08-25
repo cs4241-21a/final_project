@@ -50,7 +50,7 @@ function WelcomeMessage(props) {
           },
         }}
       >
-        <Alert severity="warning">Laundry Connect 2 will be moving to <a href="https://lc2.owenthe.dev">lc2.owenthe.dev</a> by October 31, 2022 due to Heroku discontinuing free dynos. Laundry Connect 2 will continue to be accessible on Heroku until November 28, 2022.</Alert>
+        <Alert severity="warning">Laundry Connect 2 has moved to <a href="https://lc2.owenthe.dev">lc2.owenthe.dev</a>due to Heroku discontinuing free dynos. Laundry Connect 2 will continue to be accessible from here until November 28, 2022.</Alert>
         <Typography variant="h4">
           <b>Welcome to LaundryConnect 2.0! </b>
         </Typography>
