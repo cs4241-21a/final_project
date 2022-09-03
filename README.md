@@ -1,51 +1,120 @@
-# Final Project
-*Due before the start of class, October 11th (final day of the term)*
+# LaundryConnect 2.0!
 
-For your final project, you'll implement a web application that exhibits understanding of the course materials. 
-This project should provide an opportunity to both be creative and to pursue individual research and learning goals.
+URL: https://laundry-connect-2.herokuapp.com/
 
-## General description
-Your project should consist of a complete Web application, exhibiting facets of the three main sections of the course material:
+Video: https://www.youtube.com/watch?v=oR832kbgf6c
 
-- Static Web page content and design. You should have a project that is accessible, easily navigable, and features significant content.
-- Dynamic behavior implemented with JavaScript (TypeScript is also allowed if your group wants to explore it).
-- Server-side programming *using Node.js*. Typically this will take the form of some sort of persistent data (database), authentication, and possibly server-side computation. 
-- A video (less than five minutes) where each group member explains some aspect of the project. An easy way to produce this video is for you all the groups members to join a Zoom call that is recorded; each member can share their screen when they discuss the project or one member can "drive" the interface while other members narrate (this second option will probably work better.) The video should be posted on YouTube or some other accessible video hosting service. Make sure your video is less than five minutes, but long enough to successfully  explain your project and show it in action. There is no minimum video length.
+This project is an improvement of the current LaundryConnect website. LaundryConnect is the service which provides data on the current progress of laundry machines at WPI; however, the website does not look great and it is hard to navigate (as shown below).
 
-## Project ideation
-Excellent projects typically serve someone/some group; for this assignment you need to define your users and stakeholders. I encourage you to identify projects that will have impact, either artistically, politically, or in terms of productivity. 
+Our group decided we needed to improve the user interface and add functionality to save your favorite locations on campus.
 
-## Logistics
-### Team size
-Students are will work in teams of 3-5 students for the project; teams of two can be approved with the permission of the instructor. Working in teams should help enable you to build a good project in a limited amount of time.  Use the `#project-logistics` channel in Discord to pitch ideas for final projects and/or find fellow team members as needed.
+These are some of the things we added:
+- Added each laundry location with a drop down menu showing all machines and their availabilities
+- Added a color code with five different colors showing the status of the machines
+- Added an update time which shows when the page was last updated.
+- Shows all washers and dryers with cards that show the machine's information.
+  - Shows the time left if the machine is in use
+  - Shows 'Avaliable' if the machine is available
+  - Shows 'Ready for Pickup' if the cycle has finished
+  - Shows 'Offline' if the machine is off or out of order
+- Has a log-in feature with allows users to save their favorite locations
+  - Users can hit the star icon to save their favorite locations and see them under the 'FAVORITE LOCATIONS' tab
 
-Teams must be in place by end of day on Saturday, September 25th. If you have not identified a team at this point, you will be assigned a team. You will be given some class time on Monday to work on your proposal, but please plan on reserving additional time as needed.
+**This is the original LaundryConnect**
 
-### Deliverables
+![FrontLC](./images/laundryconnect1.png)
+![SpecLC](./images/laundryconnect1main.png)
 
-__Proposal:__ 
-Provide an outline of your project direction and the names of associated team members. 
-The outline should have enough detail so that staff can determine if it meets the minimum expectations, or if it goes too far to be reasonable by the deadline. Please include a general description of a project, and list of key technologies/libraries you plan on using (e.g. React, Three.js, Svelte, TypeScript etc.). Name the file proposal.md and submit a pull request.
-Submit a PR to turn it in by Monday, September 27th at11:59 PM. Only one pull request is required per team.
+**This is the new and improved version of LaundryConnect**
 
-There are no other scheduled checkpoints for your project. 
+![LaundryConnect2](./images/laundryconnect2.png)
 
-#### Turning in Your Outline / Project
-Submit a second PR on the final project repo to turn in your app and code. Again, only one pull request per team.
+## Accessibility
+![LaundryConnectLighthouseReport](./images/LaundryConnectLighthouseReport.png)
+In order to provide an accessible experience for all users, we used a grid layout within Material UI so that components render correctly on both desktop and mobile. We put a large focus on making sure mobile users in particular were able to use our website since most users will be viewing our website on their phones from within the laundry room. We also made sure to contain all list items within their respective lists and follow an ordered structure from h1 to h6 in order to make our website accessible for users with screenreaders and other assistive devices.
 
-Deploy your app, in the form of a webpage, to Glitch/Heroku/Digital Ocean or some other service; it is critical that the application functions correctly wherever you post it.
+## Additional information needed to use the project
 
-The README for your second pull request doesn’t need to be a formal report, but it should contain:
+**Login**:
+- *Username*: Admin
+- *Password*: Admin
 
-1. A brief description of what you created, and a link to the project itself (two paragraphs of text)
-2. Any additional instructions that might be needed to fully use your project (login information etc.)
-3. An outline of the technologies you used and how you used them.
-4. What challenges you faced in completing the project.
-5. What each group member was responsible for designing / developing.
-6. A link to your project video.
+## Technologies used and how they were used
 
-Think of 1,3, and 4 in particular in a similar vein to the design / tech achievements for A1—A4… make a case for why what you did was challenging and why your implementation deserves a grade of 100%.
+**MongoDB**: MongoDB was the main database we used. This is where all the LaundryConnect data is sent.
 
-## FAQs
+**Node**: Node was used for our backend server which retrieved and sent data between the database and the client.
 
-- **Can I use XYZ framework?** You can use any web-based frameworks or tools available, but for your server programming you need to use Node.js. Your client-side scripting language should be either JavaScript or TypeScript.
+**React**: React was the frontend framework used to model our entire website and refresh data.
+
+**Mongoose**: Mongoose allowed us to easily access the data from the MongoDB database. Allowed for convenience with our data.
+
+**Express**: Express was the middleware we used to handle server logic and dataflow. It processed the JSON data sent with POST requests and also GET requests.
+
+**Material UI**: Material UI was used as our frontend framework which had many React components. This allowed us to add flair to our website and make it look clean. It also allowed us to implement mobile accessibility.
+
+**Heroku**: This is where our website is hosted.
+
+**Session Storage**: This is how the user logins are stored and saved so the website will keep users signed on.
+
+
+## Technical Achievements
+
+We fully implemented a new laundry system for WPI students. Due to our personal experience with using WPI's laundry service, we saw many problems with it and wanted to improve this. 
+
+A technical achievement for this is implementing a webscraper to frequently retrieve data from the Laundry service and update the Mongo database with this data, then display this information with react on the website so users can see realtime updates of the current WPI laundry availability.
+
+As a result of the achievements above, we created a better structured and better visualization of WPI's laundry system which is easier and more intuitive to use. Due to the nature of react and the Material UI components, this website is more accessible on mobile than the original LaundryConnect was.
+
+Based on the feedback from the various students and professors, they were very appreciative of our reimplementation of WPI's laundry website.
+
+## Challenges faced in this project
+
+- Development of the webscraper
+- Implementing the ability to favorite locations
+- Updating the website anytime the database received data from the webscraper
+
+## Group member contributions
+
+**Andrew Kerekon**:
+- Worked on frontend
+  - Added UI flair
+  - Persisted user login on refresh
+  - Improved accessibility by modifying components
+- Worked on backend
+  - Implemented getting a user's name
+  - Created functionality to change a user's password
+- Worked on the My Account Page
+  - Implemented registration and login
+
+**Owen McGinley**:
+- Developed the webscraper for the laundry data
+  - Hosted webscraper on personal server
+  - Implemented auto data fetching every two minutes
+  - Pushed the webscraper data to mongo
+- Worked on backend
+- Did frontend UI touchups
+- Edited the absolute masterclass that is the project video
+
+**Steven Tran**:
+- Worked on frontend
+  - Formatted the login and register pages
+  - Added UI flair to the design
+  - Developed the user login and register UI
+- Wrote the `readme` 
+
+**Michael Zeolla**:
+- Worked on backend
+  - Implemented the favoriting feature
+  - Implemented autorefreshing for the website
+  - Deployed website on Heroku
+- Worked on frontend
+  - Built the basic structure of the website
+  - Implemented the favoriting feature
+  - Designed the basic UI for the website
+
+**Duncan Soiffer**:
+- Developed the website backend
+  - Created user login, registration
+  - Implemented the ability to get data from the Mongo server
+  - Implemented Mongoose data structure
